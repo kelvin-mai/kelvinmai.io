@@ -9,6 +9,8 @@ interface Props {
   title: string;
 }
 
+export type SEOProps = Props;
+
 export const SEO: React.FC<Props> = ({
   description = '',
   lang = 'en',

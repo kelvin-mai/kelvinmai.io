@@ -1,16 +1,11 @@
 import React from 'react';
 
-import { SEO } from '../components/seo';
-import { Footer } from '../components/footer';
+import { Layout } from '../components/layout';
 
 const IndexPage = () => (
-  <>
-    <main className='h-screen'>
-      <SEO title='Home' />
-      <h1>Hello World</h1>
-    </main>
-    <Footer />
-  </>
+  <Layout title='Home' fullWidth>
+    <h1>Hello World</h1>
+  </Layout>
 );
 
 export default IndexPage;
