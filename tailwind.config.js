@@ -1,5 +1,12 @@
 module.exports = {
   theme: {
+    container: {
+      center: true,
+    },
+    fontFamily: {
+      body: ['Ubuntu', 'sans-serif'],
+      'font-mono': ['Ubuntu Mono', 'Menlo', 'monospace'],
+    },
     colors: {
       black: '#282a36',
       white: '#f8f8f2',

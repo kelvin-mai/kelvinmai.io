@@ -17,9 +17,7 @@ export const Layout: React.FC<Props> = ({
   <>
     <SEO title={title} />
     <Header />
-    <main
-      className={classnames({ 'container mx-auto': !fullWidth }, 'min-h-80vh')}
-    >
+    <main className={classnames({ container: !fullWidth }, 'min-h-80vh')}>
       {children}
     </main>
     <Footer />
