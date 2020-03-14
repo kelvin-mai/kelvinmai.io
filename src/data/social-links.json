@@ -1,0 +1,8 @@
+[
+  { "to": "https://twitter.com/kelvinmai", "icon": "Twitter" },
+  { "to": "https://youtube.com/c/kelvinmai", "icon": "Youtube" },
+  {
+    "to": "https://www.linkedin.com/in/kelvin-mai-461756152/",
+    "icon": "Linkedin"
+  }
+]

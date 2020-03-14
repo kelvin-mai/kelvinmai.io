@@ -19,11 +19,6 @@
   animation-timing-function: linear;
 }
 
-.shine-size {
-  width: 800px;
-  height: 104px;
-}
-
 @keyframes shimmer {
   0% {
     background-position: -468px 0;
@@ -36,4 +31,8 @@
 
 .min-h-80vh {
   min-height: 80vh;
+}
+
+.h-fit {
+  height: fit-content;
 }
