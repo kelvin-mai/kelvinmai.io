@@ -1,0 +1,5 @@
+[
+  { "to": "/", "name": "home" },
+  { "to": "/uses", "name": "uses" },
+  { "to": "/404", "name": "not found" }
+]

@@ -8,18 +8,24 @@ export interface IconProps {
 }
 
 export const Icon: React.FC<IconProps> = ({
-  icon: { path, title },
+  icon: { path, title, hex },
   size = 24,
-  className = 'inline fill-current text-white hover:text-dark m-1',
-}) => (
-  <svg
-    xmlns='http://www.w3.org/2000/svg'
-    viewBox='0 0 24 24'
-    height={size}
-    width={size}
-    className={className}
-  >
-    <title>{title}</title>
-    <path d={path} />
-  </svg>
-);
+  className = 'inline fill-current m-1',
+}) => {
+  const [fillColor, setFillColor] = React.useState('currentColor');
+  return (
+    <svg
+      xmlns='http://www.w3.org/2000/svg'
+      viewBox='0 0 24 24'
+      height={size}
+      width={size}
+      className={className}
+      onMouseEnter={() => setFillColor(hex)}
+      onMouseLeave={() => setFillColor('currentColor')}
+      style={{ fill: fillColor }}
+    >
+      <title>{title}</title>
+      <path d={path} />
+    </svg>
+  );
+};
