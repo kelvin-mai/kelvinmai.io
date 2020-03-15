@@ -5,5 +5,6 @@
 @tailwind utilities;
 
 body {
-  background-color: #f8f8f2;
+  background-color: #44475a;
+  color: #f8f8f2;
 }

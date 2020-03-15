@@ -42,3 +42,14 @@
   left: 50%;
   transform: translate(-50%, -50%);
 }
+
+.video-container {
+  position: relative;
+  padding-top: 56.25%;
+}
+
+.video-player {
+  position: absolute;
+  top: 0;
+  left: 0;
+}

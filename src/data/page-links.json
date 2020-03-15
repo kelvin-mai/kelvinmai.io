@@ -1,5 +1,6 @@
 [
   { "to": "/", "name": "home" },
+  { "to": "/tutorials", "name": "tutorials" },
   { "to": "/uses", "name": "uses" },
   { "to": "/404", "name": "not found" }
 ]
