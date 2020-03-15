@@ -1,0 +1,50 @@
+import React from 'react';
+import { useStaticQuery, graphql, Link } from 'gatsby';
+import Img from 'gatsby-image';
+
+export const HighlightedCourses = () => {
+  const data = useStaticQuery(graphql`
+    query {
+      courses: allCoursesJson {
+        nodes {
+          title
+          image
+          slug
+        }
+      }
+      images: allFile {
+        nodes {
+          childImageSharp {
+            fluid(maxWidth: 400) {
+              ...GatsbyImageSharpFluid
+            }
+          }
+          relativePath
+        }
+      }
+    }
+  `);
+  console.log(data.courses.nodes.map(course => course.image));
+  const courses = data.courses.nodes
+    .filter((_, i) => i < 2)
+    .map(course => ({
+      ...course,
+      image: data.images.nodes.find(
+        image => image.relativePath === course.image
+      ),
+    }));
+
+  return (
+    <div className='grid grid-cols-1 md:grid-cols-2 md:grid-rows-1 gap-8 md:gap-24 w-4/5 md:w-3/5 mx-auto'>
+      {courses.map(course => (
+        <Link
+          key={course.id}
+          className='w-auto h-auto rounded-lg shadow-xl overflow-hidden'
+          to={`/courses/${course.slug}`}
+        >
+          <Img fluid={course.image.childImageSharp.fluid} />
+        </Link>
+      ))}
+    </div>
+  );
+};

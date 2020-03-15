@@ -1,6 +1,7 @@
 [
   {
     "title": "Redux Tip Calculator",
+    "image": "redux-tip.jpg",
     "videos": [
       {
         "ordinance": 0,
@@ -51,10 +52,12 @@
         "publishedAt": "2020-01-20T08:00:01.000Z",
         "thumbnail": "https://i.ytimg.com/vi/1n8IY12ROrg/maxresdefault.jpg"
       }
-    ]
+    ],
+    "slug": "redux-tip-calculator"
   },
   {
     "title": "Scala Mongo API",
+    "image": "scala-mongo.jpg",
     "videos": [
       {
         "ordinance": 0,
@@ -77,10 +80,12 @@
         "publishedAt": "2019-06-22T16:00:05.000Z",
         "thumbnail": "https://i.ytimg.com/vi/G6But_7ug9Q/maxresdefault.jpg"
       }
-    ]
+    ],
+    "slug": "scala-mongo-api"
   },
   {
     "title": "NestJS ECommerce",
+    "image": "nestjs-commerce.jpg",
     "videos": [
       {
         "ordinance": 0,
@@ -173,10 +178,12 @@
         "publishedAt": "2019-04-02T16:00:01.000Z",
         "thumbnail": "https://i.ytimg.com/vi/0CfuBokD_xA/maxresdefault.jpg"
       }
-    ]
+    ],
+    "slug": "nestjs-ecommerce"
   },
   {
     "title": "Ideas App - Angular NgRx",
+    "image": "angular-ideas.jpg",
     "videos": [
       {
         "ordinance": 0,
@@ -269,10 +276,12 @@
         "publishedAt": "2018-12-16T21:44:37.000Z",
         "thumbnail": "https://i.ytimg.com/vi/rLe1cGBFbNI/maxresdefault.jpg"
       }
-    ]
+    ],
+    "slug": "ideas-app-angular-ngrx"
   },
   {
     "title": "Ideas App - NestJS GraphQL",
+    "image": "nestjs-ideas-graphql.jpg",
     "videos": [
       {
         "ordinance": 0,
@@ -309,10 +318,12 @@
         "publishedAt": "2018-10-22T18:30:00.000Z",
         "thumbnail": "https://i.ytimg.com/vi/opYgfyQnKwE/maxresdefault.jpg"
       }
-    ]
+    ],
+    "slug": "ideas-app-nestjs-graphql"
   },
   {
     "title": "Ideas App - NestJS API",
+    "image": "nestjs-ideas.jpg",
     "videos": [
       {
         "ordinance": 0,
@@ -398,10 +409,12 @@
         "publishedAt": "2018-10-11T18:30:00.000Z",
         "thumbnail": "https://i.ytimg.com/vi/p8sKVKMJRco/maxresdefault.jpg"
       }
-    ]
+    ],
+    "slug": "ideas-app-nestjs-api"
   },
   {
     "title": "Angular Simon Game",
+    "image": "angular-simon.jpg",
     "videos": [
       {
         "ordinance": 0,
@@ -445,10 +458,12 @@
         "publishedAt": "2018-08-28T18:17:12.000Z",
         "thumbnail": "https://i.ytimg.com/vi/k8qpbqgIcMk/maxresdefault.jpg"
       }
-    ]
+    ],
+    "slug": "angular-simon-game"
   },
   {
     "title": "TypeScript Gropceries API",
+    "image": "ts-groceries.jpg",
     "videos": [
       {
         "ordinance": 0,
@@ -485,10 +500,12 @@
         "publishedAt": "2018-07-17T23:29:01.000Z",
         "thumbnail": "https://i.ytimg.com/vi/pI3ILKjIK6Y/maxresdefault.jpg"
       }
-    ]
+    ],
+    "slug": "typescript-gropceries-api"
   },
   {
     "title": "Full Stack MERN Voting App",
+    "image": "mern-vote.jpg",
     "videos": [
       {
         "ordinance": 0,
@@ -637,6 +654,7 @@
         "publishedAt": "2018-07-11T20:00:00.000Z",
         "thumbnail": "https://i.ytimg.com/vi/56dtu30fQU8/maxresdefault.jpg"
       }
-    ]
+    ],
+    "slug": "full-stack-mern-voting-app"
   }
 ]

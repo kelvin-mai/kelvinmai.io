@@ -1,6 +1,6 @@
 import React from 'react';
 import Img from 'gatsby-image';
-import { useStaticQuery, graphql } from 'gatsby';
+import { useStaticQuery, graphql, Link } from 'gatsby';
 
 interface Props {
   limit?: number;
@@ -9,7 +9,7 @@ interface Props {
 export const TutorailSection: React.FC<Props> = ({ limit }) => {
   const data = useStaticQuery(graphql`
     query {
-      tutorials: allTutorialLinksJson(limit: 12) {
+      tutorials: allTutorialsJson {
         nodes {
           title
           videoId
@@ -32,16 +32,19 @@ export const TutorailSection: React.FC<Props> = ({ limit }) => {
     <section className='h-auto pt-8 pb-8'>
       <div className='container'>
         <div className='text-center mb-4'>
-          <h3 className='text-2xl font-bold uppercase'>Tutorials</h3>
+          <h2 className='text-2xl font-bold uppercase'>Tutorials</h2>
           <p className='text-xl'>
             Below is a collection of my latest tutorials.
           </p>
         </div>
         <div className='grid grid-cols-2 md:grid-cols-4 gap-8 pb-8'>
           {nodes.map(tutorial => (
-            <div className='w-auto h-auto rounded-lg overflow-hidden'>
+            <Link
+              className='w-auto h-auto rounded-lg overflow-hidden'
+              to={`/tutorials/${tutorial.videoId}`}
+            >
               <Img fluid={tutorial.thumbnailImage.childImageSharp.fluid} />
-            </div>
+            </Link>
           ))}
         </div>
       </div>
