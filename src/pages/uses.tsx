@@ -4,10 +4,7 @@ import { Layout } from '../components/layout';
 
 const Uses = () => (
   <Layout title='Uses'>
-    <h1>Uses</h1>
-    <p></p>
-
-    <h2>Editor</h2>
+    <h1 className='text-center text-4xl'>Uses</h1>
   </Layout>
 );
 

@@ -1,5 +1,11 @@
 [
   {
+    "videoId": "yVk_ImBQqms",
+    "title": "Simple Web Server in Clojure deps.edn",
+    "publishedAt": "2020-03-15T07:00:00.000Z",
+    "thumbnail": "https://i.ytimg.com/vi/yVk_ImBQqms/maxresdefault.jpg"
+  },
+  {
     "videoId": "J9m71iuSvlE",
     "title": "Clojure deps.edn Introduction",
     "publishedAt": "2020-03-14T15:00:12.000Z",

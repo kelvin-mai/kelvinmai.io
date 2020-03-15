@@ -8,6 +8,7 @@ module.exports = {
       'font-mono': ['Ubuntu Mono', 'Menlo', 'monospace'],
     },
     colors: {
+      'real-white': '#fff',
       black: '#282a36',
       white: '#f8f8f2',
       dark: '#44475a',
