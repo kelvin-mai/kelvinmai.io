@@ -2,29 +2,49 @@ import React from 'react';
 import { useStaticQuery, graphql, Link } from 'gatsby';
 import Img from 'gatsby-image';
 
-export const HighlightedCourses = () => {
-  const data = useStaticQuery(graphql`
-    query {
-      courses: allCoursesJson {
-        nodes {
-          title
-          image
-          slug
-        }
-      }
-      images: allFile {
-        nodes {
-          childImageSharp {
-            fluid(maxWidth: 400) {
-              ...GatsbyImageSharpFluid
-            }
-          }
-          relativePath
-        }
+const query = graphql`
+  query {
+    courses: allCoursesJson {
+      nodes {
+        title
+        image
+        slug
       }
     }
-  `);
-  console.log(data.courses.nodes.map(course => course.image));
+    images: allFile {
+      nodes {
+        childImageSharp {
+          fluid(maxWidth: 400) {
+            ...GatsbyImageSharpFluid
+          }
+        }
+        relativePath
+      }
+    }
+  }
+`;
+
+interface DataType {
+  courses: {
+    nodes: {
+      id: string;
+      title: string;
+      image: string;
+      slug: string;
+    }[];
+  };
+  images: {
+    nodes: {
+      childImageSharp: {
+        fluid: any;
+      };
+      relativePath: string;
+    }[];
+  };
+}
+
+export const HighlightedCourses = () => {
+  const data: DataType = useStaticQuery(query);
   const courses = data.courses.nodes
     .filter((_, i) => i < 2)
     .map(course => ({
@@ -33,7 +53,6 @@ export const HighlightedCourses = () => {
         image => image.relativePath === course.image
       ),
     }));
-
   return (
     <div className='grid grid-cols-1 sm:grid-cols-2 sm:grid-rows-1 gap-8 w-5/6 sm:w-4/5 md:w-3/5 lg:w-1/2 mx-auto'>
       {courses.map(course => (

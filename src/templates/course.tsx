@@ -9,28 +9,30 @@ interface Props {
   pageContext: { image: string };
 }
 
-export const Course: React.FC<Props> = ({ pageContext, ...props }) => {
-  const data = useStaticQuery(graphql`
-    query($image: String) {
-      images: allFile {
-        nodes {
-          childImageSharp {
-            fluid(maxWidth: 400) {
-              ...GatsbyImageSharpFluid
-            }
-          }
-          relativePath
-        }
-      }
-      image: file(relativePath: { eq: $image }) {
+const query = graphql`
+  query($image: String) {
+    images: allFile {
+      nodes {
         childImageSharp {
           fluid(maxWidth: 400) {
             ...GatsbyImageSharpFluid
           }
         }
+        relativePath
       }
     }
-  `);
+    image: file(relativePath: { eq: $image }) {
+      childImageSharp {
+        fluid(maxWidth: 400) {
+          ...GatsbyImageSharpFluid
+        }
+      }
+    }
+  }
+`;
+
+export const Course: React.FC<Props> = ({ pageContext, ...props }) => {
+  const data = useStaticQuery(query);
   const imgSrc = data.images.nodes.find(
     node => node.relativePath === pageContext.image
   );

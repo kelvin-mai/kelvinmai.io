@@ -1,0 +1,67 @@
+[
+  {
+    "title": "Cross Platform Software",
+    "tools": [
+      {
+        "title": "Visual Studio Code",
+        "link": "https://code.visualstudio.com/",
+        "description": "main code editor and pseudo-IDE for large projects"
+      },
+      {
+        "title": "neovim",
+        "link": "https://neovim.io/",
+        "description": "code editor for small files"
+      },
+      {
+        "title": "Doom Emacs",
+        "link": "https://github.com/hlissner/doom-emacs",
+        "description": "code editor that I'm trying out"
+      },
+      {
+        "title": "Alacritty",
+        "link": "https://github.com/alacritty/alacritty",
+        "description": "terminal"
+      },
+      {
+        "title": "Oh My Zsh",
+        "link": "https://ohmyz.sh/",
+        "description": "shell environment"
+      },
+      {
+        "title": "i3wm",
+        "link": "https://i3wm.org/",
+        "description": "linux tiling window manager"
+      },
+      {
+        "title": "ranger",
+        "link": "https://github.com/ranger/ranger",
+        "description": "terminal file mananger"
+      },
+      {
+        "title": "OBS",
+        "link": "https://obsproject.com/",
+        "description": "video recording"
+      },
+      {
+        "title": "Shotcut",
+        "link": "https://www.shotcut.org/",
+        "description": "video editor"
+      }
+    ]
+  },
+  {
+    "title": "Linux Software",
+    "tools": [
+      {
+        "title": "compton",
+        "link": "https://github.com/chjj/compton",
+        "description": "desktop compositor"
+      },
+      {
+        "title": "polybar",
+        "link": "https://github.com/polybar/polybar",
+        "description": "status bar"
+      }
+    ]
+  }
+]

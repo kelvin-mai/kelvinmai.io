@@ -1,29 +1,42 @@
 import React from 'react';
 import Img from 'gatsby-image';
 import { useStaticQuery, graphql, Link } from 'gatsby';
+import { ImageData } from '../types';
 
 interface Props {
   limit?: number;
 }
 
-export const TutorailSection: React.FC<Props> = ({ limit }) => {
-  const data = useStaticQuery(graphql`
-    query {
-      tutorials: allTutorialsJson {
-        nodes {
-          title
-          videoId
-          thumbnailImage {
-            childImageSharp {
-              fluid(maxWidth: 400) {
-                ...GatsbyImageSharpFluid
-              }
+const query = graphql`
+  query {
+    tutorials: allTutorialsJson {
+      nodes {
+        title
+        videoId
+        thumbnailImage {
+          childImageSharp {
+            fluid(maxWidth: 400) {
+              ...GatsbyImageSharpFluid
             }
           }
         }
       }
     }
-  `);
+  }
+`;
+
+interface DataType {
+  tutorials: {
+    nodes: {
+      title: string;
+      videoId: string;
+      thumbnailImage: ImageData;
+    }[];
+  };
+}
+
+export const TutorailSection: React.FC<Props> = ({ limit }) => {
+  const data: DataType = useStaticQuery(query);
   let nodes = data.tutorials.nodes;
   if (limit) {
     nodes = nodes.filter((_, i) => i < limit);

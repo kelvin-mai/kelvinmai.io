@@ -3,17 +3,28 @@ import { useWindowScroll } from 'react-use';
 import classnames from 'classnames';
 import { Link, useStaticQuery, graphql } from 'gatsby';
 
-export const Header = () => {
-  const data = useStaticQuery(graphql`
-    query {
-      pages: allPageLinksJson {
-        nodes {
-          name
-          to
-        }
+const query = graphql`
+  query {
+    pages: allPageLinksJson {
+      nodes {
+        name
+        to
       }
     }
-  `);
+  }
+`;
+
+interface DataType {
+  pages: {
+    nodes: {
+      name: string;
+      to: string;
+    }[];
+  };
+}
+
+export const Header = () => {
+  const data: DataType = useStaticQuery(query);
   const { y } = useWindowScroll();
   return (
     <header className={classnames('fixed w-full z-50', { 'bg-black': y > 80 })}>

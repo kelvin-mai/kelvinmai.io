@@ -2,19 +2,26 @@ import React from 'react';
 import { useStaticQuery, graphql } from 'gatsby';
 import Img from 'gatsby-image';
 import { SocialLinks } from './social-links';
+import { ImageData } from '../types';
 
-export const HeroCard = () => {
-  const data = useStaticQuery(graphql`
-    query {
-      avatar: file(relativePath: { eq: "me.jpg" }) {
-        childImageSharp {
-          fluid(maxWidth: 400) {
-            ...GatsbyImageSharpFluid
-          }
+const query = graphql`
+  query {
+    avatar: file(relativePath: { eq: "me.jpg" }) {
+      childImageSharp {
+        fluid(maxWidth: 400) {
+          ...GatsbyImageSharpFluid
         }
       }
     }
-  `);
+  }
+`;
+
+interface DataType {
+  avatar: ImageData;
+}
+
+export const HeroCard = () => {
+  const data: DataType = useStaticQuery(query);
   return (
     <div className='sm:w-full md:w-5/6 lg:w-3/5 pb-5 mx-auto md:rounded-lg md:shadow-xl bg-white text-black'>
       <div className='flex sm:justify-between p-5'>

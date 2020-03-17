@@ -7,20 +7,31 @@ export interface SocialLinksProps extends Omit<IconProps, 'icon'> {
   className?: string;
 }
 
+const query = graphql`
+  query {
+    socialLinks: allSocialLinksJson {
+      nodes {
+        icon
+        to
+      }
+    }
+  }
+`;
+
+interface DataType {
+  socialLinks: {
+    nodes: {
+      icon: string;
+      to: string;
+    }[];
+  };
+}
+
 export const SocialLinks: React.FC<SocialLinksProps> = ({
   className = '',
   ...iconProps
 }) => {
-  const data = useStaticQuery(graphql`
-    query {
-      socialLinks: allSocialLinksJson {
-        nodes {
-          icon
-          to
-        }
-      }
-    }
-  `);
+  const data: DataType = useStaticQuery(query);
   return (
     <div className={className}>
       {data.socialLinks.nodes.map(({ to, icon }) => (

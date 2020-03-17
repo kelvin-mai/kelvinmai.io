@@ -11,28 +11,36 @@ interface Props {
 
 export type SEOProps = Props;
 
+const query = graphql`
+  query {
+    site {
+      siteMetadata {
+        title
+        description
+        author
+      }
+    }
+  }
+`;
+
+interface DataType {
+  site: {
+    siteMetadata: {
+      title: string;
+      description: string;
+      author: string;
+    };
+  };
+}
+
 export const SEO: React.FC<Props> = ({
   description = '',
   lang = 'en',
   meta = [],
   title,
 }) => {
-  const { site } = useStaticQuery(
-    graphql`
-      query {
-        site {
-          siteMetadata {
-            title
-            description
-            author
-          }
-        }
-      }
-    `
-  );
-
+  const { site }: DataType = useStaticQuery(query);
   const metaDescription = description || site.siteMetadata.description;
-
   return (
     <Helmet
       htmlAttributes={{

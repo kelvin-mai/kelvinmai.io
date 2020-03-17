@@ -1,19 +1,26 @@
 import React from 'react';
 import { useStaticQuery, graphql } from 'gatsby';
 import Img from 'gatsby-image';
+import { ImageData } from '../types';
 
-export const AboutSection = () => {
-  const data = useStaticQuery(graphql`
-    query {
-      avatar: file(relativePath: { eq: "me-about.jpg" }) {
-        childImageSharp {
-          fluid(maxWidth: 400) {
-            ...GatsbyImageSharpFluid
-          }
+const query = graphql`
+  query {
+    avatar: file(relativePath: { eq: "me-about.jpg" }) {
+      childImageSharp {
+        fluid(maxWidth: 400) {
+          ...GatsbyImageSharpFluid
         }
       }
     }
-  `);
+  }
+`;
+
+interface DataType {
+  avatar: ImageData;
+}
+
+export const AboutSection = () => {
+  const data: DataType = useStaticQuery(query);
   return (
     <div className='flex justify-between pt-8 pb-20 text-black'>
       <div className='w-2/3 text-center sm:pr-8 mx-auto'>
