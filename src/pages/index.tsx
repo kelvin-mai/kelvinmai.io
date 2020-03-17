@@ -2,12 +2,11 @@ import React from 'react';
 import { Link } from 'gatsby';
 
 import bgImage from '../assets/images/bg.jpg';
-import { Layout } from '../components/layout';
+import { Layout } from '../components/layout/layout';
 import { HeroCard } from '../components/hero-card';
 import { TutorailSection } from '../components/tutorial-section';
 import { HighlightedCourses } from '../components/highligted-courses';
 import { AboutSection } from '../components/about-section';
-import { Resume } from '../components/resume';
 
 const IndexPage = () => (
   <Layout title='Home' fullWidth>
@@ -31,11 +30,6 @@ const IndexPage = () => (
     <section className='bg-real-white'>
       <div className='container'>
         <AboutSection />
-      </div>
-    </section>
-    <section className='bg-white text-black h-screen'>
-      <div className='container pt-4'>
-        <Resume />
       </div>
     </section>
   </Layout>

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useToggle } from 'react-use';
 
-import { Layout } from '../components/layout';
+import { Layout } from '../components/layout/layout';
 import { AboutSection } from '../components/about-section';
 import { Resume } from '../components/resume';
 

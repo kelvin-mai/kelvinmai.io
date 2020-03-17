@@ -2,7 +2,7 @@ import React from 'react';
 import { useStaticQuery, graphql, Link } from 'gatsby';
 import Img from 'gatsby-image';
 
-import { Layout } from '../components/layout';
+import { Layout } from '../components/layout/layout';
 import { VideoPlayer } from '../components/video-player';
 import { ImageData } from '../types';
 
@@ -32,6 +32,7 @@ const query = graphql`
 interface DataType {
   tutorials: {
     nodes: {
+      id: string;
       title: string;
       videoId: string;
       publishedAt: string;
@@ -62,6 +63,7 @@ export const Tutorial: React.FC<Props> = ({ pageContext: { videoId } }) => {
               .filter(tutorial => tutorial.videoId !== videoId)
               .map(tutorial => (
                 <Link
+                  key={tutorial.id}
                   className='rounded-lg overflow-hidden lg:m-4'
                   to={`/tutorials/${tutorial.videoId}`}
                 >

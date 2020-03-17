@@ -2,7 +2,8 @@ import React from 'react';
 import { graphql, useStaticQuery } from 'gatsby';
 import Img from 'gatsby-image';
 
-import { Layout } from '../components/layout';
+import { Layout } from '../components/layout/layout';
+import { ExternalLink } from '../components/external-link';
 import { ImageData } from '../types';
 
 const query = graphql`
@@ -31,8 +32,10 @@ interface DataType {
   screenshot: ImageData;
   uses: {
     nodes: {
+      id: string;
       title: string;
       tools: {
+        id: string;
         title: string;
         link: string;
         description: string;
@@ -68,19 +71,12 @@ const Uses = () => {
         </div>
       </div>
       {data.uses.nodes.map(section => (
-        <section className='w-11/12 mx-auto pb-8'>
+        <section key={section.id} className='w-11/12 mx-auto pb-8'>
           <h2 className='text-2xl pb-4'>{section.title}</h2>
           <ul className='list-disc list-inside'>
             {section.tools.map(tool => (
-              <li>
-                <a
-                  className='text-cyan hover:text-pink'
-                  href={tool.link}
-                  rel='noopener noreferrer'
-                  target='_blank'
-                >
-                  {tool.title}
-                </a>
+              <li key={tool.id}>
+                <ExternalLink href={tool.link}>{tool.title}</ExternalLink>
                 {` - ${tool.description}`}
               </li>
             ))}

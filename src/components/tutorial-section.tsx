@@ -28,6 +28,7 @@ const query = graphql`
 interface DataType {
   tutorials: {
     nodes: {
+      id: string;
       title: string;
       videoId: string;
       thumbnailImage: ImageData;
@@ -53,6 +54,7 @@ export const TutorailSection: React.FC<Props> = ({ limit }) => {
         <div className='grid grid-cols-2 md:grid-cols-4 gap-8 pb-8'>
           {nodes.map(tutorial => (
             <Link
+              key={tutorial.id}
               className='w-auto h-auto rounded-lg overflow-hidden'
               to={`/tutorials/${tutorial.videoId}`}
             >

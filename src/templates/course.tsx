@@ -2,8 +2,7 @@ import React from 'react';
 import { useStaticQuery, graphql } from 'gatsby';
 import Img from 'gatsby-image';
 
-import { Layout } from '../components/layout';
-import { VideoPlayer } from '../components/video-player';
+import { Layout } from '../components/layout/layout';
 
 interface Props {
   pageContext: { image: string };

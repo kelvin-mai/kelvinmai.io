@@ -7,19 +7,23 @@ import { Footer } from './footer';
 
 interface Props extends SEOProps {
   fullWidth?: boolean;
+  bg?: string;
 }
 
 export const Layout: React.FC<Props> = ({
   children,
   title,
   fullWidth = false,
+  bg = '',
 }) => (
   <>
     <SEO title={title} />
     <Header />
-    <main className={classnames({ container: !fullWidth }, 'min-h-80vh')}>
-      {children}
-    </main>
+    <div className={bg}>
+      <main className={classnames({ container: !fullWidth }, 'min-h-80vh')}>
+        {children}
+      </main>
+    </div>
     <Footer />
   </>
 );

@@ -2,6 +2,8 @@ import React from 'react';
 import { graphql, useStaticQuery } from 'gatsby';
 import { PDFExport } from '@progress/kendo-react-pdf';
 
+import { ExternalLink } from './external-link';
+
 const query = graphql`
   query {
     resume: allResumeJson {
@@ -56,23 +58,11 @@ export const Resume = () => {
         <article className='resume-page mx-auto shadow-lg text-xs'>
           <h3 className='text-xl font-bold text-dark-purple'>Kelvin Mai</h3>
           <div className='flex justify-between'>
-            <a
-              className='text-dark-purple hover:text-pink'
-              href={resume.website}
-              target='_blank'
-              rel='noopener noreferrer'
-            >
-              {resume.website}
-            </a>
+            <ExternalLink href={resume.website}>{resume.website}</ExternalLink>
             {' | '}
-            <a
-              className='text-dark-purple hover:text-pink'
-              href={`mailto:${resume.email}`}
-              target='_blank'
-              rel='noopener noreferrer'
-            >
+            <ExternalLink href={`mailto:${resume.email}`}>
               {resume.email}
-            </a>
+            </ExternalLink>
             {' | '}
             <p>{resume.location}</p>
           </div>
@@ -80,17 +70,12 @@ export const Resume = () => {
             <h4 className='text-dark-purple text-base'>Projects</h4>
             <hr />
             {resume.projects.map(project => (
-              <div className='mt-2'>
+              <div key={project.id} className='mt-2'>
                 <div className='flex justify-between font-bold'>
                   <p>
-                    <a
-                      className='text-dark-purple hover:text-pink'
-                      href={`mailto:${resume.email}`}
-                      target='_blank'
-                      rel='noopener noreferrer'
-                    >
+                    <ExternalLink href={`mailto:${resume.email}`}>
                       {project.title}
-                    </a>
+                    </ExternalLink>
                   </p>
                   <p>{project.date}</p>
                 </div>
@@ -102,7 +87,7 @@ export const Resume = () => {
             <h4 className='text-dark-purple text-base'>Work Experience</h4>
             <hr />
             {resume.work.map(job => (
-              <div className='mt-1'>
+              <div key={job.id} className='mt-1'>
                 <div className='flex justify-between font-bold'>
                   <p>{job.company}</p>
                   <p>{job.location}</p>
@@ -116,7 +101,7 @@ export const Resume = () => {
                 <p className='mt-1'>{job.description}</p>
                 <ul className='list-disc list-inside'>
                   {job.points.map(p => (
-                    <li>{p}</li>
+                    <li key={p.id}>{p}</li>
                   ))}
                 </ul>
               </div>
@@ -126,7 +111,7 @@ export const Resume = () => {
             <h4 className='text-dark-purple text-base'>Education</h4>
             <hr />
             {resume.education.map(school => (
-              <div className='mt-1'>
+              <div key={school.id} className='mt-1'>
                 <div className='flex justify-between font-bold'>
                   <p>{school.school}</p>
                   <p>{school.location}</p>

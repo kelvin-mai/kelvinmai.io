@@ -1,13 +1,15 @@
 import React from 'react';
 import { SimpleIcon } from 'simple-icons';
 
-export interface IconProps {
+export interface Props {
   icon: SimpleIcon;
   size?: number;
   className?: string;
 }
 
-export const Icon: React.FC<IconProps> = ({
+export type IconProps = Props;
+
+export const Icon: React.FC<Props> = ({
   icon: { path, title, hex },
   size = 24,
   className = 'inline fill-current m-1',

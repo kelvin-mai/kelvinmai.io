@@ -1,7 +1,7 @@
 import React from 'react';
 import icons from 'simple-icons';
-import { SocialLinks } from './social-links';
-import { Icon } from './icon';
+import { SocialLinks } from '../social-links';
+import { Icon } from '../icon';
 
 export const Footer = () => (
   <footer className='bg-black text-white pt-4'>

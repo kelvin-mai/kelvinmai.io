@@ -4,7 +4,7 @@ import Img from 'gatsby-image';
 
 const query = graphql`
   query {
-    courses: allCoursesJson {
+    courses: allCoursesJson(limit: 2) {
       nodes {
         title
         image
@@ -45,14 +45,10 @@ interface DataType {
 
 export const HighlightedCourses = () => {
   const data: DataType = useStaticQuery(query);
-  const courses = data.courses.nodes
-    .filter((_, i) => i < 2)
-    .map(course => ({
-      ...course,
-      image: data.images.nodes.find(
-        image => image.relativePath === course.image
-      ),
-    }));
+  const courses = data.courses.nodes.map(course => ({
+    ...course,
+    image: data.images.nodes.find(image => image.relativePath === course.image),
+  }));
   return (
     <div className='grid grid-cols-1 sm:grid-cols-2 sm:grid-rows-1 gap-8 w-5/6 sm:w-4/5 md:w-3/5 lg:w-1/2 mx-auto'>
       {courses.map(course => (
