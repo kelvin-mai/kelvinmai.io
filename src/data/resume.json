@@ -1,0 +1,74 @@
+[
+  {
+    "location": "Las Vegas, NV",
+    "website": "https://kelvinmai.io",
+    "email": "kelvin.mai002@gmail.com",
+    "work": [
+      {
+        "company": "Nucamp Coding Bootcamp",
+        "title": "Instructor (Contract)",
+        "date": "Jan 2020 - Present",
+        "description": "",
+        "points": []
+      },
+      {
+        "company": "Vegas.com",
+        "title": "Front End Developer",
+        "location": "Las Vegas, NV",
+        "date": "Jul 2019 - Mar 2020",
+        "description": "",
+        "points": [
+          "Implemented mobile cart page and path",
+          "Initiated upgrade of React Router from version 2 to 5"
+        ]
+      },
+      {
+        "company": "Motivis Learning",
+        "title": "Software Developer",
+        "location": "Boston, MA",
+        "date": "Apr 2018 - Jun 2019",
+        "description": "Constant research and development with new and upcoming technologies, as well as feature development and maintenance of the cloud software product, Motivis Learning Management System. ",
+        "points": [
+          "Designed and prototyped GraphQL layer for internal API",
+          "Created microservice to provide full text search using PostgreSQL",
+          "Created and maintained React application for schema viewing of internal API",
+          "Aided conversion of front end application from Angular 5 to 6",
+          "Aided conversion of internal UI components to the more stable PrimeNG components"
+        ]
+      },
+      {
+        "company": "DigitalCrafts",
+        "title": "Developer In Residence (Internship)",
+        "location": "Houston, TX",
+        "date": "Feb 2018 - Apr 2018",
+        "description": "Three month paid internship to work with and assist experienced instructors to develop full stack web applications.",
+        "points": [
+          "Assist in teaching incoming coding bootcamp students in various web technologies",
+          "Offer one on one tutoring and trouble shooting with web development students"
+        ]
+      }
+    ],
+    "education": [
+      {
+        "school": "DigitalCrafts",
+        "title": "Full Stack Immersive Bootcamp",
+        "location": "Houston, TX",
+        "date": "Nov 2017 - Mar 2018"
+      },
+      {
+        "school": "University of California, Riverside",
+        "title": "Computer Science Major (No Degree)",
+        "location": "Riverside, CA",
+        "date": "Sept 2008 - Feb 2011"
+      }
+    ],
+    "projects": [
+      {
+        "title": "Youtube",
+        "link": "https://www.youtube.com/c/kelvinmai",
+        "description": "Web development tutorials and courses",
+        "date": "Jun 2018 - Present"
+      }
+    ]
+  }
+]

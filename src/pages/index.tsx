@@ -7,6 +7,7 @@ import { HeroCard } from '../components/hero-card';
 import { TutorailSection } from '../components/tutorial-section';
 import { HighlightedCourses } from '../components/highligted-courses';
 import { AboutSection } from '../components/about-section';
+import { Resume } from '../components/resume';
 
 const IndexPage = () => (
   <Layout title='Home' fullWidth>
@@ -32,8 +33,10 @@ const IndexPage = () => (
         <AboutSection />
       </div>
     </section>
-    <section className='bg-white h-screen'>
-      <div className='container'></div>
+    <section className='bg-white text-black h-screen'>
+      <div className='container pt-4'>
+        <Resume />
+      </div>
     </section>
   </Layout>
 );
