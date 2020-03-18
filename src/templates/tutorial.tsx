@@ -46,7 +46,7 @@ export const Tutorial: React.FC<Props> = ({ pageContext: { videoId } }) => {
   const info = tutorials.nodes.find(node => node.videoId === videoId);
   return (
     <Layout title='Video'>
-      <div className='h-screen flex flex-col lg:flex-row pt-8 pb-8'>
+      <div className='h-screen flex flex-col lg:flex-row py-8'>
         <div className='lg:flex-grow pb-16'>
           <VideoPlayer videoId={videoId} />
           <div className='flex justify-between mt-4'>

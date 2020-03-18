@@ -3,6 +3,5 @@
   { "to": "/about", "name": "about" },
   { "to": "/tutorials", "name": "tutorials" },
   { "to": "/courses", "name": "courses" },
-  { "to": "/uses", "name": "uses" },
-  { "to": "/404", "name": "not found" }
+  { "to": "/uses", "name": "uses" }
 ]

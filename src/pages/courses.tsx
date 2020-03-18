@@ -60,7 +60,7 @@ export const Courses = () => {
   }));
   return (
     <Layout title='Courses' bg='bg-white'>
-      <section className='pt-8 pb-8'>
+      <section className='py-8'>
         <div className='text-center text-black'>
           <h1 className='text-4xl'>Courses</h1>
           <p className='text-xl'>All of my available courses</p>
@@ -69,7 +69,7 @@ export const Courses = () => {
           {courses.map(course => (
             <Link
               key={course.id}
-              className='flex overflow-hidden rounded-lg mt-4 mb-4 bg-real-white text-black shadow-lg'
+              className='flex overflow-hidden rounded-lg my-4 bg-real-white text-black shadow-lg'
               to={`/courses/${course.slug}`}
             >
               <div className='w-1/3'>
