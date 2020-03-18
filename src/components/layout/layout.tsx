@@ -18,7 +18,7 @@ export const Layout: React.FC<Props> = ({
 }) => (
   <>
     <SEO title={title} />
-    <Header />
+    {/* <Header /> */}
     <div className={bg}>
       <main className={classnames({ container: !fullWidth }, 'min-h-80vh')}>
         {children}

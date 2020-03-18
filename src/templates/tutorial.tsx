@@ -42,8 +42,8 @@ interface DataType {
 }
 
 export const Tutorial: React.FC<Props> = ({ pageContext: { videoId } }) => {
-  const data: DataType = useStaticQuery(query);
-  const info = data.tutorials.nodes.find(node => node.videoId === videoId);
+  const { tutorials }: DataType = useStaticQuery(query);
+  const info = tutorials.nodes.find(node => node.videoId === videoId);
   return (
     <Layout title='Video'>
       <div className='h-screen flex flex-col lg:flex-row pt-8 pb-8'>
@@ -59,7 +59,7 @@ export const Tutorial: React.FC<Props> = ({ pageContext: { videoId } }) => {
         </h3>
         <div className='w-full lg:w-1/3 lg:pl-4 overflow-scroll'>
           <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 lg:flex lg:flex-col'>
-            {data.tutorials.nodes
+            {tutorials.nodes
               .filter(tutorial => tutorial.videoId !== videoId)
               .map(tutorial => (
                 <Link

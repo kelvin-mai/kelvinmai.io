@@ -46,7 +46,7 @@ export const Resume = () => {
   const data = useStaticQuery(query);
   const [resume] = data.resume.nodes;
   return (
-    <>
+    <div className='pb-4'>
       <PDFExport
         paperSize='Letter'
         fileName='KelvinMaiResume.pdf'
@@ -128,11 +128,11 @@ export const Resume = () => {
         </article>
       </PDFExport>
       <button
-        className='block w-auto mx-auto border rounded mt-4 p-2'
+        className='block w-auto mx-auto mt-4 p-2 bg-dark-purple hover:bg-purple text-white shadow-xl rounded'
         onClick={downloadPdf}
       >
         Download Resume
       </button>
-    </>
+    </div>
   );
 };

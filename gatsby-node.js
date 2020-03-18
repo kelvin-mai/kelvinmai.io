@@ -41,6 +41,7 @@ exports.createPages = ({ actions: { createPage } }) => {
       component: path.resolve('./src/templates/course.tsx'),
       context: {
         image: course.image,
+        videos: course.videos,
       },
     });
   });

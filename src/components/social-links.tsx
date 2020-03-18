@@ -31,10 +31,12 @@ export const SocialLinks: React.FC<SocialLinksProps> = ({
   className = '',
   ...iconProps
 }) => {
-  const data: DataType = useStaticQuery(query);
+  const {
+    socialLinks: { nodes: links },
+  }: DataType = useStaticQuery(query);
   return (
     <div className={className}>
-      {data.socialLinks.nodes.map(({ to, icon }) => (
+      {links.map(({ to, icon }) => (
         <a key={icon} href={to} target='_blank' rel='noopener noreferrer'>
           <Icon icon={icons.get(icon)} {...iconProps} />
         </a>

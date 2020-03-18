@@ -21,12 +21,12 @@ interface DataType {
 }
 
 export const HeroCard = () => {
-  const data: DataType = useStaticQuery(query);
+  const { avatar }: DataType = useStaticQuery(query);
   return (
     <div className='sm:w-full md:w-5/6 lg:w-3/5 pb-5 mx-auto md:rounded-lg md:shadow-xl bg-white text-black'>
       <div className='flex sm:justify-between p-5'>
         <div className='w-40 rounded-full overflow-hidden h-fit'>
-          <Img fluid={data.avatar.childImageSharp.fluid} />
+          <Img fluid={avatar.childImageSharp.fluid} />
         </div>
         <div className='ml-2 flex-grow text-center sm:text-center md:text-right'>
           <h2 className='text-3xl xs:text-4xl'>Kelvin Mai</h2>

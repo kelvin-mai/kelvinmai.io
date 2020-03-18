@@ -57,14 +57,12 @@ const Uses = () => {
           I am a big believer in personalization in your tools because after all
           as a dev you look at your screen everyday. To checkout my particular
           flavor of configuration files you can find them{' '}
-          <a
+          <ExternalLink
             className='text-cyan hover:text-pink'
             href='https://github.com/kelvin-mai/dotfiles'
-            rel='noopener noreferrer'
-            target='_blank'
           >
             here.
-          </a>
+          </ExternalLink>
         </p>
         <div className='w-5/6 mx-auto shadow-xl rounded-lg overflow-hidden mt-4'>
           <Img fluid={data.screenshot.childImageSharp.fluid} />
@@ -76,7 +74,12 @@ const Uses = () => {
           <ul className='list-disc list-inside'>
             {section.tools.map(tool => (
               <li key={tool.id}>
-                <ExternalLink href={tool.link}>{tool.title}</ExternalLink>
+                <ExternalLink
+                  className='text-cyan hover:text-pink'
+                  href={tool.link}
+                >
+                  {tool.title}
+                </ExternalLink>
                 {` - ${tool.description}`}
               </li>
             ))}

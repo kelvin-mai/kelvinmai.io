@@ -37,11 +37,9 @@ interface DataType {
 }
 
 export const TutorailSection: React.FC<Props> = ({ limit }) => {
-  const data: DataType = useStaticQuery(query);
-  let nodes = data.tutorials.nodes;
-  if (limit) {
-    nodes = nodes.filter((_, i) => i < limit);
-  }
+  const {
+    tutorials: { nodes },
+  }: DataType = useStaticQuery(query);
   return (
     <section className='h-auto pt-8 pb-8'>
       <div className='container'>
@@ -52,15 +50,17 @@ export const TutorailSection: React.FC<Props> = ({ limit }) => {
           </p>
         </div>
         <div className='grid grid-cols-2 md:grid-cols-4 gap-8 pb-8'>
-          {nodes.map(tutorial => (
-            <Link
-              key={tutorial.id}
-              className='w-auto h-auto rounded-lg overflow-hidden'
-              to={`/tutorials/${tutorial.videoId}`}
-            >
-              <Img fluid={tutorial.thumbnailImage.childImageSharp.fluid} />
-            </Link>
-          ))}
+          {nodes
+            .filter((t, i) => (limit ? i < limit : t))
+            .map(tutorial => (
+              <Link
+                key={tutorial.id}
+                className='w-auto h-auto rounded-lg overflow-hidden'
+                to={`/tutorials/${tutorial.videoId}`}
+              >
+                <Img fluid={tutorial.thumbnailImage.childImageSharp.fluid} />
+              </Link>
+            ))}
         </div>
       </div>
     </section>
