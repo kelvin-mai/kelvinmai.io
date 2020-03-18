@@ -4,6 +4,7 @@ import Img from 'gatsby-image';
 
 import { Layout } from '../components/layout/layout';
 import { ExternalLink } from '../components/external-link';
+import { UseSection } from '../components/uses/use-section';
 import { ImageData } from '../types';
 
 const query = graphql`
@@ -69,22 +70,7 @@ const Uses = () => {
         </div>
       </div>
       {data.uses.nodes.map(section => (
-        <section key={section.id} className='w-11/12 mx-auto pb-8'>
-          <h2 className='text-2xl pb-4'>{section.title}</h2>
-          <ul className='list-disc list-inside'>
-            {section.tools.map(tool => (
-              <li key={tool.id}>
-                <ExternalLink
-                  className='text-cyan hover:text-pink'
-                  href={tool.link}
-                >
-                  {tool.title}
-                </ExternalLink>
-                {` - ${tool.description}`}
-              </li>
-            ))}
-          </ul>
-        </section>
+        <UseSection key={section.id} {...section} />
       ))}
     </Layout>
   );

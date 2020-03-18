@@ -4,6 +4,7 @@ import Img from 'gatsby-image';
 
 import { ImageData } from '../types';
 import { ExternalLink } from '../components/external-link';
+import { PageHeader } from './page-header';
 
 const query = graphql`
   query {
@@ -28,11 +29,11 @@ export const AboutSection = () => {
       <div className='w-1/2 mx-auto md:w-1/3 overflow-hidden rounded-full md:rounded-none'>
         <Img fluid={avatar.childImageSharp.fluid} />
       </div>
-      <div className='w-full md:w-2/3 flex-grow text-center md:pr-8 mx-auto'>
-        <h2 className='text-3xl sm:text-5xl'>About Kelvin</h2>
-        <p className='text-xl pb-2 capitalize'>
-          Kelvin is a self taught full stack developer.
-        </p>
+      <div className='w-full md:w-2/3 flex-grow md:pr-8 mx-auto'>
+        <PageHeader
+          title='About Kelvin'
+          subtitle='Kelvin is a self taught full stack developer.'
+        />
         <div className='mx-auto text-justify p-4'>
           <p>
             Although I am a college dropout, I had a passion about programming

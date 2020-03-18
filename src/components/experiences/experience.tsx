@@ -1,6 +1,8 @@
 import React from 'react';
 import { graphql, useStaticQuery } from 'gatsby';
-import { ExternalLink } from './external-link';
+
+import { ExperienceProject } from './experience-project';
+import { ExperienceWork } from './experience-work';
 
 const query = graphql`
   query {
@@ -29,12 +31,14 @@ interface DataType {
   experience: {
     nodes: {
       projects: {
+        id: string;
         title: string;
         link: string;
         description: string;
         date: string;
       }[];
       work: {
+        id: string;
         company: string;
         date: string;
         description: string;
@@ -57,33 +61,10 @@ export const Experience = () => {
         </h2>
         <ul>
           {resume.projects.map(project => (
-            <li className='pb-4'>
-              <div className='flex justify-between'>
-                <h3 className='text-lg font-bold'>
-                  <ExternalLink href={project.link}>
-                    {project.title}
-                  </ExternalLink>
-                </h3>
-                <p>{project.date}</p>
-              </div>
-              <p>{project.description}</p>
-            </li>
+            <ExperienceProject key={project.id} {...project} />
           ))}
           {resume.work.map(work => (
-            <li className='pb-4'>
-              <h3 className='text-lg font-bold'>{work.company}</h3>
-              <p className='font-bold'>{work.title}</p>
-              <div className='flex justify-between'>
-                <p>{work.location}</p>
-                <p>{work.date}</p>
-              </div>
-              <p>{work.description}</p>
-              <ul className='list-disc list-inside'>
-                {work.points.map(point => (
-                  <li>{point}</li>
-                ))}
-              </ul>
-            </li>
+            <ExperienceWork key={work.id} {...work} />
           ))}
         </ul>
       </div>

@@ -18,6 +18,7 @@ const query = graphql`
 interface DataType {
   pages: {
     nodes: {
+      id: string;
       name: string;
       to: string;
     }[];
@@ -30,8 +31,8 @@ export const Footer = () => {
     <footer className='bg-black text-white pt-8'>
       <section className='container flex flex-col md:flex-row justify-between uppercase font-bold font-mono'>
         <ul className='font-normal capitalize text-center md:text-left'>
-          {pages.nodes.map(({ to, name }) => (
-            <li className='hover:text-pink'>
+          {pages.nodes.map(({ id, to, name }) => (
+            <li key={id} className='hover:text-pink'>
               <Link to={to}>{name}</Link>
             </li>
           ))}

@@ -4,8 +4,8 @@ import { Link } from 'gatsby';
 import bgImage from '../assets/images/bg.jpg';
 import { Layout } from '../components/layout/layout';
 import { HeroCard } from '../components/hero-card';
-import { TutorailSection } from '../components/tutorial-section';
-import { HighlightedCourses } from '../components/highligted-courses';
+import { TutorailSection } from '../components/tutorials/tutorial-section';
+import { HighlightedCourses } from '../components/courses/highlighted-courses';
 import { AboutSection } from '../components/about-section';
 
 const IndexPage = () => (
