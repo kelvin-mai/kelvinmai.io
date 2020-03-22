@@ -15,6 +15,9 @@ const query = graphql`
         website
         email
         location
+        skills {
+          resume
+        }
         projects {
           title
           link
@@ -46,6 +49,9 @@ interface DataType {
       website: string;
       email: string;
       location: string;
+      skills: {
+        resume: string[];
+      };
       projects: {
         id: string;
         title: string;
@@ -103,6 +109,9 @@ export const Resume = () => {
             {' | '}
             <p>{resume.location}</p>
           </div>
+          <p className='mt-2 text-justify'>
+            <strong>Skills:</strong> {resume.skills.resume.join(', ')}
+          </p>
           <ResumeSection title='Projects'>
             {resume.projects.map(project => (
               <ResumeProject key={project.id} {...project} />

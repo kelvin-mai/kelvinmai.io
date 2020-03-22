@@ -77,7 +77,7 @@
 }
 
 .resume-page {
-  height: 792px;
+  min-height: 792px;
   width: 612px;
   padding: 18px 36px;
   background-color: white;

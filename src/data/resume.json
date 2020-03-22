@@ -3,21 +3,37 @@
     "location": "Las Vegas, NV",
     "website": "https://kelvinmai.io",
     "email": "kelvin.mai002@gmail.com",
+    "skills": {
+      "resume": [
+        "React",
+        "Angular",
+        "JavaScript",
+        "TypeScript",
+        "Clojure",
+        "Java",
+        "node.js",
+        "MongoDB",
+        "PostgreSQL",
+        "git",
+        "Google Cloud Platform"
+      ],
+      "icons": []
+    },
     "work": [
       {
         "company": "Nucamp Coding Bootcamp",
         "title": "Instructor (Contract)",
         "location": "Las Vegas, NV",
         "date": "Jan 2020 - Present",
-        "description": "",
-        "points": []
+        "description": "Bootcamp instructor responsible for teaching students web development technologies.",
+        "points": ["Lead classes in Bootstrap, Node.js, React, React Native"]
       },
       {
         "company": "Vegas.com",
         "title": "Front End Developer",
         "location": "Las Vegas, NV",
         "date": "Jul 2019 - Mar 2020",
-        "description": "",
+        "description": "Feature development on desktop and mobile retail travel e-commerce web application.",
         "points": [
           "Implemented mobile cart page and path",
           "Initiated upgrade of React Router from version 2 to 5"
@@ -28,7 +44,7 @@
         "title": "Software Developer",
         "location": "Boston, MA",
         "date": "Apr 2018 - Jun 2019",
-        "description": "Constant research and development with new and upcoming technologies, as well as feature development and maintenance of the cloud software product, Motivis Learning Management System. ",
+        "description": "Research and development with new technologies, as well as feature development and maintenance of the cloud software product, Motivis Learning Management System.",
         "points": [
           "Designed and prototyped GraphQL layer for internal API",
           "Created microservice to provide full text search using PostgreSQL",
@@ -42,7 +58,7 @@
         "title": "Developer In Residence (Internship)",
         "location": "Houston, TX",
         "date": "Feb 2018 - Apr 2018",
-        "description": "Three month paid internship to work with and assist experienced instructors to develop full stack web applications.",
+        "description": "Three month paid internship to work with and assist experienced instructors to develop and teach full stack web applications.",
         "points": [
           "Assist in teaching incoming coding bootcamp students in various web technologies",
           "Offer one on one tutoring and trouble shooting with web development students"
@@ -67,7 +83,7 @@
       {
         "title": "Youtube",
         "link": "https://www.youtube.com/c/kelvinmai",
-        "description": "Web development tutorials and courses",
+        "description": "Create and offer free web development tutorials and courses.",
         "date": "Jun 2018 - Present"
       }
     ]
