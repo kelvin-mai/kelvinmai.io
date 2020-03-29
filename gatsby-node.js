@@ -36,6 +36,8 @@ exports.onCreateNode = async ({
 };
 
 exports.createPages = ({ actions: { createPage } }) => {
+  // TODO course pages under construction
+  /*
   courses.forEach(course => {
     createPage({
       path: `courses/${course.slug}`,
@@ -46,6 +48,7 @@ exports.createPages = ({ actions: { createPage } }) => {
       },
     });
   });
+  */
 
   tutorials.forEach(tutorial => {
     createPage({

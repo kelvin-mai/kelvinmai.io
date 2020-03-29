@@ -10,6 +10,7 @@ const query = graphql`
     courses: allCoursesJson {
       nodes {
         title
+        pid
         image
         slug
         videos {
@@ -20,7 +21,7 @@ const query = graphql`
         }
       }
     }
-    images: allFile {
+    images: allFile(filter: { relativeDirectory: { eq: "courses" } }) {
       nodes {
         childImageSharp {
           fluid(maxWidth: 400) {
@@ -37,6 +38,7 @@ interface DataType {
   courses: {
     nodes: {
       id: string;
+      pid: string;
       title: string;
       image: string;
       slug: string;
@@ -57,7 +59,9 @@ export const Courses = () => {
   const data: DataType = useStaticQuery(query);
   const courses = data.courses.nodes.map(course => ({
     ...course,
-    image: data.images.nodes.find(image => image.relativePath === course.image),
+    image: data.images.nodes.find(
+      image => image.relativePath === `courses/${course.image}`
+    ),
   }));
   return (
     <Layout title='Courses' bg='bg-white'>
