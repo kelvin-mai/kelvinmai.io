@@ -20,8 +20,9 @@ exports.onCreateNode = async ({
   createNodeId,
 }) => {
   if (node.internal.type === 'TutorialsJson' && node.thumbnail !== null) {
+    ('https://i.ytimg.com/vi/yVk_ImBQqms/maxresdefault.jpg');
     const fileNode = await createRemoteFileNode({
-      url: node.thumbnail,
+      url: `https://i.ytimg.com/vi/${node.videoId}/maxresdefault.jpg`,
       parentNodeId: node.id,
       createNode,
       createNodeId,
