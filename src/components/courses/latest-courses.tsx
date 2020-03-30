@@ -46,7 +46,7 @@ interface DataType {
   };
 }
 
-export const HighlightedCourses = () => {
+export const LatestCourses = () => {
   const { courses: courseData, images }: DataType = useStaticQuery(query);
   const courses = courseData.nodes.map(course => ({
     ...course,

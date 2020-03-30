@@ -2,121 +2,145 @@
   {
     "videoId": "r0TP4DdXeIk",
     "title": "Swagger in NestJS",
-    "publishedAt": "2020-03-26T08:00:00.000Z"
+    "publishedAt": "2020-03-26T08:00:00.000Z",
+    "tags": ["Swagger", "NestJS"]
   },
   {
     "videoId": "yVk_ImBQqms",
     "title": "Simple Web Server in Clojure deps.edn",
-    "publishedAt": "2020-03-15T07:00:00.000Z"
+    "publishedAt": "2020-03-15T07:00:00.000Z",
+    "tags": ["Clojure"]
   },
   {
     "videoId": "J9m71iuSvlE",
     "title": "Clojure deps.edn Introduction",
-    "publishedAt": "2020-03-14T15:00:12.000Z"
+    "publishedAt": "2020-03-14T15:00:12.000Z",
+    "tags": ["Clojure"]
   },
   {
     "videoId": "Sa-MaCmS0gk",
     "title": "Clojurescript - Random Quote Generator",
-    "publishedAt": "2019-12-12T08:00:06.000Z"
+    "publishedAt": "2019-12-12T08:00:06.000Z",
+    "tags": ["Clojure", "ClojureScript", "React"]
   },
   {
     "videoId": "mEY_XFpzMP0",
     "title": "Clojure Deck of Cards",
-    "publishedAt": "2019-12-09T08:00:11.000Z"
+    "publishedAt": "2019-12-09T08:00:11.000Z",
+    "tags": ["Clojure"]
   },
   {
     "videoId": "BmeuZGgMnO4",
     "title": "Clojure for Visual Studio Code",
-    "publishedAt": "2019-12-08T08:00:00.000Z"
+    "publishedAt": "2019-12-08T08:00:00.000Z",
+    "tags": ["Clojure", "Visual Studio Code"]
   },
   {
     "videoId": "7z0W5J6m6VQ",
     "title": "JavaScript Review - Array Higher Order Functions",
-    "publishedAt": "2019-06-23T16:48:46.000Z"
+    "publishedAt": "2019-06-23T16:48:46.000Z",
+    "tags": ["JavaScript"]
   },
   {
     "videoId": "t620S8-cwWg",
     "title": "Scala Play Framework Introduction",
-    "publishedAt": "2019-06-17T16:00:11.000Z"
+    "publishedAt": "2019-06-17T16:00:11.000Z",
+    "tags": ["Scala", "Play"]
   },
   {
     "videoId": "_apb4hfUjOk",
     "title": "C# DotNET Core - Todo Rest API",
-    "publishedAt": "2019-05-21T18:00:04.000Z"
+    "publishedAt": "2019-05-21T18:00:04.000Z",
+    "tags": ["C#", ".Net"]
   },
   {
     "videoId": "YuRY8_wJhjU",
     "title": "Binary To Decimal in Javascript without parseInt",
-    "publishedAt": "2019-04-23T17:00:02.000Z"
+    "publishedAt": "2019-04-23T17:00:02.000Z",
+    "tags": ["JavaScript"]
   },
   {
     "videoId": "Bu4zmLEWQW8",
     "title": "React Atom for State Management",
-    "publishedAt": "2019-04-22T17:00:03.000Z"
+    "publishedAt": "2019-04-22T17:00:03.000Z",
+    "tags": ["React"]
   },
   {
     "videoId": "d_BuEAl_CVM",
     "title": "JavaScript Review - Nested Destructuring",
-    "publishedAt": "2019-03-13T17:00:04.000Z"
+    "publishedAt": "2019-03-13T17:00:04.000Z",
+    "tags": ["JavaScript"]
   },
   {
     "videoId": "GE7RjyO3w68",
     "title": "File Uploads in NestJS and Multer",
-    "publishedAt": "2019-03-11T17:00:04.000Z"
+    "publishedAt": "2019-03-11T17:00:04.000Z",
+    "tags": ["NestJS", "Multer", "file upload"]
   },
   {
     "videoId": "vHLY2-ZCOiI",
     "title": "NextJS And NestJS Together",
-    "publishedAt": "2019-02-20T18:00:03.000Z"
+    "publishedAt": "2019-02-20T18:00:03.000Z",
+    "tags": ["NestJS", "NextJS", "React"]
   },
   {
     "videoId": "Ut-W0_7Ad14",
     "title": "Is Palindrome in JavaScript",
-    "publishedAt": "2019-02-19T18:00:02.000Z"
+    "publishedAt": "2019-02-19T18:00:02.000Z",
+    "tags": ["JavaScript"]
   },
   {
     "videoId": "DF1MXRg-J48",
     "title": "Factorial in Swift",
-    "publishedAt": "2019-02-13T19:47:35.000Z"
+    "publishedAt": "2019-02-13T19:47:35.000Z",
+    "tags": ["Swift"]
   },
   {
     "videoId": "ieTWSk3tJrs",
     "title": "Parcel Wikipedia Search Engine",
-    "publishedAt": "2019-02-11T19:00:05.000Z"
+    "publishedAt": "2019-02-11T19:00:05.000Z",
+    "tags": ["Parcel", "JavaScript"]
   },
   {
     "videoId": "NHtOwT35mW0",
     "title": "Fibonacci Sequence in Clojure",
-    "publishedAt": "2019-02-04T00:58:46.000Z"
+    "publishedAt": "2019-02-04T00:58:46.000Z",
+    "tags": ["Clojure"]
   },
   {
     "videoId": "j35sK3HzEog",
     "title": "Brave Clojure Catching Vampires",
-    "publishedAt": "2019-01-27T19:00:02.000Z"
+    "publishedAt": "2019-01-27T19:00:02.000Z",
+    "tags": ["Clojure"]
   },
   {
     "videoId": "hnUNq1zz5b4",
     "title": "Brave Clojure Hitting Hobbits",
-    "publishedAt": "2019-01-23T18:00:03.000Z"
+    "publishedAt": "2019-01-23T18:00:03.000Z",
+    "tags": ["Clojure"]
   },
   {
     "videoId": "ELtZxATN5lQ",
     "title": "NestJS - Websockets",
-    "publishedAt": "2018-12-31T15:58:35.000Z"
+    "publishedAt": "2018-12-31T15:58:35.000Z",
+    "tags": ["NestJS", "web sockets"]
   },
   {
     "videoId": "W60mhHXespM",
     "title": "Reagent - Markdown Previewer",
-    "publishedAt": "2018-12-26T19:00:03.000Z"
+    "publishedAt": "2018-12-26T19:00:03.000Z",
+    "tags": ["Clojure", "ClojureScript", "React"]
   },
   {
     "videoId": "69lLzjXwuww",
     "title": "How to build an Angular component Library",
-    "publishedAt": "2018-08-07T19:00:01.000Z"
+    "publishedAt": "2018-08-07T19:00:01.000Z",
+    "tags": ["Angular"]
   },
   {
     "videoId": "fkOstSFTiuw",
     "title": "How to set up NestJS from scratch",
-    "publishedAt": "2018-07-26T19:00:30.000Z"
+    "publishedAt": "2018-07-26T19:00:30.000Z",
+    "tags": ["NestJS"]
   }
 ]

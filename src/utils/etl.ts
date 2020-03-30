@@ -1,28 +1,26 @@
 require('dotenv/config');
-const fs = require('fs');
-const axios = require('axios');
-const prettier = require('prettier');
-const slugify = require('slugify');
+import * as path from 'path';
+import * as fs from 'fs';
+import axios from 'axios';
+import slugify from 'slugify';
 
-const courses = require('./src/data/courses');
-const tutorials = require('./src/data/tutorials');
+import { sortByDate, toJSON } from './funcs';
 
-const toJSON = data =>
-  prettier.format(JSON.stringify(data), { parser: 'json' });
-
-const sortByDate = (arr, date) =>
-  arr.sort((a, b) => new Date(b[date]) - new Date(a[date]));
+const courses = require('../data/courses');
+const tutorials = require('../data/tutorials');
 
 const insertTutorial = tutorial => {
-  const data = sortByDate([tutorial, ...tutorials], 'publishedAt');
+  const data = sortByDate([tutorial, ...tutorials], {
+    dateProp: 'publishedAt',
+  });
   const json = toJSON(data);
-  fs.writeFileSync('./src/data/tutorials.json', json);
+  fs.writeFileSync(path.resolve(__dirname, '../data/tutorials.json'), json);
 };
 
 const insertCourse = course => {
-  const data = sortByDate([course, ...courses], 'lastUpdated');
+  const data = sortByDate([course, ...courses], { dateProp: 'lastUpdated' });
   const json = toJSON(data);
-  fs.writeFileSync('./src/data/courses.json', json);
+  fs.writeFileSync(path.resolve(__dirname, '../data/courses.json'), json);
 };
 
 const createCourse = ({ title, videos, pid }) => {
@@ -51,7 +49,7 @@ const coursesFromYT = async ({ length, title, pid }) => {
       publishedAt,
       title,
     }));
-  const videos = sortByDate(items, 'publishedAt')
+  const videos = sortByDate(items, { dateProp: 'publishedAt' })
     .reverse()
     .map(({ videoId, title, publishedAt }, i) => ({
       ordinance: i,

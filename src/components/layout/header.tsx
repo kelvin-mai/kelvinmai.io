@@ -1,46 +1,24 @@
 import React from 'react';
-import { useWindowScroll } from 'react-use';
-import classnames from 'classnames';
-import { Link, useStaticQuery, graphql } from 'gatsby';
-
-const query = graphql`
-  query {
-    pages: allPageLinksJson {
-      nodes {
-        name
-        to
-      }
-    }
-  }
-`;
-
-interface DataType {
-  pages: {
-    nodes: {
-      name: string;
-      to: string;
-    }[];
-  };
-}
+import { Link } from 'gatsby';
+import { Nav } from './nav';
+import { tw } from '../../utils/tailwind';
 
 export const Header = () => {
-  const data: DataType = useStaticQuery(query);
-  const { y } = useWindowScroll();
   return (
-    <header className={classnames('fixed w-full z-50', { 'bg-black': y > 80 })}>
-      <div className='container'>
-        <nav className='flex justify-between'>
-          <div>
-            <Link to='/'>Kelvin Mai</Link>
-          </div>
-          <ul className='flex flex-row'>
-            {data.pages.nodes.map(page => (
-              <li key={page.name} className='ml-2'>
-                <Link to={page.to}>{page.name}</Link>
-              </li>
-            ))}
-          </ul>
-        </nav>
+    <header className='fixed w-full z-50'>
+      <div
+        className={tw({ md: 'mt-4 bg-none shadow-none' }, 'bg-black shadow-md')}
+      >
+        <Link
+          to='/'
+          className={tw(
+            { md: 'hidden' },
+            'block text-lg text-center pt-2 font-bold uppercase'
+          )}
+        >
+          Kelvin Mai
+        </Link>
+        <Nav />
       </div>
     </header>
   );

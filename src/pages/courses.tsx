@@ -65,7 +65,7 @@ export const Courses = () => {
   }));
   return (
     <Layout title='Courses' bg='bg-white'>
-      <section className='py-8'>
+      <section>
         <PageHeader
           className='text-dark'
           title='Courses'

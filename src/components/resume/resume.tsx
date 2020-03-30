@@ -2,41 +2,42 @@ import React from 'react';
 import { graphql, useStaticQuery } from 'gatsby';
 import { PDFExport } from '@progress/kendo-react-pdf';
 
-import { ExternalLink } from '../external-link';
 import { ResumeSection } from './resume-section';
-import { ResumeProject } from './resume-project';
 import { ResumeWork } from './resume-work';
 import { ResumeSchool } from './resume-school';
+import { ResumeInfo } from './resume-info';
 
 const query = graphql`
   query {
     resume: allResumeJson {
       nodes {
-        website
-        email
-        location
-        skills {
-          resume
-        }
-        projects {
-          title
-          link
-          description
-          date
+        basics {
+          email
+          label
+          name
+          summary
+          url
+          location {
+            city
+            countryCode
+            region
+          }
         }
         education {
-          date
+          area
+          startDate(formatString: "MMM YYYY")
+          endDate(formatString: "MMM YYYY")
+          institution
           location
-          school
-          title
         }
         work {
-          company
-          date
-          description
+          startDate(formatString: "MMM YYYY")
+          endDate(formatString: "MMM YYYY")
+          highlights
           location
-          points
-          title
+          name
+          position
+          summary
         }
       }
     }
@@ -44,39 +45,7 @@ const query = graphql`
 `;
 
 interface DataType {
-  resume: {
-    nodes: {
-      website: string;
-      email: string;
-      location: string;
-      skills: {
-        resume: string[];
-      };
-      projects: {
-        id: string;
-        title: string;
-        description: string;
-        link: string;
-        date: string;
-      }[];
-      education: {
-        id: string;
-        school: string;
-        title: string;
-        location: string;
-        date: string;
-      }[];
-      work: {
-        id: string;
-        company: string;
-        date: string;
-        title: string;
-        description: string;
-        location: string;
-        points: string[];
-      }[];
-    }[];
-  };
+  resume: any;
 }
 
 export const Resume = () => {
@@ -99,24 +68,7 @@ export const Resume = () => {
         ref={pdf}
       >
         <article className='resume-page mx-auto shadow-lg text-xs'>
-          <h3 className='text-xl font-bold text-dark-purple'>Kelvin Mai</h3>
-          <div className='flex justify-between'>
-            <ExternalLink href={resume.website}>{resume.website}</ExternalLink>
-            {' | '}
-            <ExternalLink href={`mailto:${resume.email}`}>
-              {resume.email}
-            </ExternalLink>
-            {' | '}
-            <p>{resume.location}</p>
-          </div>
-          <p className='mt-2 text-justify'>
-            <strong>Skills:</strong> {resume.skills.resume.join(', ')}
-          </p>
-          <ResumeSection title='Projects'>
-            {resume.projects.map(project => (
-              <ResumeProject key={project.id} {...project} />
-            ))}
-          </ResumeSection>
+          <ResumeInfo {...resume.basics} />
           <ResumeSection title='Work Experience'>
             {resume.work.map(job => (
               <ResumeWork key={job.id} {...job} />

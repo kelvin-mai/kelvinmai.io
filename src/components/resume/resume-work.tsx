@@ -1,37 +1,41 @@
 import React from 'react';
 
 interface Props {
-  company: string;
+  name: string;
   location: string;
-  title: string;
-  date: string;
-  description: string;
-  points: string[];
+  position: string;
+  startDate: string;
+  endDate?: string;
+  summary: string;
+  highlights: string[];
 }
 
 export const ResumeWork: React.FC<Props> = ({
-  company,
+  name,
+  position,
+  summary,
   location,
-  title,
-  date,
-  description,
-  points,
+  startDate,
+  endDate,
+  highlights,
 }) => (
   <div className='mt-1'>
     <div className='flex justify-between font-bold'>
-      <p>{company}</p>
+      <p>{name}</p>
       <p>{location}</p>
     </div>
     <div className='flex justify-between'>
       <p>
-        <i>{title}</i>
+        <i>{position}</i>
       </p>
-      <p>{date}</p>
+      <p>
+        {startDate} - {endDate ? endDate : 'Present'}
+      </p>
     </div>
-    <p className='mt-1'>{description}</p>
+    <p className='mt-1'>{summary}</p>
     <ul className='list-disc list-inside'>
-      {points.map(p => (
-        <li key={p}>{p}</li>
+      {highlights.map(h => (
+        <li key={h}>{h}</li>
       ))}
     </ul>
   </div>

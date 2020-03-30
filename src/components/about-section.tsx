@@ -63,9 +63,10 @@ export const AboutSection = () => {
             development and becoming the best version of myself.
           </p>
           <a
-            className='inline-block mt-4 py-2 px-4 bg-dark-purple hover:bg-purple text-white shadow-xl rounded'
+            className='inline-block mt-4 py-2 px-4 bg-dark-purple hover:bg-purple text-white shadow-md rounded'
             href='mailto:kelvin.mai002@gmail.com'
             target='_blank'
+            title='Email'
             rel='noopener noreferrer'
           >
             Contact Me

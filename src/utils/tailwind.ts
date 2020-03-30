@@ -7,7 +7,11 @@ export const twPrefix = (prefix: string, className: string) =>
 
 export const tw = (classMap: classMap, defaultClasses?: string) => {
   const classesWithPrefix = Object.entries(classMap).reduce(
-    (acc, [prefix, className]) => `${acc} ${twPrefix(prefix, className)}`,
+    (acc, [prefix, classNames]) =>
+      `${acc} ${classNames
+        .split(' ')
+        .map(className => twPrefix(prefix, className))
+        .join(' ')}`,
     ''
   );
   return `${defaultClasses && defaultClasses} ${classesWithPrefix}`;

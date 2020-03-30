@@ -1,51 +1,86 @@
 [
   {
-    "location": "Las Vegas, NV",
-    "website": "https://kelvinmai.io",
-    "email": "kelvin.mai002@gmail.com",
-    "skills": {
-      "resume": [
-        "React",
-        "Angular",
-        "JavaScript",
-        "TypeScript",
-        "Clojure",
-        "Java",
-        "node.js",
-        "MongoDB",
-        "PostgreSQL",
-        "git",
-        "Google Cloud Platform"
-      ],
-      "icons": []
+    "basics": {
+      "name": "Kelvin Mai",
+      "label": "Full Stack Developer",
+      "image": null,
+      "email": "kelvin.mai002@gmail.com",
+      "phone": null,
+      "url": "kelvinmai.io",
+      "summary": "Self taught Full Stack Developer, aspiring functional programming polyglot, and full time nerd.",
+      "location": {
+        "address": null,
+        "postalCode": null,
+        "city": "Las Vegas",
+        "countryCode": "US",
+        "region": "Nevada"
+      },
+      "profiles": [
+        {
+          "network": "Youtube",
+          "url": "https://youtube.com/c/kelvinmai",
+          "username": "kelvinmai"
+        },
+        {
+          "network": "Github",
+          "url": "https://github.com/kelvin-mai",
+          "username": "kelvinmai"
+        },
+        {
+          "network": "Twitter",
+          "url": "https://twitter.com/kelvinmai",
+          "username": "kelvinmai"
+        },
+        {
+          "network": "Instagram",
+          "url": "https://www.instagram.com/iamnivlek/",
+          "username": "iamnivlek"
+        },
+        {
+          "network": "Linkedin",
+          "url": "https://www.linkedin.com/in/kelvin-mai-461756152/",
+          "username": "Kelvin Mai"
+        }
+      ]
     },
     "work": [
       {
-        "company": "Nucamp Coding Bootcamp",
-        "title": "Instructor (Contract)",
+        "name": "Nucamp Coding Bootcamp",
         "location": "Las Vegas, NV",
-        "date": "Jan 2020 - Present",
-        "description": "Bootcamp instructor responsible for teaching students web development technologies.",
-        "points": ["Lead classes in Bootstrap, Node.js, React, React Native"]
+        "description": null,
+        "url": null,
+        "position": "Instructor (Contract)",
+        "startDate": "2020-01-01T08:00:00.000Z",
+        "endDate": null,
+        "summary": "Bootcamp instructor responsible for teaching students web development technologies.",
+        "highlights": [
+          "Lead classes in Bootstrap, Node.js, React, React Native"
+        ]
       },
       {
-        "company": "Vegas.com",
-        "title": "Front End Developer",
+        "name": "Vegas.com",
         "location": "Las Vegas, NV",
-        "date": "Jul 2019 - Mar 2020",
-        "description": "Feature development on desktop and mobile retail travel e-commerce web application.",
-        "points": [
+        "description": null,
+        "url": null,
+        "position": "Front End Developer",
+        "startDate": "2019-07-01T07:00:00.000Z",
+        "endDate": "2020-03-01T08:00:00.000Z",
+        "summary": "Feature development on desktop and mobile retail travel e-commerce web application.",
+        "highlights": [
           "Implemented mobile cart page and path",
           "Initiated upgrade of React Router from version 2 to 5"
         ]
       },
       {
-        "company": "Motivis Learning",
-        "title": "Software Developer",
+        "name": "Motivis Learning",
         "location": "Boston, MA",
-        "date": "Apr 2018 - Jun 2019",
-        "description": "Research and development with new technologies, as well as feature development and maintenance of the cloud software product, Motivis Learning Management System.",
-        "points": [
+        "description": null,
+        "url": null,
+        "position": "Software Developer",
+        "startDate": "2018-04-01T07:00:00.000Z",
+        "endDate": "2019-06-01T07:00:00.000Z",
+        "summary": "Research and development with new technologies, as well as feature development and maintenance of the cloud software product, Motivis Learning Management System.",
+        "highlights": [
           "Designed and prototyped GraphQL layer for internal API",
           "Created microservice to provide full text search using PostgreSQL",
           "Created and maintained React application for schema viewing of internal API",
@@ -54,12 +89,15 @@
         ]
       },
       {
-        "company": "DigitalCrafts",
-        "title": "Developer In Residence (Internship)",
+        "name": "DigitalCrafts",
         "location": "Houston, TX",
-        "date": "Feb 2018 - Apr 2018",
-        "description": "Three month paid internship to work with and assist experienced instructors to develop and teach full stack web applications.",
-        "points": [
+        "description": null,
+        "url": null,
+        "position": "Developer In Residence (Internship)",
+        "startDate": "2018-02-01T08:00:00.000Z",
+        "endDate": "2018-04-01T07:00:00.000Z",
+        "summary": "Three month paid internship to work with and assist experienced instructors to develop and teach full stack web applications.",
+        "highlights": [
           "Assist in teaching incoming coding bootcamp students in various web technologies",
           "Offer one on one tutoring and trouble shooting with web development students"
         ]
@@ -67,24 +105,24 @@
     ],
     "education": [
       {
-        "school": "DigitalCrafts",
-        "title": "Full Stack Immersive Bootcamp",
+        "institution": "DigitalCrafts",
+        "area": "Full Stack Immersive Bootcamp",
         "location": "Houston, TX",
-        "date": "Nov 2017 - Mar 2018"
+        "startDate": "2017-11-01T07:00:00.000Z",
+        "endDate": "2018-03-01T08:00:00.000Z",
+        "studyType": null,
+        "gpa": null,
+        "courses": null
       },
       {
-        "school": "University of California, Riverside",
-        "title": "Computer Science Major (No Degree)",
+        "institution": "University of California, Riverside",
+        "area": "Computer Science Major (No Degree)",
         "location": "Riverside, CA",
-        "date": "Sept 2008 - Feb 2011"
-      }
-    ],
-    "projects": [
-      {
-        "title": "Youtube",
-        "link": "https://www.youtube.com/c/kelvinmai",
-        "description": "Create and offer free web development tutorials and courses.",
-        "date": "Jun 2018 - Present"
+        "startDate": "2008-09-01T07:00:00.000Z",
+        "endDate": "2011-02-01T08:00:00.000Z",
+        "studyType": null,
+        "gpa": null,
+        "courses": null
       }
     ]
   }

@@ -9,36 +9,30 @@ export interface SocialLinksProps extends Omit<IconProps, 'icon'> {
 
 const query = graphql`
   query {
-    socialLinks: allSocialLinksJson {
+    socialLinks: allResumeJson {
       nodes {
-        icon
-        to
+        basics {
+          profiles {
+            url
+            network
+          }
+        }
       }
     }
   }
 `;
 
-interface DataType {
-  socialLinks: {
-    nodes: {
-      icon: string;
-      to: string;
-    }[];
-  };
-}
-
 export const SocialLinks: React.FC<SocialLinksProps> = ({
   className = '',
   ...iconProps
 }) => {
-  const {
-    socialLinks: { nodes: links },
-  }: DataType = useStaticQuery(query);
+  const data = useStaticQuery(query);
+  const links = data.socialLinks.nodes[0].basics.profiles;
   return (
     <div className={className}>
-      {links.map(({ to, icon }) => (
-        <a key={icon} href={to} target='_blank' rel='noopener noreferrer'>
-          <Icon icon={icons.get(icon)} {...iconProps} />
+      {links.map(({ url, network }) => (
+        <a key={network} href={url} target='_blank' rel='noopener noreferrer'>
+          <Icon icon={icons.get(network)} {...iconProps} />
         </a>
       ))}
     </div>

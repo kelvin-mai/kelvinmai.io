@@ -49,7 +49,7 @@ const Uses = () => {
   const data: DataType = useStaticQuery(query);
   return (
     <Layout title='Uses'>
-      <div className='w-11/12 mx-auto text-center py-8'>
+      <div className='w-11/12 mx-auto text-center'>
         <h1 className='text-4xl'>Uses</h1>
         <p className='text-xl'>
           This is an almost comprehensive list of the tools that I use.

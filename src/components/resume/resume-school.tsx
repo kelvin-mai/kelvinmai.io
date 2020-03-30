@@ -1,28 +1,32 @@
 import React from 'react';
 
 interface Props {
-  school: string;
+  institution: string;
   location: string;
-  title: string;
-  date: string;
+  area: string;
+  startDate: string;
+  endDate: string;
 }
 
 export const ResumeSchool: React.FC<Props> = ({
-  school,
+  institution,
   location,
-  title,
-  date,
+  area,
+  startDate,
+  endDate,
 }) => (
   <div className='mt-1'>
     <div className='flex justify-between font-bold'>
-      <p>{school}</p>
+      <p>{institution}</p>
       <p>{location}</p>
     </div>
     <div className='flex justify-between'>
       <p>
-        <i>{title}</i>
+        <i>{area}</i>
       </p>
-      <p>{date}</p>
+      <p>
+        {startDate} - {endDate ? endDate : 'Present'}
+      </p>
     </div>
   </div>
 );

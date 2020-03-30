@@ -3,7 +3,6 @@ import { useToggle } from 'react-use';
 
 import { Layout } from '../components/layout/layout';
 import { AboutSection } from '../components/about-section';
-import { Experience } from '../components/experiences/experience';
 import { Resume } from '../components/resume/resume';
 
 export const About = () => {
@@ -22,9 +21,7 @@ export const About = () => {
         >
           View as Resume
         </button>
-        <div className='container pt-4'>
-          {resume ? <Resume /> : <Experience />}
-        </div>
+        <div className='container pt-4'>{resume && <Resume />}</div>
       </section>
     </Layout>
   );

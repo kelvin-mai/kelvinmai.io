@@ -4,8 +4,8 @@ import { Link } from 'gatsby';
 import bgImage from '../assets/images/bg.jpg';
 import { Layout } from '../components/layout/layout';
 import { HeroCard } from '../components/hero-card';
-import { TutorailSection } from '../components/tutorials/tutorial-section';
-import { HighlightedCourses } from '../components/courses/highlighted-courses';
+import { LatestTutorials } from '../components/tutorials/latest-tutorials';
+import { LatestCourses } from '../components/courses/latest-courses';
 import { AboutSection } from '../components/about-section';
 
 const IndexPage = () => (
@@ -24,9 +24,9 @@ const IndexPage = () => (
           Courses
         </h2>
       </Link>
-      <HighlightedCourses />
+      <LatestCourses />
     </section>
-    <TutorailSection limit={4} />
+    <LatestTutorials />
     <section className='bg-real-white'>
       <div className='container'>
         <AboutSection />
