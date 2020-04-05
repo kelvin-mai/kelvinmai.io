@@ -1,4 +1,5 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 import { graphql, useStaticQuery } from 'gatsby';
 import { PDFExport } from '@progress/kendo-react-pdf';
 
@@ -58,7 +59,13 @@ export const Resume = () => {
   const data: DataType = useStaticQuery(query);
   const [resume] = data.resume.nodes;
   return (
-    <div className='pb-4'>
+    <motion.div
+      className='pb-4'
+      initial={{ opacity: 0, scaleY: 0 }}
+      animate={{ opacity: 1, scaleY: 1 }}
+      exit={{ opacity: 0, scaleY: 0 }}
+      style={{ originY: 0 }}
+    >
       <PDFExport
         paperSize='Letter'
         fileName='KelvinMaiResume.pdf'
@@ -71,12 +78,12 @@ export const Resume = () => {
           <ResumeInfo {...resume.basics} />
           <ResumeSection title='Work Experience'>
             {resume.work.map(job => (
-              <ResumeWork key={job.id} {...job} />
+              <ResumeWork key={job.name} {...job} />
             ))}
           </ResumeSection>
           <ResumeSection title='Education'>
             {resume.education.map(school => (
-              <ResumeSchool key={school.id} {...school} />
+              <ResumeSchool key={school.institution} {...school} />
             ))}
           </ResumeSection>
         </article>
@@ -87,6 +94,6 @@ export const Resume = () => {
       >
         Download Resume
       </button>
-    </div>
+    </motion.div>
   );
 };

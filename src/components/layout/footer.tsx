@@ -8,6 +8,7 @@ const query = graphql`
   query {
     pages: allPageLinksJson {
       nodes {
+        id
         name
         to
       }

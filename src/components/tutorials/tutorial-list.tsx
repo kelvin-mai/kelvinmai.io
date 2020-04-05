@@ -29,7 +29,7 @@ const query = graphql`
 export const TutorialList: React.FC<Props> = () => {
   const data = useStaticQuery(query);
   return (
-    <ul className={tw({ md: 'rounded-md' }, 'bg-white')}>
+    <ul className={tw({ md: 'rounded-md my-4' }, 'bg-white')}>
       {data.tutorials.nodes.map(tutorial => (
         <TutorialListItem key={tutorial.id} {...tutorial} />
       ))}

@@ -23,14 +23,14 @@
         "description": "terminal"
       },
       {
-        "title": "Oh My Zsh",
-        "link": "https://ohmyz.sh/",
-        "description": "shell environment"
+        "title": "zsh",
+        "link": "https://www.zsh.org/",
+        "description": "terminal shell"
       },
       {
-        "title": "i3wm",
-        "link": "https://i3wm.org/",
-        "description": "linux tiling window manager"
+        "title": "Oh My Zsh",
+        "link": "https://ohmyz.sh/",
+        "description": "custom shell environment for zsh"
       },
       {
         "title": "ranger",
@@ -52,6 +52,21 @@
   {
     "title": "Linux Software",
     "tools": [
+      {
+        "title": "Manjaro",
+        "link": "https://manjaro.org/",
+        "description": "linux operating system"
+      },
+      {
+        "title": "i3wm",
+        "link": "https://i3wm.org/",
+        "description": "linux tiling window manager"
+      },
+      {
+        "title": "i3-gaps",
+        "link": "https://github.com/Airblader/i3",
+        "description": "fork that enhances the i3wm experience"
+      },
       {
         "title": "compton",
         "link": "https://github.com/chjj/compton",

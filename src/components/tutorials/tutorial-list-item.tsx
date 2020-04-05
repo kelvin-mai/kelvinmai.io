@@ -62,11 +62,11 @@ export const TutorialListItem: React.FC<Props> = ({
       <ul className='text-right'>
         {tags.map(tag => (
           <li
+            key={tag}
             className={tw(
               { hover: 'bg-dark-purple text-pink shadow-md' },
               'inline-block bg-purple text-black px-2 m-1 rounded text-sm cursor-pointer shadow lowercase'
             )}
-            key={tag}
           >
             {tag}
           </li>

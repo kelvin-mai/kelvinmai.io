@@ -2,9 +2,9 @@ import React from 'react';
 import { useStaticQuery, graphql } from 'gatsby';
 import Img from 'gatsby-image';
 
-import { ImageData } from '../types';
-import { ExternalLink } from '../components/external-link';
-import { PageHeader } from './page-header';
+import { ImageData } from '../../types';
+import { ExternalLink } from '../../components/external-link';
+import { PageHeader } from '../page-header';
 
 const query = graphql`
   query {

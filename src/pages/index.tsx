@@ -6,7 +6,7 @@ import { Layout } from '../components/layout/layout';
 import { HeroCard } from '../components/hero-card';
 import { LatestTutorials } from '../components/tutorials/latest-tutorials';
 import { LatestCourses } from '../components/courses/latest-courses';
-import { AboutSection } from '../components/about-section';
+import { AboutSection } from '../components/about/about-section';
 
 const IndexPage = () => (
   <Layout title='Home' fullWidth>

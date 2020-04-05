@@ -9,6 +9,14 @@ exports.createSchemaCustomization = ({ actions: { createTypes } }) => {
     publishedAt: Date
     thumbnail: String
   }
+
+  type CoursesVideo {
+    videoId: String
+  }
+
+  type CoursesJson implements Node {
+    videos: [CoursesVideo]
+  }
   `);
 };
 
@@ -20,7 +28,6 @@ exports.onCreateNode = async ({
   createNodeId,
 }) => {
   if (node.internal.type === 'TutorialsJson' && node.thumbnail !== null) {
-    ('https://i.ytimg.com/vi/yVk_ImBQqms/maxresdefault.jpg');
     const fileNode = await createRemoteFileNode({
       url: `https://i.ytimg.com/vi/${node.videoId}/maxresdefault.jpg`,
       parentNodeId: node.id,
@@ -31,6 +38,19 @@ exports.onCreateNode = async ({
     });
     if (fileNode) {
       node.thumbnailImage___NODE = fileNode.id;
+    }
+  }
+  if (node.internal.type === 'CoursesVideo' && node.videoId !== null) {
+    const fileNode = await createRemoteFileNode({
+      url: `https://i.ytimg.com/vi/${node.videoId}/maxresdefault.jpg`,
+      parentNodeId: node.id,
+      createNode,
+      createNodeId,
+      cache,
+      store,
+    });
+    if (fileNode) {
+      node.thumbnail___NODE = fileNode.id;
     }
   }
 };

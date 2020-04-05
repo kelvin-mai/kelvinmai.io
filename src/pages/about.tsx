@@ -2,8 +2,10 @@ import React from 'react';
 import { useToggle } from 'react-use';
 
 import { Layout } from '../components/layout/layout';
-import { AboutSection } from '../components/about-section';
+import { AboutSection } from '../components/about/about-section';
+import { Experience } from '../components/about/experience';
 import { Resume } from '../components/resume/resume';
+import { AnimatePresence } from 'framer-motion';
 
 export const About = () => {
   const [resume, toggleResume] = useToggle(false);
@@ -21,7 +23,11 @@ export const About = () => {
         >
           View as Resume
         </button>
-        <div className='container pt-4'>{resume && <Resume />}</div>
+        <div className='container py-4'>
+          <AnimatePresence>
+            {resume ? <Resume /> : <Experience />}
+          </AnimatePresence>
+        </div>
       </section>
     </Layout>
   );
