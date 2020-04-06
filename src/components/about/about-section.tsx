@@ -1,10 +1,8 @@
 import React from 'react';
 import { useStaticQuery, graphql } from 'gatsby';
-import Img from 'gatsby-image';
 
-import { ImageData } from '../../types';
-import { ExternalLink } from '../../components/external-link';
-import { PageHeader } from '../page-header';
+import { Img } from '../image';
+import { ExternalLink } from '../external-link';
 
 const query = graphql`
   query {
@@ -18,22 +16,15 @@ const query = graphql`
   }
 `;
 
-interface DataType {
-  avatar: ImageData;
-}
-
 export const AboutSection = () => {
-  const { avatar }: DataType = useStaticQuery(query);
+  const { avatar } = useStaticQuery(query);
   return (
     <div className='flex flex-col md:flex-row-reverse justify-between pt-8 pb-20 text-black'>
-      <div className='w-1/2 mx-auto md:w-1/3 overflow-hidden rounded-full md:rounded-none'>
-        <Img fluid={avatar.childImageSharp.fluid} />
-      </div>
+      <Img
+        className='w-1/2 md:w-1/3 rounded-full md:rounded-none'
+        imageSrc={avatar.childImageSharp.fluid}
+      />
       <div className='w-full md:w-2/3 flex-grow md:pr-8 mx-auto'>
-        <PageHeader
-          title='About Kelvin'
-          subtitle='Kelvin is a self taught full stack developer.'
-        />
         <div className='mx-auto text-justify p-4'>
           <p>
             Although I am a college dropout, I had a passion about programming

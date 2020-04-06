@@ -1,6 +1,7 @@
 import React from 'react';
 import icons from 'simple-icons';
 import { graphql, useStaticQuery, Link } from 'gatsby';
+
 import { SocialLinks } from '../social-links';
 import { Icon } from '../icon';
 
@@ -16,18 +17,8 @@ const query = graphql`
   }
 `;
 
-interface DataType {
-  pages: {
-    nodes: {
-      id: string;
-      name: string;
-      to: string;
-    }[];
-  };
-}
-
 export const Footer = () => {
-  const { pages }: DataType = useStaticQuery(query);
+  const { pages } = useStaticQuery(query);
   return (
     <footer className='bg-black text-white pt-8'>
       <section className='container flex flex-col md:flex-row justify-between uppercase font-bold font-mono'>

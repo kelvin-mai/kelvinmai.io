@@ -1,8 +1,8 @@
 import React from 'react';
-
-import { Layout } from '../components/layout/layout';
-import { BlueScreen } from '../components/blue-screen';
 import { Link } from 'gatsby';
+
+import { Layout } from '../components/layout';
+import { BlueScreen } from '../components/blue-screen';
 
 const NotFoundPage = () => (
   <Layout title='404: Not Found'>

@@ -1,9 +1,10 @@
 import React from 'react';
 import icons from 'simple-icons';
 import { useStaticQuery, graphql } from 'gatsby';
+
 import { Icon, IconProps } from './icon';
 
-export interface SocialLinksProps extends Omit<IconProps, 'icon'> {
+export interface Props extends Omit<IconProps, 'icon'> {
   className?: string;
 }
 
@@ -22,7 +23,7 @@ const query = graphql`
   }
 `;
 
-export const SocialLinks: React.FC<SocialLinksProps> = ({
+export const SocialLinks: React.FC<Props> = ({
   className = '',
   ...iconProps
 }) => {

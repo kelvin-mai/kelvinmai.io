@@ -1,9 +1,8 @@
 import React from 'react';
 import { useStaticQuery, graphql } from 'gatsby';
 
-import { Layout } from '../components/layout/layout';
+import { Layout, PageHeader, Section } from '../components/layout';
 import { CourseCard } from '../components/courses/course-card';
-import { PageHeader } from '../components/page-header';
 
 const query = graphql`
   query {
@@ -13,6 +12,8 @@ const query = graphql`
         pid
         image
         slug
+        description
+        tags
         videos {
           title
           videoId
@@ -34,29 +35,8 @@ const query = graphql`
   }
 `;
 
-interface DataType {
-  courses: {
-    nodes: {
-      id: string;
-      pid: string;
-      title: string;
-      image: string;
-      slug: string;
-      videos: any[];
-    }[];
-  };
-  images: {
-    nodes: {
-      childImageSharp: {
-        fluid: any;
-      };
-      relativePath: string;
-    }[];
-  };
-}
-
 export const Courses = () => {
-  const data: DataType = useStaticQuery(query);
+  const data = useStaticQuery(query);
   const courses = data.courses.nodes.map(course => ({
     ...course,
     image: data.images.nodes.find(
@@ -65,18 +45,18 @@ export const Courses = () => {
   }));
   return (
     <Layout title='Courses' bg='bg-white'>
-      <section>
+      <Section>
         <PageHeader
           className='text-dark'
           title='Courses'
           subtitle='All of my Available courses'
         />
-        <div className='w-11/12 lg:w-full mx-auto'>
+        <div>
           {courses.map(course => (
             <CourseCard key={course.id} {...course} />
           ))}
         </div>
-      </section>
+      </Section>
     </Layout>
   );
 };

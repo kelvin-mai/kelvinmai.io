@@ -1,12 +1,7 @@
 import React from 'react';
-import Img from 'gatsby-image';
 import { useStaticQuery, graphql, Link } from 'gatsby';
 
-import { ImageData } from '../../types';
-
-interface Props {
-  limit?: number;
-}
+import { Img } from '../image';
 
 const query = graphql`
   query {
@@ -26,21 +21,10 @@ const query = graphql`
   }
 `;
 
-interface DataType {
-  tutorials: {
-    nodes: {
-      id: string;
-      title: string;
-      videoId: string;
-      thumbnailImage: ImageData;
-    }[];
-  };
-}
-
 export const LatestTutorials = () => {
   const {
     tutorials: { nodes },
-  }: DataType = useStaticQuery(query);
+  } = useStaticQuery(query);
   return (
     <section className='h-auto pt-8 pb-8'>
       <div className='container'>
@@ -50,12 +34,11 @@ export const LatestTutorials = () => {
         </div>
         <div className='grid grid-cols-2 md:grid-cols-4 gap-8 pb-8'>
           {nodes.map(tutorial => (
-            <Link
-              key={tutorial.id}
-              className='w-auto h-auto rounded-lg overflow-hidden shadow-md'
-              to={`/tutorials/${tutorial.videoId}`}
-            >
-              <Img fluid={tutorial.thumbnailImage.childImageSharp.fluid} />
+            <Link key={tutorial.id} to={`/tutorials/${tutorial.videoId}`}>
+              <Img
+                className='w-auto h-auto rounded-lg shadow-md'
+                imageSrc={tutorial.thumbnailImage.childImageSharp.fluid}
+              />
             </Link>
           ))}
         </div>

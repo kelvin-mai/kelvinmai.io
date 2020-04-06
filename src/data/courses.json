@@ -4,6 +4,7 @@
     "slug": "NestJS-Blog-API",
     "pid": "PLBeQxJQNprbjZL5iguWelcxlmWvY4Dmdj",
     "lastUpdated": "2020-03-26T15:00:38.000Z",
+    "description": "Learn to create a medium clone Rest API with NestJS and PostgreSQL with the help of TypeORM. This application is based on go thinkster's Real World App repository.",
     "image": "nestjs-blog-api.jpg",
     "tags": ["NestJS", "PostgreSQL", "rest api", "TypeScript"],
     "videos": [
@@ -98,6 +99,7 @@
     "slug": "redux-tip-calculator",
     "pid": "PLBeQxJQNprbgAeAi15SWDS8Is28HxazqV",
     "lastUpdated": "2020-01-20T08:00:01.000Z",
+    "description": "Learn how to integrate the Redux state management library with a Typescript React project.",
     "image": "redux-tip.jpg",
     "tags": ["React", "Redux", "TypeScript"],
     "videos": [
@@ -157,8 +159,9 @@
     "slug": "scala-mongo-api",
     "pid": "PLBeQxJQNprbhb6kOJS477I_laHQTGgjg8",
     "lastUpdated": "2019-06-22T16:00:05.000Z",
+    "description": "Learn how to create a simple Rest API with the Play framework in Scala and use MongoDB as the data layer.",
     "image": "scala-mongo.jpg",
-    "tags": ["Scala", "rest api", "MongoDB"],
+    "tags": ["Scala", "rest api", "MongoDB", "play framework"],
     "videos": [
       {
         "ordinance": 0,
@@ -188,6 +191,7 @@
     "slug": "nestjs-ecommerce",
     "pid": "PLBeQxJQNprbiykCyVNcSExTgytMMjSjnQ",
     "lastUpdated": "2019-04-02T16:00:01.000Z",
+    "description": "Learn how to create an e-commerce server architecture Rest API in NestJS with MongoDB as the database.",
     "image": "nestjs-commerce.jpg",
     "tags": ["MongoDB", "NestJS"],
     "videos": [
@@ -289,6 +293,7 @@
     "slug": "ideas-app-angular-ngrx",
     "pid": "PLBeQxJQNprbiJm55q7nTAfhMmzIC8MWxc",
     "lastUpdated": "2018-12-16T21:44:37.000Z",
+    "description": "Learn Angular and NgRx state management by creating the front end of the Ideas app, which is a reddit-like application for managing ideas.",
     "image": "angular-ideas.jpg",
     "tags": ["Angular", "NgRx", "RxJS"],
     "videos": [
@@ -390,6 +395,7 @@
     "slug": "ideas-app-nestjs-graphql",
     "pid": "PLBeQxJQNprbiJm55q7nTAfhMmzIC8MWxc",
     "lastUpdated": "2018-10-22T18:30:00.000Z",
+    "description": "Add a GraphQL layer to the Ideas app",
     "image": "nestjs-ideas-graphql.jpg",
     "tags": ["NestJS", "TypeScript", "GraphQL"],
     "videos": [
@@ -435,6 +441,7 @@
     "slug": "ideas-app-nestjs-api",
     "pid": "PLBeQxJQNprbiJm55q7nTAfhMmzIC8MWxc",
     "lastUpdated": "2018-10-11T18:30:00.000Z",
+    "description": "Learn NestJS by creating a Rest API with PostgreSQL as the database and TypeORM to interact with it. This is the beginning of a full stack application similar to reddit and twitter that will manage ideas.",
     "image": "nestjs-ideas.jpg",
     "tags": ["NestJS", "PostgreSQL", "TypeScript", "rest api"],
     "videos": [
@@ -529,6 +536,7 @@
     "slug": "angular-simon-game",
     "pid": "PLBeQxJQNprbgZgivXyBX-djYAhMJGE93B",
     "lastUpdated": "2018-08-28T18:17:12.000Z",
+    "description": "Learn Angular by creating a simon says game.",
     "image": "angular-simon.jpg",
     "tags": ["Angular"],
     "videos": [
@@ -581,6 +589,7 @@
     "slug": "typescript-gropceries-api",
     "pid": "PLBeQxJQNprbhvbBAmoyIJykggzE_JIhWe",
     "lastUpdated": "2018-07-17T23:29:01.000Z",
+    "description": "Learn Typescript by creating a node.js express server that manages groceries lists.",
     "image": "ts-groceries.jpg",
     "tags": ["TypeScript", "PostgreSQL", "rest api"],
     "videos": [
@@ -626,6 +635,7 @@
     "slug": "full-stack-mern-voting-app",
     "pid": "PLBeQxJQNprbgrNfcntLO8N2Y-dzlMZXZe",
     "lastUpdated": "2018-07-11T20:00:00.000Z",
+    "description": "Learn all the parts of the MERN stack (MongoDB, Express, React and Node) as well as Redux by creating a voting application.",
     "image": "mern-vote.jpg",
     "tags": ["React", "MongoDB", "Redux", "JavaScript", "Express"],
     "videos": [

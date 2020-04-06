@@ -23,23 +23,13 @@ const query = graphql`
   }
 `;
 
-interface DataType {
-  site: {
-    siteMetadata: {
-      title: string;
-      description: string;
-      author: string;
-    };
-  };
-}
-
 export const SEO: React.FC<Props> = ({
   description = '',
   lang = 'en',
   meta = [],
   title,
 }) => {
-  const { site }: DataType = useStaticQuery(query);
+  const { site } = useStaticQuery(query);
   const metaDescription = description || site.siteMetadata.description;
   return (
     <Helmet

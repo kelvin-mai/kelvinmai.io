@@ -1,6 +1,7 @@
 import React from 'react';
-import { useStaticQuery, graphql, Link } from 'gatsby';
-import Img from 'gatsby-image';
+import { useStaticQuery, graphql } from 'gatsby';
+
+import { Img } from '../image';
 import { ExternalLink } from '../external-link';
 
 const query = graphql`
@@ -26,28 +27,8 @@ const query = graphql`
   }
 `;
 
-interface DataType {
-  courses: {
-    nodes: {
-      id: string;
-      pid: string;
-      title: string;
-      image: string;
-      slug: string;
-    }[];
-  };
-  images: {
-    nodes: {
-      childImageSharp: {
-        fluid: any;
-      };
-      relativePath: string;
-    }[];
-  };
-}
-
 export const LatestCourses = () => {
-  const { courses: courseData, images }: DataType = useStaticQuery(query);
+  const { courses: courseData, images } = useStaticQuery(query);
   const courses = courseData.nodes.map(course => ({
     ...course,
     image: images.nodes.find(
@@ -55,15 +36,16 @@ export const LatestCourses = () => {
     ),
   }));
   return (
-    <div className='grid grid-cols-1 sm:grid-cols-2 sm:grid-rows-1 gap-8 w-5/6 sm:w-4/5 md:w-3/5 lg:w-1/2 mx-auto'>
+    <div className='grid grid-cols-1 sm:grid-cols-2 sm:grid-rows-1 gap-8 w-5/6 lg:w-2/3 mx-auto'>
       {courses.map(course => (
         <ExternalLink
           key={course.id}
-          className='w-auto h-auto rounded-lg shadow-xl overflow-hidden'
-          // to={`/courses/${course.slug}`}
           href={`https://www.youtube.com/playlist?list=${course.pid}`}
         >
-          <Img fluid={course.image.childImageSharp.fluid} />
+          <Img
+            className='rounded-lg shadow-xl'
+            imageSrc={course.image.childImageSharp.fluid}
+          />
         </ExternalLink>
       ))}
     </div>

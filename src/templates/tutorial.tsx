@@ -2,7 +2,7 @@ import React from 'react';
 import { useStaticQuery, graphql, Link } from 'gatsby';
 import Img from 'gatsby-image';
 
-import { Layout } from '../components/layout/layout';
+import { Layout } from '../components/layout';
 import { VideoPlayer } from '../components/video-player';
 import { ImageData } from '../types';
 
@@ -29,20 +29,8 @@ const query = graphql`
   }
 `;
 
-interface DataType {
-  tutorials: {
-    nodes: {
-      id: string;
-      title: string;
-      videoId: string;
-      publishedAt: string;
-      thumbnailImage: ImageData;
-    }[];
-  };
-}
-
 export const Tutorial: React.FC<Props> = ({ pageContext: { videoId } }) => {
-  const { tutorials }: DataType = useStaticQuery(query);
+  const { tutorials } = useStaticQuery(query);
   const info = tutorials.nodes.find(node => node.videoId === videoId);
   return (
     <Layout title='Video'>

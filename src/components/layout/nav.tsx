@@ -4,8 +4,7 @@ import { useToggle } from 'react-use';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link, useStaticQuery, graphql } from 'gatsby';
 
-import { Burger } from '../burger';
-import { tw } from '../../utils/tailwind';
+import { Burger } from './burger';
 
 const query = graphql`
   query {
@@ -18,33 +17,22 @@ const query = graphql`
   }
 `;
 
-interface DataType {
-  pages: {
-    nodes: {
-      name: string;
-      to: string;
-    }[];
-  };
-}
-
 export const Nav = () => {
   const [open, toggleOpen] = useToggle(false);
-  const data: DataType = useStaticQuery(query);
+  const data = useStaticQuery(query);
   const menu = {
     closed: { opacity: 0, scaleX: 0, x: 24 },
     open: { opacity: 1, scaleX: 1, x: 0 },
     style: { originX: 1 },
   };
   const menuItems = data.pages.nodes.map(page => (
-    <li key={page.name} className={tw({ hover: 'text-purple' }, 'ml-2')}>
+    <li key={page.name} className='ml-2 hover:text-purple'>
       <Link to={page.to}>{page.name}</Link>
     </li>
   ));
   return (
-    <nav className={tw({ md: 'justify-end' }, 'flex justify-center')}>
-      <ul className={tw({ md: 'hidden' }, 'block flex item-center ')}>
-        {menuItems}
-      </ul>
+    <nav className='flex justify-center md:justify-end'>
+      <ul className='block flex item-center md:hidden'>{menuItems}</ul>
       <AnimatePresence>
         {open && (
           <motion.ul
@@ -61,8 +49,8 @@ export const Nav = () => {
       </AnimatePresence>
       <div
         className={classnames(
-          tw({ md: 'block rounded-full shadow-xl p-2' }, 'hidden m-1 mx-4'),
-          { [tw({ md: 'bg-red' })]: open, [tw({ md: 'bg-pink' })]: !open }
+          'hidden m-1 mx-4 md:block md:rounded-full md:shadow-xl md:p-2',
+          { ['md:bg-red']: open, ['md:bg-pink']: !open }
         )}
         onClick={toggleOpen}
       >

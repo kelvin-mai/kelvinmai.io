@@ -4,7 +4,7 @@ import { useSearchParam } from 'react-use';
 import { useStaticQuery, graphql } from 'gatsby';
 import Img from 'gatsby-image';
 
-import { Layout } from '../components/layout/layout';
+import { Layout } from '../components/layout';
 import { VideoPlayer } from '../components/video-player';
 
 interface Props extends RouteComponentProps {

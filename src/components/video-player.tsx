@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactPlayer from 'react-player';
 
-export interface VideoPlayerProps {
+export interface Props {
   videoId: string;
 }
 
-export const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoId }) => (
+export const VideoPlayer: React.FC<Props> = ({ videoId }) => (
   <div className='video-container shadow-2xl rounded-lg overflow-hidden'>
     <ReactPlayer
       className='video-player'

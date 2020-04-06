@@ -1,4 +1,5 @@
 import React from 'react';
+import classnames from 'classnames';
 import { motion } from 'framer-motion';
 
 interface Props {
@@ -26,6 +27,14 @@ const animations = {
   },
 };
 
+const BurgerBun = ({ className, ...props }) => (
+  <motion.div
+    className={classnames('h-1 absolute block bg-white rounded', className)}
+    initial='closed'
+    {...props}
+  />
+);
+
 export const Burger: React.FC<Props> = ({ open }) => {
   const animate = open ? 'open' : 'closed';
   return (
@@ -36,21 +45,19 @@ export const Burger: React.FC<Props> = ({ open }) => {
       variants={animations.burger}
       className='h-8 w-8 relative cursor-pointer'
     >
-      <motion.div
-        className='w-2/3 /3 h-1 absolute block bg-white rounded top-0 right-0'
-        initial='closed'
+      <BurgerBun
+        className='w-2/3 top-0 right-0'
         animate={animate}
         variants={animations.top}
       />
-      <motion.div
-        className='w-full h-1 absolute block bg-white rounded inset-y-1/2'
+      <BurgerBun
+        className='w-full inset-y-1/2'
         animate={animate}
         variants={animations.middle}
         style={{ transform: 'translateY(-50%)' }}
       />
-      <motion.div
-        className='w-2/3 h-1 absolute block bg-white rounded bottom-0 left-0'
-        initial='closed'
+      <BurgerBun
+        className='w-2/3 bottom-0 left-0'
         animate={animate}
         variants={animations.bottom}
       />
