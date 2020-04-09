@@ -22,8 +22,8 @@
           "username": "kelvinmai"
         },
         {
-          "network": "Github",
-          "url": "https://github.com/kelvin-mai",
+          "network": "Patreon",
+          "url": "https://www.patreon.com/kelvinmai",
           "username": "kelvinmai"
         },
         {
@@ -32,14 +32,19 @@
           "username": "kelvinmai"
         },
         {
-          "network": "Instagram",
-          "url": "https://www.instagram.com/iamnivlek/",
-          "username": "iamnivlek"
+          "network": "Github",
+          "url": "https://github.com/kelvin-mai",
+          "username": "kelvinmai"
         },
         {
           "network": "Linkedin",
           "url": "https://www.linkedin.com/in/kelvin-mai-461756152/",
           "username": "Kelvin Mai"
+        },
+        {
+          "network": "Instagram",
+          "url": "https://www.instagram.com/iamnivlek/",
+          "username": "iamnivlek"
         }
       ]
     },
