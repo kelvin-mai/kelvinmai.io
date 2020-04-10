@@ -5,13 +5,17 @@ import axios from 'axios';
 
 import { toJSON } from './utils/funcs';
 import { createEducation, createWork } from './utils/resume';
-import { createCourse, createTutorial } from './utils/videos';
+import {
+  createCourse,
+  createCourseVideoYT,
+  createTutorial,
+} from './utils/videos';
 
 const [resume] = require('./data/resume.json');
 const courses = require('./data/courses.json');
 const tutorials = require('./data/tutorials.json');
 
-const write = (file: string, data: string) =>
+const write = (file: string, data: any) =>
   fs.writeFileSync(
     path.resolve(__dirname, `./data/${file}.json`),
     toJSON(data)
@@ -26,3 +30,21 @@ const getLatestVideos = async (length: number = 1) => {
 
 // write interactive code below
 // yarn etl || npm run etl
+const etl = async () => {
+  const fromYT = await getLatestVideos(8);
+  const videos = fromYT.items
+    .reverse()
+    .filter(v => v.id.videoId !== 'Vh_Oy2DHJlI')
+    .map(createCourseVideoYT);
+  const data = createCourse({
+    title: 'React Conduit',
+    videos,
+    pid: 'PLBeQxJQNprbhO7-QgNP2JLicOyUuNdy5T',
+    tags: ['React', 'Overmind', 'reach router', 'Bootstrap', 'Typescript'],
+    description:
+      'Learn a different React stack, this frontend framework uses Overmind for state management and @reach/router for navigation.',
+  });
+  console.log([data, ...courses]);
+  // write('courses', [data, ...courses]);
+};
+etl();
