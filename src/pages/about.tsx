@@ -10,9 +10,9 @@ import { Resume } from '../components/resume/resume';
 
 export const AnimateTransition = ({ children }) => {
   const variants = {
-    enter: { opacity: 0, x: 500, scaleY: 0 },
-    visible: { opacity: 1, x: 0, scaleY: 1 },
-    exit: { opacity: 0, x: -500, scaleY: 0 },
+    enter: { opacity: 0, x: 800 },
+    visible: { opacity: 1, x: 0 },
+    exit: { opacity: 0, x: -800 },
   };
   return (
     <motion.div
