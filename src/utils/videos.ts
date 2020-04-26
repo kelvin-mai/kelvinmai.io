@@ -1,17 +1,27 @@
 import slugify from 'slugify';
 
-interface Tutorial {
+interface YoutubeVideoItem {
+  id: {
+    videoId: string;
+  };
+  snippet: {
+    publishedAt: string;
+    title: string;
+  };
+}
+
+interface Video {
   videoId: string;
   title: string;
   publishedAt: string | Date;
+}
+
+interface Tutorial extends Video {
   tags: string[];
 }
 
-interface CourseVideo {
+interface CourseVideo extends Video {
   ordinance: number;
-  videoId: string;
-  title: string;
-  publishedAt: string | Date;
 }
 
 interface Course {
@@ -25,13 +35,35 @@ interface Course {
   videos: CourseVideo[];
 }
 
-export const createTutorial = ({
-  videoId,
-  title,
-  publishedAt,
-  tags,
-}): Tutorial => {
-  return { videoId, title, publishedAt, tags };
+export const videoFromYT = ({
+  id: { videoId },
+  snippet: { title, publishedAt },
+}: YoutubeVideoItem): Video => {
+  return {
+    videoId,
+    title,
+    publishedAt,
+  };
+};
+
+export const createTutorial = (
+  item: YoutubeVideoItem,
+  tags: string[]
+): Tutorial => {
+  return {
+    ...videoFromYT(item),
+    tags,
+  };
+};
+
+export const createCourseVideoYT = (
+  item: YoutubeVideoItem,
+  index: number
+): CourseVideo => {
+  return {
+    ordinance: index,
+    ...videoFromYT(item),
+  };
 };
 
 export const createCourse = ({
@@ -41,7 +73,7 @@ export const createCourse = ({
   tags,
   description,
 }): Course => {
-  const slug = slugify(title);
+  const slug = slugify(title.toLocaleLowerCase());
   const lastUpdated = new Date(
     Math.max(...videos.map(v => new Date(v.publishedAt)))
   );

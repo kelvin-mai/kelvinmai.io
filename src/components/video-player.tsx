@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactPlayer from 'react-player';
+import ReactPlayer from 'react-player/lib/players/YouTube';
 
 export interface Props {
   videoId: string;

@@ -1,5 +1,88 @@
 [
   {
+    "title": "React Conduit",
+    "slug": "react-conduit",
+    "pid": "PLBeQxJQNprbhO7-QgNP2JLicOyUuNdy5T",
+    "lastUpdated": "2020-04-10T07:00:02.000Z",
+    "description": "Learn a different React stack, this frontend framework uses Overmind for state management and @reach/router for navigation.",
+    "image": "react-conduit.jpg",
+    "tags": ["React", "Overmind", "reach router", "Bootstrap", "Typescript"],
+    "videos": [
+      {
+        "ordinance": 0,
+        "videoId": "ECZTGnFaHm4",
+        "title": "React Conduit - Introduction",
+        "publishedAt": "2020-03-31T12:10:04.000Z"
+      },
+      {
+        "ordinance": 1,
+        "videoId": "lq-69Y9IKTM",
+        "title": "React Conduit - [1] Setup Reach Router and Overmind JS",
+        "publishedAt": "2020-03-31T12:34:08.000Z"
+      },
+      {
+        "ordinance": 2,
+        "videoId": "QTNbgQu8844",
+        "title": "React Conduit - [2] Authentication State in OvermindJS",
+        "publishedAt": "2020-04-04T15:00:10.000Z"
+      },
+      {
+        "ordinance": 3,
+        "videoId": "n-PWPqFnbq8",
+        "title": "React Conduit - [3] Authentication Form with Formik",
+        "publishedAt": "2020-04-05T12:00:33.000Z"
+      },
+      {
+        "ordinance": 4,
+        "videoId": "p407XPG66kk",
+        "title": "React Conduit - [4] User Settings and Profiles",
+        "publishedAt": "2020-04-06T12:00:34.000Z"
+      },
+      {
+        "ordinance": 5,
+        "videoId": "alPwzUIVZoc",
+        "title": "React Conduit - [5] User Settings and Profile part 2",
+        "publishedAt": "2020-04-08T07:00:00.000Z"
+      },
+      {
+        "ordinance": 6,
+        "videoId": "D2Fo61g0RWU",
+        "title": "React Conduit - [6] Article Listings",
+        "publishedAt": "2020-04-10T07:00:02.000Z"
+      },
+      {
+        "ordinance": 7,
+        "videoId": "zl4oEmtcJA0",
+        "title": "React Conduit - [7] Article Optimizations",
+        "publishedAt": "2020-04-14T16:51:29.000Z"
+      },
+      {
+        "ordinance": 8,
+        "videoId": "q4d9UxxcVpM",
+        "title": "React Conduit - [8] Articles User Interface",
+        "publishedAt": "2020-04-17T07:00:30.000Z"
+      },
+      {
+        "ordinance": 9,
+        "videoId": "yIzrEAickfQ",
+        "title": "React Conduit - [9] Article Page",
+        "publishedAt": "2020-04-18T07:00:30.000Z"
+      },
+      {
+        "ordinance": 10,
+        "videoId": "BRYjX0O8-m4",
+        "title": "React Conduit - [10] Editor Page",
+        "publishedAt": "2020-04-23T07:00:02.000Z"
+      },
+      {
+        "ordinance": 11,
+        "videoId": "1SMqLtKXloQ",
+        "title": "React Conduit - [11] Adding Comments",
+        "publishedAt": "2020-04-25T07:00:01.000Z"
+      }
+    ]
+  },
+  {
     "title": "NestJS Blog API",
     "slug": "NestJS-Blog-API",
     "pid": "PLBeQxJQNprbjZL5iguWelcxlmWvY4Dmdj",
