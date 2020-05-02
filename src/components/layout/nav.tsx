@@ -100,7 +100,7 @@ export const Nav = () => {
     >
       <motion.div
         className='absolute bg-black top-0 left-0 bottom-0 shadow-lg'
-        style={{ width: '300px', height }}
+        style={{ width: '300px', height: height || '500px' }}
         variants={sidebar}
       />
       <NavItems items={data.pages.nodes} />

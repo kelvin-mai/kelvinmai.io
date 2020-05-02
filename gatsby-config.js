@@ -1,7 +1,7 @@
 module.exports = {
   siteMetadata: {
     title: `Kelvin Mai`,
-    description: `Kick off your next, great Gatsby project with this default starter. This barebones starter ships with the main Gatsby configuration files you might need.`,
+    description: `Kelvin Mai is a self taught full stack developer, aspiring functional programming polyglot, content creator and full time nerd.`,
     author: `Kelvin Mai`,
   },
   plugins: [
