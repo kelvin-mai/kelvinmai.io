@@ -1,5 +1,23 @@
 [
   {
+    "videoId": "dZd9tZe5w3M",
+    "title": "How to use NestJS Config",
+    "publishedAt": "2020-05-13T07:00:12Z",
+    "tags": ["NestJS"]
+  },
+  {
+    "videoId": "Jx-3uMnMuPU",
+    "title": "NestJS GraphQL Authentication",
+    "publishedAt": "2020-05-12T07:00:03Z",
+    "tags": ["NestJS", "GraphQL"]
+  },
+  {
+    "videoId": "q4zlpiGtOxY",
+    "title": "NestJS Schema First GraphQL Server",
+    "publishedAt": "2020-05-07T07:00:26Z",
+    "tags": ["NestJS", "GraphQL"]
+  },
+  {
     "videoId": "r0TP4DdXeIk",
     "title": "Swagger in NestJS",
     "publishedAt": "2020-03-26T08:00:00.000Z",

@@ -31,20 +31,11 @@ const getLatestVideos = async (length: number = 1) => {
 // write interactive code below
 // yarn etl || npm run etl
 const etl = async () => {
-  const fromYT = await getLatestVideos(8);
+  const fromYT = await getLatestVideos(3);
   const videos = fromYT.items
     .reverse()
-    .filter(v => v.id.videoId !== 'Vh_Oy2DHJlI')
-    .map(createCourseVideoYT);
-  const data = createCourse({
-    title: 'React Conduit',
-    videos,
-    pid: 'PLBeQxJQNprbhO7-QgNP2JLicOyUuNdy5T',
-    tags: ['React', 'Overmind', 'reach router', 'Bootstrap', 'Typescript'],
-    description:
-      'Learn a different React stack, this frontend framework uses Overmind for state management and @reach/router for navigation.',
-  });
-  console.log([data, ...courses]);
-  // write('courses', [data, ...courses]);
+    .map(v => createTutorial(v, ['NestJS', 'GraphQL']));
+  console.log(videos.concat(tutorials));
+  write('tutorials', videos.concat(tutorials));
 };
 etl();
