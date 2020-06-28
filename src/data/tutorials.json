@@ -1,5 +1,41 @@
 [
   {
+    "videoId": "IEE6wwZ3_9s",
+    "title": "Local Databases with Docker and Docker Compose",
+    "publishedAt": "2020-06-15T07:00:10Z",
+    "tags": ["Docker", "MongoDB", "PostgreSQL"]
+  },
+  {
+    "videoId": "H6X6AJZna98",
+    "title": "Weather App in ReasonML and React",
+    "publishedAt": "2020-06-12T07:00:05Z",
+    "tags": ["ReasonML", "React"]
+  },
+  {
+    "videoId": "0CMmML7Q6Ds",
+    "title": "How to Set Up webpack for ReasonML and React",
+    "publishedAt": "2020-06-10T07:00:00Z",
+    "tags": ["ReasonML", "webpack", "react"]
+  },
+  {
+    "videoId": "ntMezAkFPYM",
+    "title": "Typing Speed Test with React Context",
+    "publishedAt": "2020-06-08T07:00:14Z",
+    "tags": ["React"]
+  },
+  {
+    "videoId": "8ftCqZ2-7cQ",
+    "title": "Pomodoro Timer with ReasonML and React Hooks",
+    "publishedAt": "2020-06-01T07:00:03Z",
+    "tags": ["ReasonML", "React"]
+  },
+  {
+    "videoId": "wN0YpP8Ckpc",
+    "title": "Recoil State Management for React",
+    "publishedAt": "2020-05-19T07:00:11Z",
+    "tags": ["React", "recoil"]
+  },
+  {
     "videoId": "dZd9tZe5w3M",
     "title": "How to use NestJS Config",
     "publishedAt": "2020-05-13T07:00:12Z",
