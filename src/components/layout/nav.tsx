@@ -79,7 +79,7 @@ export const NavItems = ({ items }) => {
       variants={variants}
     >
       {items.map(item => (
-        <NavItem to={item.to} name={item.name} />
+        <NavItem key={item.name} to={item.to} name={item.name} />
       ))}
     </motion.ul>
   );

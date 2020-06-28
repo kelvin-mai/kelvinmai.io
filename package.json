@@ -11,6 +11,7 @@
     "framer-motion": "^1.9.1",
     "gatsby": "^2.19.7",
     "gatsby-image": "^2.2.39",
+    "gatsby-plugin-graphql-codegen": "^2.7.1",
     "gatsby-plugin-purgecss": "^5.0.0",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",

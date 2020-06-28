@@ -35,12 +35,11 @@ export const LatestCourses = () => {
       image => image.relativePath === `courses/${course.image}`
     ),
   }));
-  console.log(courses);
   return (
     <div className='grid grid-cols-1 sm:grid-cols-2 sm:grid-rows-1 gap-8 w-5/6 lg:w-2/3 mx-auto'>
       {courses.map(course => (
         <ExternalLink
-          key={course.id}
+          key={course.pid}
           href={`https://www.youtube.com/playlist?list=${course.pid}`}
         >
           <Img

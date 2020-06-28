@@ -1,5 +1,40 @@
 [
   {
+    "title": "Angular Countries",
+    "slug": "angular-countries",
+    "pid": "PLBeQxJQNprbhUlUVzLimbu2NS3iCxnPi_",
+    "lastUpdated": "2020-06-22T07:00:03Z",
+    "description": "In this video series, take on the frontend mentor challenge to do the countries REST api application with Angular.",
+    "image": "angular-countries.png",
+    "tags": ["Angular", "RxJS"],
+    "videos": [
+      {
+        "ordinance": 0,
+        "videoId": "4nMpvb12Uo8",
+        "title": "Angular Countries - [1] Setup and Theming",
+        "publishedAt": "2020-06-17T07:00:02Z"
+      },
+      {
+        "ordinance": 1,
+        "videoId": "YkVShyTILpY",
+        "title": "Angular Countries - [2] Api Service",
+        "publishedAt": "2020-06-19T07:00:16Z"
+      },
+      {
+        "ordinance": 2,
+        "videoId": "hXXwm0QRTEU",
+        "title": "Angular Countries - [3] Page Styling",
+        "publishedAt": "2020-06-20T07:00:12Z"
+      },
+      {
+        "ordinance": 3,
+        "videoId": "4ekenSY6jac",
+        "title": "Angular Countries - [4] Filter Options",
+        "publishedAt": "2020-06-22T07:00:03Z"
+      }
+    ]
+  },
+  {
     "title": "React Conduit",
     "slug": "react-conduit",
     "pid": "PLBeQxJQNprbhO7-QgNP2JLicOyUuNdy5T",
