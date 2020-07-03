@@ -11,13 +11,13 @@ import {
   createTutorial,
 } from './utils/videos';
 
-const [resume] = require('./data/resume.json');
-const courses = require('./data/courses.json');
-const tutorials = require('./data/tutorials.json');
+const [resume] = require('../data/resume.json');
+const courses = require('../data/courses.json');
+const tutorials = require('../data/tutorials.json');
 
 const write = (file: string, data: any) =>
   fs.writeFileSync(
-    path.resolve(__dirname, `./data/${file}.json`),
+    path.resolve(__dirname, `../data/${file}.json`),
     toJSON(data)
   );
 

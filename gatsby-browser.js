@@ -1,2 +1,3 @@
-import './src/styles/tailwind.css';
-import './src/styles/index.css';
+import './assets/styles/tailwind.css';
+import './assets/styles/index.css';
+import './assets/styles/prism-dracula.css';

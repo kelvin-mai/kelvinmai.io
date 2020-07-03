@@ -27,6 +27,7 @@ const query = graphql`
 
 export const TutorialList: React.FC<Props> = () => {
   const data = useStaticQuery(query);
+  console.log(data);
   return (
     <ul className='bg-white md:rounded-md md:my-4'>
       {data.tutorials.nodes.map(tutorial => (

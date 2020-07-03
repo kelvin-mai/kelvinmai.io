@@ -1,6 +1,6 @@
 import React from 'react';
 
-import bgImage from '../../assets/images/bg.jpg';
+import bgImage from '../../../assets/images/bg.jpg';
 import { HeroCard } from './hero-card';
 
 export const HeroSection = () => (

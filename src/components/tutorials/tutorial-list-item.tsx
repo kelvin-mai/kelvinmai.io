@@ -1,8 +1,8 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Link } from 'gatsby';
 
 import { Img } from '../image';
+import { ExternalLink } from '../external-link';
 import { ImageData } from '../../types';
 
 interface Props {
@@ -33,17 +33,19 @@ export const TutorialListItem: React.FC<Props> = ({
     className='w-full flex justify-between py-4 px-2 text-dark border-b border-purple first:border-b-0 hover:shadow-2xl'
   >
     <div className='w-1/2 md:w-1/4'>
-      <Link to={`/tutorials/${videoId}`}>
+      <ExternalLink href={`https://www.youtube.com/watch?v=${videoId}`}>
         <Img
           className='w-full rounded-lg hover:shadow-md'
           imageSrc={thumbnailImage.childImageSharp.fluid}
         />
-      </Link>
+      </ExternalLink>
     </div>
     <div className='flex flex-col justify-between flex-grow ml-4'>
       <div>
         <h3 className='text-dark-purple text-lg font-bold'>
-          <Link to={`/tutorials/${videoId}`}>{title}</Link>
+          <ExternalLink href={`https://www.youtube.com/watch?v=${videoId}`}>
+            {title}
+          </ExternalLink>
         </h3>
         <p>{publishedAt}</p>
       </div>

@@ -1,5 +1,11 @@
 [
   {
+    "videoId": "feNNPKHCYFg",
+    "title": "Deno REST API with Dactyl and DenoDB",
+    "publishedAt": "2020-06-29T07:00:14Z",
+    "tags": ["deno", "typescript"]
+  },
+  {
     "videoId": "IEE6wwZ3_9s",
     "title": "Local Databases with Docker and Docker Compose",
     "publishedAt": "2020-06-15T07:00:10Z",

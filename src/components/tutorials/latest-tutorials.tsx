@@ -1,7 +1,8 @@
 import React from 'react';
-import { useStaticQuery, graphql, Link } from 'gatsby';
+import { useStaticQuery, graphql } from 'gatsby';
 
 import { Img } from '../image';
+import { ExternalLink } from '../external-link';
 
 const query = graphql`
   query {
@@ -34,12 +35,15 @@ export const LatestTutorials = () => {
         </div>
         <div className='grid grid-cols-2 md:grid-cols-4 gap-8 pb-8'>
           {nodes.map(tutorial => (
-            <Link key={tutorial.id} to={`/tutorials/${tutorial.videoId}`}>
+            <ExternalLink
+              key={tutorial.id}
+              href={`https://www.youtube.com/watch?v=${tutorial.videoId}`}
+            >
               <Img
                 className='w-auto h-auto rounded-lg shadow-md'
                 imageSrc={tutorial.thumbnailImage.childImageSharp.fluid}
               />
-            </Link>
+            </ExternalLink>
           ))}
         </div>
       </div>
