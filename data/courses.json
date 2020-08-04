@@ -1,5 +1,58 @@
 [
   {
+    "title": "Full Stack Clojure Contact Book",
+    "slug": "full-stack-clojure-contact-book",
+    "pid": "PLBeQxJQNprbgkmvbv80xC8R0SHcPsosjZ",
+    "lastUpdated": "2020-08-03T16:00:15.000Z",
+    "description": "",
+    "image": "fullstack-clj.png",
+    "tags": ["clojure"],
+    "videos": [
+      {
+        "ordinance": 2,
+        "videoId": "R5YZRfABbWY",
+        "title": "Full Stack Clojure Contact Book - [1] Reitit Ring Set Up",
+        "publishedAt": "2020-07-13T07:00:04Z"
+      },
+      {
+        "ordinance": 3,
+        "videoId": "2_Pd6QeFqYs",
+        "title": "Full Stack Clojure Contact Book - [2] HugSQL Configuration",
+        "publishedAt": "2020-07-15T07:00:00Z"
+      },
+      {
+        "ordinance": 4,
+        "videoId": "dMB-EWpR_Cw",
+        "title": "Full Stack Clojure Contact Book - [3] API Endpoints",
+        "publishedAt": "2020-07-17T07:00:16Z"
+      },
+      {
+        "ordinance": 5,
+        "videoId": "Jf94HNmCXyU",
+        "title": "Full Stack Clojure Contact Book - [4] Front End Preparation",
+        "publishedAt": "2020-07-20T07:00:03Z"
+      },
+      {
+        "ordinance": 6,
+        "videoId": "PDtv-CL0XeI",
+        "title": "Full Stack Clojure Contact Book - [5] React Components",
+        "publishedAt": "2020-07-27T16:00:12Z"
+      },
+      {
+        "ordinance": 7,
+        "videoId": "PRDP5ba8lPU",
+        "title": "Full Stack Clojure Contact Book - [6] State Management",
+        "publishedAt": "2020-07-31T16:00:07Z"
+      },
+      {
+        "ordinance": 8,
+        "videoId": "p8d9VtrdZ7Y",
+        "title": "Full Stack Clojure Contact Book - [7] Final Integration",
+        "publishedAt": "2020-08-03T16:00:15Z"
+      }
+    ]
+  },
+  {
     "title": "Angular Countries",
     "slug": "angular-countries",
     "pid": "PLBeQxJQNprbhUlUVzLimbu2NS3iCxnPi_",

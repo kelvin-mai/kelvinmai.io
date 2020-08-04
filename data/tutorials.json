@@ -1,5 +1,17 @@
 [
   {
+    "videoId": "p61lhOvQg2Q",
+    "title": "Full Stack Clojure Contact Book",
+    "publishedAt": "2020-07-10T05:49:57Z",
+    "tags": ["clojure", "ClojureScript"]
+  },
+  {
+    "videoId": "3AWXM8CN6FA",
+    "title": "Introduction to Clojure Ring",
+    "publishedAt": "2020-07-10T07:00:00Z",
+    "tags": ["clojure"]
+  },
+  {
     "videoId": "feNNPKHCYFg",
     "title": "Deno REST API with Dactyl and DenoDB",
     "publishedAt": "2020-06-29T07:00:14Z",

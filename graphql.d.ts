@@ -608,9 +608,9 @@ export type File = Node & {
   children: Array<Node>;
   internal: Internal;
   childrenCoursesJson?: Maybe<Array<Maybe<CoursesJson>>>;
-  childrenPageLinksJson?: Maybe<Array<Maybe<PageLinksJson>>>;
-  childrenTutorialsJson?: Maybe<Array<Maybe<TutorialsJson>>>;
   childResumeJson?: Maybe<ResumeJson>;
+  childrenTutorialsJson?: Maybe<Array<Maybe<TutorialsJson>>>;
+  childrenPageLinksJson?: Maybe<Array<Maybe<PageLinksJson>>>;
   childrenUsesJson?: Maybe<Array<Maybe<UsesJson>>>;
   childMdx?: Maybe<Mdx>;
 };
@@ -963,47 +963,71 @@ export type FileFieldsEnum =
   | 'childrenCoursesJson___internal___mediaType'
   | 'childrenCoursesJson___internal___owner'
   | 'childrenCoursesJson___internal___type'
-  | 'childrenPageLinksJson'
-  | 'childrenPageLinksJson___id'
-  | 'childrenPageLinksJson___parent___id'
-  | 'childrenPageLinksJson___parent___parent___id'
-  | 'childrenPageLinksJson___parent___parent___children'
-  | 'childrenPageLinksJson___parent___children'
-  | 'childrenPageLinksJson___parent___children___id'
-  | 'childrenPageLinksJson___parent___children___children'
-  | 'childrenPageLinksJson___parent___internal___content'
-  | 'childrenPageLinksJson___parent___internal___contentDigest'
-  | 'childrenPageLinksJson___parent___internal___description'
-  | 'childrenPageLinksJson___parent___internal___fieldOwners'
-  | 'childrenPageLinksJson___parent___internal___ignoreType'
-  | 'childrenPageLinksJson___parent___internal___mediaType'
-  | 'childrenPageLinksJson___parent___internal___owner'
-  | 'childrenPageLinksJson___parent___internal___type'
-  | 'childrenPageLinksJson___children'
-  | 'childrenPageLinksJson___children___id'
-  | 'childrenPageLinksJson___children___parent___id'
-  | 'childrenPageLinksJson___children___parent___children'
-  | 'childrenPageLinksJson___children___children'
-  | 'childrenPageLinksJson___children___children___id'
-  | 'childrenPageLinksJson___children___children___children'
-  | 'childrenPageLinksJson___children___internal___content'
-  | 'childrenPageLinksJson___children___internal___contentDigest'
-  | 'childrenPageLinksJson___children___internal___description'
-  | 'childrenPageLinksJson___children___internal___fieldOwners'
-  | 'childrenPageLinksJson___children___internal___ignoreType'
-  | 'childrenPageLinksJson___children___internal___mediaType'
-  | 'childrenPageLinksJson___children___internal___owner'
-  | 'childrenPageLinksJson___children___internal___type'
-  | 'childrenPageLinksJson___internal___content'
-  | 'childrenPageLinksJson___internal___contentDigest'
-  | 'childrenPageLinksJson___internal___description'
-  | 'childrenPageLinksJson___internal___fieldOwners'
-  | 'childrenPageLinksJson___internal___ignoreType'
-  | 'childrenPageLinksJson___internal___mediaType'
-  | 'childrenPageLinksJson___internal___owner'
-  | 'childrenPageLinksJson___internal___type'
-  | 'childrenPageLinksJson___to'
-  | 'childrenPageLinksJson___name'
+  | 'childResumeJson___id'
+  | 'childResumeJson___parent___id'
+  | 'childResumeJson___parent___parent___id'
+  | 'childResumeJson___parent___parent___children'
+  | 'childResumeJson___parent___children'
+  | 'childResumeJson___parent___children___id'
+  | 'childResumeJson___parent___children___children'
+  | 'childResumeJson___parent___internal___content'
+  | 'childResumeJson___parent___internal___contentDigest'
+  | 'childResumeJson___parent___internal___description'
+  | 'childResumeJson___parent___internal___fieldOwners'
+  | 'childResumeJson___parent___internal___ignoreType'
+  | 'childResumeJson___parent___internal___mediaType'
+  | 'childResumeJson___parent___internal___owner'
+  | 'childResumeJson___parent___internal___type'
+  | 'childResumeJson___children'
+  | 'childResumeJson___children___id'
+  | 'childResumeJson___children___parent___id'
+  | 'childResumeJson___children___parent___children'
+  | 'childResumeJson___children___children'
+  | 'childResumeJson___children___children___id'
+  | 'childResumeJson___children___children___children'
+  | 'childResumeJson___children___internal___content'
+  | 'childResumeJson___children___internal___contentDigest'
+  | 'childResumeJson___children___internal___description'
+  | 'childResumeJson___children___internal___fieldOwners'
+  | 'childResumeJson___children___internal___ignoreType'
+  | 'childResumeJson___children___internal___mediaType'
+  | 'childResumeJson___children___internal___owner'
+  | 'childResumeJson___children___internal___type'
+  | 'childResumeJson___internal___content'
+  | 'childResumeJson___internal___contentDigest'
+  | 'childResumeJson___internal___description'
+  | 'childResumeJson___internal___fieldOwners'
+  | 'childResumeJson___internal___ignoreType'
+  | 'childResumeJson___internal___mediaType'
+  | 'childResumeJson___internal___owner'
+  | 'childResumeJson___internal___type'
+  | 'childResumeJson___basics___name'
+  | 'childResumeJson___basics___label'
+  | 'childResumeJson___basics___email'
+  | 'childResumeJson___basics___url'
+  | 'childResumeJson___basics___summary'
+  | 'childResumeJson___basics___location___city'
+  | 'childResumeJson___basics___location___countryCode'
+  | 'childResumeJson___basics___location___region'
+  | 'childResumeJson___basics___profiles'
+  | 'childResumeJson___basics___profiles___network'
+  | 'childResumeJson___basics___profiles___url'
+  | 'childResumeJson___basics___profiles___username'
+  | 'childResumeJson___work'
+  | 'childResumeJson___work___name'
+  | 'childResumeJson___work___location'
+  | 'childResumeJson___work___image'
+  | 'childResumeJson___work___position'
+  | 'childResumeJson___work___startDate'
+  | 'childResumeJson___work___endDate'
+  | 'childResumeJson___work___summary'
+  | 'childResumeJson___work___highlights'
+  | 'childResumeJson___education'
+  | 'childResumeJson___education___institution'
+  | 'childResumeJson___education___area'
+  | 'childResumeJson___education___location'
+  | 'childResumeJson___education___startDate'
+  | 'childResumeJson___education___endDate'
   | 'childrenTutorialsJson'
   | 'childrenTutorialsJson___publishedAt'
   | 'childrenTutorialsJson___thumbnail'
@@ -1072,11 +1096,10 @@ export type FileFieldsEnum =
   | 'childrenTutorialsJson___thumbnailImage___childrenCoursesJson___tags'
   | 'childrenTutorialsJson___thumbnailImage___childrenCoursesJson___id'
   | 'childrenTutorialsJson___thumbnailImage___childrenCoursesJson___children'
-  | 'childrenTutorialsJson___thumbnailImage___childrenPageLinksJson'
-  | 'childrenTutorialsJson___thumbnailImage___childrenPageLinksJson___id'
-  | 'childrenTutorialsJson___thumbnailImage___childrenPageLinksJson___children'
-  | 'childrenTutorialsJson___thumbnailImage___childrenPageLinksJson___to'
-  | 'childrenTutorialsJson___thumbnailImage___childrenPageLinksJson___name'
+  | 'childrenTutorialsJson___thumbnailImage___childResumeJson___id'
+  | 'childrenTutorialsJson___thumbnailImage___childResumeJson___children'
+  | 'childrenTutorialsJson___thumbnailImage___childResumeJson___work'
+  | 'childrenTutorialsJson___thumbnailImage___childResumeJson___education'
   | 'childrenTutorialsJson___thumbnailImage___childrenTutorialsJson'
   | 'childrenTutorialsJson___thumbnailImage___childrenTutorialsJson___publishedAt'
   | 'childrenTutorialsJson___thumbnailImage___childrenTutorialsJson___thumbnail'
@@ -1085,10 +1108,11 @@ export type FileFieldsEnum =
   | 'childrenTutorialsJson___thumbnailImage___childrenTutorialsJson___tags'
   | 'childrenTutorialsJson___thumbnailImage___childrenTutorialsJson___id'
   | 'childrenTutorialsJson___thumbnailImage___childrenTutorialsJson___children'
-  | 'childrenTutorialsJson___thumbnailImage___childResumeJson___id'
-  | 'childrenTutorialsJson___thumbnailImage___childResumeJson___children'
-  | 'childrenTutorialsJson___thumbnailImage___childResumeJson___work'
-  | 'childrenTutorialsJson___thumbnailImage___childResumeJson___education'
+  | 'childrenTutorialsJson___thumbnailImage___childrenPageLinksJson'
+  | 'childrenTutorialsJson___thumbnailImage___childrenPageLinksJson___id'
+  | 'childrenTutorialsJson___thumbnailImage___childrenPageLinksJson___children'
+  | 'childrenTutorialsJson___thumbnailImage___childrenPageLinksJson___to'
+  | 'childrenTutorialsJson___thumbnailImage___childrenPageLinksJson___name'
   | 'childrenTutorialsJson___thumbnailImage___childrenUsesJson'
   | 'childrenTutorialsJson___thumbnailImage___childrenUsesJson___id'
   | 'childrenTutorialsJson___thumbnailImage___childrenUsesJson___children'
@@ -1143,71 +1167,47 @@ export type FileFieldsEnum =
   | 'childrenTutorialsJson___internal___mediaType'
   | 'childrenTutorialsJson___internal___owner'
   | 'childrenTutorialsJson___internal___type'
-  | 'childResumeJson___id'
-  | 'childResumeJson___parent___id'
-  | 'childResumeJson___parent___parent___id'
-  | 'childResumeJson___parent___parent___children'
-  | 'childResumeJson___parent___children'
-  | 'childResumeJson___parent___children___id'
-  | 'childResumeJson___parent___children___children'
-  | 'childResumeJson___parent___internal___content'
-  | 'childResumeJson___parent___internal___contentDigest'
-  | 'childResumeJson___parent___internal___description'
-  | 'childResumeJson___parent___internal___fieldOwners'
-  | 'childResumeJson___parent___internal___ignoreType'
-  | 'childResumeJson___parent___internal___mediaType'
-  | 'childResumeJson___parent___internal___owner'
-  | 'childResumeJson___parent___internal___type'
-  | 'childResumeJson___children'
-  | 'childResumeJson___children___id'
-  | 'childResumeJson___children___parent___id'
-  | 'childResumeJson___children___parent___children'
-  | 'childResumeJson___children___children'
-  | 'childResumeJson___children___children___id'
-  | 'childResumeJson___children___children___children'
-  | 'childResumeJson___children___internal___content'
-  | 'childResumeJson___children___internal___contentDigest'
-  | 'childResumeJson___children___internal___description'
-  | 'childResumeJson___children___internal___fieldOwners'
-  | 'childResumeJson___children___internal___ignoreType'
-  | 'childResumeJson___children___internal___mediaType'
-  | 'childResumeJson___children___internal___owner'
-  | 'childResumeJson___children___internal___type'
-  | 'childResumeJson___internal___content'
-  | 'childResumeJson___internal___contentDigest'
-  | 'childResumeJson___internal___description'
-  | 'childResumeJson___internal___fieldOwners'
-  | 'childResumeJson___internal___ignoreType'
-  | 'childResumeJson___internal___mediaType'
-  | 'childResumeJson___internal___owner'
-  | 'childResumeJson___internal___type'
-  | 'childResumeJson___basics___name'
-  | 'childResumeJson___basics___label'
-  | 'childResumeJson___basics___email'
-  | 'childResumeJson___basics___url'
-  | 'childResumeJson___basics___summary'
-  | 'childResumeJson___basics___location___city'
-  | 'childResumeJson___basics___location___countryCode'
-  | 'childResumeJson___basics___location___region'
-  | 'childResumeJson___basics___profiles'
-  | 'childResumeJson___basics___profiles___network'
-  | 'childResumeJson___basics___profiles___url'
-  | 'childResumeJson___basics___profiles___username'
-  | 'childResumeJson___work'
-  | 'childResumeJson___work___name'
-  | 'childResumeJson___work___location'
-  | 'childResumeJson___work___image'
-  | 'childResumeJson___work___position'
-  | 'childResumeJson___work___startDate'
-  | 'childResumeJson___work___endDate'
-  | 'childResumeJson___work___summary'
-  | 'childResumeJson___work___highlights'
-  | 'childResumeJson___education'
-  | 'childResumeJson___education___institution'
-  | 'childResumeJson___education___area'
-  | 'childResumeJson___education___location'
-  | 'childResumeJson___education___startDate'
-  | 'childResumeJson___education___endDate'
+  | 'childrenPageLinksJson'
+  | 'childrenPageLinksJson___id'
+  | 'childrenPageLinksJson___parent___id'
+  | 'childrenPageLinksJson___parent___parent___id'
+  | 'childrenPageLinksJson___parent___parent___children'
+  | 'childrenPageLinksJson___parent___children'
+  | 'childrenPageLinksJson___parent___children___id'
+  | 'childrenPageLinksJson___parent___children___children'
+  | 'childrenPageLinksJson___parent___internal___content'
+  | 'childrenPageLinksJson___parent___internal___contentDigest'
+  | 'childrenPageLinksJson___parent___internal___description'
+  | 'childrenPageLinksJson___parent___internal___fieldOwners'
+  | 'childrenPageLinksJson___parent___internal___ignoreType'
+  | 'childrenPageLinksJson___parent___internal___mediaType'
+  | 'childrenPageLinksJson___parent___internal___owner'
+  | 'childrenPageLinksJson___parent___internal___type'
+  | 'childrenPageLinksJson___children'
+  | 'childrenPageLinksJson___children___id'
+  | 'childrenPageLinksJson___children___parent___id'
+  | 'childrenPageLinksJson___children___parent___children'
+  | 'childrenPageLinksJson___children___children'
+  | 'childrenPageLinksJson___children___children___id'
+  | 'childrenPageLinksJson___children___children___children'
+  | 'childrenPageLinksJson___children___internal___content'
+  | 'childrenPageLinksJson___children___internal___contentDigest'
+  | 'childrenPageLinksJson___children___internal___description'
+  | 'childrenPageLinksJson___children___internal___fieldOwners'
+  | 'childrenPageLinksJson___children___internal___ignoreType'
+  | 'childrenPageLinksJson___children___internal___mediaType'
+  | 'childrenPageLinksJson___children___internal___owner'
+  | 'childrenPageLinksJson___children___internal___type'
+  | 'childrenPageLinksJson___internal___content'
+  | 'childrenPageLinksJson___internal___contentDigest'
+  | 'childrenPageLinksJson___internal___description'
+  | 'childrenPageLinksJson___internal___fieldOwners'
+  | 'childrenPageLinksJson___internal___ignoreType'
+  | 'childrenPageLinksJson___internal___mediaType'
+  | 'childrenPageLinksJson___internal___owner'
+  | 'childrenPageLinksJson___internal___type'
+  | 'childrenPageLinksJson___to'
+  | 'childrenPageLinksJson___name'
   | 'childrenUsesJson'
   | 'childrenUsesJson___id'
   | 'childrenUsesJson___parent___id'
@@ -1348,9 +1348,9 @@ export type FileFilterInput = {
   children?: Maybe<NodeFilterListInput>;
   internal?: Maybe<InternalFilterInput>;
   childrenCoursesJson?: Maybe<CoursesJsonFilterListInput>;
-  childrenPageLinksJson?: Maybe<PageLinksJsonFilterListInput>;
-  childrenTutorialsJson?: Maybe<TutorialsJsonFilterListInput>;
   childResumeJson?: Maybe<ResumeJsonFilterInput>;
+  childrenTutorialsJson?: Maybe<TutorialsJsonFilterListInput>;
+  childrenPageLinksJson?: Maybe<PageLinksJsonFilterListInput>;
   childrenUsesJson?: Maybe<UsesJsonFilterListInput>;
   childMdx?: Maybe<MdxFilterInput>;
 };
@@ -2379,10 +2379,10 @@ export type Query = {
   allCoursesJson: CoursesJsonConnection;
   usesJson?: Maybe<UsesJson>;
   allUsesJson: UsesJsonConnection;
-  resumeJson?: Maybe<ResumeJson>;
-  allResumeJson: ResumeJsonConnection;
   pageLinksJson?: Maybe<PageLinksJson>;
   allPageLinksJson: PageLinksJsonConnection;
+  resumeJson?: Maybe<ResumeJson>;
+  allResumeJson: ResumeJsonConnection;
   siteBuildMetadata?: Maybe<SiteBuildMetadata>;
   allSiteBuildMetadata: SiteBuildMetadataConnection;
   sitePlugin?: Maybe<SitePlugin>;
@@ -2432,9 +2432,9 @@ export type QueryFileArgs = {
   children?: Maybe<NodeFilterListInput>;
   internal?: Maybe<InternalFilterInput>;
   childrenCoursesJson?: Maybe<CoursesJsonFilterListInput>;
-  childrenPageLinksJson?: Maybe<PageLinksJsonFilterListInput>;
-  childrenTutorialsJson?: Maybe<TutorialsJsonFilterListInput>;
   childResumeJson?: Maybe<ResumeJsonFilterInput>;
+  childrenTutorialsJson?: Maybe<TutorialsJsonFilterListInput>;
+  childrenPageLinksJson?: Maybe<PageLinksJsonFilterListInput>;
   childrenUsesJson?: Maybe<UsesJsonFilterListInput>;
   childMdx?: Maybe<MdxFilterInput>;
 };
@@ -2503,14 +2503,14 @@ export type QuerySitePageArgs = {
   internalComponentName?: Maybe<StringQueryOperatorInput>;
   componentChunkName?: Maybe<StringQueryOperatorInput>;
   matchPath?: Maybe<StringQueryOperatorInput>;
-  id?: Maybe<StringQueryOperatorInput>;
-  parent?: Maybe<NodeFilterInput>;
-  children?: Maybe<NodeFilterListInput>;
-  internal?: Maybe<InternalFilterInput>;
   isCreatedByStatefulCreatePages?: Maybe<BooleanQueryOperatorInput>;
   pluginCreator?: Maybe<SitePluginFilterInput>;
   pluginCreatorId?: Maybe<StringQueryOperatorInput>;
   componentPath?: Maybe<StringQueryOperatorInput>;
+  id?: Maybe<StringQueryOperatorInput>;
+  parent?: Maybe<NodeFilterInput>;
+  children?: Maybe<NodeFilterListInput>;
+  internal?: Maybe<InternalFilterInput>;
 };
 
 
@@ -2527,8 +2527,6 @@ export type QuerySiteArgs = {
   siteMetadata?: Maybe<SiteSiteMetadataFilterInput>;
   port?: Maybe<DateQueryOperatorInput>;
   host?: Maybe<StringQueryOperatorInput>;
-  polyfill?: Maybe<BooleanQueryOperatorInput>;
-  pathPrefix?: Maybe<StringQueryOperatorInput>;
   id?: Maybe<StringQueryOperatorInput>;
   parent?: Maybe<NodeFilterInput>;
   children?: Maybe<NodeFilterListInput>;
@@ -2657,6 +2655,24 @@ export type QueryAllUsesJsonArgs = {
 };
 
 
+export type QueryPageLinksJsonArgs = {
+  id?: Maybe<StringQueryOperatorInput>;
+  parent?: Maybe<NodeFilterInput>;
+  children?: Maybe<NodeFilterListInput>;
+  internal?: Maybe<InternalFilterInput>;
+  to?: Maybe<StringQueryOperatorInput>;
+  name?: Maybe<StringQueryOperatorInput>;
+};
+
+
+export type QueryAllPageLinksJsonArgs = {
+  filter?: Maybe<PageLinksJsonFilterInput>;
+  sort?: Maybe<PageLinksJsonSortInput>;
+  skip?: Maybe<Scalars['Int']>;
+  limit?: Maybe<Scalars['Int']>;
+};
+
+
 export type QueryResumeJsonArgs = {
   id?: Maybe<StringQueryOperatorInput>;
   parent?: Maybe<NodeFilterInput>;
@@ -2671,24 +2687,6 @@ export type QueryResumeJsonArgs = {
 export type QueryAllResumeJsonArgs = {
   filter?: Maybe<ResumeJsonFilterInput>;
   sort?: Maybe<ResumeJsonSortInput>;
-  skip?: Maybe<Scalars['Int']>;
-  limit?: Maybe<Scalars['Int']>;
-};
-
-
-export type QueryPageLinksJsonArgs = {
-  id?: Maybe<StringQueryOperatorInput>;
-  parent?: Maybe<NodeFilterInput>;
-  children?: Maybe<NodeFilterListInput>;
-  internal?: Maybe<InternalFilterInput>;
-  to?: Maybe<StringQueryOperatorInput>;
-  name?: Maybe<StringQueryOperatorInput>;
-};
-
-
-export type QueryAllPageLinksJsonArgs = {
-  filter?: Maybe<PageLinksJsonFilterInput>;
-  sort?: Maybe<PageLinksJsonSortInput>;
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
 };
@@ -3042,8 +3040,6 @@ export type Site = Node & {
   siteMetadata?: Maybe<SiteSiteMetadata>;
   port?: Maybe<Scalars['Date']>;
   host?: Maybe<Scalars['String']>;
-  polyfill?: Maybe<Scalars['Boolean']>;
-  pathPrefix?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
   parent?: Maybe<Node>;
   children: Array<Node>;
@@ -3256,8 +3252,6 @@ export type SiteFieldsEnum =
   | 'siteMetadata___keywords'
   | 'port'
   | 'host'
-  | 'polyfill'
-  | 'pathPrefix'
   | 'id'
   | 'parent___id'
   | 'parent___parent___id'
@@ -3350,8 +3344,6 @@ export type SiteFilterInput = {
   siteMetadata?: Maybe<SiteSiteMetadataFilterInput>;
   port?: Maybe<DateQueryOperatorInput>;
   host?: Maybe<StringQueryOperatorInput>;
-  polyfill?: Maybe<BooleanQueryOperatorInput>;
-  pathPrefix?: Maybe<StringQueryOperatorInput>;
   id?: Maybe<StringQueryOperatorInput>;
   parent?: Maybe<NodeFilterInput>;
   children?: Maybe<NodeFilterListInput>;
@@ -3373,14 +3365,14 @@ export type SitePage = Node & {
   internalComponentName: Scalars['String'];
   componentChunkName: Scalars['String'];
   matchPath?: Maybe<Scalars['String']>;
-  id: Scalars['ID'];
-  parent?: Maybe<Node>;
-  children: Array<Node>;
-  internal: Internal;
   isCreatedByStatefulCreatePages?: Maybe<Scalars['Boolean']>;
   pluginCreator?: Maybe<SitePlugin>;
   pluginCreatorId?: Maybe<Scalars['String']>;
   componentPath?: Maybe<Scalars['String']>;
+  id: Scalars['ID'];
+  parent?: Maybe<Node>;
+  children: Array<Node>;
+  internal: Internal;
 };
 
 export type SitePageConnection = {
@@ -3416,92 +3408,6 @@ export type SitePageFieldsEnum =
   | 'internalComponentName'
   | 'componentChunkName'
   | 'matchPath'
-  | 'id'
-  | 'parent___id'
-  | 'parent___parent___id'
-  | 'parent___parent___parent___id'
-  | 'parent___parent___parent___children'
-  | 'parent___parent___children'
-  | 'parent___parent___children___id'
-  | 'parent___parent___children___children'
-  | 'parent___parent___internal___content'
-  | 'parent___parent___internal___contentDigest'
-  | 'parent___parent___internal___description'
-  | 'parent___parent___internal___fieldOwners'
-  | 'parent___parent___internal___ignoreType'
-  | 'parent___parent___internal___mediaType'
-  | 'parent___parent___internal___owner'
-  | 'parent___parent___internal___type'
-  | 'parent___children'
-  | 'parent___children___id'
-  | 'parent___children___parent___id'
-  | 'parent___children___parent___children'
-  | 'parent___children___children'
-  | 'parent___children___children___id'
-  | 'parent___children___children___children'
-  | 'parent___children___internal___content'
-  | 'parent___children___internal___contentDigest'
-  | 'parent___children___internal___description'
-  | 'parent___children___internal___fieldOwners'
-  | 'parent___children___internal___ignoreType'
-  | 'parent___children___internal___mediaType'
-  | 'parent___children___internal___owner'
-  | 'parent___children___internal___type'
-  | 'parent___internal___content'
-  | 'parent___internal___contentDigest'
-  | 'parent___internal___description'
-  | 'parent___internal___fieldOwners'
-  | 'parent___internal___ignoreType'
-  | 'parent___internal___mediaType'
-  | 'parent___internal___owner'
-  | 'parent___internal___type'
-  | 'children'
-  | 'children___id'
-  | 'children___parent___id'
-  | 'children___parent___parent___id'
-  | 'children___parent___parent___children'
-  | 'children___parent___children'
-  | 'children___parent___children___id'
-  | 'children___parent___children___children'
-  | 'children___parent___internal___content'
-  | 'children___parent___internal___contentDigest'
-  | 'children___parent___internal___description'
-  | 'children___parent___internal___fieldOwners'
-  | 'children___parent___internal___ignoreType'
-  | 'children___parent___internal___mediaType'
-  | 'children___parent___internal___owner'
-  | 'children___parent___internal___type'
-  | 'children___children'
-  | 'children___children___id'
-  | 'children___children___parent___id'
-  | 'children___children___parent___children'
-  | 'children___children___children'
-  | 'children___children___children___id'
-  | 'children___children___children___children'
-  | 'children___children___internal___content'
-  | 'children___children___internal___contentDigest'
-  | 'children___children___internal___description'
-  | 'children___children___internal___fieldOwners'
-  | 'children___children___internal___ignoreType'
-  | 'children___children___internal___mediaType'
-  | 'children___children___internal___owner'
-  | 'children___children___internal___type'
-  | 'children___internal___content'
-  | 'children___internal___contentDigest'
-  | 'children___internal___description'
-  | 'children___internal___fieldOwners'
-  | 'children___internal___ignoreType'
-  | 'children___internal___mediaType'
-  | 'children___internal___owner'
-  | 'children___internal___type'
-  | 'internal___content'
-  | 'internal___contentDigest'
-  | 'internal___description'
-  | 'internal___fieldOwners'
-  | 'internal___ignoreType'
-  | 'internal___mediaType'
-  | 'internal___owner'
-  | 'internal___type'
   | 'isCreatedByStatefulCreatePages'
   | 'pluginCreator___id'
   | 'pluginCreator___parent___id'
@@ -3587,7 +3493,93 @@ export type SitePageFieldsEnum =
   | 'pluginCreator___packageJson___peerDependencies___version'
   | 'pluginCreator___packageJson___keywords'
   | 'pluginCreatorId'
-  | 'componentPath';
+  | 'componentPath'
+  | 'id'
+  | 'parent___id'
+  | 'parent___parent___id'
+  | 'parent___parent___parent___id'
+  | 'parent___parent___parent___children'
+  | 'parent___parent___children'
+  | 'parent___parent___children___id'
+  | 'parent___parent___children___children'
+  | 'parent___parent___internal___content'
+  | 'parent___parent___internal___contentDigest'
+  | 'parent___parent___internal___description'
+  | 'parent___parent___internal___fieldOwners'
+  | 'parent___parent___internal___ignoreType'
+  | 'parent___parent___internal___mediaType'
+  | 'parent___parent___internal___owner'
+  | 'parent___parent___internal___type'
+  | 'parent___children'
+  | 'parent___children___id'
+  | 'parent___children___parent___id'
+  | 'parent___children___parent___children'
+  | 'parent___children___children'
+  | 'parent___children___children___id'
+  | 'parent___children___children___children'
+  | 'parent___children___internal___content'
+  | 'parent___children___internal___contentDigest'
+  | 'parent___children___internal___description'
+  | 'parent___children___internal___fieldOwners'
+  | 'parent___children___internal___ignoreType'
+  | 'parent___children___internal___mediaType'
+  | 'parent___children___internal___owner'
+  | 'parent___children___internal___type'
+  | 'parent___internal___content'
+  | 'parent___internal___contentDigest'
+  | 'parent___internal___description'
+  | 'parent___internal___fieldOwners'
+  | 'parent___internal___ignoreType'
+  | 'parent___internal___mediaType'
+  | 'parent___internal___owner'
+  | 'parent___internal___type'
+  | 'children'
+  | 'children___id'
+  | 'children___parent___id'
+  | 'children___parent___parent___id'
+  | 'children___parent___parent___children'
+  | 'children___parent___children'
+  | 'children___parent___children___id'
+  | 'children___parent___children___children'
+  | 'children___parent___internal___content'
+  | 'children___parent___internal___contentDigest'
+  | 'children___parent___internal___description'
+  | 'children___parent___internal___fieldOwners'
+  | 'children___parent___internal___ignoreType'
+  | 'children___parent___internal___mediaType'
+  | 'children___parent___internal___owner'
+  | 'children___parent___internal___type'
+  | 'children___children'
+  | 'children___children___id'
+  | 'children___children___parent___id'
+  | 'children___children___parent___children'
+  | 'children___children___children'
+  | 'children___children___children___id'
+  | 'children___children___children___children'
+  | 'children___children___internal___content'
+  | 'children___children___internal___contentDigest'
+  | 'children___children___internal___description'
+  | 'children___children___internal___fieldOwners'
+  | 'children___children___internal___ignoreType'
+  | 'children___children___internal___mediaType'
+  | 'children___children___internal___owner'
+  | 'children___children___internal___type'
+  | 'children___internal___content'
+  | 'children___internal___contentDigest'
+  | 'children___internal___description'
+  | 'children___internal___fieldOwners'
+  | 'children___internal___ignoreType'
+  | 'children___internal___mediaType'
+  | 'children___internal___owner'
+  | 'children___internal___type'
+  | 'internal___content'
+  | 'internal___contentDigest'
+  | 'internal___description'
+  | 'internal___fieldOwners'
+  | 'internal___ignoreType'
+  | 'internal___mediaType'
+  | 'internal___owner'
+  | 'internal___type';
 
 export type SitePageFilterInput = {
   path?: Maybe<StringQueryOperatorInput>;
@@ -3595,14 +3587,14 @@ export type SitePageFilterInput = {
   internalComponentName?: Maybe<StringQueryOperatorInput>;
   componentChunkName?: Maybe<StringQueryOperatorInput>;
   matchPath?: Maybe<StringQueryOperatorInput>;
-  id?: Maybe<StringQueryOperatorInput>;
-  parent?: Maybe<NodeFilterInput>;
-  children?: Maybe<NodeFilterListInput>;
-  internal?: Maybe<InternalFilterInput>;
   isCreatedByStatefulCreatePages?: Maybe<BooleanQueryOperatorInput>;
   pluginCreator?: Maybe<SitePluginFilterInput>;
   pluginCreatorId?: Maybe<StringQueryOperatorInput>;
   componentPath?: Maybe<StringQueryOperatorInput>;
+  id?: Maybe<StringQueryOperatorInput>;
+  parent?: Maybe<NodeFilterInput>;
+  children?: Maybe<NodeFilterListInput>;
+  internal?: Maybe<InternalFilterInput>;
 };
 
 export type SitePageGroupConnection = {
@@ -4259,23 +4251,41 @@ export type TutorialsJsonFieldsEnum =
   | 'thumbnailImage___childrenCoursesJson___internal___mediaType'
   | 'thumbnailImage___childrenCoursesJson___internal___owner'
   | 'thumbnailImage___childrenCoursesJson___internal___type'
-  | 'thumbnailImage___childrenPageLinksJson'
-  | 'thumbnailImage___childrenPageLinksJson___id'
-  | 'thumbnailImage___childrenPageLinksJson___parent___id'
-  | 'thumbnailImage___childrenPageLinksJson___parent___children'
-  | 'thumbnailImage___childrenPageLinksJson___children'
-  | 'thumbnailImage___childrenPageLinksJson___children___id'
-  | 'thumbnailImage___childrenPageLinksJson___children___children'
-  | 'thumbnailImage___childrenPageLinksJson___internal___content'
-  | 'thumbnailImage___childrenPageLinksJson___internal___contentDigest'
-  | 'thumbnailImage___childrenPageLinksJson___internal___description'
-  | 'thumbnailImage___childrenPageLinksJson___internal___fieldOwners'
-  | 'thumbnailImage___childrenPageLinksJson___internal___ignoreType'
-  | 'thumbnailImage___childrenPageLinksJson___internal___mediaType'
-  | 'thumbnailImage___childrenPageLinksJson___internal___owner'
-  | 'thumbnailImage___childrenPageLinksJson___internal___type'
-  | 'thumbnailImage___childrenPageLinksJson___to'
-  | 'thumbnailImage___childrenPageLinksJson___name'
+  | 'thumbnailImage___childResumeJson___id'
+  | 'thumbnailImage___childResumeJson___parent___id'
+  | 'thumbnailImage___childResumeJson___parent___children'
+  | 'thumbnailImage___childResumeJson___children'
+  | 'thumbnailImage___childResumeJson___children___id'
+  | 'thumbnailImage___childResumeJson___children___children'
+  | 'thumbnailImage___childResumeJson___internal___content'
+  | 'thumbnailImage___childResumeJson___internal___contentDigest'
+  | 'thumbnailImage___childResumeJson___internal___description'
+  | 'thumbnailImage___childResumeJson___internal___fieldOwners'
+  | 'thumbnailImage___childResumeJson___internal___ignoreType'
+  | 'thumbnailImage___childResumeJson___internal___mediaType'
+  | 'thumbnailImage___childResumeJson___internal___owner'
+  | 'thumbnailImage___childResumeJson___internal___type'
+  | 'thumbnailImage___childResumeJson___basics___name'
+  | 'thumbnailImage___childResumeJson___basics___label'
+  | 'thumbnailImage___childResumeJson___basics___email'
+  | 'thumbnailImage___childResumeJson___basics___url'
+  | 'thumbnailImage___childResumeJson___basics___summary'
+  | 'thumbnailImage___childResumeJson___basics___profiles'
+  | 'thumbnailImage___childResumeJson___work'
+  | 'thumbnailImage___childResumeJson___work___name'
+  | 'thumbnailImage___childResumeJson___work___location'
+  | 'thumbnailImage___childResumeJson___work___image'
+  | 'thumbnailImage___childResumeJson___work___position'
+  | 'thumbnailImage___childResumeJson___work___startDate'
+  | 'thumbnailImage___childResumeJson___work___endDate'
+  | 'thumbnailImage___childResumeJson___work___summary'
+  | 'thumbnailImage___childResumeJson___work___highlights'
+  | 'thumbnailImage___childResumeJson___education'
+  | 'thumbnailImage___childResumeJson___education___institution'
+  | 'thumbnailImage___childResumeJson___education___area'
+  | 'thumbnailImage___childResumeJson___education___location'
+  | 'thumbnailImage___childResumeJson___education___startDate'
+  | 'thumbnailImage___childResumeJson___education___endDate'
   | 'thumbnailImage___childrenTutorialsJson'
   | 'thumbnailImage___childrenTutorialsJson___publishedAt'
   | 'thumbnailImage___childrenTutorialsJson___thumbnail'
@@ -4320,8 +4330,8 @@ export type TutorialsJsonFieldsEnum =
   | 'thumbnailImage___childrenTutorialsJson___thumbnailImage___id'
   | 'thumbnailImage___childrenTutorialsJson___thumbnailImage___children'
   | 'thumbnailImage___childrenTutorialsJson___thumbnailImage___childrenCoursesJson'
-  | 'thumbnailImage___childrenTutorialsJson___thumbnailImage___childrenPageLinksJson'
   | 'thumbnailImage___childrenTutorialsJson___thumbnailImage___childrenTutorialsJson'
+  | 'thumbnailImage___childrenTutorialsJson___thumbnailImage___childrenPageLinksJson'
   | 'thumbnailImage___childrenTutorialsJson___thumbnailImage___childrenUsesJson'
   | 'thumbnailImage___childrenTutorialsJson___id'
   | 'thumbnailImage___childrenTutorialsJson___parent___id'
@@ -4337,41 +4347,23 @@ export type TutorialsJsonFieldsEnum =
   | 'thumbnailImage___childrenTutorialsJson___internal___mediaType'
   | 'thumbnailImage___childrenTutorialsJson___internal___owner'
   | 'thumbnailImage___childrenTutorialsJson___internal___type'
-  | 'thumbnailImage___childResumeJson___id'
-  | 'thumbnailImage___childResumeJson___parent___id'
-  | 'thumbnailImage___childResumeJson___parent___children'
-  | 'thumbnailImage___childResumeJson___children'
-  | 'thumbnailImage___childResumeJson___children___id'
-  | 'thumbnailImage___childResumeJson___children___children'
-  | 'thumbnailImage___childResumeJson___internal___content'
-  | 'thumbnailImage___childResumeJson___internal___contentDigest'
-  | 'thumbnailImage___childResumeJson___internal___description'
-  | 'thumbnailImage___childResumeJson___internal___fieldOwners'
-  | 'thumbnailImage___childResumeJson___internal___ignoreType'
-  | 'thumbnailImage___childResumeJson___internal___mediaType'
-  | 'thumbnailImage___childResumeJson___internal___owner'
-  | 'thumbnailImage___childResumeJson___internal___type'
-  | 'thumbnailImage___childResumeJson___basics___name'
-  | 'thumbnailImage___childResumeJson___basics___label'
-  | 'thumbnailImage___childResumeJson___basics___email'
-  | 'thumbnailImage___childResumeJson___basics___url'
-  | 'thumbnailImage___childResumeJson___basics___summary'
-  | 'thumbnailImage___childResumeJson___basics___profiles'
-  | 'thumbnailImage___childResumeJson___work'
-  | 'thumbnailImage___childResumeJson___work___name'
-  | 'thumbnailImage___childResumeJson___work___location'
-  | 'thumbnailImage___childResumeJson___work___image'
-  | 'thumbnailImage___childResumeJson___work___position'
-  | 'thumbnailImage___childResumeJson___work___startDate'
-  | 'thumbnailImage___childResumeJson___work___endDate'
-  | 'thumbnailImage___childResumeJson___work___summary'
-  | 'thumbnailImage___childResumeJson___work___highlights'
-  | 'thumbnailImage___childResumeJson___education'
-  | 'thumbnailImage___childResumeJson___education___institution'
-  | 'thumbnailImage___childResumeJson___education___area'
-  | 'thumbnailImage___childResumeJson___education___location'
-  | 'thumbnailImage___childResumeJson___education___startDate'
-  | 'thumbnailImage___childResumeJson___education___endDate'
+  | 'thumbnailImage___childrenPageLinksJson'
+  | 'thumbnailImage___childrenPageLinksJson___id'
+  | 'thumbnailImage___childrenPageLinksJson___parent___id'
+  | 'thumbnailImage___childrenPageLinksJson___parent___children'
+  | 'thumbnailImage___childrenPageLinksJson___children'
+  | 'thumbnailImage___childrenPageLinksJson___children___id'
+  | 'thumbnailImage___childrenPageLinksJson___children___children'
+  | 'thumbnailImage___childrenPageLinksJson___internal___content'
+  | 'thumbnailImage___childrenPageLinksJson___internal___contentDigest'
+  | 'thumbnailImage___childrenPageLinksJson___internal___description'
+  | 'thumbnailImage___childrenPageLinksJson___internal___fieldOwners'
+  | 'thumbnailImage___childrenPageLinksJson___internal___ignoreType'
+  | 'thumbnailImage___childrenPageLinksJson___internal___mediaType'
+  | 'thumbnailImage___childrenPageLinksJson___internal___owner'
+  | 'thumbnailImage___childrenPageLinksJson___internal___type'
+  | 'thumbnailImage___childrenPageLinksJson___to'
+  | 'thumbnailImage___childrenPageLinksJson___name'
   | 'thumbnailImage___childrenUsesJson'
   | 'thumbnailImage___childrenUsesJson___id'
   | 'thumbnailImage___childrenUsesJson___parent___id'
