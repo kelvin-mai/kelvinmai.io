@@ -50,6 +50,23 @@
     },
     "work": [
       {
+        "name": "Bonotel Exclusive Travel",
+        "location": "Las Vegas, NV",
+        "description": null,
+        "url": null,
+        "image": "nucamp.png",
+        "position": "Software Developer",
+        "startDate": "2020-07-01T08:00:00.000Z",
+        "endDate": null,
+        "summary": "Development on various Travel B2B dependant microservices and internal administration tools",
+        "highlights": [
+          "Development on both client facing and administrative frontend applications in both React and Angular",
+          "Development and orchaestration of Java and Golang microservices",
+          "Implemented a Python based ETL worker to update and propogate Redis data",
+          "Created SFTP file transfer automation tool in Java as well as a test SFTP server using docker"
+        ]
+      },
+      {
         "name": "Nucamp Coding Bootcamp",
         "location": "Las Vegas, NV",
         "description": null,
@@ -57,7 +74,7 @@
         "image": "nucamp.png",
         "position": "Instructor (Contract)",
         "startDate": "2020-01-01T08:00:00.000Z",
-        "endDate": null,
+        "endDate": "2020-08-01T08:00:00.000Z",
         "summary": "Bootcamp instructor responsible for teaching students web development technologies.",
         "highlights": [
           "Lead classes in Bootstrap, Node.js, React, React Native"

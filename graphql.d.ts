@@ -607,11 +607,11 @@ export type File = Node & {
   parent?: Maybe<Node>;
   children: Array<Node>;
   internal: Internal;
-  childrenCoursesJson?: Maybe<Array<Maybe<CoursesJson>>>;
-  childResumeJson?: Maybe<ResumeJson>;
   childrenTutorialsJson?: Maybe<Array<Maybe<TutorialsJson>>>;
+  childResumeJson?: Maybe<ResumeJson>;
   childrenPageLinksJson?: Maybe<Array<Maybe<PageLinksJson>>>;
   childrenUsesJson?: Maybe<Array<Maybe<UsesJson>>>;
+  childrenCoursesJson?: Maybe<Array<Maybe<CoursesJson>>>;
   childMdx?: Maybe<Mdx>;
 };
 
@@ -911,58 +911,145 @@ export type FileFieldsEnum =
   | 'internal___mediaType'
   | 'internal___owner'
   | 'internal___type'
-  | 'childrenCoursesJson'
-  | 'childrenCoursesJson___videos'
-  | 'childrenCoursesJson___videos___videoId'
-  | 'childrenCoursesJson___videos___ordinance'
-  | 'childrenCoursesJson___videos___title'
-  | 'childrenCoursesJson___videos___publishedAt'
-  | 'childrenCoursesJson___videos___thumbnail'
-  | 'childrenCoursesJson___title'
-  | 'childrenCoursesJson___slug'
-  | 'childrenCoursesJson___pid'
-  | 'childrenCoursesJson___lastUpdated'
-  | 'childrenCoursesJson___description'
-  | 'childrenCoursesJson___image'
-  | 'childrenCoursesJson___tags'
-  | 'childrenCoursesJson___id'
-  | 'childrenCoursesJson___parent___id'
-  | 'childrenCoursesJson___parent___parent___id'
-  | 'childrenCoursesJson___parent___parent___children'
-  | 'childrenCoursesJson___parent___children'
-  | 'childrenCoursesJson___parent___children___id'
-  | 'childrenCoursesJson___parent___children___children'
-  | 'childrenCoursesJson___parent___internal___content'
-  | 'childrenCoursesJson___parent___internal___contentDigest'
-  | 'childrenCoursesJson___parent___internal___description'
-  | 'childrenCoursesJson___parent___internal___fieldOwners'
-  | 'childrenCoursesJson___parent___internal___ignoreType'
-  | 'childrenCoursesJson___parent___internal___mediaType'
-  | 'childrenCoursesJson___parent___internal___owner'
-  | 'childrenCoursesJson___parent___internal___type'
-  | 'childrenCoursesJson___children'
-  | 'childrenCoursesJson___children___id'
-  | 'childrenCoursesJson___children___parent___id'
-  | 'childrenCoursesJson___children___parent___children'
-  | 'childrenCoursesJson___children___children'
-  | 'childrenCoursesJson___children___children___id'
-  | 'childrenCoursesJson___children___children___children'
-  | 'childrenCoursesJson___children___internal___content'
-  | 'childrenCoursesJson___children___internal___contentDigest'
-  | 'childrenCoursesJson___children___internal___description'
-  | 'childrenCoursesJson___children___internal___fieldOwners'
-  | 'childrenCoursesJson___children___internal___ignoreType'
-  | 'childrenCoursesJson___children___internal___mediaType'
-  | 'childrenCoursesJson___children___internal___owner'
-  | 'childrenCoursesJson___children___internal___type'
-  | 'childrenCoursesJson___internal___content'
-  | 'childrenCoursesJson___internal___contentDigest'
-  | 'childrenCoursesJson___internal___description'
-  | 'childrenCoursesJson___internal___fieldOwners'
-  | 'childrenCoursesJson___internal___ignoreType'
-  | 'childrenCoursesJson___internal___mediaType'
-  | 'childrenCoursesJson___internal___owner'
-  | 'childrenCoursesJson___internal___type'
+  | 'childrenTutorialsJson'
+  | 'childrenTutorialsJson___publishedAt'
+  | 'childrenTutorialsJson___thumbnail'
+  | 'childrenTutorialsJson___videoId'
+  | 'childrenTutorialsJson___title'
+  | 'childrenTutorialsJson___tags'
+  | 'childrenTutorialsJson___thumbnailImage___sourceInstanceName'
+  | 'childrenTutorialsJson___thumbnailImage___absolutePath'
+  | 'childrenTutorialsJson___thumbnailImage___relativePath'
+  | 'childrenTutorialsJson___thumbnailImage___extension'
+  | 'childrenTutorialsJson___thumbnailImage___size'
+  | 'childrenTutorialsJson___thumbnailImage___prettySize'
+  | 'childrenTutorialsJson___thumbnailImage___modifiedTime'
+  | 'childrenTutorialsJson___thumbnailImage___accessTime'
+  | 'childrenTutorialsJson___thumbnailImage___changeTime'
+  | 'childrenTutorialsJson___thumbnailImage___birthTime'
+  | 'childrenTutorialsJson___thumbnailImage___root'
+  | 'childrenTutorialsJson___thumbnailImage___dir'
+  | 'childrenTutorialsJson___thumbnailImage___base'
+  | 'childrenTutorialsJson___thumbnailImage___ext'
+  | 'childrenTutorialsJson___thumbnailImage___name'
+  | 'childrenTutorialsJson___thumbnailImage___relativeDirectory'
+  | 'childrenTutorialsJson___thumbnailImage___dev'
+  | 'childrenTutorialsJson___thumbnailImage___mode'
+  | 'childrenTutorialsJson___thumbnailImage___nlink'
+  | 'childrenTutorialsJson___thumbnailImage___uid'
+  | 'childrenTutorialsJson___thumbnailImage___gid'
+  | 'childrenTutorialsJson___thumbnailImage___rdev'
+  | 'childrenTutorialsJson___thumbnailImage___ino'
+  | 'childrenTutorialsJson___thumbnailImage___atimeMs'
+  | 'childrenTutorialsJson___thumbnailImage___mtimeMs'
+  | 'childrenTutorialsJson___thumbnailImage___ctimeMs'
+  | 'childrenTutorialsJson___thumbnailImage___atime'
+  | 'childrenTutorialsJson___thumbnailImage___mtime'
+  | 'childrenTutorialsJson___thumbnailImage___ctime'
+  | 'childrenTutorialsJson___thumbnailImage___birthtime'
+  | 'childrenTutorialsJson___thumbnailImage___birthtimeMs'
+  | 'childrenTutorialsJson___thumbnailImage___blksize'
+  | 'childrenTutorialsJson___thumbnailImage___blocks'
+  | 'childrenTutorialsJson___thumbnailImage___url'
+  | 'childrenTutorialsJson___thumbnailImage___publicURL'
+  | 'childrenTutorialsJson___thumbnailImage___childImageSharp___id'
+  | 'childrenTutorialsJson___thumbnailImage___childImageSharp___children'
+  | 'childrenTutorialsJson___thumbnailImage___id'
+  | 'childrenTutorialsJson___thumbnailImage___parent___id'
+  | 'childrenTutorialsJson___thumbnailImage___parent___children'
+  | 'childrenTutorialsJson___thumbnailImage___children'
+  | 'childrenTutorialsJson___thumbnailImage___children___id'
+  | 'childrenTutorialsJson___thumbnailImage___children___children'
+  | 'childrenTutorialsJson___thumbnailImage___internal___content'
+  | 'childrenTutorialsJson___thumbnailImage___internal___contentDigest'
+  | 'childrenTutorialsJson___thumbnailImage___internal___description'
+  | 'childrenTutorialsJson___thumbnailImage___internal___fieldOwners'
+  | 'childrenTutorialsJson___thumbnailImage___internal___ignoreType'
+  | 'childrenTutorialsJson___thumbnailImage___internal___mediaType'
+  | 'childrenTutorialsJson___thumbnailImage___internal___owner'
+  | 'childrenTutorialsJson___thumbnailImage___internal___type'
+  | 'childrenTutorialsJson___thumbnailImage___childrenTutorialsJson'
+  | 'childrenTutorialsJson___thumbnailImage___childrenTutorialsJson___publishedAt'
+  | 'childrenTutorialsJson___thumbnailImage___childrenTutorialsJson___thumbnail'
+  | 'childrenTutorialsJson___thumbnailImage___childrenTutorialsJson___videoId'
+  | 'childrenTutorialsJson___thumbnailImage___childrenTutorialsJson___title'
+  | 'childrenTutorialsJson___thumbnailImage___childrenTutorialsJson___tags'
+  | 'childrenTutorialsJson___thumbnailImage___childrenTutorialsJson___id'
+  | 'childrenTutorialsJson___thumbnailImage___childrenTutorialsJson___children'
+  | 'childrenTutorialsJson___thumbnailImage___childResumeJson___id'
+  | 'childrenTutorialsJson___thumbnailImage___childResumeJson___children'
+  | 'childrenTutorialsJson___thumbnailImage___childResumeJson___work'
+  | 'childrenTutorialsJson___thumbnailImage___childResumeJson___education'
+  | 'childrenTutorialsJson___thumbnailImage___childrenPageLinksJson'
+  | 'childrenTutorialsJson___thumbnailImage___childrenPageLinksJson___id'
+  | 'childrenTutorialsJson___thumbnailImage___childrenPageLinksJson___children'
+  | 'childrenTutorialsJson___thumbnailImage___childrenPageLinksJson___to'
+  | 'childrenTutorialsJson___thumbnailImage___childrenPageLinksJson___name'
+  | 'childrenTutorialsJson___thumbnailImage___childrenUsesJson'
+  | 'childrenTutorialsJson___thumbnailImage___childrenUsesJson___id'
+  | 'childrenTutorialsJson___thumbnailImage___childrenUsesJson___children'
+  | 'childrenTutorialsJson___thumbnailImage___childrenUsesJson___title'
+  | 'childrenTutorialsJson___thumbnailImage___childrenUsesJson___tools'
+  | 'childrenTutorialsJson___thumbnailImage___childrenCoursesJson'
+  | 'childrenTutorialsJson___thumbnailImage___childrenCoursesJson___videos'
+  | 'childrenTutorialsJson___thumbnailImage___childrenCoursesJson___title'
+  | 'childrenTutorialsJson___thumbnailImage___childrenCoursesJson___slug'
+  | 'childrenTutorialsJson___thumbnailImage___childrenCoursesJson___pid'
+  | 'childrenTutorialsJson___thumbnailImage___childrenCoursesJson___lastUpdated'
+  | 'childrenTutorialsJson___thumbnailImage___childrenCoursesJson___description'
+  | 'childrenTutorialsJson___thumbnailImage___childrenCoursesJson___image'
+  | 'childrenTutorialsJson___thumbnailImage___childrenCoursesJson___tags'
+  | 'childrenTutorialsJson___thumbnailImage___childrenCoursesJson___id'
+  | 'childrenTutorialsJson___thumbnailImage___childrenCoursesJson___children'
+  | 'childrenTutorialsJson___thumbnailImage___childMdx___rawBody'
+  | 'childrenTutorialsJson___thumbnailImage___childMdx___fileAbsolutePath'
+  | 'childrenTutorialsJson___thumbnailImage___childMdx___body'
+  | 'childrenTutorialsJson___thumbnailImage___childMdx___excerpt'
+  | 'childrenTutorialsJson___thumbnailImage___childMdx___headings'
+  | 'childrenTutorialsJson___thumbnailImage___childMdx___html'
+  | 'childrenTutorialsJson___thumbnailImage___childMdx___mdxAST'
+  | 'childrenTutorialsJson___thumbnailImage___childMdx___tableOfContents'
+  | 'childrenTutorialsJson___thumbnailImage___childMdx___timeToRead'
+  | 'childrenTutorialsJson___thumbnailImage___childMdx___id'
+  | 'childrenTutorialsJson___thumbnailImage___childMdx___children'
+  | 'childrenTutorialsJson___id'
+  | 'childrenTutorialsJson___parent___id'
+  | 'childrenTutorialsJson___parent___parent___id'
+  | 'childrenTutorialsJson___parent___parent___children'
+  | 'childrenTutorialsJson___parent___children'
+  | 'childrenTutorialsJson___parent___children___id'
+  | 'childrenTutorialsJson___parent___children___children'
+  | 'childrenTutorialsJson___parent___internal___content'
+  | 'childrenTutorialsJson___parent___internal___contentDigest'
+  | 'childrenTutorialsJson___parent___internal___description'
+  | 'childrenTutorialsJson___parent___internal___fieldOwners'
+  | 'childrenTutorialsJson___parent___internal___ignoreType'
+  | 'childrenTutorialsJson___parent___internal___mediaType'
+  | 'childrenTutorialsJson___parent___internal___owner'
+  | 'childrenTutorialsJson___parent___internal___type'
+  | 'childrenTutorialsJson___children'
+  | 'childrenTutorialsJson___children___id'
+  | 'childrenTutorialsJson___children___parent___id'
+  | 'childrenTutorialsJson___children___parent___children'
+  | 'childrenTutorialsJson___children___children'
+  | 'childrenTutorialsJson___children___children___id'
+  | 'childrenTutorialsJson___children___children___children'
+  | 'childrenTutorialsJson___children___internal___content'
+  | 'childrenTutorialsJson___children___internal___contentDigest'
+  | 'childrenTutorialsJson___children___internal___description'
+  | 'childrenTutorialsJson___children___internal___fieldOwners'
+  | 'childrenTutorialsJson___children___internal___ignoreType'
+  | 'childrenTutorialsJson___children___internal___mediaType'
+  | 'childrenTutorialsJson___children___internal___owner'
+  | 'childrenTutorialsJson___children___internal___type'
+  | 'childrenTutorialsJson___internal___content'
+  | 'childrenTutorialsJson___internal___contentDigest'
+  | 'childrenTutorialsJson___internal___description'
+  | 'childrenTutorialsJson___internal___fieldOwners'
+  | 'childrenTutorialsJson___internal___ignoreType'
+  | 'childrenTutorialsJson___internal___mediaType'
+  | 'childrenTutorialsJson___internal___owner'
+  | 'childrenTutorialsJson___internal___type'
   | 'childResumeJson___id'
   | 'childResumeJson___parent___id'
   | 'childResumeJson___parent___parent___id'
@@ -1028,145 +1115,6 @@ export type FileFieldsEnum =
   | 'childResumeJson___education___location'
   | 'childResumeJson___education___startDate'
   | 'childResumeJson___education___endDate'
-  | 'childrenTutorialsJson'
-  | 'childrenTutorialsJson___publishedAt'
-  | 'childrenTutorialsJson___thumbnail'
-  | 'childrenTutorialsJson___videoId'
-  | 'childrenTutorialsJson___title'
-  | 'childrenTutorialsJson___tags'
-  | 'childrenTutorialsJson___thumbnailImage___sourceInstanceName'
-  | 'childrenTutorialsJson___thumbnailImage___absolutePath'
-  | 'childrenTutorialsJson___thumbnailImage___relativePath'
-  | 'childrenTutorialsJson___thumbnailImage___extension'
-  | 'childrenTutorialsJson___thumbnailImage___size'
-  | 'childrenTutorialsJson___thumbnailImage___prettySize'
-  | 'childrenTutorialsJson___thumbnailImage___modifiedTime'
-  | 'childrenTutorialsJson___thumbnailImage___accessTime'
-  | 'childrenTutorialsJson___thumbnailImage___changeTime'
-  | 'childrenTutorialsJson___thumbnailImage___birthTime'
-  | 'childrenTutorialsJson___thumbnailImage___root'
-  | 'childrenTutorialsJson___thumbnailImage___dir'
-  | 'childrenTutorialsJson___thumbnailImage___base'
-  | 'childrenTutorialsJson___thumbnailImage___ext'
-  | 'childrenTutorialsJson___thumbnailImage___name'
-  | 'childrenTutorialsJson___thumbnailImage___relativeDirectory'
-  | 'childrenTutorialsJson___thumbnailImage___dev'
-  | 'childrenTutorialsJson___thumbnailImage___mode'
-  | 'childrenTutorialsJson___thumbnailImage___nlink'
-  | 'childrenTutorialsJson___thumbnailImage___uid'
-  | 'childrenTutorialsJson___thumbnailImage___gid'
-  | 'childrenTutorialsJson___thumbnailImage___rdev'
-  | 'childrenTutorialsJson___thumbnailImage___ino'
-  | 'childrenTutorialsJson___thumbnailImage___atimeMs'
-  | 'childrenTutorialsJson___thumbnailImage___mtimeMs'
-  | 'childrenTutorialsJson___thumbnailImage___ctimeMs'
-  | 'childrenTutorialsJson___thumbnailImage___atime'
-  | 'childrenTutorialsJson___thumbnailImage___mtime'
-  | 'childrenTutorialsJson___thumbnailImage___ctime'
-  | 'childrenTutorialsJson___thumbnailImage___birthtime'
-  | 'childrenTutorialsJson___thumbnailImage___birthtimeMs'
-  | 'childrenTutorialsJson___thumbnailImage___blksize'
-  | 'childrenTutorialsJson___thumbnailImage___blocks'
-  | 'childrenTutorialsJson___thumbnailImage___url'
-  | 'childrenTutorialsJson___thumbnailImage___publicURL'
-  | 'childrenTutorialsJson___thumbnailImage___childImageSharp___id'
-  | 'childrenTutorialsJson___thumbnailImage___childImageSharp___children'
-  | 'childrenTutorialsJson___thumbnailImage___id'
-  | 'childrenTutorialsJson___thumbnailImage___parent___id'
-  | 'childrenTutorialsJson___thumbnailImage___parent___children'
-  | 'childrenTutorialsJson___thumbnailImage___children'
-  | 'childrenTutorialsJson___thumbnailImage___children___id'
-  | 'childrenTutorialsJson___thumbnailImage___children___children'
-  | 'childrenTutorialsJson___thumbnailImage___internal___content'
-  | 'childrenTutorialsJson___thumbnailImage___internal___contentDigest'
-  | 'childrenTutorialsJson___thumbnailImage___internal___description'
-  | 'childrenTutorialsJson___thumbnailImage___internal___fieldOwners'
-  | 'childrenTutorialsJson___thumbnailImage___internal___ignoreType'
-  | 'childrenTutorialsJson___thumbnailImage___internal___mediaType'
-  | 'childrenTutorialsJson___thumbnailImage___internal___owner'
-  | 'childrenTutorialsJson___thumbnailImage___internal___type'
-  | 'childrenTutorialsJson___thumbnailImage___childrenCoursesJson'
-  | 'childrenTutorialsJson___thumbnailImage___childrenCoursesJson___videos'
-  | 'childrenTutorialsJson___thumbnailImage___childrenCoursesJson___title'
-  | 'childrenTutorialsJson___thumbnailImage___childrenCoursesJson___slug'
-  | 'childrenTutorialsJson___thumbnailImage___childrenCoursesJson___pid'
-  | 'childrenTutorialsJson___thumbnailImage___childrenCoursesJson___lastUpdated'
-  | 'childrenTutorialsJson___thumbnailImage___childrenCoursesJson___description'
-  | 'childrenTutorialsJson___thumbnailImage___childrenCoursesJson___image'
-  | 'childrenTutorialsJson___thumbnailImage___childrenCoursesJson___tags'
-  | 'childrenTutorialsJson___thumbnailImage___childrenCoursesJson___id'
-  | 'childrenTutorialsJson___thumbnailImage___childrenCoursesJson___children'
-  | 'childrenTutorialsJson___thumbnailImage___childResumeJson___id'
-  | 'childrenTutorialsJson___thumbnailImage___childResumeJson___children'
-  | 'childrenTutorialsJson___thumbnailImage___childResumeJson___work'
-  | 'childrenTutorialsJson___thumbnailImage___childResumeJson___education'
-  | 'childrenTutorialsJson___thumbnailImage___childrenTutorialsJson'
-  | 'childrenTutorialsJson___thumbnailImage___childrenTutorialsJson___publishedAt'
-  | 'childrenTutorialsJson___thumbnailImage___childrenTutorialsJson___thumbnail'
-  | 'childrenTutorialsJson___thumbnailImage___childrenTutorialsJson___videoId'
-  | 'childrenTutorialsJson___thumbnailImage___childrenTutorialsJson___title'
-  | 'childrenTutorialsJson___thumbnailImage___childrenTutorialsJson___tags'
-  | 'childrenTutorialsJson___thumbnailImage___childrenTutorialsJson___id'
-  | 'childrenTutorialsJson___thumbnailImage___childrenTutorialsJson___children'
-  | 'childrenTutorialsJson___thumbnailImage___childrenPageLinksJson'
-  | 'childrenTutorialsJson___thumbnailImage___childrenPageLinksJson___id'
-  | 'childrenTutorialsJson___thumbnailImage___childrenPageLinksJson___children'
-  | 'childrenTutorialsJson___thumbnailImage___childrenPageLinksJson___to'
-  | 'childrenTutorialsJson___thumbnailImage___childrenPageLinksJson___name'
-  | 'childrenTutorialsJson___thumbnailImage___childrenUsesJson'
-  | 'childrenTutorialsJson___thumbnailImage___childrenUsesJson___id'
-  | 'childrenTutorialsJson___thumbnailImage___childrenUsesJson___children'
-  | 'childrenTutorialsJson___thumbnailImage___childrenUsesJson___title'
-  | 'childrenTutorialsJson___thumbnailImage___childrenUsesJson___tools'
-  | 'childrenTutorialsJson___thumbnailImage___childMdx___rawBody'
-  | 'childrenTutorialsJson___thumbnailImage___childMdx___fileAbsolutePath'
-  | 'childrenTutorialsJson___thumbnailImage___childMdx___body'
-  | 'childrenTutorialsJson___thumbnailImage___childMdx___excerpt'
-  | 'childrenTutorialsJson___thumbnailImage___childMdx___headings'
-  | 'childrenTutorialsJson___thumbnailImage___childMdx___html'
-  | 'childrenTutorialsJson___thumbnailImage___childMdx___mdxAST'
-  | 'childrenTutorialsJson___thumbnailImage___childMdx___tableOfContents'
-  | 'childrenTutorialsJson___thumbnailImage___childMdx___timeToRead'
-  | 'childrenTutorialsJson___thumbnailImage___childMdx___id'
-  | 'childrenTutorialsJson___thumbnailImage___childMdx___children'
-  | 'childrenTutorialsJson___id'
-  | 'childrenTutorialsJson___parent___id'
-  | 'childrenTutorialsJson___parent___parent___id'
-  | 'childrenTutorialsJson___parent___parent___children'
-  | 'childrenTutorialsJson___parent___children'
-  | 'childrenTutorialsJson___parent___children___id'
-  | 'childrenTutorialsJson___parent___children___children'
-  | 'childrenTutorialsJson___parent___internal___content'
-  | 'childrenTutorialsJson___parent___internal___contentDigest'
-  | 'childrenTutorialsJson___parent___internal___description'
-  | 'childrenTutorialsJson___parent___internal___fieldOwners'
-  | 'childrenTutorialsJson___parent___internal___ignoreType'
-  | 'childrenTutorialsJson___parent___internal___mediaType'
-  | 'childrenTutorialsJson___parent___internal___owner'
-  | 'childrenTutorialsJson___parent___internal___type'
-  | 'childrenTutorialsJson___children'
-  | 'childrenTutorialsJson___children___id'
-  | 'childrenTutorialsJson___children___parent___id'
-  | 'childrenTutorialsJson___children___parent___children'
-  | 'childrenTutorialsJson___children___children'
-  | 'childrenTutorialsJson___children___children___id'
-  | 'childrenTutorialsJson___children___children___children'
-  | 'childrenTutorialsJson___children___internal___content'
-  | 'childrenTutorialsJson___children___internal___contentDigest'
-  | 'childrenTutorialsJson___children___internal___description'
-  | 'childrenTutorialsJson___children___internal___fieldOwners'
-  | 'childrenTutorialsJson___children___internal___ignoreType'
-  | 'childrenTutorialsJson___children___internal___mediaType'
-  | 'childrenTutorialsJson___children___internal___owner'
-  | 'childrenTutorialsJson___children___internal___type'
-  | 'childrenTutorialsJson___internal___content'
-  | 'childrenTutorialsJson___internal___contentDigest'
-  | 'childrenTutorialsJson___internal___description'
-  | 'childrenTutorialsJson___internal___fieldOwners'
-  | 'childrenTutorialsJson___internal___ignoreType'
-  | 'childrenTutorialsJson___internal___mediaType'
-  | 'childrenTutorialsJson___internal___owner'
-  | 'childrenTutorialsJson___internal___type'
   | 'childrenPageLinksJson'
   | 'childrenPageLinksJson___id'
   | 'childrenPageLinksJson___parent___id'
@@ -1252,6 +1200,58 @@ export type FileFieldsEnum =
   | 'childrenUsesJson___tools___title'
   | 'childrenUsesJson___tools___link'
   | 'childrenUsesJson___tools___description'
+  | 'childrenCoursesJson'
+  | 'childrenCoursesJson___videos'
+  | 'childrenCoursesJson___videos___videoId'
+  | 'childrenCoursesJson___videos___ordinance'
+  | 'childrenCoursesJson___videos___title'
+  | 'childrenCoursesJson___videos___publishedAt'
+  | 'childrenCoursesJson___videos___thumbnail'
+  | 'childrenCoursesJson___title'
+  | 'childrenCoursesJson___slug'
+  | 'childrenCoursesJson___pid'
+  | 'childrenCoursesJson___lastUpdated'
+  | 'childrenCoursesJson___description'
+  | 'childrenCoursesJson___image'
+  | 'childrenCoursesJson___tags'
+  | 'childrenCoursesJson___id'
+  | 'childrenCoursesJson___parent___id'
+  | 'childrenCoursesJson___parent___parent___id'
+  | 'childrenCoursesJson___parent___parent___children'
+  | 'childrenCoursesJson___parent___children'
+  | 'childrenCoursesJson___parent___children___id'
+  | 'childrenCoursesJson___parent___children___children'
+  | 'childrenCoursesJson___parent___internal___content'
+  | 'childrenCoursesJson___parent___internal___contentDigest'
+  | 'childrenCoursesJson___parent___internal___description'
+  | 'childrenCoursesJson___parent___internal___fieldOwners'
+  | 'childrenCoursesJson___parent___internal___ignoreType'
+  | 'childrenCoursesJson___parent___internal___mediaType'
+  | 'childrenCoursesJson___parent___internal___owner'
+  | 'childrenCoursesJson___parent___internal___type'
+  | 'childrenCoursesJson___children'
+  | 'childrenCoursesJson___children___id'
+  | 'childrenCoursesJson___children___parent___id'
+  | 'childrenCoursesJson___children___parent___children'
+  | 'childrenCoursesJson___children___children'
+  | 'childrenCoursesJson___children___children___id'
+  | 'childrenCoursesJson___children___children___children'
+  | 'childrenCoursesJson___children___internal___content'
+  | 'childrenCoursesJson___children___internal___contentDigest'
+  | 'childrenCoursesJson___children___internal___description'
+  | 'childrenCoursesJson___children___internal___fieldOwners'
+  | 'childrenCoursesJson___children___internal___ignoreType'
+  | 'childrenCoursesJson___children___internal___mediaType'
+  | 'childrenCoursesJson___children___internal___owner'
+  | 'childrenCoursesJson___children___internal___type'
+  | 'childrenCoursesJson___internal___content'
+  | 'childrenCoursesJson___internal___contentDigest'
+  | 'childrenCoursesJson___internal___description'
+  | 'childrenCoursesJson___internal___fieldOwners'
+  | 'childrenCoursesJson___internal___ignoreType'
+  | 'childrenCoursesJson___internal___mediaType'
+  | 'childrenCoursesJson___internal___owner'
+  | 'childrenCoursesJson___internal___type'
   | 'childMdx___rawBody'
   | 'childMdx___fileAbsolutePath'
   | 'childMdx___frontmatter___title'
@@ -1347,11 +1347,11 @@ export type FileFilterInput = {
   parent?: Maybe<NodeFilterInput>;
   children?: Maybe<NodeFilterListInput>;
   internal?: Maybe<InternalFilterInput>;
-  childrenCoursesJson?: Maybe<CoursesJsonFilterListInput>;
-  childResumeJson?: Maybe<ResumeJsonFilterInput>;
   childrenTutorialsJson?: Maybe<TutorialsJsonFilterListInput>;
+  childResumeJson?: Maybe<ResumeJsonFilterInput>;
   childrenPageLinksJson?: Maybe<PageLinksJsonFilterListInput>;
   childrenUsesJson?: Maybe<UsesJsonFilterListInput>;
+  childrenCoursesJson?: Maybe<CoursesJsonFilterListInput>;
   childMdx?: Maybe<MdxFilterInput>;
 };
 
@@ -2377,12 +2377,12 @@ export type Query = {
   allTutorialsJson: TutorialsJsonConnection;
   coursesJson?: Maybe<CoursesJson>;
   allCoursesJson: CoursesJsonConnection;
+  resumeJson?: Maybe<ResumeJson>;
+  allResumeJson: ResumeJsonConnection;
   usesJson?: Maybe<UsesJson>;
   allUsesJson: UsesJsonConnection;
   pageLinksJson?: Maybe<PageLinksJson>;
   allPageLinksJson: PageLinksJsonConnection;
-  resumeJson?: Maybe<ResumeJson>;
-  allResumeJson: ResumeJsonConnection;
   siteBuildMetadata?: Maybe<SiteBuildMetadata>;
   allSiteBuildMetadata: SiteBuildMetadataConnection;
   sitePlugin?: Maybe<SitePlugin>;
@@ -2431,11 +2431,11 @@ export type QueryFileArgs = {
   parent?: Maybe<NodeFilterInput>;
   children?: Maybe<NodeFilterListInput>;
   internal?: Maybe<InternalFilterInput>;
-  childrenCoursesJson?: Maybe<CoursesJsonFilterListInput>;
-  childResumeJson?: Maybe<ResumeJsonFilterInput>;
   childrenTutorialsJson?: Maybe<TutorialsJsonFilterListInput>;
+  childResumeJson?: Maybe<ResumeJsonFilterInput>;
   childrenPageLinksJson?: Maybe<PageLinksJsonFilterListInput>;
   childrenUsesJson?: Maybe<UsesJsonFilterListInput>;
+  childrenCoursesJson?: Maybe<CoursesJsonFilterListInput>;
   childMdx?: Maybe<MdxFilterInput>;
 };
 
@@ -2503,14 +2503,14 @@ export type QuerySitePageArgs = {
   internalComponentName?: Maybe<StringQueryOperatorInput>;
   componentChunkName?: Maybe<StringQueryOperatorInput>;
   matchPath?: Maybe<StringQueryOperatorInput>;
-  isCreatedByStatefulCreatePages?: Maybe<BooleanQueryOperatorInput>;
-  pluginCreator?: Maybe<SitePluginFilterInput>;
-  pluginCreatorId?: Maybe<StringQueryOperatorInput>;
-  componentPath?: Maybe<StringQueryOperatorInput>;
   id?: Maybe<StringQueryOperatorInput>;
   parent?: Maybe<NodeFilterInput>;
   children?: Maybe<NodeFilterListInput>;
   internal?: Maybe<InternalFilterInput>;
+  isCreatedByStatefulCreatePages?: Maybe<BooleanQueryOperatorInput>;
+  pluginCreator?: Maybe<SitePluginFilterInput>;
+  pluginCreatorId?: Maybe<StringQueryOperatorInput>;
+  componentPath?: Maybe<StringQueryOperatorInput>;
 };
 
 
@@ -2527,6 +2527,8 @@ export type QuerySiteArgs = {
   siteMetadata?: Maybe<SiteSiteMetadataFilterInput>;
   port?: Maybe<DateQueryOperatorInput>;
   host?: Maybe<StringQueryOperatorInput>;
+  polyfill?: Maybe<BooleanQueryOperatorInput>;
+  pathPrefix?: Maybe<StringQueryOperatorInput>;
   id?: Maybe<StringQueryOperatorInput>;
   parent?: Maybe<NodeFilterInput>;
   children?: Maybe<NodeFilterListInput>;
@@ -2637,6 +2639,25 @@ export type QueryAllCoursesJsonArgs = {
 };
 
 
+export type QueryResumeJsonArgs = {
+  id?: Maybe<StringQueryOperatorInput>;
+  parent?: Maybe<NodeFilterInput>;
+  children?: Maybe<NodeFilterListInput>;
+  internal?: Maybe<InternalFilterInput>;
+  basics?: Maybe<ResumeJsonBasicsFilterInput>;
+  work?: Maybe<ResumeJsonWorkFilterListInput>;
+  education?: Maybe<ResumeJsonEducationFilterListInput>;
+};
+
+
+export type QueryAllResumeJsonArgs = {
+  filter?: Maybe<ResumeJsonFilterInput>;
+  sort?: Maybe<ResumeJsonSortInput>;
+  skip?: Maybe<Scalars['Int']>;
+  limit?: Maybe<Scalars['Int']>;
+};
+
+
 export type QueryUsesJsonArgs = {
   id?: Maybe<StringQueryOperatorInput>;
   parent?: Maybe<NodeFilterInput>;
@@ -2668,25 +2689,6 @@ export type QueryPageLinksJsonArgs = {
 export type QueryAllPageLinksJsonArgs = {
   filter?: Maybe<PageLinksJsonFilterInput>;
   sort?: Maybe<PageLinksJsonSortInput>;
-  skip?: Maybe<Scalars['Int']>;
-  limit?: Maybe<Scalars['Int']>;
-};
-
-
-export type QueryResumeJsonArgs = {
-  id?: Maybe<StringQueryOperatorInput>;
-  parent?: Maybe<NodeFilterInput>;
-  children?: Maybe<NodeFilterListInput>;
-  internal?: Maybe<InternalFilterInput>;
-  basics?: Maybe<ResumeJsonBasicsFilterInput>;
-  work?: Maybe<ResumeJsonWorkFilterListInput>;
-  education?: Maybe<ResumeJsonEducationFilterListInput>;
-};
-
-
-export type QueryAllResumeJsonArgs = {
-  filter?: Maybe<ResumeJsonFilterInput>;
-  sort?: Maybe<ResumeJsonSortInput>;
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
 };
@@ -3040,6 +3042,8 @@ export type Site = Node & {
   siteMetadata?: Maybe<SiteSiteMetadata>;
   port?: Maybe<Scalars['Date']>;
   host?: Maybe<Scalars['String']>;
+  polyfill?: Maybe<Scalars['Boolean']>;
+  pathPrefix?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
   parent?: Maybe<Node>;
   children: Array<Node>;
@@ -3252,6 +3256,8 @@ export type SiteFieldsEnum =
   | 'siteMetadata___keywords'
   | 'port'
   | 'host'
+  | 'polyfill'
+  | 'pathPrefix'
   | 'id'
   | 'parent___id'
   | 'parent___parent___id'
@@ -3344,6 +3350,8 @@ export type SiteFilterInput = {
   siteMetadata?: Maybe<SiteSiteMetadataFilterInput>;
   port?: Maybe<DateQueryOperatorInput>;
   host?: Maybe<StringQueryOperatorInput>;
+  polyfill?: Maybe<BooleanQueryOperatorInput>;
+  pathPrefix?: Maybe<StringQueryOperatorInput>;
   id?: Maybe<StringQueryOperatorInput>;
   parent?: Maybe<NodeFilterInput>;
   children?: Maybe<NodeFilterListInput>;
@@ -3365,14 +3373,14 @@ export type SitePage = Node & {
   internalComponentName: Scalars['String'];
   componentChunkName: Scalars['String'];
   matchPath?: Maybe<Scalars['String']>;
-  isCreatedByStatefulCreatePages?: Maybe<Scalars['Boolean']>;
-  pluginCreator?: Maybe<SitePlugin>;
-  pluginCreatorId?: Maybe<Scalars['String']>;
-  componentPath?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
   parent?: Maybe<Node>;
   children: Array<Node>;
   internal: Internal;
+  isCreatedByStatefulCreatePages?: Maybe<Scalars['Boolean']>;
+  pluginCreator?: Maybe<SitePlugin>;
+  pluginCreatorId?: Maybe<Scalars['String']>;
+  componentPath?: Maybe<Scalars['String']>;
 };
 
 export type SitePageConnection = {
@@ -3408,92 +3416,6 @@ export type SitePageFieldsEnum =
   | 'internalComponentName'
   | 'componentChunkName'
   | 'matchPath'
-  | 'isCreatedByStatefulCreatePages'
-  | 'pluginCreator___id'
-  | 'pluginCreator___parent___id'
-  | 'pluginCreator___parent___parent___id'
-  | 'pluginCreator___parent___parent___children'
-  | 'pluginCreator___parent___children'
-  | 'pluginCreator___parent___children___id'
-  | 'pluginCreator___parent___children___children'
-  | 'pluginCreator___parent___internal___content'
-  | 'pluginCreator___parent___internal___contentDigest'
-  | 'pluginCreator___parent___internal___description'
-  | 'pluginCreator___parent___internal___fieldOwners'
-  | 'pluginCreator___parent___internal___ignoreType'
-  | 'pluginCreator___parent___internal___mediaType'
-  | 'pluginCreator___parent___internal___owner'
-  | 'pluginCreator___parent___internal___type'
-  | 'pluginCreator___children'
-  | 'pluginCreator___children___id'
-  | 'pluginCreator___children___parent___id'
-  | 'pluginCreator___children___parent___children'
-  | 'pluginCreator___children___children'
-  | 'pluginCreator___children___children___id'
-  | 'pluginCreator___children___children___children'
-  | 'pluginCreator___children___internal___content'
-  | 'pluginCreator___children___internal___contentDigest'
-  | 'pluginCreator___children___internal___description'
-  | 'pluginCreator___children___internal___fieldOwners'
-  | 'pluginCreator___children___internal___ignoreType'
-  | 'pluginCreator___children___internal___mediaType'
-  | 'pluginCreator___children___internal___owner'
-  | 'pluginCreator___children___internal___type'
-  | 'pluginCreator___internal___content'
-  | 'pluginCreator___internal___contentDigest'
-  | 'pluginCreator___internal___description'
-  | 'pluginCreator___internal___fieldOwners'
-  | 'pluginCreator___internal___ignoreType'
-  | 'pluginCreator___internal___mediaType'
-  | 'pluginCreator___internal___owner'
-  | 'pluginCreator___internal___type'
-  | 'pluginCreator___resolve'
-  | 'pluginCreator___name'
-  | 'pluginCreator___version'
-  | 'pluginCreator___pluginOptions___name'
-  | 'pluginCreator___pluginOptions___path'
-  | 'pluginCreator___pluginOptions___short_name'
-  | 'pluginCreator___pluginOptions___start_url'
-  | 'pluginCreator___pluginOptions___background_color'
-  | 'pluginCreator___pluginOptions___theme_color'
-  | 'pluginCreator___pluginOptions___display'
-  | 'pluginCreator___pluginOptions___icon'
-  | 'pluginCreator___pluginOptions___cache_busting_mode'
-  | 'pluginCreator___pluginOptions___include_favicon'
-  | 'pluginCreator___pluginOptions___legacy'
-  | 'pluginCreator___pluginOptions___theme_color_in_head'
-  | 'pluginCreator___pluginOptions___cacheDigest'
-  | 'pluginCreator___pluginOptions___extensions'
-  | 'pluginCreator___pluginOptions___gatsbyRemarkPlugins'
-  | 'pluginCreator___pluginOptions___gatsbyRemarkPlugins___resolve'
-  | 'pluginCreator___pluginOptions___fileName'
-  | 'pluginCreator___pluginOptions___printRejected'
-  | 'pluginCreator___pluginOptions___develop'
-  | 'pluginCreator___pluginOptions___tailwind'
-  | 'pluginCreator___pluginOptions___ignore'
-  | 'pluginCreator___pluginOptions___pathCheck'
-  | 'pluginCreator___nodeAPIs'
-  | 'pluginCreator___browserAPIs'
-  | 'pluginCreator___ssrAPIs'
-  | 'pluginCreator___pluginFilepath'
-  | 'pluginCreator___packageJson___name'
-  | 'pluginCreator___packageJson___description'
-  | 'pluginCreator___packageJson___version'
-  | 'pluginCreator___packageJson___main'
-  | 'pluginCreator___packageJson___author'
-  | 'pluginCreator___packageJson___license'
-  | 'pluginCreator___packageJson___dependencies'
-  | 'pluginCreator___packageJson___dependencies___name'
-  | 'pluginCreator___packageJson___dependencies___version'
-  | 'pluginCreator___packageJson___devDependencies'
-  | 'pluginCreator___packageJson___devDependencies___name'
-  | 'pluginCreator___packageJson___devDependencies___version'
-  | 'pluginCreator___packageJson___peerDependencies'
-  | 'pluginCreator___packageJson___peerDependencies___name'
-  | 'pluginCreator___packageJson___peerDependencies___version'
-  | 'pluginCreator___packageJson___keywords'
-  | 'pluginCreatorId'
-  | 'componentPath'
   | 'id'
   | 'parent___id'
   | 'parent___parent___id'
@@ -3579,7 +3501,93 @@ export type SitePageFieldsEnum =
   | 'internal___ignoreType'
   | 'internal___mediaType'
   | 'internal___owner'
-  | 'internal___type';
+  | 'internal___type'
+  | 'isCreatedByStatefulCreatePages'
+  | 'pluginCreator___id'
+  | 'pluginCreator___parent___id'
+  | 'pluginCreator___parent___parent___id'
+  | 'pluginCreator___parent___parent___children'
+  | 'pluginCreator___parent___children'
+  | 'pluginCreator___parent___children___id'
+  | 'pluginCreator___parent___children___children'
+  | 'pluginCreator___parent___internal___content'
+  | 'pluginCreator___parent___internal___contentDigest'
+  | 'pluginCreator___parent___internal___description'
+  | 'pluginCreator___parent___internal___fieldOwners'
+  | 'pluginCreator___parent___internal___ignoreType'
+  | 'pluginCreator___parent___internal___mediaType'
+  | 'pluginCreator___parent___internal___owner'
+  | 'pluginCreator___parent___internal___type'
+  | 'pluginCreator___children'
+  | 'pluginCreator___children___id'
+  | 'pluginCreator___children___parent___id'
+  | 'pluginCreator___children___parent___children'
+  | 'pluginCreator___children___children'
+  | 'pluginCreator___children___children___id'
+  | 'pluginCreator___children___children___children'
+  | 'pluginCreator___children___internal___content'
+  | 'pluginCreator___children___internal___contentDigest'
+  | 'pluginCreator___children___internal___description'
+  | 'pluginCreator___children___internal___fieldOwners'
+  | 'pluginCreator___children___internal___ignoreType'
+  | 'pluginCreator___children___internal___mediaType'
+  | 'pluginCreator___children___internal___owner'
+  | 'pluginCreator___children___internal___type'
+  | 'pluginCreator___internal___content'
+  | 'pluginCreator___internal___contentDigest'
+  | 'pluginCreator___internal___description'
+  | 'pluginCreator___internal___fieldOwners'
+  | 'pluginCreator___internal___ignoreType'
+  | 'pluginCreator___internal___mediaType'
+  | 'pluginCreator___internal___owner'
+  | 'pluginCreator___internal___type'
+  | 'pluginCreator___resolve'
+  | 'pluginCreator___name'
+  | 'pluginCreator___version'
+  | 'pluginCreator___pluginOptions___name'
+  | 'pluginCreator___pluginOptions___path'
+  | 'pluginCreator___pluginOptions___short_name'
+  | 'pluginCreator___pluginOptions___start_url'
+  | 'pluginCreator___pluginOptions___background_color'
+  | 'pluginCreator___pluginOptions___theme_color'
+  | 'pluginCreator___pluginOptions___display'
+  | 'pluginCreator___pluginOptions___icon'
+  | 'pluginCreator___pluginOptions___cache_busting_mode'
+  | 'pluginCreator___pluginOptions___include_favicon'
+  | 'pluginCreator___pluginOptions___legacy'
+  | 'pluginCreator___pluginOptions___theme_color_in_head'
+  | 'pluginCreator___pluginOptions___cacheDigest'
+  | 'pluginCreator___pluginOptions___extensions'
+  | 'pluginCreator___pluginOptions___gatsbyRemarkPlugins'
+  | 'pluginCreator___pluginOptions___gatsbyRemarkPlugins___resolve'
+  | 'pluginCreator___pluginOptions___fileName'
+  | 'pluginCreator___pluginOptions___printRejected'
+  | 'pluginCreator___pluginOptions___develop'
+  | 'pluginCreator___pluginOptions___tailwind'
+  | 'pluginCreator___pluginOptions___ignore'
+  | 'pluginCreator___pluginOptions___pathCheck'
+  | 'pluginCreator___nodeAPIs'
+  | 'pluginCreator___browserAPIs'
+  | 'pluginCreator___ssrAPIs'
+  | 'pluginCreator___pluginFilepath'
+  | 'pluginCreator___packageJson___name'
+  | 'pluginCreator___packageJson___description'
+  | 'pluginCreator___packageJson___version'
+  | 'pluginCreator___packageJson___main'
+  | 'pluginCreator___packageJson___author'
+  | 'pluginCreator___packageJson___license'
+  | 'pluginCreator___packageJson___dependencies'
+  | 'pluginCreator___packageJson___dependencies___name'
+  | 'pluginCreator___packageJson___dependencies___version'
+  | 'pluginCreator___packageJson___devDependencies'
+  | 'pluginCreator___packageJson___devDependencies___name'
+  | 'pluginCreator___packageJson___devDependencies___version'
+  | 'pluginCreator___packageJson___peerDependencies'
+  | 'pluginCreator___packageJson___peerDependencies___name'
+  | 'pluginCreator___packageJson___peerDependencies___version'
+  | 'pluginCreator___packageJson___keywords'
+  | 'pluginCreatorId'
+  | 'componentPath';
 
 export type SitePageFilterInput = {
   path?: Maybe<StringQueryOperatorInput>;
@@ -3587,14 +3595,14 @@ export type SitePageFilterInput = {
   internalComponentName?: Maybe<StringQueryOperatorInput>;
   componentChunkName?: Maybe<StringQueryOperatorInput>;
   matchPath?: Maybe<StringQueryOperatorInput>;
-  isCreatedByStatefulCreatePages?: Maybe<BooleanQueryOperatorInput>;
-  pluginCreator?: Maybe<SitePluginFilterInput>;
-  pluginCreatorId?: Maybe<StringQueryOperatorInput>;
-  componentPath?: Maybe<StringQueryOperatorInput>;
   id?: Maybe<StringQueryOperatorInput>;
   parent?: Maybe<NodeFilterInput>;
   children?: Maybe<NodeFilterListInput>;
   internal?: Maybe<InternalFilterInput>;
+  isCreatedByStatefulCreatePages?: Maybe<BooleanQueryOperatorInput>;
+  pluginCreator?: Maybe<SitePluginFilterInput>;
+  pluginCreatorId?: Maybe<StringQueryOperatorInput>;
+  componentPath?: Maybe<StringQueryOperatorInput>;
 };
 
 export type SitePageGroupConnection = {
@@ -4223,69 +4231,6 @@ export type TutorialsJsonFieldsEnum =
   | 'thumbnailImage___internal___mediaType'
   | 'thumbnailImage___internal___owner'
   | 'thumbnailImage___internal___type'
-  | 'thumbnailImage___childrenCoursesJson'
-  | 'thumbnailImage___childrenCoursesJson___videos'
-  | 'thumbnailImage___childrenCoursesJson___videos___videoId'
-  | 'thumbnailImage___childrenCoursesJson___videos___ordinance'
-  | 'thumbnailImage___childrenCoursesJson___videos___title'
-  | 'thumbnailImage___childrenCoursesJson___videos___publishedAt'
-  | 'thumbnailImage___childrenCoursesJson___videos___thumbnail'
-  | 'thumbnailImage___childrenCoursesJson___title'
-  | 'thumbnailImage___childrenCoursesJson___slug'
-  | 'thumbnailImage___childrenCoursesJson___pid'
-  | 'thumbnailImage___childrenCoursesJson___lastUpdated'
-  | 'thumbnailImage___childrenCoursesJson___description'
-  | 'thumbnailImage___childrenCoursesJson___image'
-  | 'thumbnailImage___childrenCoursesJson___tags'
-  | 'thumbnailImage___childrenCoursesJson___id'
-  | 'thumbnailImage___childrenCoursesJson___parent___id'
-  | 'thumbnailImage___childrenCoursesJson___parent___children'
-  | 'thumbnailImage___childrenCoursesJson___children'
-  | 'thumbnailImage___childrenCoursesJson___children___id'
-  | 'thumbnailImage___childrenCoursesJson___children___children'
-  | 'thumbnailImage___childrenCoursesJson___internal___content'
-  | 'thumbnailImage___childrenCoursesJson___internal___contentDigest'
-  | 'thumbnailImage___childrenCoursesJson___internal___description'
-  | 'thumbnailImage___childrenCoursesJson___internal___fieldOwners'
-  | 'thumbnailImage___childrenCoursesJson___internal___ignoreType'
-  | 'thumbnailImage___childrenCoursesJson___internal___mediaType'
-  | 'thumbnailImage___childrenCoursesJson___internal___owner'
-  | 'thumbnailImage___childrenCoursesJson___internal___type'
-  | 'thumbnailImage___childResumeJson___id'
-  | 'thumbnailImage___childResumeJson___parent___id'
-  | 'thumbnailImage___childResumeJson___parent___children'
-  | 'thumbnailImage___childResumeJson___children'
-  | 'thumbnailImage___childResumeJson___children___id'
-  | 'thumbnailImage___childResumeJson___children___children'
-  | 'thumbnailImage___childResumeJson___internal___content'
-  | 'thumbnailImage___childResumeJson___internal___contentDigest'
-  | 'thumbnailImage___childResumeJson___internal___description'
-  | 'thumbnailImage___childResumeJson___internal___fieldOwners'
-  | 'thumbnailImage___childResumeJson___internal___ignoreType'
-  | 'thumbnailImage___childResumeJson___internal___mediaType'
-  | 'thumbnailImage___childResumeJson___internal___owner'
-  | 'thumbnailImage___childResumeJson___internal___type'
-  | 'thumbnailImage___childResumeJson___basics___name'
-  | 'thumbnailImage___childResumeJson___basics___label'
-  | 'thumbnailImage___childResumeJson___basics___email'
-  | 'thumbnailImage___childResumeJson___basics___url'
-  | 'thumbnailImage___childResumeJson___basics___summary'
-  | 'thumbnailImage___childResumeJson___basics___profiles'
-  | 'thumbnailImage___childResumeJson___work'
-  | 'thumbnailImage___childResumeJson___work___name'
-  | 'thumbnailImage___childResumeJson___work___location'
-  | 'thumbnailImage___childResumeJson___work___image'
-  | 'thumbnailImage___childResumeJson___work___position'
-  | 'thumbnailImage___childResumeJson___work___startDate'
-  | 'thumbnailImage___childResumeJson___work___endDate'
-  | 'thumbnailImage___childResumeJson___work___summary'
-  | 'thumbnailImage___childResumeJson___work___highlights'
-  | 'thumbnailImage___childResumeJson___education'
-  | 'thumbnailImage___childResumeJson___education___institution'
-  | 'thumbnailImage___childResumeJson___education___area'
-  | 'thumbnailImage___childResumeJson___education___location'
-  | 'thumbnailImage___childResumeJson___education___startDate'
-  | 'thumbnailImage___childResumeJson___education___endDate'
   | 'thumbnailImage___childrenTutorialsJson'
   | 'thumbnailImage___childrenTutorialsJson___publishedAt'
   | 'thumbnailImage___childrenTutorialsJson___thumbnail'
@@ -4329,10 +4274,10 @@ export type TutorialsJsonFieldsEnum =
   | 'thumbnailImage___childrenTutorialsJson___thumbnailImage___publicURL'
   | 'thumbnailImage___childrenTutorialsJson___thumbnailImage___id'
   | 'thumbnailImage___childrenTutorialsJson___thumbnailImage___children'
-  | 'thumbnailImage___childrenTutorialsJson___thumbnailImage___childrenCoursesJson'
   | 'thumbnailImage___childrenTutorialsJson___thumbnailImage___childrenTutorialsJson'
   | 'thumbnailImage___childrenTutorialsJson___thumbnailImage___childrenPageLinksJson'
   | 'thumbnailImage___childrenTutorialsJson___thumbnailImage___childrenUsesJson'
+  | 'thumbnailImage___childrenTutorialsJson___thumbnailImage___childrenCoursesJson'
   | 'thumbnailImage___childrenTutorialsJson___id'
   | 'thumbnailImage___childrenTutorialsJson___parent___id'
   | 'thumbnailImage___childrenTutorialsJson___parent___children'
@@ -4347,6 +4292,41 @@ export type TutorialsJsonFieldsEnum =
   | 'thumbnailImage___childrenTutorialsJson___internal___mediaType'
   | 'thumbnailImage___childrenTutorialsJson___internal___owner'
   | 'thumbnailImage___childrenTutorialsJson___internal___type'
+  | 'thumbnailImage___childResumeJson___id'
+  | 'thumbnailImage___childResumeJson___parent___id'
+  | 'thumbnailImage___childResumeJson___parent___children'
+  | 'thumbnailImage___childResumeJson___children'
+  | 'thumbnailImage___childResumeJson___children___id'
+  | 'thumbnailImage___childResumeJson___children___children'
+  | 'thumbnailImage___childResumeJson___internal___content'
+  | 'thumbnailImage___childResumeJson___internal___contentDigest'
+  | 'thumbnailImage___childResumeJson___internal___description'
+  | 'thumbnailImage___childResumeJson___internal___fieldOwners'
+  | 'thumbnailImage___childResumeJson___internal___ignoreType'
+  | 'thumbnailImage___childResumeJson___internal___mediaType'
+  | 'thumbnailImage___childResumeJson___internal___owner'
+  | 'thumbnailImage___childResumeJson___internal___type'
+  | 'thumbnailImage___childResumeJson___basics___name'
+  | 'thumbnailImage___childResumeJson___basics___label'
+  | 'thumbnailImage___childResumeJson___basics___email'
+  | 'thumbnailImage___childResumeJson___basics___url'
+  | 'thumbnailImage___childResumeJson___basics___summary'
+  | 'thumbnailImage___childResumeJson___basics___profiles'
+  | 'thumbnailImage___childResumeJson___work'
+  | 'thumbnailImage___childResumeJson___work___name'
+  | 'thumbnailImage___childResumeJson___work___location'
+  | 'thumbnailImage___childResumeJson___work___image'
+  | 'thumbnailImage___childResumeJson___work___position'
+  | 'thumbnailImage___childResumeJson___work___startDate'
+  | 'thumbnailImage___childResumeJson___work___endDate'
+  | 'thumbnailImage___childResumeJson___work___summary'
+  | 'thumbnailImage___childResumeJson___work___highlights'
+  | 'thumbnailImage___childResumeJson___education'
+  | 'thumbnailImage___childResumeJson___education___institution'
+  | 'thumbnailImage___childResumeJson___education___area'
+  | 'thumbnailImage___childResumeJson___education___location'
+  | 'thumbnailImage___childResumeJson___education___startDate'
+  | 'thumbnailImage___childResumeJson___education___endDate'
   | 'thumbnailImage___childrenPageLinksJson'
   | 'thumbnailImage___childrenPageLinksJson___id'
   | 'thumbnailImage___childrenPageLinksJson___parent___id'
@@ -4384,6 +4364,34 @@ export type TutorialsJsonFieldsEnum =
   | 'thumbnailImage___childrenUsesJson___tools___title'
   | 'thumbnailImage___childrenUsesJson___tools___link'
   | 'thumbnailImage___childrenUsesJson___tools___description'
+  | 'thumbnailImage___childrenCoursesJson'
+  | 'thumbnailImage___childrenCoursesJson___videos'
+  | 'thumbnailImage___childrenCoursesJson___videos___videoId'
+  | 'thumbnailImage___childrenCoursesJson___videos___ordinance'
+  | 'thumbnailImage___childrenCoursesJson___videos___title'
+  | 'thumbnailImage___childrenCoursesJson___videos___publishedAt'
+  | 'thumbnailImage___childrenCoursesJson___videos___thumbnail'
+  | 'thumbnailImage___childrenCoursesJson___title'
+  | 'thumbnailImage___childrenCoursesJson___slug'
+  | 'thumbnailImage___childrenCoursesJson___pid'
+  | 'thumbnailImage___childrenCoursesJson___lastUpdated'
+  | 'thumbnailImage___childrenCoursesJson___description'
+  | 'thumbnailImage___childrenCoursesJson___image'
+  | 'thumbnailImage___childrenCoursesJson___tags'
+  | 'thumbnailImage___childrenCoursesJson___id'
+  | 'thumbnailImage___childrenCoursesJson___parent___id'
+  | 'thumbnailImage___childrenCoursesJson___parent___children'
+  | 'thumbnailImage___childrenCoursesJson___children'
+  | 'thumbnailImage___childrenCoursesJson___children___id'
+  | 'thumbnailImage___childrenCoursesJson___children___children'
+  | 'thumbnailImage___childrenCoursesJson___internal___content'
+  | 'thumbnailImage___childrenCoursesJson___internal___contentDigest'
+  | 'thumbnailImage___childrenCoursesJson___internal___description'
+  | 'thumbnailImage___childrenCoursesJson___internal___fieldOwners'
+  | 'thumbnailImage___childrenCoursesJson___internal___ignoreType'
+  | 'thumbnailImage___childrenCoursesJson___internal___mediaType'
+  | 'thumbnailImage___childrenCoursesJson___internal___owner'
+  | 'thumbnailImage___childrenCoursesJson___internal___type'
   | 'thumbnailImage___childMdx___rawBody'
   | 'thumbnailImage___childMdx___fileAbsolutePath'
   | 'thumbnailImage___childMdx___frontmatter___title'
