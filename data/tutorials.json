@@ -1,7 +1,25 @@
 [
   {
+    "videoId": "a23UPryyOww",
+    "title": "My neovim Clojure config is NOT Fireplace",
+    "publishedAt": "2020-12-08T08:00:02Z",
+    "tags": ["clojure"]
+  },
+  {
+    "videoId": "xmqKgTD1WFE",
+    "title": "Golang TDD Password Cracker",
+    "publishedAt": "2020-10-06T16:00:27Z",
+    "tags": ["golang"]
+  },
+  {
+    "videoId": "KW8jls13YOY",
+    "title": "Golang Port Scanner",
+    "publishedAt": "2020-09-29T16:00:10Z",
+    "tags": ["golang"]
+  },
+  {
     "videoId": "p61lhOvQg2Q",
-    "title": "Full Stack Clojure Contact Book",
+    "title": "How to Set Up shadow-cljs",
     "publishedAt": "2020-07-10T05:49:57Z",
     "tags": ["clojure", "ClojureScript"]
   },

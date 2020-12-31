@@ -37,11 +37,11 @@ export type CoursesJson = Node & {
   videos?: Maybe<Array<Maybe<CoursesVideo>>>;
   title?: Maybe<Scalars['String']>;
   slug?: Maybe<Scalars['String']>;
-  pid?: Maybe<Scalars['String']>;
   lastUpdated?: Maybe<Scalars['Date']>;
   description?: Maybe<Scalars['String']>;
   image?: Maybe<Scalars['String']>;
   tags?: Maybe<Array<Maybe<Scalars['String']>>>;
+  pid?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
   parent?: Maybe<Node>;
   children: Array<Node>;
@@ -92,11 +92,11 @@ export type CoursesJsonFieldsEnum =
   | 'videos___thumbnail'
   | 'title'
   | 'slug'
-  | 'pid'
   | 'lastUpdated'
   | 'description'
   | 'image'
   | 'tags'
+  | 'pid'
   | 'id'
   | 'parent___id'
   | 'parent___parent___id'
@@ -188,11 +188,11 @@ export type CoursesJsonFilterInput = {
   videos?: Maybe<CoursesVideoFilterListInput>;
   title?: Maybe<StringQueryOperatorInput>;
   slug?: Maybe<StringQueryOperatorInput>;
-  pid?: Maybe<StringQueryOperatorInput>;
   lastUpdated?: Maybe<DateQueryOperatorInput>;
   description?: Maybe<StringQueryOperatorInput>;
   image?: Maybe<StringQueryOperatorInput>;
   tags?: Maybe<StringQueryOperatorInput>;
+  pid?: Maybe<StringQueryOperatorInput>;
   id?: Maybe<StringQueryOperatorInput>;
   parent?: Maybe<NodeFilterInput>;
   children?: Maybe<NodeFilterListInput>;
@@ -607,12 +607,13 @@ export type File = Node & {
   parent?: Maybe<Node>;
   children: Array<Node>;
   internal: Internal;
+  childrenCoursesJson?: Maybe<Array<Maybe<CoursesJson>>>;
   childrenTutorialsJson?: Maybe<Array<Maybe<TutorialsJson>>>;
   childResumeJson?: Maybe<ResumeJson>;
   childrenPageLinksJson?: Maybe<Array<Maybe<PageLinksJson>>>;
   childrenUsesJson?: Maybe<Array<Maybe<UsesJson>>>;
-  childrenCoursesJson?: Maybe<Array<Maybe<CoursesJson>>>;
   childMdx?: Maybe<Mdx>;
+  childRawJson?: Maybe<RawJson>;
 };
 
 
@@ -911,6 +912,58 @@ export type FileFieldsEnum =
   | 'internal___mediaType'
   | 'internal___owner'
   | 'internal___type'
+  | 'childrenCoursesJson'
+  | 'childrenCoursesJson___videos'
+  | 'childrenCoursesJson___videos___videoId'
+  | 'childrenCoursesJson___videos___ordinance'
+  | 'childrenCoursesJson___videos___title'
+  | 'childrenCoursesJson___videos___publishedAt'
+  | 'childrenCoursesJson___videos___thumbnail'
+  | 'childrenCoursesJson___title'
+  | 'childrenCoursesJson___slug'
+  | 'childrenCoursesJson___lastUpdated'
+  | 'childrenCoursesJson___description'
+  | 'childrenCoursesJson___image'
+  | 'childrenCoursesJson___tags'
+  | 'childrenCoursesJson___pid'
+  | 'childrenCoursesJson___id'
+  | 'childrenCoursesJson___parent___id'
+  | 'childrenCoursesJson___parent___parent___id'
+  | 'childrenCoursesJson___parent___parent___children'
+  | 'childrenCoursesJson___parent___children'
+  | 'childrenCoursesJson___parent___children___id'
+  | 'childrenCoursesJson___parent___children___children'
+  | 'childrenCoursesJson___parent___internal___content'
+  | 'childrenCoursesJson___parent___internal___contentDigest'
+  | 'childrenCoursesJson___parent___internal___description'
+  | 'childrenCoursesJson___parent___internal___fieldOwners'
+  | 'childrenCoursesJson___parent___internal___ignoreType'
+  | 'childrenCoursesJson___parent___internal___mediaType'
+  | 'childrenCoursesJson___parent___internal___owner'
+  | 'childrenCoursesJson___parent___internal___type'
+  | 'childrenCoursesJson___children'
+  | 'childrenCoursesJson___children___id'
+  | 'childrenCoursesJson___children___parent___id'
+  | 'childrenCoursesJson___children___parent___children'
+  | 'childrenCoursesJson___children___children'
+  | 'childrenCoursesJson___children___children___id'
+  | 'childrenCoursesJson___children___children___children'
+  | 'childrenCoursesJson___children___internal___content'
+  | 'childrenCoursesJson___children___internal___contentDigest'
+  | 'childrenCoursesJson___children___internal___description'
+  | 'childrenCoursesJson___children___internal___fieldOwners'
+  | 'childrenCoursesJson___children___internal___ignoreType'
+  | 'childrenCoursesJson___children___internal___mediaType'
+  | 'childrenCoursesJson___children___internal___owner'
+  | 'childrenCoursesJson___children___internal___type'
+  | 'childrenCoursesJson___internal___content'
+  | 'childrenCoursesJson___internal___contentDigest'
+  | 'childrenCoursesJson___internal___description'
+  | 'childrenCoursesJson___internal___fieldOwners'
+  | 'childrenCoursesJson___internal___ignoreType'
+  | 'childrenCoursesJson___internal___mediaType'
+  | 'childrenCoursesJson___internal___owner'
+  | 'childrenCoursesJson___internal___type'
   | 'childrenTutorialsJson'
   | 'childrenTutorialsJson___publishedAt'
   | 'childrenTutorialsJson___thumbnail'
@@ -968,6 +1021,17 @@ export type FileFieldsEnum =
   | 'childrenTutorialsJson___thumbnailImage___internal___mediaType'
   | 'childrenTutorialsJson___thumbnailImage___internal___owner'
   | 'childrenTutorialsJson___thumbnailImage___internal___type'
+  | 'childrenTutorialsJson___thumbnailImage___childrenCoursesJson'
+  | 'childrenTutorialsJson___thumbnailImage___childrenCoursesJson___videos'
+  | 'childrenTutorialsJson___thumbnailImage___childrenCoursesJson___title'
+  | 'childrenTutorialsJson___thumbnailImage___childrenCoursesJson___slug'
+  | 'childrenTutorialsJson___thumbnailImage___childrenCoursesJson___lastUpdated'
+  | 'childrenTutorialsJson___thumbnailImage___childrenCoursesJson___description'
+  | 'childrenTutorialsJson___thumbnailImage___childrenCoursesJson___image'
+  | 'childrenTutorialsJson___thumbnailImage___childrenCoursesJson___tags'
+  | 'childrenTutorialsJson___thumbnailImage___childrenCoursesJson___pid'
+  | 'childrenTutorialsJson___thumbnailImage___childrenCoursesJson___id'
+  | 'childrenTutorialsJson___thumbnailImage___childrenCoursesJson___children'
   | 'childrenTutorialsJson___thumbnailImage___childrenTutorialsJson'
   | 'childrenTutorialsJson___thumbnailImage___childrenTutorialsJson___publishedAt'
   | 'childrenTutorialsJson___thumbnailImage___childrenTutorialsJson___thumbnail'
@@ -990,17 +1054,6 @@ export type FileFieldsEnum =
   | 'childrenTutorialsJson___thumbnailImage___childrenUsesJson___children'
   | 'childrenTutorialsJson___thumbnailImage___childrenUsesJson___title'
   | 'childrenTutorialsJson___thumbnailImage___childrenUsesJson___tools'
-  | 'childrenTutorialsJson___thumbnailImage___childrenCoursesJson'
-  | 'childrenTutorialsJson___thumbnailImage___childrenCoursesJson___videos'
-  | 'childrenTutorialsJson___thumbnailImage___childrenCoursesJson___title'
-  | 'childrenTutorialsJson___thumbnailImage___childrenCoursesJson___slug'
-  | 'childrenTutorialsJson___thumbnailImage___childrenCoursesJson___pid'
-  | 'childrenTutorialsJson___thumbnailImage___childrenCoursesJson___lastUpdated'
-  | 'childrenTutorialsJson___thumbnailImage___childrenCoursesJson___description'
-  | 'childrenTutorialsJson___thumbnailImage___childrenCoursesJson___image'
-  | 'childrenTutorialsJson___thumbnailImage___childrenCoursesJson___tags'
-  | 'childrenTutorialsJson___thumbnailImage___childrenCoursesJson___id'
-  | 'childrenTutorialsJson___thumbnailImage___childrenCoursesJson___children'
   | 'childrenTutorialsJson___thumbnailImage___childMdx___rawBody'
   | 'childrenTutorialsJson___thumbnailImage___childMdx___fileAbsolutePath'
   | 'childrenTutorialsJson___thumbnailImage___childMdx___body'
@@ -1012,6 +1065,10 @@ export type FileFieldsEnum =
   | 'childrenTutorialsJson___thumbnailImage___childMdx___timeToRead'
   | 'childrenTutorialsJson___thumbnailImage___childMdx___id'
   | 'childrenTutorialsJson___thumbnailImage___childMdx___children'
+  | 'childrenTutorialsJson___thumbnailImage___childRawJson___id'
+  | 'childrenTutorialsJson___thumbnailImage___childRawJson___children'
+  | 'childrenTutorialsJson___thumbnailImage___childRawJson___kind'
+  | 'childrenTutorialsJson___thumbnailImage___childRawJson___etag'
   | 'childrenTutorialsJson___id'
   | 'childrenTutorialsJson___parent___id'
   | 'childrenTutorialsJson___parent___parent___id'
@@ -1200,58 +1257,6 @@ export type FileFieldsEnum =
   | 'childrenUsesJson___tools___title'
   | 'childrenUsesJson___tools___link'
   | 'childrenUsesJson___tools___description'
-  | 'childrenCoursesJson'
-  | 'childrenCoursesJson___videos'
-  | 'childrenCoursesJson___videos___videoId'
-  | 'childrenCoursesJson___videos___ordinance'
-  | 'childrenCoursesJson___videos___title'
-  | 'childrenCoursesJson___videos___publishedAt'
-  | 'childrenCoursesJson___videos___thumbnail'
-  | 'childrenCoursesJson___title'
-  | 'childrenCoursesJson___slug'
-  | 'childrenCoursesJson___pid'
-  | 'childrenCoursesJson___lastUpdated'
-  | 'childrenCoursesJson___description'
-  | 'childrenCoursesJson___image'
-  | 'childrenCoursesJson___tags'
-  | 'childrenCoursesJson___id'
-  | 'childrenCoursesJson___parent___id'
-  | 'childrenCoursesJson___parent___parent___id'
-  | 'childrenCoursesJson___parent___parent___children'
-  | 'childrenCoursesJson___parent___children'
-  | 'childrenCoursesJson___parent___children___id'
-  | 'childrenCoursesJson___parent___children___children'
-  | 'childrenCoursesJson___parent___internal___content'
-  | 'childrenCoursesJson___parent___internal___contentDigest'
-  | 'childrenCoursesJson___parent___internal___description'
-  | 'childrenCoursesJson___parent___internal___fieldOwners'
-  | 'childrenCoursesJson___parent___internal___ignoreType'
-  | 'childrenCoursesJson___parent___internal___mediaType'
-  | 'childrenCoursesJson___parent___internal___owner'
-  | 'childrenCoursesJson___parent___internal___type'
-  | 'childrenCoursesJson___children'
-  | 'childrenCoursesJson___children___id'
-  | 'childrenCoursesJson___children___parent___id'
-  | 'childrenCoursesJson___children___parent___children'
-  | 'childrenCoursesJson___children___children'
-  | 'childrenCoursesJson___children___children___id'
-  | 'childrenCoursesJson___children___children___children'
-  | 'childrenCoursesJson___children___internal___content'
-  | 'childrenCoursesJson___children___internal___contentDigest'
-  | 'childrenCoursesJson___children___internal___description'
-  | 'childrenCoursesJson___children___internal___fieldOwners'
-  | 'childrenCoursesJson___children___internal___ignoreType'
-  | 'childrenCoursesJson___children___internal___mediaType'
-  | 'childrenCoursesJson___children___internal___owner'
-  | 'childrenCoursesJson___children___internal___type'
-  | 'childrenCoursesJson___internal___content'
-  | 'childrenCoursesJson___internal___contentDigest'
-  | 'childrenCoursesJson___internal___description'
-  | 'childrenCoursesJson___internal___fieldOwners'
-  | 'childrenCoursesJson___internal___ignoreType'
-  | 'childrenCoursesJson___internal___mediaType'
-  | 'childrenCoursesJson___internal___owner'
-  | 'childrenCoursesJson___internal___type'
   | 'childMdx___rawBody'
   | 'childMdx___fileAbsolutePath'
   | 'childMdx___frontmatter___title'
@@ -1304,7 +1309,54 @@ export type FileFieldsEnum =
   | 'childMdx___internal___ignoreType'
   | 'childMdx___internal___mediaType'
   | 'childMdx___internal___owner'
-  | 'childMdx___internal___type';
+  | 'childMdx___internal___type'
+  | 'childRawJson___id'
+  | 'childRawJson___parent___id'
+  | 'childRawJson___parent___parent___id'
+  | 'childRawJson___parent___parent___children'
+  | 'childRawJson___parent___children'
+  | 'childRawJson___parent___children___id'
+  | 'childRawJson___parent___children___children'
+  | 'childRawJson___parent___internal___content'
+  | 'childRawJson___parent___internal___contentDigest'
+  | 'childRawJson___parent___internal___description'
+  | 'childRawJson___parent___internal___fieldOwners'
+  | 'childRawJson___parent___internal___ignoreType'
+  | 'childRawJson___parent___internal___mediaType'
+  | 'childRawJson___parent___internal___owner'
+  | 'childRawJson___parent___internal___type'
+  | 'childRawJson___children'
+  | 'childRawJson___children___id'
+  | 'childRawJson___children___parent___id'
+  | 'childRawJson___children___parent___children'
+  | 'childRawJson___children___children'
+  | 'childRawJson___children___children___id'
+  | 'childRawJson___children___children___children'
+  | 'childRawJson___children___internal___content'
+  | 'childRawJson___children___internal___contentDigest'
+  | 'childRawJson___children___internal___description'
+  | 'childRawJson___children___internal___fieldOwners'
+  | 'childRawJson___children___internal___ignoreType'
+  | 'childRawJson___children___internal___mediaType'
+  | 'childRawJson___children___internal___owner'
+  | 'childRawJson___children___internal___type'
+  | 'childRawJson___internal___content'
+  | 'childRawJson___internal___contentDigest'
+  | 'childRawJson___internal___description'
+  | 'childRawJson___internal___fieldOwners'
+  | 'childRawJson___internal___ignoreType'
+  | 'childRawJson___internal___mediaType'
+  | 'childRawJson___internal___owner'
+  | 'childRawJson___internal___type'
+  | 'childRawJson___kind'
+  | 'childRawJson___etag'
+  | 'childRawJson___snippet___publishedAt'
+  | 'childRawJson___snippet___channelId'
+  | 'childRawJson___snippet___title'
+  | 'childRawJson___snippet___description'
+  | 'childRawJson___snippet___channelTitle'
+  | 'childRawJson___snippet___liveBroadcastContent'
+  | 'childRawJson___snippet___publishTime';
 
 export type FileFilterInput = {
   sourceInstanceName?: Maybe<StringQueryOperatorInput>;
@@ -1347,12 +1399,13 @@ export type FileFilterInput = {
   parent?: Maybe<NodeFilterInput>;
   children?: Maybe<NodeFilterListInput>;
   internal?: Maybe<InternalFilterInput>;
+  childrenCoursesJson?: Maybe<CoursesJsonFilterListInput>;
   childrenTutorialsJson?: Maybe<TutorialsJsonFilterListInput>;
   childResumeJson?: Maybe<ResumeJsonFilterInput>;
   childrenPageLinksJson?: Maybe<PageLinksJsonFilterListInput>;
   childrenUsesJson?: Maybe<UsesJsonFilterListInput>;
-  childrenCoursesJson?: Maybe<CoursesJsonFilterListInput>;
   childMdx?: Maybe<MdxFilterInput>;
+  childRawJson?: Maybe<RawJsonFilterInput>;
 };
 
 export type FileGroupConnection = {
@@ -2377,12 +2430,14 @@ export type Query = {
   allTutorialsJson: TutorialsJsonConnection;
   coursesJson?: Maybe<CoursesJson>;
   allCoursesJson: CoursesJsonConnection;
-  resumeJson?: Maybe<ResumeJson>;
-  allResumeJson: ResumeJsonConnection;
+  rawJson?: Maybe<RawJson>;
+  allRawJson: RawJsonConnection;
   usesJson?: Maybe<UsesJson>;
   allUsesJson: UsesJsonConnection;
   pageLinksJson?: Maybe<PageLinksJson>;
   allPageLinksJson: PageLinksJsonConnection;
+  resumeJson?: Maybe<ResumeJson>;
+  allResumeJson: ResumeJsonConnection;
   siteBuildMetadata?: Maybe<SiteBuildMetadata>;
   allSiteBuildMetadata: SiteBuildMetadataConnection;
   sitePlugin?: Maybe<SitePlugin>;
@@ -2431,12 +2486,13 @@ export type QueryFileArgs = {
   parent?: Maybe<NodeFilterInput>;
   children?: Maybe<NodeFilterListInput>;
   internal?: Maybe<InternalFilterInput>;
+  childrenCoursesJson?: Maybe<CoursesJsonFilterListInput>;
   childrenTutorialsJson?: Maybe<TutorialsJsonFilterListInput>;
   childResumeJson?: Maybe<ResumeJsonFilterInput>;
   childrenPageLinksJson?: Maybe<PageLinksJsonFilterListInput>;
   childrenUsesJson?: Maybe<UsesJsonFilterListInput>;
-  childrenCoursesJson?: Maybe<CoursesJsonFilterListInput>;
   childMdx?: Maybe<MdxFilterInput>;
+  childRawJson?: Maybe<RawJsonFilterInput>;
 };
 
 
@@ -2619,11 +2675,11 @@ export type QueryCoursesJsonArgs = {
   videos?: Maybe<CoursesVideoFilterListInput>;
   title?: Maybe<StringQueryOperatorInput>;
   slug?: Maybe<StringQueryOperatorInput>;
-  pid?: Maybe<StringQueryOperatorInput>;
   lastUpdated?: Maybe<DateQueryOperatorInput>;
   description?: Maybe<StringQueryOperatorInput>;
   image?: Maybe<StringQueryOperatorInput>;
   tags?: Maybe<StringQueryOperatorInput>;
+  pid?: Maybe<StringQueryOperatorInput>;
   id?: Maybe<StringQueryOperatorInput>;
   parent?: Maybe<NodeFilterInput>;
   children?: Maybe<NodeFilterListInput>;
@@ -2639,20 +2695,20 @@ export type QueryAllCoursesJsonArgs = {
 };
 
 
-export type QueryResumeJsonArgs = {
+export type QueryRawJsonArgs = {
   id?: Maybe<StringQueryOperatorInput>;
   parent?: Maybe<NodeFilterInput>;
   children?: Maybe<NodeFilterListInput>;
   internal?: Maybe<InternalFilterInput>;
-  basics?: Maybe<ResumeJsonBasicsFilterInput>;
-  work?: Maybe<ResumeJsonWorkFilterListInput>;
-  education?: Maybe<ResumeJsonEducationFilterListInput>;
+  kind?: Maybe<StringQueryOperatorInput>;
+  etag?: Maybe<StringQueryOperatorInput>;
+  snippet?: Maybe<RawJsonSnippetFilterInput>;
 };
 
 
-export type QueryAllResumeJsonArgs = {
-  filter?: Maybe<ResumeJsonFilterInput>;
-  sort?: Maybe<ResumeJsonSortInput>;
+export type QueryAllRawJsonArgs = {
+  filter?: Maybe<RawJsonFilterInput>;
+  sort?: Maybe<RawJsonSortInput>;
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
 };
@@ -2689,6 +2745,25 @@ export type QueryPageLinksJsonArgs = {
 export type QueryAllPageLinksJsonArgs = {
   filter?: Maybe<PageLinksJsonFilterInput>;
   sort?: Maybe<PageLinksJsonSortInput>;
+  skip?: Maybe<Scalars['Int']>;
+  limit?: Maybe<Scalars['Int']>;
+};
+
+
+export type QueryResumeJsonArgs = {
+  id?: Maybe<StringQueryOperatorInput>;
+  parent?: Maybe<NodeFilterInput>;
+  children?: Maybe<NodeFilterListInput>;
+  internal?: Maybe<InternalFilterInput>;
+  basics?: Maybe<ResumeJsonBasicsFilterInput>;
+  work?: Maybe<ResumeJsonWorkFilterListInput>;
+  education?: Maybe<ResumeJsonEducationFilterListInput>;
+};
+
+
+export type QueryAllResumeJsonArgs = {
+  filter?: Maybe<ResumeJsonFilterInput>;
+  sort?: Maybe<ResumeJsonSortInput>;
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
 };
@@ -2733,6 +2808,259 @@ export type QueryAllSitePluginArgs = {
   sort?: Maybe<SitePluginSortInput>;
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
+};
+
+export type RawJson = Node & {
+  id: Scalars['ID'];
+  parent?: Maybe<Node>;
+  children: Array<Node>;
+  internal: Internal;
+  kind?: Maybe<Scalars['String']>;
+  etag?: Maybe<Scalars['String']>;
+  snippet?: Maybe<RawJsonSnippet>;
+};
+
+export type RawJsonConnection = {
+  totalCount: Scalars['Int'];
+  edges: Array<RawJsonEdge>;
+  nodes: Array<RawJson>;
+  pageInfo: PageInfo;
+  distinct: Array<Scalars['String']>;
+  group: Array<RawJsonGroupConnection>;
+};
+
+
+export type RawJsonConnectionDistinctArgs = {
+  field: RawJsonFieldsEnum;
+};
+
+
+export type RawJsonConnectionGroupArgs = {
+  skip?: Maybe<Scalars['Int']>;
+  limit?: Maybe<Scalars['Int']>;
+  field: RawJsonFieldsEnum;
+};
+
+export type RawJsonEdge = {
+  next?: Maybe<RawJson>;
+  node: RawJson;
+  previous?: Maybe<RawJson>;
+};
+
+export type RawJsonFieldsEnum = 
+  | 'id'
+  | 'parent___id'
+  | 'parent___parent___id'
+  | 'parent___parent___parent___id'
+  | 'parent___parent___parent___children'
+  | 'parent___parent___children'
+  | 'parent___parent___children___id'
+  | 'parent___parent___children___children'
+  | 'parent___parent___internal___content'
+  | 'parent___parent___internal___contentDigest'
+  | 'parent___parent___internal___description'
+  | 'parent___parent___internal___fieldOwners'
+  | 'parent___parent___internal___ignoreType'
+  | 'parent___parent___internal___mediaType'
+  | 'parent___parent___internal___owner'
+  | 'parent___parent___internal___type'
+  | 'parent___children'
+  | 'parent___children___id'
+  | 'parent___children___parent___id'
+  | 'parent___children___parent___children'
+  | 'parent___children___children'
+  | 'parent___children___children___id'
+  | 'parent___children___children___children'
+  | 'parent___children___internal___content'
+  | 'parent___children___internal___contentDigest'
+  | 'parent___children___internal___description'
+  | 'parent___children___internal___fieldOwners'
+  | 'parent___children___internal___ignoreType'
+  | 'parent___children___internal___mediaType'
+  | 'parent___children___internal___owner'
+  | 'parent___children___internal___type'
+  | 'parent___internal___content'
+  | 'parent___internal___contentDigest'
+  | 'parent___internal___description'
+  | 'parent___internal___fieldOwners'
+  | 'parent___internal___ignoreType'
+  | 'parent___internal___mediaType'
+  | 'parent___internal___owner'
+  | 'parent___internal___type'
+  | 'children'
+  | 'children___id'
+  | 'children___parent___id'
+  | 'children___parent___parent___id'
+  | 'children___parent___parent___children'
+  | 'children___parent___children'
+  | 'children___parent___children___id'
+  | 'children___parent___children___children'
+  | 'children___parent___internal___content'
+  | 'children___parent___internal___contentDigest'
+  | 'children___parent___internal___description'
+  | 'children___parent___internal___fieldOwners'
+  | 'children___parent___internal___ignoreType'
+  | 'children___parent___internal___mediaType'
+  | 'children___parent___internal___owner'
+  | 'children___parent___internal___type'
+  | 'children___children'
+  | 'children___children___id'
+  | 'children___children___parent___id'
+  | 'children___children___parent___children'
+  | 'children___children___children'
+  | 'children___children___children___id'
+  | 'children___children___children___children'
+  | 'children___children___internal___content'
+  | 'children___children___internal___contentDigest'
+  | 'children___children___internal___description'
+  | 'children___children___internal___fieldOwners'
+  | 'children___children___internal___ignoreType'
+  | 'children___children___internal___mediaType'
+  | 'children___children___internal___owner'
+  | 'children___children___internal___type'
+  | 'children___internal___content'
+  | 'children___internal___contentDigest'
+  | 'children___internal___description'
+  | 'children___internal___fieldOwners'
+  | 'children___internal___ignoreType'
+  | 'children___internal___mediaType'
+  | 'children___internal___owner'
+  | 'children___internal___type'
+  | 'internal___content'
+  | 'internal___contentDigest'
+  | 'internal___description'
+  | 'internal___fieldOwners'
+  | 'internal___ignoreType'
+  | 'internal___mediaType'
+  | 'internal___owner'
+  | 'internal___type'
+  | 'kind'
+  | 'etag'
+  | 'snippet___publishedAt'
+  | 'snippet___channelId'
+  | 'snippet___title'
+  | 'snippet___description'
+  | 'snippet___thumbnails___default___url'
+  | 'snippet___thumbnails___default___width'
+  | 'snippet___thumbnails___default___height'
+  | 'snippet___thumbnails___medium___url'
+  | 'snippet___thumbnails___medium___width'
+  | 'snippet___thumbnails___medium___height'
+  | 'snippet___thumbnails___high___url'
+  | 'snippet___thumbnails___high___width'
+  | 'snippet___thumbnails___high___height'
+  | 'snippet___channelTitle'
+  | 'snippet___liveBroadcastContent'
+  | 'snippet___publishTime';
+
+export type RawJsonFilterInput = {
+  id?: Maybe<StringQueryOperatorInput>;
+  parent?: Maybe<NodeFilterInput>;
+  children?: Maybe<NodeFilterListInput>;
+  internal?: Maybe<InternalFilterInput>;
+  kind?: Maybe<StringQueryOperatorInput>;
+  etag?: Maybe<StringQueryOperatorInput>;
+  snippet?: Maybe<RawJsonSnippetFilterInput>;
+};
+
+export type RawJsonGroupConnection = {
+  totalCount: Scalars['Int'];
+  edges: Array<RawJsonEdge>;
+  nodes: Array<RawJson>;
+  pageInfo: PageInfo;
+  field: Scalars['String'];
+  fieldValue?: Maybe<Scalars['String']>;
+};
+
+export type RawJsonSnippet = {
+  publishedAt?: Maybe<Scalars['Date']>;
+  channelId?: Maybe<Scalars['String']>;
+  title?: Maybe<Scalars['String']>;
+  description?: Maybe<Scalars['String']>;
+  thumbnails?: Maybe<RawJsonSnippetThumbnails>;
+  channelTitle?: Maybe<Scalars['String']>;
+  liveBroadcastContent?: Maybe<Scalars['String']>;
+  publishTime?: Maybe<Scalars['Date']>;
+};
+
+
+export type RawJsonSnippetPublishedAtArgs = {
+  formatString?: Maybe<Scalars['String']>;
+  fromNow?: Maybe<Scalars['Boolean']>;
+  difference?: Maybe<Scalars['String']>;
+  locale?: Maybe<Scalars['String']>;
+};
+
+
+export type RawJsonSnippetPublishTimeArgs = {
+  formatString?: Maybe<Scalars['String']>;
+  fromNow?: Maybe<Scalars['Boolean']>;
+  difference?: Maybe<Scalars['String']>;
+  locale?: Maybe<Scalars['String']>;
+};
+
+export type RawJsonSnippetFilterInput = {
+  publishedAt?: Maybe<DateQueryOperatorInput>;
+  channelId?: Maybe<StringQueryOperatorInput>;
+  title?: Maybe<StringQueryOperatorInput>;
+  description?: Maybe<StringQueryOperatorInput>;
+  thumbnails?: Maybe<RawJsonSnippetThumbnailsFilterInput>;
+  channelTitle?: Maybe<StringQueryOperatorInput>;
+  liveBroadcastContent?: Maybe<StringQueryOperatorInput>;
+  publishTime?: Maybe<DateQueryOperatorInput>;
+};
+
+export type RawJsonSnippetThumbnails = {
+  default?: Maybe<RawJsonSnippetThumbnailsDefault>;
+  medium?: Maybe<RawJsonSnippetThumbnailsMedium>;
+  high?: Maybe<RawJsonSnippetThumbnailsHigh>;
+};
+
+export type RawJsonSnippetThumbnailsDefault = {
+  url?: Maybe<Scalars['String']>;
+  width?: Maybe<Scalars['Int']>;
+  height?: Maybe<Scalars['Int']>;
+};
+
+export type RawJsonSnippetThumbnailsDefaultFilterInput = {
+  url?: Maybe<StringQueryOperatorInput>;
+  width?: Maybe<IntQueryOperatorInput>;
+  height?: Maybe<IntQueryOperatorInput>;
+};
+
+export type RawJsonSnippetThumbnailsFilterInput = {
+  default?: Maybe<RawJsonSnippetThumbnailsDefaultFilterInput>;
+  medium?: Maybe<RawJsonSnippetThumbnailsMediumFilterInput>;
+  high?: Maybe<RawJsonSnippetThumbnailsHighFilterInput>;
+};
+
+export type RawJsonSnippetThumbnailsHigh = {
+  url?: Maybe<Scalars['String']>;
+  width?: Maybe<Scalars['Int']>;
+  height?: Maybe<Scalars['Int']>;
+};
+
+export type RawJsonSnippetThumbnailsHighFilterInput = {
+  url?: Maybe<StringQueryOperatorInput>;
+  width?: Maybe<IntQueryOperatorInput>;
+  height?: Maybe<IntQueryOperatorInput>;
+};
+
+export type RawJsonSnippetThumbnailsMedium = {
+  url?: Maybe<Scalars['String']>;
+  width?: Maybe<Scalars['Int']>;
+  height?: Maybe<Scalars['Int']>;
+};
+
+export type RawJsonSnippetThumbnailsMediumFilterInput = {
+  url?: Maybe<StringQueryOperatorInput>;
+  width?: Maybe<IntQueryOperatorInput>;
+  height?: Maybe<IntQueryOperatorInput>;
+};
+
+export type RawJsonSortInput = {
+  fields?: Maybe<Array<Maybe<RawJsonFieldsEnum>>>;
+  order?: Maybe<Array<Maybe<SortOrderEnum>>>;
 };
 
 export type ResumeJson = Node & {
@@ -4231,6 +4559,34 @@ export type TutorialsJsonFieldsEnum =
   | 'thumbnailImage___internal___mediaType'
   | 'thumbnailImage___internal___owner'
   | 'thumbnailImage___internal___type'
+  | 'thumbnailImage___childrenCoursesJson'
+  | 'thumbnailImage___childrenCoursesJson___videos'
+  | 'thumbnailImage___childrenCoursesJson___videos___videoId'
+  | 'thumbnailImage___childrenCoursesJson___videos___ordinance'
+  | 'thumbnailImage___childrenCoursesJson___videos___title'
+  | 'thumbnailImage___childrenCoursesJson___videos___publishedAt'
+  | 'thumbnailImage___childrenCoursesJson___videos___thumbnail'
+  | 'thumbnailImage___childrenCoursesJson___title'
+  | 'thumbnailImage___childrenCoursesJson___slug'
+  | 'thumbnailImage___childrenCoursesJson___lastUpdated'
+  | 'thumbnailImage___childrenCoursesJson___description'
+  | 'thumbnailImage___childrenCoursesJson___image'
+  | 'thumbnailImage___childrenCoursesJson___tags'
+  | 'thumbnailImage___childrenCoursesJson___pid'
+  | 'thumbnailImage___childrenCoursesJson___id'
+  | 'thumbnailImage___childrenCoursesJson___parent___id'
+  | 'thumbnailImage___childrenCoursesJson___parent___children'
+  | 'thumbnailImage___childrenCoursesJson___children'
+  | 'thumbnailImage___childrenCoursesJson___children___id'
+  | 'thumbnailImage___childrenCoursesJson___children___children'
+  | 'thumbnailImage___childrenCoursesJson___internal___content'
+  | 'thumbnailImage___childrenCoursesJson___internal___contentDigest'
+  | 'thumbnailImage___childrenCoursesJson___internal___description'
+  | 'thumbnailImage___childrenCoursesJson___internal___fieldOwners'
+  | 'thumbnailImage___childrenCoursesJson___internal___ignoreType'
+  | 'thumbnailImage___childrenCoursesJson___internal___mediaType'
+  | 'thumbnailImage___childrenCoursesJson___internal___owner'
+  | 'thumbnailImage___childrenCoursesJson___internal___type'
   | 'thumbnailImage___childrenTutorialsJson'
   | 'thumbnailImage___childrenTutorialsJson___publishedAt'
   | 'thumbnailImage___childrenTutorialsJson___thumbnail'
@@ -4274,10 +4630,10 @@ export type TutorialsJsonFieldsEnum =
   | 'thumbnailImage___childrenTutorialsJson___thumbnailImage___publicURL'
   | 'thumbnailImage___childrenTutorialsJson___thumbnailImage___id'
   | 'thumbnailImage___childrenTutorialsJson___thumbnailImage___children'
+  | 'thumbnailImage___childrenTutorialsJson___thumbnailImage___childrenCoursesJson'
   | 'thumbnailImage___childrenTutorialsJson___thumbnailImage___childrenTutorialsJson'
   | 'thumbnailImage___childrenTutorialsJson___thumbnailImage___childrenPageLinksJson'
   | 'thumbnailImage___childrenTutorialsJson___thumbnailImage___childrenUsesJson'
-  | 'thumbnailImage___childrenTutorialsJson___thumbnailImage___childrenCoursesJson'
   | 'thumbnailImage___childrenTutorialsJson___id'
   | 'thumbnailImage___childrenTutorialsJson___parent___id'
   | 'thumbnailImage___childrenTutorialsJson___parent___children'
@@ -4364,34 +4720,6 @@ export type TutorialsJsonFieldsEnum =
   | 'thumbnailImage___childrenUsesJson___tools___title'
   | 'thumbnailImage___childrenUsesJson___tools___link'
   | 'thumbnailImage___childrenUsesJson___tools___description'
-  | 'thumbnailImage___childrenCoursesJson'
-  | 'thumbnailImage___childrenCoursesJson___videos'
-  | 'thumbnailImage___childrenCoursesJson___videos___videoId'
-  | 'thumbnailImage___childrenCoursesJson___videos___ordinance'
-  | 'thumbnailImage___childrenCoursesJson___videos___title'
-  | 'thumbnailImage___childrenCoursesJson___videos___publishedAt'
-  | 'thumbnailImage___childrenCoursesJson___videos___thumbnail'
-  | 'thumbnailImage___childrenCoursesJson___title'
-  | 'thumbnailImage___childrenCoursesJson___slug'
-  | 'thumbnailImage___childrenCoursesJson___pid'
-  | 'thumbnailImage___childrenCoursesJson___lastUpdated'
-  | 'thumbnailImage___childrenCoursesJson___description'
-  | 'thumbnailImage___childrenCoursesJson___image'
-  | 'thumbnailImage___childrenCoursesJson___tags'
-  | 'thumbnailImage___childrenCoursesJson___id'
-  | 'thumbnailImage___childrenCoursesJson___parent___id'
-  | 'thumbnailImage___childrenCoursesJson___parent___children'
-  | 'thumbnailImage___childrenCoursesJson___children'
-  | 'thumbnailImage___childrenCoursesJson___children___id'
-  | 'thumbnailImage___childrenCoursesJson___children___children'
-  | 'thumbnailImage___childrenCoursesJson___internal___content'
-  | 'thumbnailImage___childrenCoursesJson___internal___contentDigest'
-  | 'thumbnailImage___childrenCoursesJson___internal___description'
-  | 'thumbnailImage___childrenCoursesJson___internal___fieldOwners'
-  | 'thumbnailImage___childrenCoursesJson___internal___ignoreType'
-  | 'thumbnailImage___childrenCoursesJson___internal___mediaType'
-  | 'thumbnailImage___childrenCoursesJson___internal___owner'
-  | 'thumbnailImage___childrenCoursesJson___internal___type'
   | 'thumbnailImage___childMdx___rawBody'
   | 'thumbnailImage___childMdx___fileAbsolutePath'
   | 'thumbnailImage___childMdx___frontmatter___title'
@@ -4421,6 +4749,29 @@ export type TutorialsJsonFieldsEnum =
   | 'thumbnailImage___childMdx___internal___mediaType'
   | 'thumbnailImage___childMdx___internal___owner'
   | 'thumbnailImage___childMdx___internal___type'
+  | 'thumbnailImage___childRawJson___id'
+  | 'thumbnailImage___childRawJson___parent___id'
+  | 'thumbnailImage___childRawJson___parent___children'
+  | 'thumbnailImage___childRawJson___children'
+  | 'thumbnailImage___childRawJson___children___id'
+  | 'thumbnailImage___childRawJson___children___children'
+  | 'thumbnailImage___childRawJson___internal___content'
+  | 'thumbnailImage___childRawJson___internal___contentDigest'
+  | 'thumbnailImage___childRawJson___internal___description'
+  | 'thumbnailImage___childRawJson___internal___fieldOwners'
+  | 'thumbnailImage___childRawJson___internal___ignoreType'
+  | 'thumbnailImage___childRawJson___internal___mediaType'
+  | 'thumbnailImage___childRawJson___internal___owner'
+  | 'thumbnailImage___childRawJson___internal___type'
+  | 'thumbnailImage___childRawJson___kind'
+  | 'thumbnailImage___childRawJson___etag'
+  | 'thumbnailImage___childRawJson___snippet___publishedAt'
+  | 'thumbnailImage___childRawJson___snippet___channelId'
+  | 'thumbnailImage___childRawJson___snippet___title'
+  | 'thumbnailImage___childRawJson___snippet___description'
+  | 'thumbnailImage___childRawJson___snippet___channelTitle'
+  | 'thumbnailImage___childRawJson___snippet___liveBroadcastContent'
+  | 'thumbnailImage___childRawJson___snippet___publishTime'
   | 'id'
   | 'parent___id'
   | 'parent___parent___id'

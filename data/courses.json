@@ -1,5 +1,34 @@
 [
   {
+    "title": "Clojure Auth",
+    "slug": "clojure-auth",
+    "pid": "PLBeQxJQNprbjvILPGCw4h7pFOZp_Yms1B",
+    "lastUpdated": "2020-11-30T17:00:07Z",
+    "description": "",
+    "image": "clj-auth.jpg",
+    "tags": ["clojure"],
+    "videos": [
+      {
+        "ordinance": 0,
+        "videoId": "TQ0xIPI-8Z0",
+        "title": "[Clojure Auth][1] Reviewing Reitit and Ring",
+        "publishedAt": "2020-11-20T17:00:08Z"
+      },
+      {
+        "ordinance": 1,
+        "videoId": "OGj5S0H4hPg",
+        "title": "[Clojure Auth][2] Honeysql and next.jdbc",
+        "publishedAt": "2020-11-23T17:00:14Z"
+      },
+      {
+        "ordinance": 2,
+        "videoId": "FcxO5VCPLi4",
+        "title": "[Clojure Auth][3] Signed JWT authentication with Buddy",
+        "publishedAt": "2020-11-30T17:00:07Z"
+      }
+    ]
+  },
+  {
     "title": "Full Stack Clojure Contact Book",
     "slug": "full-stack-clojure-contact-book",
     "pid": "PLBeQxJQNprbgkmvbv80xC8R0SHcPsosjZ",
