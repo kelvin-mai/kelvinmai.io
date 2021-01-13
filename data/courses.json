@@ -1,5 +1,72 @@
 [
   {
+    "title": "Nx Space Explorer",
+    "slug": "nx-space-explorer",
+    "pid": "PLBeQxJQNprbjZmm6JG_mrnqAVr9zIjbxc",
+    "lastUpdated": "2021-01-12T17:00:12.000Z",
+    "description": "",
+    "image": "nx-space-explorer.png",
+    "tags": [
+      "nestjs",
+      "typescript",
+      "nextjs",
+      "react",
+      "nx",
+      "docker",
+      "postgres"
+    ],
+    "videos": [
+      {
+        "ordinance": 0,
+        "videoId": "kcCiOAjQxAU",
+        "title": "Nx Space Explorer [1] - Reinitializing Project",
+        "publishedAt": "2020-12-14T17:00:15Z"
+      },
+      {
+        "ordinance": 1,
+        "videoId": "cvuZvpRn91Y",
+        "title": "Nx Space Explorer [2] - NestJS Launch Module",
+        "publishedAt": "2020-12-15T17:00:13Z"
+      },
+      {
+        "ordinance": 2,
+        "videoId": "oKcjABQVVmg",
+        "title": "Nx Space Explorer [3] - NestJS User Module",
+        "publishedAt": "2020-12-22T16:00:27Z"
+      },
+      {
+        "ordinance": 3,
+        "videoId": "tsPij-TjKw4",
+        "title": "Nx Space Explorer [4] - Setting up NextJS and GraphQL Codegen",
+        "publishedAt": "2020-12-28T16:00:09Z"
+      },
+      {
+        "ordinance": 4,
+        "videoId": "cdpI8o05kn8",
+        "title": "Nx Space Explorer [5] - NextJS Launches",
+        "publishedAt": "2020-12-28T17:00:11Z"
+      },
+      {
+        "ordinance": 5,
+        "videoId": "yQ0Nm6lKHNY",
+        "title": "Nx Space Explorer [6] - SSR and Infinite Scroll",
+        "publishedAt": "2021-01-05T17:00:34Z"
+      },
+      {
+        "ordinance": 6,
+        "videoId": "sy1PdnrjhQA",
+        "title": "Nx Space Explorer [7] - Client Side Authentication",
+        "publishedAt": "2021-01-07T17:00:16Z"
+      },
+      {
+        "ordinance": 7,
+        "videoId": "Y_botHhHpdg",
+        "title": "Nx Space Explorer [8] - Cart State Management",
+        "publishedAt": "2021-01-12T17:00:12Z"
+      }
+    ]
+  },
+  {
     "title": "Clojure Auth",
     "slug": "clojure-auth",
     "pid": "PLBeQxJQNprbjvILPGCw4h7pFOZp_Yms1B",
