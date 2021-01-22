@@ -1,5 +1,11 @@
 [
   {
+    "videoId": "NV7i-3P5SUY",
+    "title": "How To Write Unit Tests In Clojure",
+    "publishedAt": "2021-01-19T17:00:16Z",
+    "tags": ["clojure"]
+  },
+  {
     "videoId": "a23UPryyOww",
     "title": "My neovim Clojure config is NOT Fireplace",
     "publishedAt": "2020-12-08T08:00:02Z",
