@@ -31,7 +31,7 @@
     "@types/react-helmet": "^5.0.15",
     "@types/simple-icons": "^2.5.0",
     "autoprefixer": "^9.7.4",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "dotenv": "^8.2.0",
     "gatsby-plugin-manifest": "^2.2.39",
     "gatsby-plugin-mdx": "^1.2.22",
