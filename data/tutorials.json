@@ -1,5 +1,17 @@
 [
   {
+    "videoId": "ODsoc2QQyyU",
+    "title": "Clojure Configuration Variables Using Aero",
+    "publishedAt": "2021-01-28T17:00:23Z",
+    "tags": ["clojure"]
+  },
+  {
+    "videoId": "BEMksAV5Cww",
+    "title": "Manage REPL state with Integrant",
+    "publishedAt": "2021-01-26T17:00:04Z",
+    "tags": ["clojure"]
+  },
+  {
     "videoId": "NV7i-3P5SUY",
     "title": "How To Write Unit Tests In Clojure",
     "publishedAt": "2021-01-19T17:00:16Z",
