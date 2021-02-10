@@ -42,7 +42,7 @@ export const About = () => {
       <Section className='bg-white text-black'>
         <div className='w-full lg:w-2/3 mx-auto pb-2 shadow bg-real-white'>
           <h3 className='text-center text-xl font-bold uppercase text-dark-purple'>
-            Follow Me
+            Follow Or Support Me
           </h3>
           <SocialLinks className='flex justify-around' />
         </div>

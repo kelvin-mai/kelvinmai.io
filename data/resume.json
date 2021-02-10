@@ -22,11 +22,6 @@
           "username": "kelvinmai"
         },
         {
-          "network": "Patreon",
-          "url": "https://www.patreon.com/kelvinmai",
-          "username": "kelvinmai"
-        },
-        {
           "network": "Twitter",
           "url": "https://twitter.com/kelvinmai",
           "username": "kelvinmai"
@@ -37,14 +32,14 @@
           "username": "kelvinmai"
         },
         {
+          "network": "Buy Me A Coffee",
+          "url": "https://www.buymeacoffee.com/kelvinmai",
+          "username": "kelvinmai"
+        },
+        {
           "network": "Linkedin",
           "url": "https://www.linkedin.com/in/kelvin-mai-461756152/",
           "username": "Kelvin Mai"
-        },
-        {
-          "network": "Instagram",
-          "url": "https://www.instagram.com/iamnivlek/",
-          "username": "iamnivlek"
         }
       ]
     },
