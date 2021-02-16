@@ -2377,10 +2377,10 @@ export type Query = {
   allTutorialsJson: TutorialsJsonConnection;
   coursesJson?: Maybe<CoursesJson>;
   allCoursesJson: CoursesJsonConnection;
-  usesJson?: Maybe<UsesJson>;
-  allUsesJson: UsesJsonConnection;
   resumeJson?: Maybe<ResumeJson>;
   allResumeJson: ResumeJsonConnection;
+  usesJson?: Maybe<UsesJson>;
+  allUsesJson: UsesJsonConnection;
   pageLinksJson?: Maybe<PageLinksJson>;
   allPageLinksJson: PageLinksJsonConnection;
   siteBuildMetadata?: Maybe<SiteBuildMetadata>;
@@ -2639,24 +2639,6 @@ export type QueryAllCoursesJsonArgs = {
 };
 
 
-export type QueryUsesJsonArgs = {
-  id?: Maybe<StringQueryOperatorInput>;
-  parent?: Maybe<NodeFilterInput>;
-  children?: Maybe<NodeFilterListInput>;
-  internal?: Maybe<InternalFilterInput>;
-  title?: Maybe<StringQueryOperatorInput>;
-  tools?: Maybe<UsesJsonToolsFilterListInput>;
-};
-
-
-export type QueryAllUsesJsonArgs = {
-  filter?: Maybe<UsesJsonFilterInput>;
-  sort?: Maybe<UsesJsonSortInput>;
-  skip?: Maybe<Scalars['Int']>;
-  limit?: Maybe<Scalars['Int']>;
-};
-
-
 export type QueryResumeJsonArgs = {
   id?: Maybe<StringQueryOperatorInput>;
   parent?: Maybe<NodeFilterInput>;
@@ -2671,6 +2653,24 @@ export type QueryResumeJsonArgs = {
 export type QueryAllResumeJsonArgs = {
   filter?: Maybe<ResumeJsonFilterInput>;
   sort?: Maybe<ResumeJsonSortInput>;
+  skip?: Maybe<Scalars['Int']>;
+  limit?: Maybe<Scalars['Int']>;
+};
+
+
+export type QueryUsesJsonArgs = {
+  id?: Maybe<StringQueryOperatorInput>;
+  parent?: Maybe<NodeFilterInput>;
+  children?: Maybe<NodeFilterListInput>;
+  internal?: Maybe<InternalFilterInput>;
+  title?: Maybe<StringQueryOperatorInput>;
+  tools?: Maybe<UsesJsonToolsFilterListInput>;
+};
+
+
+export type QueryAllUsesJsonArgs = {
+  filter?: Maybe<UsesJsonFilterInput>;
+  sort?: Maybe<UsesJsonSortInput>;
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
 };

@@ -1,5 +1,46 @@
 [
   {
+    "title": "NextJS Jobs Listings",
+    "slug": "nextjs-jobs-listings",
+    "pid": "PLBeQxJQNprbhUU5hrPlENx4V3jVhDK2_F",
+    "lastUpdated": "2021-02-16T15:00:11.000Z",
+    "description": "",
+    "image": "next-jobs.png",
+    "tags": ["NextJS", "react", "typescirpt"],
+    "videos": [
+      {
+        "ordinance": 0,
+        "videoId": "-nDGZK9sbYI",
+        "title": "NextJS Job Listings [1] - Project Setup",
+        "publishedAt": "2021-02-02T17:00:01Z"
+      },
+      {
+        "ordinance": 1,
+        "videoId": "1eFHGrJarEQ",
+        "title": "NextJS Job Listings [2] - Card UI",
+        "publishedAt": "2021-02-04T17:00:01Z"
+      },
+      {
+        "ordinance": 2,
+        "videoId": "g8gpi-6x8ro",
+        "title": "NextJS Job Listings [3] - Job Page",
+        "publishedAt": "2021-02-09T15:00:16Z"
+      },
+      {
+        "ordinance": 3,
+        "videoId": "Z4fPxqH38MQ",
+        "title": "NextJS Job Listings [4] - Search Widgets",
+        "publishedAt": "2021-02-11T15:00:11Z"
+      },
+      {
+        "ordinance": 4,
+        "videoId": "bA3zLZK4Ay8",
+        "title": "NextJS Job Listings [5] - Pagination and Deployment",
+        "publishedAt": "2021-02-16T15:00:11Z"
+      }
+    ]
+  },
+  {
     "title": "Nx Space Explorer",
     "slug": "nx-space-explorer",
     "pid": "PLBeQxJQNprbjZmm6JG_mrnqAVr9zIjbxc",
