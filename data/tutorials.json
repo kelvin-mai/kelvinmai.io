@@ -1,5 +1,11 @@
 [
   {
+    "videoId": "ZkJcVCW9GqY",
+    "title": "Clojure Crash Course",
+    "publishedAt": "2021-08-17T15:00:15Z",
+    "tags": ["clojure"]
+  },
+  {
     "videoId": "ODsoc2QQyyU",
     "title": "Clojure Configuration Variables Using Aero",
     "publishedAt": "2021-01-28T17:00:23Z",
