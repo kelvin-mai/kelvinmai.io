@@ -45,6 +45,23 @@
     },
     "work": [
       {
+        "name": "Luminare Inc.",
+        "location": "Remote",
+        "description": null,
+        "url": null,
+        "image": "luminare.png",
+        "position": "Software Engineer",
+        "startDate": "2021-02-08T08:00:00.000Z",
+        "endDate": null,
+        "summary": "Feature development and maintenance on vaccination management software",
+        "highlights": [
+          "Rapid development of COVID-19 vaccination management app during pandemic",
+          "Assisted application migration to stable general vaccination software",
+          "Development of SMS/Email notifications feature",
+          "Mentored and teach junior developers about Clojure/ClojureScript"
+        ]
+      },
+      {
         "name": "Bonotel Exclusive Travel",
         "location": "Las Vegas, NV",
         "description": null,
@@ -52,7 +69,7 @@
         "image": "bonotel.png",
         "position": "Software Developer",
         "startDate": "2020-07-01T08:00:00.000Z",
-        "endDate": null,
+        "endDate": "2021-02-04T08:00:00.000Z",
         "summary": "Development on various Travel B2B dependant microservices and internal administration tools",
         "highlights": [
           "Development on both client facing and administrative frontend applications in both React and Angular",
