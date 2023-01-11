@@ -44,7 +44,7 @@
     "gatsby-remark-prismjs": "^3.5.9",
     "gatsby-source-filesystem": "^2.1.46",
     "gatsby-transformer-json": "^2.2.27",
-    "gatsby-transformer-remark": "^2.8.23",
+    "gatsby-transformer-remark": "^5.25.1",
     "gatsby-transformer-sharp": "^2.3.13",
     "prettier": "^1.19.1",
     "tailwindcss": "^1.2.0",
