@@ -52,7 +52,7 @@
         "image": "luminare.png",
         "position": "Software Engineer",
         "startDate": "2021-02-08T08:00:00.000Z",
-        "endDate": null,
+        "endDate": "2023-01-20-08T08:00:00.000Z",
         "summary": "Feature development and maintenance on vaccination management software",
         "highlights": [
           "Rapid development of COVID-19 vaccination management app during pandemic",
