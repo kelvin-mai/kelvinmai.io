@@ -1,13 +1,13 @@
-export const data = {
+export const resume = {
   basics: {
     name: 'Kelvin Mai',
-    label: 'Full Stack Developer',
+    label: 'Software Engineer',
     image: null,
     email: 'kelvin.mai002@gmail.com',
     phone: null,
     url: 'kelvinmai.io',
     summary:
-      'Self taught Full Stack Developer, aspiring functional programming polyglot, and full time nerd.',
+      'Self taught software engineer and functional programming enthusiast with 5+ years of professional experience. Primarily working with web technologies such as TypeScript, Clojure, and React.',
     location: {
       address: null,
       postalCode: null,
@@ -48,11 +48,11 @@ export const data = {
       name: 'Luminare Inc.',
       location: 'Remote',
       description: null,
-      url: null,
+      url: 'https://www.luminare.io/',
       image: 'luminare.png',
       position: 'Software Engineer',
       startDate: '2021-02-08T08:00:00.000Z',
-      endDate: '2023-01-20-08T08:00:00.000Z',
+      endDate: '2023-01-20T08:00:00.000Z',
       summary:
         'Feature development and maintenance on vaccination management software',
       highlights: [
@@ -66,7 +66,7 @@ export const data = {
       name: 'Bonotel Exclusive Travel',
       location: 'Las Vegas, NV',
       description: null,
-      url: null,
+      url: 'https://www.bonotel.com/',
       image: 'bonotel.png',
       position: 'Software Developer',
       startDate: '2020-07-01T08:00:00.000Z',
@@ -84,9 +84,9 @@ export const data = {
       name: 'Nucamp Coding Bootcamp',
       location: 'Las Vegas, NV',
       description: null,
-      url: null,
+      url: 'https://www.nucamp.co/',
       image: 'nucamp.png',
-      position: 'Instructor (Contract)',
+      position: 'Instructor',
       startDate: '2020-01-01T08:00:00.000Z',
       endDate: '2020-08-01T08:00:00.000Z',
       summary:
@@ -97,7 +97,7 @@ export const data = {
       name: 'Vegas.com',
       location: 'Las Vegas, NV',
       description: null,
-      url: null,
+      url: 'https://www.vegas.com/',
       image: 'vegas.png',
       position: 'Front End Developer',
       startDate: '2019-07-01T07:00:00.000Z',
@@ -132,7 +132,7 @@ export const data = {
       name: 'DigitalCrafts',
       location: 'Houston, TX',
       description: null,
-      url: null,
+      url: 'https://www.digitalcrafts.com/',
       image: 'digitalcrafts.png',
       position: 'Developer In Residence (Internship)',
       startDate: '2018-02-01T08:00:00.000Z',
@@ -168,3 +168,8 @@ export const data = {
     },
   ],
 };
+
+export type ResumeWork = (typeof resume.work)[0];
+// export type Resume {
+//   work: ResumeWork[]
+// }

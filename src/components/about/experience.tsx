@@ -1,15 +1,9 @@
 import Image from 'next/image';
 
-import { data } from './data';
+import { type ResumeWork } from '@app/constants';
 
 export interface ExperienceProps {
-  work: {
-    name: string;
-    position: string;
-    image: string;
-    summary: string;
-    highlights: string[];
-  }[];
+  work: ResumeWork[];
 }
 
 export const ExperienceCard: React.FC<{
@@ -25,36 +19,25 @@ export const ExperienceCard: React.FC<{
       className='rounded-xl bg-white/10 p-4 text-white shadow-md hover:bg-white/20'
     >
       <div className='flex'>
-        <div className='w-16'>
+        <div className='w-12'>
           <Image
             src={`/images/jobs/${image}`}
-            height={64}
-            width={64}
+            height={48}
+            width={48}
             alt={`${name} logo`}
           />
         </div>
         <div className='ml-4'>
-          <h3 className='text-2xl font-bold'>{name}</h3>
-          <p className='text-lg'>{position}</p>
+          <h3 className='text-lg font-bold'>{name}</h3>
+          <p>{position}</p>
         </div>
       </div>
       <p>{summary}</p>
-      <ul className='list-inside list-disc'>
+      <ul className='list-inside list-disc text-sm'>
         {highlights.map((highlight) => (
           <li key={highlight}>{highlight}</li>
         ))}
       </ul>
-    </div>
-  );
-};
-
-export const Experience: React.FC = () => {
-  return (
-    <div>
-      <h2>Employment</h2>
-      <div className='grid grid-cols-1 gap-4'>
-        {data.work.map(ExperienceCard)}
-      </div>
     </div>
   );
 };
