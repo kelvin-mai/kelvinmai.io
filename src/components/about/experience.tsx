@@ -32,12 +32,12 @@ export const ExperienceCard: React.FC<{
           <p>{position}</p>
         </div>
       </div>
-      <p>{summary}</p>
+      {/* <p>{summary}</p>
       <ul className='list-inside list-disc text-sm'>
         {highlights.map((highlight) => (
           <li key={highlight}>{highlight}</li>
         ))}
-      </ul>
+      </ul> */}
     </div>
   );
 };

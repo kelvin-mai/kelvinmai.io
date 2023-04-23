@@ -6,7 +6,7 @@ import { Icon, SocialLinks } from '@app/components/common';
 export const Footer = () => {
   return (
     <footer className='bg-dracula-black pt-8 text-white'>
-      <section className='font-mono container flex flex-col items-end justify-between pb-4 font-bold uppercase md:flex-row'>
+      <section className='font-mono container flex flex-col justify-between pb-4 font-bold uppercase md:flex-row md:items-end'>
         <p className='p-2 text-center'>
           © {new Date().getFullYear()} Kelvin Mai
         </p>

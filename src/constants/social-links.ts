@@ -23,10 +23,22 @@ export const socialLinks: SocialLink[] = [
     icon: siYoutube,
   },
   {
+    network: 'Github',
+    url: 'https://github.com/kelvin-mai',
+    username: 'kelvinmai',
+    icon: siGithub,
+  },
+  {
     network: 'Twitter',
     url: 'https://twitter.com/kelvinmai',
     username: 'kelvinmai',
     icon: siTwitter,
+  },
+  {
+    network: 'Linkedin',
+    url: 'https://www.linkedin.com/in/kelvin-mai-461756152/',
+    username: 'Kelvin Mai',
+    icon: siLinkedin,
   },
   {
     network: 'Instagram',
@@ -35,21 +47,9 @@ export const socialLinks: SocialLink[] = [
     icon: siInstagram,
   },
   {
-    network: 'Github',
-    url: 'https://github.com/kelvin-mai',
-    username: 'kelvinmai',
-    icon: siGithub,
-  },
-  {
     network: 'Buy Me A Coffee',
     url: 'https://www.buymeacoffee.com/kelvinmai',
     username: 'kelvinmai',
     icon: siBuymeacoffee,
-  },
-  {
-    network: 'Linkedin',
-    url: 'https://www.linkedin.com/in/kelvin-mai-461756152/',
-    username: 'Kelvin Mai',
-    icon: siLinkedin,
   },
 ];
