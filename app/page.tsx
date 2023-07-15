@@ -1,3 +1,10 @@
+import { Hero, AboutSection } from '@app/components';
+
 export default function Home() {
-  return <main className=''>Home Page</main>;
+  return (
+    <>
+      <Hero />
+      <AboutSection />
+    </>
+  );
 }
