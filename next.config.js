@@ -2,7 +2,6 @@
 const nextConfig = {
   reactStrictMode: true,
   webpack: (config) => {
-    console.log(config);
     config.module.rules.push({
       test: /\.node/,
       use: 'raw-loader',

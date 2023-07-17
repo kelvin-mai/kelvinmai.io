@@ -4,12 +4,6 @@ import { ExperienceCard } from './experience';
 import { resume } from '@app/constants';
 
 export const AboutSection = () => {
-  console.log(
-    new Date('2021-02-08T08:00:00.000Z').toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'short',
-    })
-  );
   return (
     <>
       <section className='flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-dracula-dark-purple to-dracula-black py-12 text-dracula-white'>

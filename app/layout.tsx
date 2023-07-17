@@ -1,10 +1,8 @@
 import './globals.css';
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
 
 import { Footer } from '@app/components';
-
-const inter = Inter({ subsets: ['latin'] });
+import { ubuntu } from '@app/constants/fonts';
 
 export const metadata: Metadata = {
   title: {
@@ -22,7 +20,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang='en'>
-      <body className={inter.className}>
+      <body className={ubuntu.className}>
         {children}
         <Footer />
       </body>

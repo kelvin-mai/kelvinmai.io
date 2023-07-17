@@ -16,7 +16,7 @@ export const ExperienceCard: React.FC<{
   return (
     <div
       key={name}
-      className='rounded-xl bg-white/10 p-4 text-white shadow-md hover:bg-white/20'
+      className='rounded-xl bg-white/10 p-4 text-white shadow-md shine'
     >
       <div className='flex'>
         <div className='w-12'>
