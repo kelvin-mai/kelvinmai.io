@@ -12,7 +12,14 @@ module.exports = {
         'gradient-conic':
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
+      fontFamily: {
+        sans: ['var(--font-ubuntu)'],
+        mono: ['var(--font-ubuntu-mono)'],
+      },
       colors: {
+        microsoft: {
+          blue: '#008cff',
+        },
         dracula: {
           black: '#282a36',
           white: '#f8f8f2',

@@ -1,5 +1,5 @@
 export * from './about';
+export * from './blue-screen';
 export * from './footer';
-export * from './hero';
 export * from './resume';
 export * from './social-links';

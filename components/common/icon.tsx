@@ -6,7 +6,7 @@ export interface IconProps {
 }
 
 // tailwindcss comment for dynamic hover colors
-// 'hover:fill-[#FF0000] hover:fill-[#1DA1F2] hover:fill-[#E4405F] hover:fill-[#181717] hover:fill-[#FFDD00] hover:fill-[#0A66C2] hover:fill-[#EA4335]'
+// 'hover:fill-[#FF0000] hover:fill-[#1D9BF0] hover:fill-[#E4405F] hover:fill-[#181717] hover:fill-[#FFDD00] hover:fill-[#0A66C2] hover:fill-[#EA4335]'
 
 export const Icon: React.FC<IconProps> = ({
   icon: { path, title, hex },

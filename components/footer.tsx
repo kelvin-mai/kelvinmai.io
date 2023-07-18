@@ -9,7 +9,7 @@ export const Footer = () => {
   return (
     <footer className='bg-dracula-black pt-8 text-white'>
       <section className='container flex flex-col justify-between pb-4 font-bold uppercase md:flex-row md:items-end'>
-        <p className={`p-2 text-center ${ubuntuMono.className}`}>
+        <p className='p-2 text-center font-mono'>
           © {new Date().getFullYear()} Kelvin Mai
         </p>
         <div className='text-center'>

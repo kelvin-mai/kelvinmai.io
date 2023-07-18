@@ -9,7 +9,7 @@ const PDFViewer = dynamic(
   { ssr: false },
 );
 
-export default function PDF() {
+export default function () {
   const [isClient, setIsClient] = useState(false);
   useEffect(() => {
     setIsClient(true);
