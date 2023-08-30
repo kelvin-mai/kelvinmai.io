@@ -1,5 +1,6 @@
 import './globals.css';
 import type { Metadata } from 'next';
+import { Analytics } from '@vercel/analytics/react';
 
 import { Footer } from '@app/components';
 import { ubuntu } from '@app/constants/fonts';
@@ -23,6 +24,7 @@ export default function RootLayout({
       <body className={ubuntu.className}>
         {children}
         <Footer />
+        <Analytics />
       </body>
     </html>
   );
