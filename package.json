@@ -27,7 +27,7 @@
     "encoding": "^0.1.13",
     "eslint": "8.44.0",
     "eslint-config-next": "13.4.9",
-    "postcss": "8.4.26",
+    "postcss": "8.4.31",
     "prettier": "^3.0.0",
     "raw-loader": "^4.0.2"
   }
