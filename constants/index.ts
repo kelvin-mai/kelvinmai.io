@@ -45,6 +45,25 @@ export const resume = {
   },
   work: [
     {
+      name: 'Yieldmos',
+      location: 'Mountain View, CA',
+      locationType: 'Remote',
+      description: null,
+      skills: ['typescript', 'react', 'web3'],
+      url: 'https://www.yieldmos.com/',
+      image: 'yieldmos.png',
+      position: 'Software Consultant',
+      startDate: '2023-08-16T08:00:00.000Z',
+      endDate: '2023-11-17T08:00:00.000Z',
+      summary:
+        'Provide assistance on client facing non-custodial compounding blockchain application',
+      highlights: [
+        'Collaborated with backend engineers to ensure seamless contract calls',
+        'Assisted on implementing compounding outpost strategy',
+        'Mentored and taught junior developers about React and Typescript',
+      ],
+    },
+    {
       name: 'Luminare Inc.',
       location: 'Houston, TX',
       locationType: 'Remote',
@@ -154,7 +173,7 @@ export const resume = {
       startDate: '2018-04-01T07:00:00.000Z',
       endDate: '2019-06-01T07:00:00.000Z',
       summary:
-        'Research and development with new technologies, as well as feature development and maintenance of the cloud-hosted Learning Management System.',
+        'R&D and Feature development and maintenance of the cloud-hosted LMS.',
       highlights: [
         'Designed and prototyped GraphQL layer for internal API',
         'Added C# .NET service endpoint to provide full text search using PostgreSQL',
@@ -179,7 +198,7 @@ export const resume = {
       url: 'https://www.digitalcrafts.com/',
       image: 'digitalcrafts.png',
       position: 'Developer Intern',
-      startDate: '2018-02-01T08:00:00.000Z',
+      startDate: '2018-01-01T08:00:00.000Z',
       endDate: '2018-04-01T07:00:00.000Z',
       summary:
         'Three month paid internship to work with and assist experienced instructors in developing and teach full stack web applications.',
