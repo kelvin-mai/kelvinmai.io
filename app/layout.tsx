@@ -2,7 +2,6 @@ import './globals.css';
 import type { Metadata } from 'next';
 import { Analytics } from '@vercel/analytics/react';
 
-import { Footer } from '@app/components';
 import { ubuntu } from '@app/constants/fonts';
 
 export const metadata: Metadata = {
@@ -23,7 +22,6 @@ export default function RootLayout({
     <html lang='en'>
       <body className={ubuntu.className}>
         {children}
-        <Footer />
         <Analytics />
       </body>
     </html>
