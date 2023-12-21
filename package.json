@@ -11,9 +11,9 @@
   "dependencies": {
     "@react-pdf/renderer": "^3.1.9",
     "@vercel/analytics": "^1.0.2",
-    "next": "13.5.6",
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
+    "next": "^14.0.4",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "react-pdf": "^7.1.2",
     "simple-icons": "^9.5.0",
     "tailwindcss": "3.3.3",
@@ -21,12 +21,12 @@
   },
   "devDependencies": {
     "@types/node": "20.4.2",
-    "@types/react": "18.2.15",
-    "@types/react-dom": "18.2.7",
+    "@types/react": "^18.2.45",
+    "@types/react-dom": "^18.2.18",
     "autoprefixer": "10.4.14",
     "encoding": "^0.1.13",
     "eslint": "8.44.0",
-    "eslint-config-next": "13.4.9",
+    "eslint-config-next": "^14.0.4",
     "postcss": "8.4.31",
     "prettier": "^3.0.0",
     "raw-loader": "^4.0.2"
