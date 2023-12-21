@@ -15,7 +15,7 @@ export const Hero = () => {
         </p>
         <SocialLinks className='flex justify-around text-dracula-white' />
         <Link
-          className='rounded-md bg-dracula-purple px-4 py-2 text-dracula-white drop-shadow shine'
+          className='shine rounded-md bg-dracula-purple px-4 py-2 text-dracula-white drop-shadow'
           href='/resume'
         >
           Download Resume

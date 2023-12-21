@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "format": "prettier --write ./**/*.tsx"
   },
   "dependencies": {
     "@react-pdf/renderer": "^3.1.9",
@@ -29,6 +30,7 @@
     "eslint-config-next": "^14.0.4",
     "postcss": "8.4.31",
     "prettier": "^3.0.0",
+    "prettier-plugin-tailwindcss": "^0.5.9",
     "raw-loader": "^4.0.2"
   }
 }
