@@ -2,7 +2,7 @@
 import dynamic from 'next/dynamic';
 import { useState, useEffect } from 'react';
 
-import { Resume } from '@app/components';
+import { Resume } from '@app/components/resume';
 
 const PDFViewer = dynamic(
   () => import('@react-pdf/renderer').then((m) => m.PDFViewer),
@@ -15,7 +15,7 @@ export default function PDF() {
     setIsClient(true);
   }, []);
   return (
-    <PDFViewer showToolbar={true} className='w-full min-h-screen'>
+    <PDFViewer showToolbar={true} className='min-h-screen w-full'>
       <Resume />
     </PDFViewer>
   );

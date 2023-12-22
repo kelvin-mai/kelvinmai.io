@@ -16,7 +16,7 @@ import {
   Projects,
 } from '.';
 import { resume } from '@app/constants';
-import { getBaseUrl } from '@app/utils';
+import { getBaseUrl } from '@app/lib/utils';
 
 const styles = StyleSheet.create({
   page: {

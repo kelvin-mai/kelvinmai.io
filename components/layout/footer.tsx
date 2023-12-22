@@ -3,7 +3,7 @@ import { siGmail } from 'simple-icons';
 import { Icon } from '@app/components/common';
 import { ubuntuMono } from '@app/constants/fonts';
 
-import { SocialLinks } from './social-links';
+import { SocialLinks } from '../social-links';
 
 export const Footer = () => {
   return (

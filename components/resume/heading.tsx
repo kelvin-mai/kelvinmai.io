@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet, Link, Image } from '@react-pdf/renderer';
 
 import { resume } from '@app/constants';
-import { getBaseUrl } from '@app/utils';
+import { getBaseUrl } from '@app/lib/utils';
 import { IconText } from '.';
 
 const styles = StyleSheet.create({
