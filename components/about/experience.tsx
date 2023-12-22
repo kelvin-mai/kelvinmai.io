@@ -14,10 +14,7 @@ export const ExperienceCard: React.FC<{
   highlights: string[];
 }> = ({ name, position, image }) => {
   return (
-    <div
-      key={name}
-      className='rounded-xl bg-white/10 p-4 text-white shadow-md shine'
-    >
+    <div key={name} className='rounded-xl bg-white/10 p-4 text-white shadow-md'>
       <div className='flex'>
         <div className='w-12'>
           <Image
