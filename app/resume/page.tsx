@@ -13,7 +13,7 @@ const PDFViewer = dynamic(
   },
 );
 
-export default function PDF() {
+export default function ResumePDFPage() {
   return (
     <PDFViewer showToolbar={true} className='min-h-screen w-full'>
       <Resume />

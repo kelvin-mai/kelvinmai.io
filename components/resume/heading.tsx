@@ -58,6 +58,7 @@ export const Heading = () => {
         </View>
       </View>
       <View style={styles.imageContainer}>
+        {/* eslint-disable-next-line jsx-a11y/alt-text */}
         <Image style={styles.image} src={`${getBaseUrl()}/images/me.jpg`} />
       </View>
     </View>

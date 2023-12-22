@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import { BlueScreen } from '@app/components/layout';
 import { Button } from '@app/components/ui';
 
-export default function ({
+export default function ErrorPage({
   error,
   reset,
 }: {

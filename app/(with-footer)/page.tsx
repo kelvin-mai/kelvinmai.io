@@ -1,7 +1,7 @@
 import { Hero } from '@app/components/hero';
 import { AboutSection } from '@app/components/about';
 
-export default function Home() {
+export default function HomePage() {
   return (
     <>
       <Hero />
