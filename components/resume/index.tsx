@@ -4,6 +4,7 @@ export * from './education';
 export * from './heading';
 export * from './projects';
 export * from './resume';
+export * from './resume-download-link';
 export * from './work-experience';
 export * from './watermark';
 export * from './skills';

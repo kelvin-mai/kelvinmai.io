@@ -1,8 +1,5 @@
-import Link from 'next/link';
-import { Download } from 'lucide-react';
-
 import { SocialLinks } from './social-links';
-import { Button } from './ui';
+import { ResumeDownloadLink } from './resume';
 
 export const Hero = () => {
   return (
@@ -17,12 +14,7 @@ export const Hero = () => {
           Software Engineer
         </p>
         <SocialLinks className='flex justify-around text-white' />
-        <Button asChild>
-          <Link href='/resume'>
-            <Download className='mr-4 h-4 w-4' />
-            View Resume
-          </Link>
-        </Button>
+        <ResumeDownloadLink />
       </div>
     </main>
   );
