@@ -10,12 +10,12 @@ import {
 
 import { Icon } from './common';
 
-export interface SocialLink {
+export type SocialLink = {
   network: string;
   url: string;
   username: string;
   icon: SimpleIcon;
-}
+};
 
 export const socialLinks: SocialLink[] = [
   {
@@ -56,9 +56,9 @@ export const socialLinks: SocialLink[] = [
   },
 ];
 
-export interface SocialLinksProps {
+export type SocialLinksProps = {
   className?: string;
-}
+};
 
 export const SocialLinks: React.FC<SocialLinksProps> = ({
   className = 'text-white',

@@ -2,9 +2,9 @@ import Image from 'next/image';
 
 import { type ResumeWork } from '@app/constants';
 
-export interface ExperienceProps {
+export type ExperienceProps = {
   work: ResumeWork[];
-}
+};
 
 export const ExperienceCard: React.FC<{
   name: string;

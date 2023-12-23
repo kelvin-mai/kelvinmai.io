@@ -1,8 +1,8 @@
 import { StyleSheet, Text, View } from '@react-pdf/renderer';
 
-export interface SkillsProps {
+export type SkillsProps = {
   skills: string[];
-}
+};
 
 const styles = StyleSheet.create({
   container: {

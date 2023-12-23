@@ -1,8 +1,8 @@
 import { Link } from '@react-pdf/renderer';
 
-export interface ConditionalLinkProps extends React.PropsWithChildren {
+export type ConditionalLinkProps = React.PropsWithChildren & {
   url?: string | null;
-}
+};
 
 export const ConditionalLink: React.FC<ConditionalLinkProps> = ({
   children,

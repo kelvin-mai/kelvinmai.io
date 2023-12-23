@@ -26,11 +26,11 @@ export const iconPaths = {
 
 export type IconName = keyof typeof iconPaths;
 
-export interface IconProps {
+export type IconProps = {
   name: IconName;
   size?: number;
   color?: string;
-}
+};
 
 const defaultSize = 24;
 
@@ -49,10 +49,10 @@ export const Icon: React.FC<IconProps> = ({
   return <Canvas style={{ width: size, height: size }} paint={drawIcon} />;
 };
 
-export interface IconTextProps {
+export type IconTextProps = {
   icon: IconName;
   text: string;
-}
+};
 
 export const IconText: React.FC<IconTextProps> = ({ icon, text }) => {
   return (
