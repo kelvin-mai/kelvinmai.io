@@ -1,5 +1,4 @@
-import { AboutCard } from '@app/components/about/about-card';
-import { ExperienceAccordion } from '@app/components/about/experience-accordion';
+import { AboutCard, ExperienceAccordion } from '@app/components/about';
 import { BuyMeCofffeeBanner } from '@app/components/common/buy-me-coffee-banner';
 import { resume } from '@app/constants';
 

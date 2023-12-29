@@ -1,2 +1,2 @@
-export * from './experience';
-export * from './about-section';
+export * from './about-card';
+export * from './experience-accordion';
