@@ -15,7 +15,7 @@ import {
   Education,
   Projects,
 } from '.';
-import { resume } from '@app/constants';
+import { resume as constant_resume } from '@app/constants';
 import { getBaseUrl } from '@app/lib/utils';
 
 const styles = StyleSheet.create({
@@ -93,7 +93,11 @@ Font.register({
   ],
 });
 
-export const Resume = () => {
+export type ResumeProps = {
+  resume?: typeof constant_resume;
+};
+
+export const Resume = ({ resume = constant_resume }: ResumeProps) => {
   return (
     <Document
       author='Kelvin Mai'

@@ -1,12 +1,14 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { Download } from 'lucide-react';
+import { FileHeart } from 'lucide-react';
 
+import me from '@app/public/images/me.jpg';
+import meAbout from '@app/public/images/me-about.jpeg';
 import { resume } from '@app/constants';
 import { cn } from '@app/lib/utils';
 import { SocialLinks } from '@app/components/social-links';
-import { Button } from '@app/components/ui/button';
 import { ResumeDownloadLink } from '../resume';
+import { Button } from '../ui';
 
 type Resume = typeof resume;
 
@@ -19,43 +21,51 @@ export const AboutCard: React.FC<AboutCardProps> = ({ className, summary }) => {
   return (
     <div
       className={cn(
-        'flex flex-col items-center rounded-xl px-4 py-8 drop-shadow md:flex-row',
+        'flex flex-col gap-4 px-4 py-8 drop-shadow md:flex-row lg:grid lg:grid-cols-1 lg:grid-cols-[1fr_2fr]',
         className,
       )}
     >
-      <div className='w-[200px] overflow-hidden rounded-full md:hidden'>
+      <div className='m-auto w-[200px] overflow-hidden rounded-full md:m-0 md:hidden'>
         <Image
-          src='/images/me.jpg'
+          src={me}
           width={200}
           height={200}
           alt='Avatar picture of me'
+          placeholder='blur'
+          priority
         />
       </div>
-      <div className='hidden w-1/3 overflow-hidden rounded-md md:block'>
+      <div className='hidden overflow-hidden rounded-lg md:block'>
         <Image
-          src='/images/me-about.jpeg'
+          src={meAbout}
           width={1203}
           height={1504}
           alt='Full picture of me'
+          placeholder='blur'
+          priority
         />
       </div>
-      <div className='md:ml-4 md:w-2/3'>
-        <h1 className='text-center text-5xl font-bold tracking-tight md:text-[4rem]'>
-          Kelvin Mai
-        </h1>
-        <p className='text-center text-2xl font-bold tracking-tight md:text-[2rem]'>
-          Software Engineer
-        </p>
+      <div className='to-bg-waikawa-950/40 flex flex-col justify-between rounded-lg bg-gradient-to-br from-perfume-500 p-4 text-slate-50'>
+        <div>
+          <h1 className='text-center text-5xl font-bold tracking-tight md:text-[4rem]'>
+            Kelvin Mai
+          </h1>
+          <p className='text-center text-2xl font-bold tracking-tight md:text-[2rem]'>
+            Software Engineer
+          </p>
+        </div>
         <p className='my-4'>{summary}</p>
-        <SocialLinks className='flex justify-around' />
-        <div className='mt-4 grid w-full justify-items-center md:justify-items-end'>
-          {/* <Link href='/resume'>
-            <Button>
-              <Download className='mr-4 h-4 w-4' />
-              View Resume
-            </Button>
-          </Link> */}
-          <ResumeDownloadLink />
+        <div>
+          <SocialLinks className='flex justify-around' />
+          <div className='mt-4 flex w-full justify-center lg:justify-end'>
+            <Link href='/resume'>
+              <Button className='mr-4'>
+                <FileHeart className='mr-4 h-4 w-4' />
+                View Resume
+              </Button>
+            </Link>
+            <ResumeDownloadLink />
+          </div>
         </div>
       </div>
     </div>

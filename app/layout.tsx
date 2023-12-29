@@ -1,6 +1,7 @@
 import './globals.css';
 import type { Metadata } from 'next';
 import { Analytics } from '@vercel/analytics/react';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 
 import { ubuntu, ubuntuMono } from '@app/constants/fonts';
 import { Providers } from '@app/components/providers';
@@ -30,6 +31,7 @@ export default function RootLayout({
         )}
       >
         <Providers>{children}</Providers>
+        <SpeedInsights />
         <Analytics />
       </body>
     </html>

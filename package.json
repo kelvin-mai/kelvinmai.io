@@ -12,10 +12,13 @@
   "dependencies": {
     "@radix-ui/react-accordion": "^1.1.2",
     "@radix-ui/react-slot": "^1.0.2",
+    "@radix-ui/react-tabs": "^1.0.4",
     "@react-pdf/renderer": "^3.1.9",
     "@vercel/analytics": "^1.0.2",
+    "@vercel/speed-insights": "^1.0.2",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
+    "framer-motion": "^10.16.16",
     "lucide-react": "^0.299.0",
     "next": "^14.0.4",
     "next-themes": "^0.2.1",

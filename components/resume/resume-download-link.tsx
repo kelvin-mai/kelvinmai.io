@@ -4,6 +4,7 @@ import { Download } from 'lucide-react';
 
 import { Resume } from './resume';
 import { Button } from '../ui';
+import { resume } from '@app/constants';
 
 const PDFDownloadLink = dynamic(
   () => import('@react-pdf/renderer').then((m) => m.PDFDownloadLink),
@@ -20,7 +21,10 @@ const PDFDownloadLink = dynamic(
 
 export const ResumeDownloadLink = () => {
   return (
-    <PDFDownloadLink document={<Resume />} fileName='KelvinMaiResume.pdf'>
+    <PDFDownloadLink
+      document={<Resume resume={resume} />}
+      fileName='KelvinMaiResume.pdf'
+    >
       {({ blob, url, loading, error }) => {
         return (
           <Button disabled={loading}>
