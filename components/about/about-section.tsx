@@ -6,7 +6,7 @@ import { resume } from '@app/constants';
 export const AboutSection = () => {
   return (
     <>
-      <section className='flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-waikawa-700 to-waikawa-950 py-12 text-white'>
+      <section className='text-slate flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-waikawa-700 to-waikawa-950 py-12'>
         <h2 className='mb-4 text-3xl font-bold'>About Me</h2>
         <p className='mb-4 p-4 text-xl'>{resume.basics.summary}</p>
         <div className='container flex flex-col items-center justify-between pb-20 pt-8 md:flex-row-reverse'>

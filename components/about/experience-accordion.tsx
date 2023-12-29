@@ -40,7 +40,7 @@ export const ExperienceAccordion: React.FC<ExperienceProps> = ({ jobs }) => {
               </div>
             </AccordionTrigger>
             <AccordionContent>
-              <div className='mb-2 flex flex-row items-center text-sm'>
+              <div className='mb-2 hidden flex-row items-center text-sm sm:flex'>
                 <MapPin className='mr-2 h-4 w-4' />
                 <p>
                   {j.location} - {j.locationType ? j.locationType : 'On-Site'}
@@ -55,7 +55,7 @@ export const ExperienceAccordion: React.FC<ExperienceProps> = ({ jobs }) => {
                 {j.skills.map((skill) => (
                   <p
                     key={skill}
-                    className='m-1 rounded bg-waikawa-800 px-2 text-white'
+                    className='m-1 rounded bg-waikawa-800 px-2 text-slate-50 dark:bg-waikawa-950'
                   >
                     {skill}
                   </p>

@@ -61,7 +61,7 @@ export type SocialLinksProps = {
 };
 
 export const SocialLinks: React.FC<SocialLinksProps> = ({
-  className = 'text-white',
+  className = 'text-slate-50',
 }) => {
   return (
     <div className={className}>

@@ -22,7 +22,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang='en'>
-      <body className={cn(ubuntu.variable, ubuntuMono.variable, 'font-sans')}>
+      <body
+        className={cn(
+          ubuntu.variable,
+          ubuntuMono.variable,
+          'bg-slate-50 font-sans text-waikawa-950 dark:bg-waikawa-900 dark:text-slate-50',
+        )}
+      >
         <Providers>{children}</Providers>
         <Analytics />
       </body>
