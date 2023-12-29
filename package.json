@@ -10,6 +10,7 @@
     "format": "prettier --write ./**/*.tsx"
   },
   "dependencies": {
+    "@radix-ui/react-accordion": "^1.1.2",
     "@radix-ui/react-slot": "^1.0.2",
     "@react-pdf/renderer": "^3.1.9",
     "@vercel/analytics": "^1.0.2",

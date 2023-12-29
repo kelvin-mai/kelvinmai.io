@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View } from '@react-pdf/renderer';
 
 import { resume } from '@app/constants';
+import { renderDates } from '@app/lib/utils';
 import { Section, IconText, Icon, ConditionalLink, Skills } from '.';
 
 const styles = StyleSheet.create({
@@ -35,14 +36,6 @@ const styles = StyleSheet.create({
 });
 
 export const WorkExperience = () => {
-  const formatDate = (d: string) =>
-    new Date(d).toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'short',
-    });
-
-  const renderDates = (start: string, end: string) =>
-    `${formatDate(start)} - ${end ? formatDate(end) : 'Present'}`;
   return (
     <Section title='Professional Experience'>
       {resume.work.map((w) => (

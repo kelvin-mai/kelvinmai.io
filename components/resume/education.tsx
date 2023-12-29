@@ -1,6 +1,7 @@
 import { Text, View, StyleSheet } from '@react-pdf/renderer';
 
 import { resume } from '@app/constants';
+import { renderDates } from '@app/lib/utils';
 import { IconText, Section } from '.';
 
 const styles = StyleSheet.create({
@@ -11,15 +12,6 @@ const styles = StyleSheet.create({
 });
 
 export const Education = () => {
-  const formatDate = (d: string) =>
-    new Date(d).toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'short',
-    });
-
-  const renderDates = (start: string, end: string) =>
-    `${formatDate(start)} - ${end ? formatDate(end) : 'Present'}`;
-
   return (
     <Section title='education'>
       {resume.education.map((e) => (

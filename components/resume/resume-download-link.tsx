@@ -21,10 +21,14 @@ const PDFDownloadLink = dynamic(
 export const ResumeDownloadLink = () => {
   return (
     <PDFDownloadLink document={<Resume />} fileName='KelvinMaiResume.pdf'>
-      <Button>
-        <Download className='mr-4 h-4 w-4' />
-        Download Resume
-      </Button>
+      {({ blob, url, loading, error }) => {
+        return (
+          <Button disabled={loading}>
+            <Download className='mr-4 h-4 w-4' />
+            Download Resume
+          </Button>
+        );
+      }}
     </PDFDownloadLink>
   );
 };
