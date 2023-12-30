@@ -1,12 +1,17 @@
-import { AboutCard, ExperienceAccordion } from '@app/components/about';
-import { BuyMeCofffeeBanner } from '@app/components/common/buy-me-coffee-banner';
+import {
+  AboutCard,
+  WorkExperience,
+  FreelanceExperience,
+} from '@app/components/about';
+import { BuyMeCofffeeBanner, GithubCalendar } from '@app/components/common';
+import { Tabs, TabsList, TabsTrigger, TabsContent } from '@app/components/ui';
 import { resume } from '@app/constants';
 
 export default function HomePage() {
   return (
     <>
       <main
-        className={`bg-[url('/images/bg.webp')] bg-fixed bg-top bg-no-repeat p-4 dark:bg-waikawa-700 lg:min-h-[720px]`}
+        className={`bg-[url('/images/bg.webp')] bg-fixed bg-top bg-no-repeat py-4 dark:bg-waikawa-700`}
       >
         <div className='container'>
           <AboutCard summary={resume.basics.summary} />
@@ -15,14 +20,23 @@ export default function HomePage() {
           </div>
         </div>
       </main>
-      <section className='from-waikawa-700 to-waikawa-950 p-4 dark:bg-gradient-to-b'>
+      <section className='from-waikawa-700 to-waikawa-950 py-4 dark:bg-gradient-to-b'>
         <div className='container'>
-          <h2 className='m-4 text-center text-xl font-bold'>
-            Professional Experience
-          </h2>
-          <div className='my-4 sm:rounded-xl sm:bg-white sm:drop-shadow sm:dark:bg-waikawa-50/10'>
-            <ExperienceAccordion jobs={resume.work} />
+          <div className='mb-4 hidden justify-center rounded-lg bg-gradient-to-r from-indigo-100 to-amber-100 p-4 font-medium text-waikawa-950 drop-shadow-md lg:flex'>
+            <GithubCalendar />
           </div>
+          <Tabs defaultValue='employment'>
+            <TabsList>
+              <TabsTrigger value='employment'>Employment</TabsTrigger>
+              <TabsTrigger value='freelance'>Freelance</TabsTrigger>
+            </TabsList>
+            <TabsContent value='employment'>
+              <WorkExperience jobs={resume.work} />
+            </TabsContent>
+            <TabsContent value='freelance'>
+              <FreelanceExperience />
+            </TabsContent>
+          </Tabs>
         </div>
       </section>
     </>

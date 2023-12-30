@@ -1,6 +1,6 @@
 'use client';
 import dynamic from 'next/dynamic';
-import { Download } from 'lucide-react';
+import { Download, Loader2 } from 'lucide-react';
 
 import { Resume } from './resume';
 import { Button } from '../ui';
@@ -12,7 +12,7 @@ const PDFDownloadLink = dynamic(
     ssr: false,
     loading: () => (
       <Button disabled>
-        <Download className='mr-4 h-4 w-4' />
+        <Loader2 className='mr-4 h-4 w-4 animate-spin' />
         Download Resume
       </Button>
     ),

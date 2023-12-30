@@ -1,2 +1,3 @@
 export * from './about-card';
-export * from './experience-accordion';
+export * from './freelance-experience';
+export * from './work-experience';

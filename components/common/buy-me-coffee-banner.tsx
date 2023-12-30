@@ -4,7 +4,7 @@ import { cn } from '@app/lib/utils';
 export const BuyMeCofffeeBanner = () => {
   return (
     <a
-      className='mx-auto my-6 flex w-full items-center justify-center rounded-lg bg-gradient-to-r from-orange-100 via-rose-100 to-indigo-100 p-8 drop-shadow-md'
+      className='mx-auto flex w-full items-center justify-center rounded-lg bg-gradient-to-r from-orange-100 via-rose-100 to-indigo-100 p-8 drop-shadow-md'
       href='https://www.buymeacoffee.com/kelvinmai'
       target='_blank'
       rel='noopener noreferrer'
@@ -82,7 +82,6 @@ export const BuyMeCofffeeBanner = () => {
             fill='#0d0c22'
           ></path>
         </svg>
-        <img alt='buy me a coffee'></img>
         <svg
           width='152'
           height='31'

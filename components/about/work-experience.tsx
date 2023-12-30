@@ -13,13 +13,16 @@ import {
 
 type Resume = typeof resume;
 
-type ExperienceProps = {
+type WorkExperienceProps = {
   jobs: Resume['work'];
 };
 
-export const ExperienceAccordion: React.FC<ExperienceProps> = ({ jobs }) => {
+export const WorkExperience: React.FC<WorkExperienceProps> = ({ jobs }) => {
   return (
-    <Accordion type='multiple' className='w-full px-4'>
+    <Accordion
+      type='multiple'
+      className='my-4 w-full px-4 sm:rounded-xl sm:bg-white sm:drop-shadow sm:dark:bg-waikawa-50/10'
+    >
       {jobs.map((j) => {
         return (
           <AccordionItem key={j.name} value={j.name}>
