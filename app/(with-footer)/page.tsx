@@ -22,9 +22,6 @@ export default function HomePage() {
       </main>
       <section className='from-waikawa-700 to-waikawa-950 py-4 dark:bg-gradient-to-b'>
         <div className='container'>
-          <div className='mb-4 hidden justify-center rounded-lg bg-gradient-to-r from-indigo-100 to-amber-100 p-4 font-medium text-waikawa-950 drop-shadow-md lg:flex'>
-            <GithubCalendar />
-          </div>
           <Tabs defaultValue='employment'>
             <TabsList>
               <TabsTrigger value='employment'>Employment</TabsTrigger>
