@@ -19,6 +19,8 @@ const buttonVariants = cva(
                       active:from-rose-600 active:to-rose-800`,
         outline: `border border-perfume-700 bg-slate-50 text-perfume-700
                   hover:bg-perfume-50 active:bg-perfume-100`,
+        glass:
+          'border border-slate-50 bg-waikawa-950/50 text-slate-50 disabled:opacity-50',
         azure: 'bg-azure-100 text-azure-900 hover:bg-azure-100/80',
         link: 'text-perfume-900 underline-offset-4 hover:underline dark:text-perfume-50',
       },
