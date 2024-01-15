@@ -25,8 +25,8 @@ const buttonVariants = cva(
         link: 'text-perfume-900 underline-offset-4 hover:underline dark:text-perfume-50',
       },
       size: {
-        sm: 'rounded-md px-4 py-2 drop-shadow',
-        lg: 'rounded-md px-8 py-4 drop-shadow',
+        sm: 'rounded-md px-4 py-2 shadow',
+        lg: 'rounded-md px-8 py-4 shadow',
         icon: 'h-10 w-10',
       },
     },

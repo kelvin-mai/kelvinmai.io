@@ -3,7 +3,8 @@ import {
   WorkExperience,
   FreelanceExperience,
 } from '@app/components/about';
-import { BuyMeCofffeeBanner, GithubCalendar } from '@app/components/common';
+import { Content } from '@app/components/about/content-experience';
+import { BuyMeCofffeeBanner } from '@app/components/common';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@app/components/ui';
 import { resume } from '@app/constants';
 

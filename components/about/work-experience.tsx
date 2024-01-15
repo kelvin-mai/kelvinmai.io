@@ -9,7 +9,8 @@ import {
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from '@app/components/ui/accordion';
+  Badge,
+} from '@app/components/ui';
 
 type Resume = typeof resume;
 
@@ -21,7 +22,7 @@ export const WorkExperience: React.FC<WorkExperienceProps> = ({ jobs }) => {
   return (
     <Accordion
       type='multiple'
-      className='my-4 w-full px-4 sm:rounded-xl sm:bg-white sm:drop-shadow sm:dark:bg-waikawa-50/10'
+      className='my-4 w-full px-4 sm:rounded-xl sm:bg-white sm:shadow sm:dark:bg-waikawa-50/10'
     >
       {jobs.map((j) => {
         return (
@@ -56,12 +57,7 @@ export const WorkExperience: React.FC<WorkExperienceProps> = ({ jobs }) => {
               <p className='mb-2'>{j.summary}</p>
               <div className='flex flex-wrap items-center'>
                 {j.skills.map((skill) => (
-                  <p
-                    key={skill}
-                    className='m-1 rounded bg-waikawa-800 px-2 text-slate-50 dark:bg-waikawa-950'
-                  >
-                    {skill}
-                  </p>
+                  <Badge key={skill}>{skill}</Badge>
                 ))}
               </div>
               <ul className='list-inside list-disc text-sm'>
