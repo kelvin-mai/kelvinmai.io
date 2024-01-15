@@ -9,7 +9,7 @@ export const FreelanceExperience = () => {
     <div className='grid gap-4 md:grid-cols-2'>
       <div className='grid gap-4 lg:grid-cols-2'>
         {freelance.map((f) => (
-          <FreelanceCard {...f} />
+          <FreelanceCard key={f.slug} {...f} />
         ))}
       </div>
       <div className='flex flex-col justify-around rounded-lg bg-white bg-gradient-to-br from-white to-rose-100 p-4 text-waikawa-950 shadow-md'>
