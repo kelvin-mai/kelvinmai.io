@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import { redirect } from 'next/navigation';
 
 import {
   Carousel,
@@ -18,9 +19,13 @@ export async function generateStaticParams() {
 }
 
 export default function FreelancePage({ params }: FreelancePageProps) {
-  const { slug, title, subtitle, description, images } = freelance.find(
-    (f) => f.slug === params.slug,
-  )!;
+  const current = freelance.find((f) => f.slug === params.slug);
+
+  if (!current) {
+    redirect('/not-found');
+  }
+
+  const { slug, title, subtitle, description, images } = current;
 
   const imageSources = [...Array(images)]
     .map((_, i) => i + 1)

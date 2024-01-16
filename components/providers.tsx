@@ -7,7 +7,7 @@ import { TooltipProvider } from './ui';
 
 export const Providers = ({ children }: React.PropsWithChildren) => {
   return (
-    <NextThemesProvider attribute='class' defaultTheme='light' enableSystem>
+    <NextThemesProvider attribute='class' defaultTheme='system' enableSystem>
       <TooltipProvider delayDuration={0}>{children}</TooltipProvider>
     </NextThemesProvider>
   );
