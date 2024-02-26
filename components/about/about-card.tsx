@@ -28,7 +28,7 @@ export const AboutCard: React.FC<AboutCardProps> = ({ className, summary }) => {
       <div className='m-auto w-[200px] overflow-hidden rounded-full shadow-md md:m-0 md:hidden'>
         <Image src={me} alt='Avatar picture of me' placeholder='blur' />
       </div>
-      <div className='to-bg-waikawa-950/40 rounoed-lg flex flex-col justify-between bg-gradient-to-br from-perfume-500 p-4 text-slate-50 shadow-md'>
+      <div className='to-bg-waikawa-950/40 flex flex-col justify-between rounded-lg bg-gradient-to-br from-perfume-500 p-4 text-slate-50 shadow-md'>
         <div>
           <h1 className='text-center text-5xl font-bold tracking-tight md:text-[4rem]'>
             Kelvin Mai
