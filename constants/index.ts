@@ -223,7 +223,7 @@ export const resume = {
     },
     {
       institution: 'University of California, Riverside',
-      area: 'Computer Science Major (No Degree)',
+      area: 'Computer Science Major',
       location: 'Riverside, CA',
       startDate: '2008-09-01T07:00:00.000Z',
       endDate: '2011-02-01T08:00:00.000Z',
