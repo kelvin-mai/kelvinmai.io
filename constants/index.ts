@@ -7,7 +7,7 @@ export const resume = {
     phone: null,
     url: 'kelvinmai.io',
     summary:
-      'Self taught software engineer and functional programming enthusiast with 5+ years of professional experience. Primarily working with web technologies such as TypeScript, Clojure, and React.',
+      'Dynamic software engineer with over 5 years of hands-on experience and passionate about functional programming methodologies. Specializing in web technologies including TypeScript, Clojure, React and Golang with a proven track record of delivering robust solutions and adapting to new tools.',
     location: {
       address: null,
       postalCode: null,
