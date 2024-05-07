@@ -45,25 +45,6 @@ export const resume = {
   },
   work: [
     {
-      name: 'Yieldmos',
-      location: 'Mountain View, CA',
-      locationType: 'Remote',
-      description: null,
-      skills: ['typescript', 'react', 'web3'],
-      url: 'https://www.yieldmos.com/',
-      image: 'yieldmos.png',
-      position: 'Software Consultant',
-      startDate: '2023-08-16T08:00:00.000Z',
-      endDate: '2023-11-17T08:00:00.000Z',
-      summary:
-        'Provide assistance on client facing non-custodial compounding blockchain application',
-      highlights: [
-        'Collaborated with backend engineers to ensure seamless contract calls',
-        'Assisted on implementing compounding outpost strategy',
-        'Mentored and taught junior developers about React and Typescript',
-      ],
-    },
-    {
       name: 'Luminare Inc.',
       location: 'Houston, TX',
       locationType: 'Remote',
