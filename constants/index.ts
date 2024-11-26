@@ -45,6 +45,45 @@ export const resume = {
   },
   work: [
     {
+      name: 'Gravie',
+      location: 'Minneapolis, MN',
+      locationType: 'Remote',
+      description: null,
+      skills: ['clojure', 'react', 'mysql', 'aws', 'docker', 'groovy', 'grails', 'redis'],
+      url: 'https://www.gravie.com/',
+      image: 'gravie.jpg',
+      position: 'Senior Software Engineer',
+      startDate: '2023-07-15T08:00:00.000Z',
+      endDate: null,
+      summary: 'Development on internal admin tool to aid SFTP automation for insurance clients',
+      highlights: [
+        'Development on Admin UI used by Gravie employees and insurance clients',
+        'Mentored and taught React and clojurescript to Java engineers',
+        'Expand SFTP file automation flow by introducing a dry run feature',
+        'Managed AWS and Redis for file processing through Groovy on Grails backend application'
+      ],
+    },
+    {
+      name: 'Yieldmos',
+      location: 'Mountain View, CA',
+      locationType: 'Remote',
+      description: null,
+      skills: ['typescript', 'react', 'web3', 'nextjs'],
+      url: 'https://www.yieldmos.com/',
+      image: 'yieldmos.png',
+      position: 'Software Consultant',
+      startDate: '2023-08-16T08:00:00.000Z',
+      endDate: '2024-02-21T08:00:00.000Z',
+      summary:
+        'Provide development consultation on client facing non-custodial compounding blockchain application',
+      highlights: [
+        'Collaborated with backend Rust engineers to ensure seamless contract calls',
+        'Development on compounding outpost strategy implementation',
+        'Mentored and taught junior developers about React and Typescript',
+        'Initiated migration of frontend application from React 16 to NextJS'
+      ],
+    },
+    {
       name: 'Luminare Inc.',
       location: 'Houston, TX',
       locationType: 'Remote',
