@@ -17,5 +17,5 @@ export const formatDate = (d: string) =>
     month: 'short',
   });
 
-export const renderDates = (start: string, end: string) =>
+export const renderDates = (start: string, end?: string | null) =>
   `${formatDate(start)} - ${end ? formatDate(end) : 'Present'}`;
