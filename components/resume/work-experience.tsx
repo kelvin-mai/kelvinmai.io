@@ -59,7 +59,7 @@ export const WorkExperience = () => {
             </View>
           </View>
           <Skills skills={w.skills} />
-          <Text style={styles.description}>{w.summary}</Text>
+          {/* <Text style={styles.description}>{w.summary}</Text> */}
           <View style={styles.list}>
             {w.highlights.map((h) => (
               <View key={h} style={styles.listItem}>

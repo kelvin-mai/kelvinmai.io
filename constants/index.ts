@@ -49,18 +49,28 @@ export const resume = {
       location: 'Minneapolis, MN',
       locationType: 'Remote',
       description: null,
-      skills: ['clojure', 'react', 'mysql', 'aws', 'docker', 'groovy', 'grails', 'redis'],
+      skills: [
+        'clojure',
+        'react',
+        'mysql',
+        'aws',
+        'docker',
+        'groovy',
+        'grails',
+        'redis',
+      ],
       url: 'https://www.gravie.com/',
       image: 'gravie.jpg',
       position: 'Senior Software Engineer',
       startDate: '2024-07-15T08:00:00.000Z',
       endDate: null,
-      summary: 'Development on internal admin tool to aid SFTP automation for insurance clients',
+      summary:
+        'Development on internal admin tool to aid SFTP automation for insurance clients',
       highlights: [
-        'Development on Admin UI used by Gravie employees and insurance clients',
-        'Mentored and taught React and clojurescript to Java engineers',
-        'Expand SFTP file automation flow by introducing a dry run feature',
-        'Managed AWS and Redis for file processing through Groovy on Grails backend application'
+        'Developed internal admin tools for SFTP file automation by introducing a dry run feature',
+        'Enhance the Admin UI for Gravie employees and insurance clients, improving workflow efficiency.',
+        'Managed AWS & Redis for file processing in a Groovy on Grails backend.',
+        'Mentored Java engineers in React and Clojurescript, facilitating frontend modernization.',
       ],
     },
     {
@@ -77,10 +87,10 @@ export const resume = {
       summary:
         'Provide development consultation on client facing non-custodial compounding blockchain application',
       highlights: [
-        'Collaborated with backend Rust engineers to ensure seamless contract calls',
+        'Collaborated with Rust backend engineers to optimize smart contract interactions.',
         'Development on compounding outpost strategy implementation',
-        'Mentored and taught junior developers about React and Typescript',
-        'Initiated migration of frontend application from React 16 to NextJS'
+        'Migrated frontend from React 16 to Next.js, enhancing performance and scalability.',
+        'Mentored junior developers on React and Typescript best practices.',
       ],
     },
     {
@@ -97,11 +107,11 @@ export const resume = {
       summary:
         'Rapid development of vaccination management app during the COVID-19 pandemic',
       highlights: [
-        'Assisted application migration from node.js to clojure general vaccination software',
-        'Development of SMS/Email notifications feature',
-        'Optimization and reorganization of data models in PostgreSQL database',
-        'Maintained frontend application using Cypress end-to-end testing',
-        'Mentored and taught junior developers about Clojure/ClojureScript',
+        'Developed and optimized a COVID-19 vaccination management platform.',
+        'Migrated core services from Node.js to Clojure for improved performance and scalability.',
+        'Development of SMS/Email notifications feature.',
+        'Maintained frontend application using Cypress end-to-end testing.',
+        'Mentored and taught junior developers about Clojure/ClojureScript.',
       ],
     },
     {
@@ -128,30 +138,30 @@ export const resume = {
         'Development of various Travel B2B dependant microservices and internal administration tools.',
       highlights: [
         'Development on both client-facing and administrative frontend applications in both React and Angular',
-        'Development and orchestration of Java and Golang microservices',
-        'Implemented a Python based ETL worker to update and propagate Redis data',
-        'Created SFTP file transfer automation tool in Java as well as a test SFTP server using docker',
+        'Developed Java and Golang microservices for the Travel B2B platform.',
+        'Built a Python-based ETL worker to optimize Redis data propagation.',
+        'Automated SFTP file transfers using Java and Docker.',
       ],
     },
-    {
-      name: 'Nucamp Coding Bootcamp',
-      location: 'Las Vegas, NV',
-      locationType: 'Hybrid',
-      description: null,
-      skills: ['mongodb', 'react native', 'react', 'node.js'],
-      url: 'https://www.nucamp.co/',
-      image: 'nucamp.png',
-      position: 'Bootcamp Instructor',
-      startDate: '2020-01-01T08:00:00.000Z',
-      endDate: '2020-08-01T08:00:00.000Z',
-      summary:
-        'Bootcamp instructor responsible for teaching students web development technologies.',
-      highlights: [
-        'Taught aspiring developers on the MERN stack as well as React Native',
-        'Lead classes in person and asynchronously through Zoom meetings',
-        'Offer one-on-one tutoring and troubleshooting with web development students',
-      ],
-    },
+    // {
+    //   name: 'Nucamp Coding Bootcamp',
+    //   location: 'Las Vegas, NV',
+    //   locationType: 'Hybrid',
+    //   description: null,
+    //   skills: ['mongodb', 'react native', 'react', 'node.js'],
+    //   url: 'https://www.nucamp.co/',
+    //   image: 'nucamp.png',
+    //   position: 'Bootcamp Instructor',
+    //   startDate: '2020-01-01T08:00:00.000Z',
+    //   endDate: '2020-08-01T08:00:00.000Z',
+    //   summary:
+    //     'Bootcamp instructor responsible for teaching students web development technologies.',
+    //   highlights: [
+    //     'Taught aspiring developers on the MERN stack as well as React Native',
+    //     'Lead classes in person and asynchronously through Zoom meetings',
+    //     'Offer one-on-one tutoring and troubleshooting with web development students',
+    //   ],
+    // },
     {
       name: 'Vegas.com',
       location: 'Las Vegas, NV',
@@ -166,10 +176,10 @@ export const resume = {
       summary:
         'Feature development on desktop and mobile retail travel e-commerce web applications.',
       highlights: [
-        'Developed and optimized HTML emails using React for purchase confirmations',
-        'Implemented mobile cart functionality to use React Router streamlining navigation experience and mobile conversions',
-        'Initiated upgrade of React Router from version 2 to 5',
-        'Feature development on React Native Windows based kiosk application',
+        'Implemented React-based HTML email templates for improved purchase confirmation UX.',
+        'Implemented mobile cart functionality to use React Router streamlining navigation experience and mobile conversions.',
+        'Upgraded React Router (v2 to v5), enhancing navigation performance.',
+        'Feature development on React Native Windows based kiosk application.',
       ],
     },
     {
@@ -195,40 +205,39 @@ export const resume = {
       summary:
         'R&D and Feature development and maintenance of the cloud-hosted LMS.',
       highlights: [
-        'Designed and prototyped GraphQL layer for internal API',
-        'Added C# .NET service endpoint to provide full text search using PostgreSQL',
-        'Created and maintained internal React data dashboard',
-        'Aided conversion of front end applications from Angular 5 to version 6',
-        'Aided migration of internal UI components libraries that were compatible with both React and Angular',
+        'Designed and prototyped an internal GraphQL API for better data querying.',
+        'Added C# .NET service endpoint to provide full text search using PostgreSQL.',
+        'Created and maintained internal React data dashboard.',
+        'Led migration from Angular 5 to Angular 6, improving frontend maintainability.',
       ],
     },
-    {
-      name: 'DigitalCrafts',
-      location: 'Houston, TX',
-      locationType: null,
-      skills: [
-        'javascript',
-        'react',
-        'mongodb',
-        'node.js',
-        'python',
-        'postgresql',
-      ],
-      description: null,
-      url: 'https://www.digitalcrafts.com/',
-      image: 'digitalcrafts.png',
-      position: 'Developer Intern',
-      startDate: '2018-01-01T08:00:00.000Z',
-      endDate: '2018-04-01T07:00:00.000Z',
-      summary:
-        'Three month paid internship to work with and assist experienced instructors in developing and teach full stack web applications.',
-      highlights: [
-        'Assist in teaching incoming coding bootcamp students in various web technologies',
-        'Offer one-on-one tutoring and troubleshooting with web development students',
-        'Worked with experienced instructors to accelerate web development career',
-        'Assist in development of internal bootcamp CMS and client-facing bootcamp landing page',
-      ],
-    },
+    // {
+    //   name: 'DigitalCrafts',
+    //   location: 'Houston, TX',
+    //   locationType: null,
+    //   skills: [
+    //     'javascript',
+    //     'react',
+    //     'mongodb',
+    //     'node.js',
+    //     'python',
+    //     'postgresql',
+    //   ],
+    //   description: null,
+    //   url: 'https://www.digitalcrafts.com/',
+    //   image: 'digitalcrafts.png',
+    //   position: 'Developer Intern',
+    //   startDate: '2018-01-01T08:00:00.000Z',
+    //   endDate: '2018-04-01T07:00:00.000Z',
+    //   summary:
+    //     'Three month paid internship to work with and assist experienced instructors in developing and teach full stack web applications.',
+    //   highlights: [
+    //     'Assist in teaching incoming coding bootcamp students in various web technologies',
+    //     'Offer one-on-one tutoring and troubleshooting with web development students',
+    //     'Worked with experienced instructors to accelerate web development career',
+    //     'Assist in development of internal bootcamp CMS and client-facing bootcamp landing page',
+    //   ],
+    // },
   ],
   education: [
     {
