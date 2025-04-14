@@ -120,3 +120,13 @@
     @apply bg-background text-foreground;
   }
 }
+
+.container {
+  @apply mx-auto w-full px-4;
+}
+
+@media (min-width: 1400px) {
+  .container {
+    max-width: 1400px;
+  }
+}
