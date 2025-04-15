@@ -1,9 +1,10 @@
+import { resume } from '@/lib/constants';
 import { PDFViewer, ResumeDocument } from '@/components/pdf';
 
-export default function ResumePage() {
+export default async function ResumePage() {
   return (
     <PDFViewer className='min-h-screen w-full'>
-      <ResumeDocument title='old title' />
+      <ResumeDocument resume={resume} />
     </PDFViewer>
   );
 }
