@@ -8,11 +8,10 @@ const styles = StyleSheet.create({
   container: { marginBottom: 8 },
   title: {
     fontSize: 12,
-    fontFamily: 'Ubuntu',
     color: '#7c3aed',
     fontWeight: 700,
   },
-  area: { fontStyle: 'italic', marginBottom: 4 },
+  area: { fontStyle: 'italic', marginVertical: 4 },
   info: { flexDirection: 'row', justifyContent: 'space-between' },
 });
 

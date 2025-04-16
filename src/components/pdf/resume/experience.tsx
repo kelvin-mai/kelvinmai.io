@@ -7,8 +7,7 @@ import { Icon, IconText } from './icons';
 
 const styles = StyleSheet.create({
   title: {
-    fontSize: 14,
-    fontFamily: 'Ubuntu',
+    fontSize: 16,
     fontWeight: 700,
   },
   row: {
@@ -20,8 +19,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   company: {
-    fontSize: 12,
-    fontFamily: 'Ubuntu',
+    fontSize: 14,
     fontWeight: 700,
     color: '#7c3aed',
   },
@@ -51,7 +49,7 @@ export const Experience: React.FC<ExperienceProps> = ({
   highlights,
 }) => {
   return (
-    <View style={{ marginBottom: 12 }} wrap={false}>
+    <View style={{ marginBottom: 4 }} wrap={false}>
       <Text style={styles.title}>{position}</Text>
       <View style={[styles.infoContainer, styles.row]}>
         <ConditionalLink url={url}>

@@ -32,6 +32,22 @@ Font.register({
   ],
 });
 
+Font.register({
+  family: 'Geist',
+  fonts: [
+    {
+      fontStyle: 'normal',
+      fontWeight: 400,
+      src: 'https://fonts.gstatic.com/s/geist/v1/gyBhhwUxId8gMGYQMKR3pzfaWI_RnOM4nQ.ttf',
+    },
+    {
+      fontStyle: 'normal',
+      fontWeight: 700,
+      src: 'https://fonts.gstatic.com/s/geist/v1/gyBhhwUxId8gMGYQMKR3pzfaWI_Re-Q4nQ.ttf',
+    },
+  ],
+});
+
 export { ResumeDocument } from './resume/document';
 
 export const PDFViewer = dynamic(

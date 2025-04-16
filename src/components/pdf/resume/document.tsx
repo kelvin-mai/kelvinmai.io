@@ -10,13 +10,12 @@ import { Project } from './project';
 import { Skill } from './skill';
 
 const styles = StyleSheet.create({
-  title: {
+  page: {
+    paddingTop: 48,
+    paddingHorizontal: 50,
     fontFamily: 'Ubuntu',
-    fontWeight: 700,
-  },
-  subtitle: {
-    fontFamily: 'Ubuntu',
-    fontStyle: 'italic',
+    fontSize: 10,
+    paddingBottom: 36,
   },
   twoColumn: {
     flexDirection: 'row',
@@ -30,21 +29,14 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     width: '40%',
   },
-  page: {
-    paddingTop: 48,
-    paddingHorizontal: 50,
-    fontFamily: 'Ubuntu',
-    fontSize: 10,
-    paddingBottom: 36,
-  },
   pageNumber: {
     position: 'absolute',
     fontSize: 12,
-    bottom: 30,
+    bottom: 24,
     left: 0,
-    right: 0,
-    textAlign: 'center',
-    color: 'grey',
+    right: 35,
+    textAlign: 'right',
+    color: '#64748b',
   },
 });
 

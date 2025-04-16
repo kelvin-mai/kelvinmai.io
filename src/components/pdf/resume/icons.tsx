@@ -11,8 +11,10 @@ const styles = StyleSheet.create({
   },
 });
 
+type IconName = 'at' | 'calendar' | 'dot' | 'link' | 'location';
+
 type IconMap = {
-  [key: string]: React.FC<{ color: string }>;
+  [key in IconName]: React.FC<{ color: string }>;
 };
 
 const icons: IconMap = {
@@ -57,8 +59,6 @@ const icons: IconMap = {
     </>
   ),
 };
-
-type IconName = keyof typeof icons;
 
 type IconProps = {
   name: IconName;

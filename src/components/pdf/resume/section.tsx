@@ -6,19 +6,18 @@ type SectionProps = React.PropsWithChildren & {
 
 const styles = StyleSheet.create({
   container: {
-    paddingBottom: 20,
+    paddingBottom: 12,
   },
   title: {
     textTransform: 'uppercase',
-    fontFamily: 'Ubuntu',
     fontWeight: 700,
-    color: '#475569',
+    color: '#64748b',
   },
   separator: {
     height: 2,
     marginTop: 1,
-    marginBottom: 12,
-    backgroundColor: '#475569',
+    marginBottom: 4,
+    backgroundColor: '#64748b',
   },
 });
 

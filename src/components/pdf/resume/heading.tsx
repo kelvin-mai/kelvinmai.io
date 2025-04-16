@@ -11,21 +11,18 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   title: {
-    textTransform: 'uppercase',
     fontSize: 20,
-    fontFamily: 'Ubuntu',
     fontWeight: 700,
   },
   subTitle: {
-    fontSize: 12,
-    marginTop: 4,
-    fontFamily: 'Ubuntu',
-    color: '#7c3aed',
+    fontSize: 16,
+    marginTop: 2,
+    color: '#7c46e1',
     fontWeight: 700,
   },
   infoContainer: {
     flexDirection: 'row',
-    marginTop: 12,
+    marginTop: 8,
   },
   link: {
     marginRight: 16,

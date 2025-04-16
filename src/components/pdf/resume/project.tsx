@@ -6,8 +6,7 @@ import { Icon } from './icons';
 const styles = StyleSheet.create({
   title: {
     fontSize: 12,
-    fontFamily: 'Ubuntu',
-    color: '#7c3aed',
+    color: '#7c46e1',
     fontWeight: 700,
   },
   description: {
@@ -35,7 +34,7 @@ export const Project: React.FC<ProjectProps> = ({
   highlights,
 }) => {
   return (
-    <View wrap={false}>
+    <View wrap={false} style={{ marginBottom: 4 }}>
       <Link src={url} style={styles.link}>
         <Text style={styles.title}>{name}</Text>
       </Link>
