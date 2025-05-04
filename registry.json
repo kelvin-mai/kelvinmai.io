@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "",
+  "homepage": "https://kelvinmai.io",
+  "items": [
+    {
+      "name": "color-picker",
+      "type": "registry:ui",
+      "title": "Color Picker",
+      "description": "A color picker component",
+      "files": [
+        {
+          "path": "src/registry/default/ui/color-picker.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "dependencies": ["react-colorful", "lucide-react"],
+      "registryDependencies": ["button", "input", "popover", "tabs"]
+    }
+  ]
+}
