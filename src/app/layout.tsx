@@ -7,6 +7,13 @@ import { ubuntu, ubuntuMono } from '@/lib/fonts';
 import { resume } from '@/lib/constants';
 
 export const metadata: Metadata = {
+  metadataBase: new URL(
+    'https://kelvinmai.io',
+    process.env.NEXT_PUBLIC_URL || 'http://localhost:3000',
+  ),
+  alternates: {
+    canonical: '/',
+  },
   title: {
     template: '%s | Kelvin Mai',
     default: 'Kelvin Mai',
