@@ -1,5 +1,10 @@
-import { MDXRemote, MDXRemoteProps } from "next-mdx-remote/rsc";
-import remarkGfm from "remark-gfm";
+import { MDXRemote, MDXRemoteProps } from 'next-mdx-remote/rsc';
+import remarkGfm from 'remark-gfm';
+import {
+  recmaCodeHike,
+  remarkCodeHike,
+  type CodeHikeConfig,
+} from 'codehike/mdx';
 
 import {
   Table,
@@ -8,10 +13,10 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { ExternalLink } from "../ui/external-link";
-import { rehypeNpmCommand } from "@/lib/rehype";
+} from '@/components/ui/table';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { ExternalLink } from '../ui/external-link';
+import { rehypeNpmCommand } from '@/lib/rehype';
 import {
   Blockquote,
   H1,
@@ -21,9 +26,17 @@ import {
   OrderedList,
   P,
   UnorderedList,
-} from "./typography";
+} from './typography';
+import { Code, InlineCode } from './code';
 
-const components: MDXRemoteProps["components"] = {
+const chConfig: CodeHikeConfig = {
+  components: {
+    code: 'Code',
+    inlineCode: 'InlineCode',
+  },
+};
+
+const components: MDXRemoteProps['components'] = {
   h1: H1,
   h2: H2,
   h3: H3,
@@ -39,16 +52,19 @@ const components: MDXRemoteProps["components"] = {
   tr: TableRow,
   th: TableHead,
   td: TableCell,
+  Code,
+  InlineCode,
   Tabs,
   TabsList,
   TabsTrigger,
   TabsContent,
 };
 
-const options: MDXRemoteProps["options"] = {
+const options: MDXRemoteProps['options'] = {
   mdxOptions: {
-    remarkPlugins: [remarkGfm],
+    remarkPlugins: [remarkGfm, [remarkCodeHike, chConfig]],
     rehypePlugins: [rehypeNpmCommand],
+    recmaPlugins: [[recmaCodeHike, chConfig]],
   },
 };
 
