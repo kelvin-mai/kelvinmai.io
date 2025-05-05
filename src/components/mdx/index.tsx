@@ -15,7 +15,7 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { ExternalLink } from '../ui/external-link';
+import { ExternalLink } from '@/components/ui/external-link';
 import { rehypeNpmCommand } from '@/lib/rehype';
 import {
   Blockquote,
@@ -27,6 +27,9 @@ import {
   P,
   UnorderedList,
 } from './typography';
+import { Step, Steps } from './steps';
+import { ComponentPreview } from './component-preview';
+import { ComponentSource } from './component-source';
 import { Code, InlineCode } from './code';
 
 const chConfig: CodeHikeConfig = {
@@ -52,8 +55,12 @@ const components: MDXRemoteProps['components'] = {
   tr: TableRow,
   th: TableHead,
   td: TableCell,
+  ComponentPreview,
+  ComponentSource,
   Code,
   InlineCode,
+  Step,
+  Steps,
   Tabs,
   TabsList,
   TabsTrigger,

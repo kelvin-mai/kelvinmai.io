@@ -5,13 +5,13 @@
   "items": [
     {
       "name": "color-picker",
-      "type": "registry:ui",
+      "type": "registry:component",
       "title": "Color Picker",
       "description": "A color picker component",
       "files": [
         {
           "path": "src/registry/default/ui/color-picker.tsx",
-          "type": "registry:ui"
+          "type": "registry:component"
         }
       ],
       "dependencies": ["react-colorful", "lucide-react"],
