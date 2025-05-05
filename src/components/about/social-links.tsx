@@ -1,19 +1,19 @@
-import { siBuymeacoffee, siGithub, siInstagram, siYoutube } from "simple-icons";
+import { siBuymeacoffee, siGithub, siInstagram, siYoutube } from 'simple-icons';
 
-import { resume } from "@/lib/constants";
-import { ExternalLink, SimpleIcon, siLinkedin } from "../common";
+import { resume } from '@/lib/constants';
+import { ExternalLink, SimpleIcon, siLinkedin } from '../common';
 
 const getIcon = (social: string) => {
   switch (social) {
-    case "Youtube":
+    case 'Youtube':
       return siYoutube;
-    case "Github":
+    case 'Github':
       return siGithub;
-    case "Instagram":
+    case 'Instagram':
       return siInstagram;
-    case "Linkedin":
+    case 'Linkedin':
       return siLinkedin;
-    case "Buy Me A Coffee":
+    case 'Buy Me A Coffee':
       return siBuymeacoffee;
     default:
       return null;

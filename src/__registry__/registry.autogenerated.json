@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "kelvinmai.io",
+  "homepage": "https://kelvinmai.io",
+  "items": [
+    {
+      "name": "theme-switch",
+      "type": "registry:component",
+      "title": "Theme Switch",
+      "description": "Animated theme switch",
+      "dependencies": [
+        "next-themes",
+        "lucide-react",
+        "motion"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "src/registry/default/ui/theme-switch.tsx",
+          "type": "registry:component"
+        }
+      ]
+    }
+  ]
+}
