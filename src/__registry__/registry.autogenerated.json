@@ -1,0 +1,47 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "kelvinmai.io",
+  "homepage": "https://kelvinmai.io",
+  "items": [
+    {
+      "name": "color-picker",
+      "type": "registry:component",
+      "title": "Color Picker",
+      "description": "A color picker component",
+      "dependencies": [
+        "react-colorful",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "button",
+        "input",
+        "popover",
+        "tabs"
+      ],
+      "files": [
+        {
+          "path": "src/registry/default/ui/color-picker.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "theme-switch",
+      "type": "registry:component",
+      "title": "Theme Switch",
+      "description": "Animated theme switch",
+      "dependencies": [
+        "next-themes",
+        "lucide-react",
+        "motion"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "src/registry/default/ui/theme-switch.tsx",
+          "type": "registry:component"
+        }
+      ]
+    }
+  ]
+}

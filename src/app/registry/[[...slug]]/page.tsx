@@ -41,7 +41,7 @@ export default async function RegistryPage({ params }: RegistryPageProps) {
           </BreadcrumbList>
         </Breadcrumb>
       </header>
-      <main>
+      <main className='mx-4'>
         <MDX raw={doc.content} />
       </main>
     </>
