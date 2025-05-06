@@ -25,10 +25,16 @@ export const Index: Record<string, any> = {`;
     }
 
     const componentPath = `@/registry/${item.files[0].path}`;
+    const sourcePath = path.join(
+      process.cwd(),
+      'src/registry',
+      item.files[0].path,
+    );
 
     index += `
   "${item.name}": {
     name: "${item.name}",
+    title: "${item.title ?? ''}",
     description: "${item.description ?? ''}",
     type: "${item.type}",
     files: [${item.files.map((file) => {
@@ -40,7 +46,8 @@ export const Index: Record<string, any> = {`;
     })}],${
       item.type === 'registry:example'
         ? `
-    component: React.lazy(() => import("${componentPath}")),`
+    component: React.lazy(() => import("${componentPath}")),
+    source: \`${(await fs.readFile(sourcePath, 'utf-8')).toString()}\``
         : ''
     }
   },`;

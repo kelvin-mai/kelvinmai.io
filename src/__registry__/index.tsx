@@ -9,6 +9,7 @@ import React from "react";
 export const Index: Record<string, any> = {
   "color-picker": {
     name: "color-picker",
+    title: "Color Picker",
     description: "A color picker component",
     type: "registry:component",
     files: [{
@@ -18,6 +19,7 @@ export const Index: Record<string, any> = {
   },
   "theme-switch": {
     name: "theme-switch",
+    title: "Theme Switch",
     description: "Animated theme switch",
     type: "registry:component",
     files: [{
@@ -27,6 +29,7 @@ export const Index: Record<string, any> = {
   },
   "theme-switch-demo": {
     name: "theme-switch-demo",
+    title: "",
     description: "",
     type: "registry:example",
     files: [{
@@ -34,5 +37,11 @@ export const Index: Record<string, any> = {
       type: "registry:example",
     }],
     component: React.lazy(() => import("@/registry/default/examples/theme-switch-demo.tsx")),
+    source: `import { ThemeSwitch } from '@/registry/default/ui/theme-switch';
+
+export default function ThemeSwitchDemo() {
+  return <ThemeSwitch />;
+}
+`
   },
 }

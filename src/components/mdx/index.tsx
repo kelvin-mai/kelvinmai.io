@@ -16,7 +16,6 @@ import {
 } from '@/components/ui/table';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { ExternalLink } from '@/components/ui/external-link';
-import { rehypeNpmCommand } from '@/lib/rehype';
 import {
   Blockquote,
   H1,
@@ -30,7 +29,7 @@ import {
 import { Step, Steps } from './steps';
 import { ComponentPreview } from './component-preview';
 import { ComponentSource } from './component-source';
-import { Code, InlineCode } from './code';
+import { Code, InlineCode, NpmCommand } from './code';
 
 const chConfig: CodeHikeConfig = {
   components: {
@@ -59,6 +58,7 @@ const components: MDXRemoteProps['components'] = {
   ComponentSource,
   Code,
   InlineCode,
+  NpmCommand,
   Step,
   Steps,
   Tabs,
@@ -70,7 +70,6 @@ const components: MDXRemoteProps['components'] = {
 const options: MDXRemoteProps['options'] = {
   mdxOptions: {
     remarkPlugins: [remarkGfm, [remarkCodeHike, chConfig]],
-    rehypePlugins: [rehypeNpmCommand],
     recmaPlugins: [[recmaCodeHike, chConfig]],
   },
 };

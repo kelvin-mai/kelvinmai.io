@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "color-picker",
+  "type": "registry:component",
+  "title": "Color Picker",
+  "description": "A color picker component",
+  "dependencies": [
+    "react-colorful",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "button",
+    "input",
+    "popover",
+    "tabs"
+  ],
+  "files": [
+    {
+      "path": "src/registry/default/ui/color-picker.tsx",
+      "content": "'use client';\n\nimport * as React from 'react';\nimport { Paintbrush } from 'lucide-react';\nimport { HexColorPicker } from 'react-colorful';\n\nimport { Button, type ButtonProps } from '@/components/ui/button';\nimport { Input } from '@/components/ui/input';\nimport {\n  Popover,\n  PopoverContent,\n  PopoverTrigger,\n} from '@/components/ui/popover';\nimport { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';\nimport { cn } from '@/lib/utils';\n\nexport type ColorPickerProps = Omit<\n  ButtonProps,\n  'value' | 'onChange' | 'onBlur'\n> & {\n  value?: string;\n  onChange: (value: string) => void;\n  onBlur?: () => void;\n};\n\nexport const ColorPicker = React.forwardRef<HTMLInputElement, ColorPickerProps>(\n  ({ value, onChange, onBlur, name, className, disabled, ...props }, ref) => {\n    const [open, setOpen] = React.useState(false);\n\n    const presets = [\n      '#E2E2E2',\n      '#ff75c3',\n      '#ffa647',\n      '#ffe83f',\n      '#9fff5b',\n      '#70e2ff',\n      '#cd93ff',\n      '#09203f',\n    ];\n\n    return (\n      <Popover onOpenChange={setOpen} open={open}>\n        <PopoverTrigger asChild disabled={disabled} onBlur={onBlur}>\n          <Button\n            variant='outline'\n            className={cn(!value && 'text-slate-500', className)}\n            {...props}\n          >\n            <div className='flex w-full items-center gap-2'>\n              {value ? (\n                <div\n                  className={cn(\n                    'h-4 w-4 rounded !bg-cover !bg-center transition-all',\n                  )}\n                  style={{ background: value }}\n                />\n              ) : (\n                <Paintbrush className='h-4 w-4' />\n              )}\n            </div>\n          </Button>\n        </PopoverTrigger>\n        <PopoverContent className='w-64'>\n          <Tabs defaultValue='preset' className='w-full'>\n            <TabsList className='mb-4 w-full'>\n              <TabsTrigger className='flex-1' value='preset'>\n                Presets\n              </TabsTrigger>\n              <TabsTrigger className='flex-1' value='picker'>\n                Picker\n              </TabsTrigger>\n            </TabsList>\n\n            <TabsContent value='preset' className='mt-0 flex flex-wrap gap-1'>\n              {presets.map((p) => (\n                <div\n                  key={p}\n                  style={{ background: p }}\n                  className='h-6 w-6 cursor-pointer rounded-md active:scale-105'\n                  onClick={() => onChange(p)}\n                />\n              ))}\n            </TabsContent>\n\n            <TabsContent value='picker' className='mt-0 flex justify-center'>\n              <HexColorPicker color={value} onChange={onChange} />\n            </TabsContent>\n          </Tabs>\n\n          <Input\n            id='custom'\n            value={value}\n            ref={ref}\n            className='col-span-2 mt-4 h-8'\n            onChange={(e) => onChange(e.currentTarget.value)}\n          />\n        </PopoverContent>\n      </Popover>\n    );\n  },\n);\nColorPicker.displayName = 'ColorPicker';\n",
+      "type": "registry:component"
+    }
+  ]
+}
