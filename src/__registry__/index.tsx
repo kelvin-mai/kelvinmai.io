@@ -14,6 +14,7 @@ export const Index: Record<string, any> = {
     type: "registry:component",
     files: [{
       path: "src/registry/default/ui/color-picker.tsx",
+      content: "'use client';\n\nimport * as React from 'react';\nimport { Paintbrush } from 'lucide-react';\nimport { HexColorPicker } from 'react-colorful';\n\nimport { Button, type ButtonProps } from '@/components/ui/button';\nimport { Input } from '@/components/ui/input';\nimport {\n  Popover,\n  PopoverContent,\n  PopoverTrigger,\n} from '@/components/ui/popover';\nimport { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';\nimport { cn } from '@/lib/utils';\n\nconst PRESET_COLORS = [\n  '#ffffff', // white\n  '#f43f5e', // rose-500\n  '#f59e0b', // amber-500\n  '#84cc16', // lime-500\n  '#06b6d4', // cyan-500\n  '#6366f1', // indigo-500\n  '#d946ef', // fuschia-500\n  '#000000', // black\n];\n\nexport type ColorPickerProps = Omit<\n  ButtonProps,\n  'value' | 'onChange' | 'onBlur'\n> & {\n  value?: string;\n  options?: string[];\n  onChange: (value: string) => void;\n  onBlur?: () => void;\n};\n\nexport const ColorPicker = React.forwardRef<HTMLInputElement, ColorPickerProps>(\n  (\n    {\n      value,\n      onChange,\n      onBlur,\n      name,\n      options = PRESET_COLORS,\n      className,\n      disabled,\n      ...props\n    },\n    ref,\n  ) => {\n    const [open, setOpen] = React.useState(false);\n\n    return (\n      <Popover onOpenChange={setOpen} open={open}>\n        <PopoverTrigger asChild disabled={disabled} onBlur={onBlur}>\n          <Button\n            variant='outline'\n            className={cn(!value && 'text-slate-500', className)}\n            {...props}\n          >\n            <div className='flex w-full items-center gap-2'>\n              {value ? (\n                <div\n                  className={cn(\n                    'h-4 w-4 rounded border !bg-cover !bg-center transition-all',\n                  )}\n                  style={{ background: value }}\n                />\n              ) : (\n                <Paintbrush className='h-4 w-4' />\n              )}\n            </div>\n          </Button>\n        </PopoverTrigger>\n        <PopoverContent className='w-64'>\n          <Tabs defaultValue='preset' className='w-full'>\n            <TabsList className='mb-4 w-full'>\n              <TabsTrigger className='flex-1' value='preset'>\n                Presets\n              </TabsTrigger>\n              <TabsTrigger className='flex-1' value='picker'>\n                Picker\n              </TabsTrigger>\n            </TabsList>\n\n            <TabsContent\n              value='preset'\n              className='mt-0 flex flex-wrap items-center justify-center gap-1'\n            >\n              {options.map((c) => (\n                <div\n                  key={c}\n                  style={{ background: c }}\n                  className='h-6 w-6 cursor-pointer rounded-md border active:scale-105'\n                  onClick={() => onChange(c)}\n                />\n              ))}\n            </TabsContent>\n\n            <TabsContent value='picker' className='mt-0 flex justify-center'>\n              <HexColorPicker color={value} onChange={onChange} />\n            </TabsContent>\n          </Tabs>\n\n          <Input\n            id='custom'\n            value={value}\n            ref={ref}\n            className='col-span-2 mt-4 h-8'\n            onChange={(e) => onChange(e.currentTarget.value)}\n          />\n        </PopoverContent>\n      </Popover>\n    );\n  },\n);\nColorPicker.displayName = 'ColorPicker';\n",
       type: "registry:component",
     }],
   },
@@ -24,6 +25,7 @@ export const Index: Record<string, any> = {
     type: "registry:component",
     files: [{
       path: "src/registry/default/ui/theme-switch.tsx",
+      content: "'use client';\n\nimport React, { type JSX, useEffect, useState } from 'react';\nimport { MonitorIcon, MoonStarIcon, SunIcon } from 'lucide-react';\nimport { motion } from 'motion/react';\nimport { useTheme } from 'next-themes';\n\nimport { cn } from '@/lib/utils';\n\nconst ThemeOption = ({\n  icon,\n  value,\n  isActive,\n  onClick,\n}: {\n  icon: JSX.Element;\n  value: string;\n  isActive?: boolean;\n  onClick: (value: string) => void;\n}) => {\n  return (\n    <button\n      className={cn(\n        'relative flex size-8 cursor-default items-center justify-center rounded-full transition-all [&_svg]:size-4',\n        isActive\n          ? 'text-zinc-950 dark:text-zinc-50'\n          : 'text-zinc-400 hover:text-zinc-950 dark:text-zinc-500 dark:hover:text-zinc-50',\n      )}\n      role='radio'\n      aria-checked={isActive}\n      aria-label={\`Switch to \${value} theme\`}\n      onClick={() => onClick(value)}\n    >\n      {icon}\n\n      {isActive && (\n        <motion.div\n          layoutId='theme-option'\n          transition={{ type: 'spring', bounce: 0.3, duration: 0.6 }}\n          className='absolute inset-0 rounded-full border border-zinc-200 dark:border-zinc-700'\n        />\n      )}\n    </button>\n  );\n};\n\nconst THEME_OPTIONS = [\n  {\n    icon: <MonitorIcon />,\n    value: 'system',\n  },\n  {\n    icon: <SunIcon />,\n    value: 'light',\n  },\n  {\n    icon: <MoonStarIcon />,\n    value: 'dark',\n  },\n];\n\nconst ThemeSwitch = () => {\n  const { theme, setTheme } = useTheme();\n\n  const [isMounted, setIsMounted] = useState(false);\n\n  useEffect(() => {\n    setIsMounted(true);\n  }, []);\n\n  if (!isMounted) {\n    return <div className='flex h-8 w-24' />;\n  }\n\n  return (\n    <motion.div\n      key={String(isMounted)}\n      initial={{ opacity: 0 }}\n      animate={{ opacity: 1 }}\n      transition={{ duration: 0.3 }}\n      className='inline-flex items-center overflow-hidden rounded-full bg-white ring-1 ring-zinc-200 ring-inset dark:bg-zinc-950 dark:ring-zinc-700'\n      role='radiogroup'\n    >\n      {THEME_OPTIONS.map((option) => (\n        <ThemeOption\n          key={option.value}\n          icon={option.icon}\n          value={option.value}\n          isActive={theme === option.value}\n          onClick={setTheme}\n        />\n      ))}\n    </motion.div>\n  );\n};\n\nexport { ThemeSwitch };\n",
       type: "registry:component",
     }],
   },
@@ -34,14 +36,23 @@ export const Index: Record<string, any> = {
     type: "registry:example",
     files: [{
       path: "src/registry/default/examples/theme-switch-demo.tsx",
+      content: "import { ThemeSwitch } from '@/registry/default/ui/theme-switch';\n\nexport default function ThemeSwitchDemo() {\n  return <ThemeSwitch />;\n}\n",
       type: "registry:example",
     }],
     component: React.lazy(() => import("@/registry/default/examples/theme-switch-demo.tsx")),
-    source: `import { ThemeSwitch } from '@/registry/default/ui/theme-switch';
-
-export default function ThemeSwitchDemo() {
-  return <ThemeSwitch />;
-}
-`
+    source: `import { ThemeSwitch } from '@/registry/default/ui/theme-switch';\n\nexport default function ThemeSwitchDemo() {\n  return <ThemeSwitch />;\n}\n`
+  },
+  "color-picker-demo": {
+    name: "color-picker-demo",
+    title: "",
+    description: "",
+    type: "registry:example",
+    files: [{
+      path: "src/registry/default/examples/color-picker-demo.tsx",
+      content: "'use client';\n\nimport * as React from 'react';\n\nimport { ColorPicker } from '@/registry/default/ui/color-picker';\n\nexport default function ColorPickerDemo() {\n  const [color, setColor] = React.useState('#d946ef');\n  return (\n    <div className='bg-card text-card-foreground rounded-lg border shadow-sm'>\n      <div className='flex flex-col space-y-1.5 p-6'>\n        <div className='text-2xl leading-none font-semibold tracking-tight'>\n          Current Color\n        </div>\n        <div\n          className='h-8 w-full rounded-md border'\n          style={{ backgroundColor: color }}\n        />\n      </div>\n      <div className='flex items-center justify-center p-6 pt-0'>\n        <ColorPicker value={color} onChange={setColor} />\n      </div>\n    </div>\n  );\n}\n",
+      type: "registry:example",
+    }],
+    component: React.lazy(() => import("@/registry/default/examples/color-picker-demo.tsx")),
+    source: `'use client';\n\nimport * as React from 'react';\n\nimport { ColorPicker } from '@/registry/default/ui/color-picker';\n\nexport default function ColorPickerDemo() {\n  const [color, setColor] = React.useState('#d946ef');\n  return (\n    <div className='bg-card text-card-foreground rounded-lg border shadow-sm'>\n      <div className='flex flex-col space-y-1.5 p-6'>\n        <div className='text-2xl leading-none font-semibold tracking-tight'>\n          Current Color\n        </div>\n        <div\n          className='h-8 w-full rounded-md border'\n          style={{ backgroundColor: color }}\n        />\n      </div>\n      <div className='flex items-center justify-center p-6 pt-0'>\n        <ColorPicker value={color} onChange={setColor} />\n      </div>\n    </div>\n  );\n}\n`
   },
 }

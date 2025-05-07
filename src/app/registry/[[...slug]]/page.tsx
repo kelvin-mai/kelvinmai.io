@@ -13,6 +13,7 @@ import {
   BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb';
 import { MDX } from '@/components/mdx';
+import { BuyMeCofffeeBanner } from '@/components/buy-me-coffee-banner';
 
 type RegistryPageProps = {
   params: Promise<{
@@ -26,7 +27,7 @@ export default async function RegistryPage({ params }: RegistryPageProps) {
   if (!doc) {
     notFound();
   }
-  console.log(doc);
+
   return (
     <>
       <header className='flex h-16 shrink-0 items-center gap-2 px-4'>
@@ -41,8 +42,19 @@ export default async function RegistryPage({ params }: RegistryPageProps) {
           </BreadcrumbList>
         </Breadcrumb>
       </header>
-      <main className='mx-4'>
-        <MDX raw={doc.content} />
+      <main className='mx-4 mb-6'>
+        <div className='space-y-2'>
+          <h1 className='scroll-m-20 text-3xl font-bold tracking-tight'>
+            {doc.metadata.title}
+          </h1>
+          <p className='text-muted-foreground text-base'>
+            {doc.metadata.description}
+          </p>
+        </div>
+        <div className='mb-12'>
+          <MDX raw={doc.content} />
+        </div>
+        <BuyMeCofffeeBanner />
       </main>
     </>
   );

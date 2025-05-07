@@ -15,6 +15,7 @@
     "temp": "tsx ./src/scripts/build-registry.mts"
   },
   "dependencies": {
+    "@radix-ui/react-collapsible": "^1.1.10",
     "@radix-ui/react-dialog": "^1.1.11",
     "@radix-ui/react-popover": "^1.1.12",
     "@radix-ui/react-separator": "^1.1.4",

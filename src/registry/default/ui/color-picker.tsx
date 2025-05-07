@@ -14,29 +14,42 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { cn } from '@/lib/utils';
 
+const PRESET_COLORS = [
+  '#ffffff', // white
+  '#f43f5e', // rose-500
+  '#f59e0b', // amber-500
+  '#84cc16', // lime-500
+  '#06b6d4', // cyan-500
+  '#6366f1', // indigo-500
+  '#d946ef', // fuschia-500
+  '#000000', // black
+];
+
 export type ColorPickerProps = Omit<
   ButtonProps,
   'value' | 'onChange' | 'onBlur'
 > & {
   value?: string;
+  options?: string[];
   onChange: (value: string) => void;
   onBlur?: () => void;
 };
 
 export const ColorPicker = React.forwardRef<HTMLInputElement, ColorPickerProps>(
-  ({ value, onChange, onBlur, name, className, disabled, ...props }, ref) => {
+  (
+    {
+      value,
+      onChange,
+      onBlur,
+      name,
+      options = PRESET_COLORS,
+      className,
+      disabled,
+      ...props
+    },
+    ref,
+  ) => {
     const [open, setOpen] = React.useState(false);
-
-    const presets = [
-      '#E2E2E2',
-      '#ff75c3',
-      '#ffa647',
-      '#ffe83f',
-      '#9fff5b',
-      '#70e2ff',
-      '#cd93ff',
-      '#09203f',
-    ];
 
     return (
       <Popover onOpenChange={setOpen} open={open}>
@@ -50,7 +63,7 @@ export const ColorPicker = React.forwardRef<HTMLInputElement, ColorPickerProps>(
               {value ? (
                 <div
                   className={cn(
-                    'h-4 w-4 rounded !bg-cover !bg-center transition-all',
+                    'h-4 w-4 rounded border !bg-cover !bg-center transition-all',
                   )}
                   style={{ background: value }}
                 />
@@ -71,13 +84,16 @@ export const ColorPicker = React.forwardRef<HTMLInputElement, ColorPickerProps>(
               </TabsTrigger>
             </TabsList>
 
-            <TabsContent value='preset' className='mt-0 flex flex-wrap gap-1'>
-              {presets.map((p) => (
+            <TabsContent
+              value='preset'
+              className='mt-0 flex flex-wrap items-center justify-center gap-1'
+            >
+              {options.map((c) => (
                 <div
-                  key={p}
-                  style={{ background: p }}
-                  className='h-6 w-6 cursor-pointer rounded-md active:scale-105'
-                  onClick={() => onChange(p)}
+                  key={c}
+                  style={{ background: c }}
+                  className='h-6 w-6 cursor-pointer rounded-md border active:scale-105'
+                  onClick={() => onChange(c)}
                 />
               ))}
             </TabsContent>

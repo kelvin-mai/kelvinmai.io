@@ -1,9 +1,15 @@
-import * as React from "react";
-import { GalleryVerticalEnd } from "lucide-react";
+'use client';
+
+import * as React from 'react';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { GalleryVerticalEnd } from 'lucide-react';
 import {
   Sidebar,
   SidebarContent,
   SidebarGroup,
+  SidebarGroupContent,
+  SidebarGroupLabel,
   SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
@@ -11,24 +17,26 @@ import {
   SidebarMenuSub,
   SidebarMenuSubButton,
   SidebarMenuSubItem,
-} from "@/components/ui/sidebar";
+} from '@/components/ui/sidebar';
+import type { NavItem } from '@/content';
 
-export const DocsSidebar: React.FC<React.ComponentProps<typeof Sidebar>> = ({
-  ...props
-}) => {
+export const DocsSidebar: React.FC<
+  React.ComponentProps<typeof Sidebar> & { items: NavItem[] }
+> = ({ items, ...props }) => {
+  const pathname = usePathname();
   return (
-    <Sidebar variant="floating" {...props}>
+    <Sidebar variant='floating' {...props}>
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton size="lg" asChild>
-              <a href="#">
-                <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
-                  <GalleryVerticalEnd className="size-4" />
+            <SidebarMenuButton size='lg' asChild>
+              <a href='#'>
+                <div className='bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg'>
+                  <GalleryVerticalEnd className='size-4' />
                 </div>
-                <div className="flex flex-col gap-0.5 leading-none">
-                  <span className="font-semibold">Documentation</span>
-                  <span className="">v1.0.0</span>
+                <div className='flex flex-col gap-0.5 leading-none'>
+                  <span className='font-semibold'>Documentation</span>
+                  <span className=''>v1.0.0</span>
                 </div>
               </a>
             </SidebarMenuButton>
@@ -36,30 +44,27 @@ export const DocsSidebar: React.FC<React.ComponentProps<typeof Sidebar>> = ({
         </SidebarMenu>
       </SidebarHeader>
       <SidebarContent>
-        <SidebarGroup>
-          {/* <SidebarMenu className="gap-2">
-            {data.navMain.map((item) => (
-              <SidebarMenuItem key={item.title}>
-                <SidebarMenuButton asChild>
-                  <a href={item.url} className="font-medium">
-                    {item.title}
-                  </a>
-                </SidebarMenuButton>
-                {item.items?.length ? (
-                  <SidebarMenuSub className="ml-0 border-l-0 px-1.5">
-                    {item.items.map((item) => (
-                      <SidebarMenuSubItem key={item.title}>
-                        <SidebarMenuSubButton asChild isActive={item.isActive}>
-                          <a href={item.url}>{item.title}</a>
-                        </SidebarMenuSubButton>
-                      </SidebarMenuSubItem>
-                    ))}
-                  </SidebarMenuSub>
-                ) : null}
-              </SidebarMenuItem>
-            ))}
-          </SidebarMenu> */}
-        </SidebarGroup>
+        {items.map((item) => (
+          <SidebarGroup key={item.title}>
+            <SidebarGroupLabel>{item.title}</SidebarGroupLabel>
+            {item.items && item.items.length > 0 && (
+              <SidebarGroupContent>
+                <SidebarMenu>
+                  {item.items.map((item) => (
+                    <SidebarMenuItem key={item.title}>
+                      <SidebarMenuButton
+                        asChild
+                        isActive={pathname === item.url}
+                      >
+                        <Link href={item.url}>{item.title}</Link>
+                      </SidebarMenuButton>
+                    </SidebarMenuItem>
+                  ))}
+                </SidebarMenu>
+              </SidebarGroupContent>
+            )}
+          </SidebarGroup>
+        ))}
       </SidebarContent>
     </Sidebar>
   );

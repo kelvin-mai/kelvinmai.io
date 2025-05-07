@@ -1,22 +1,25 @@
-import * as React from "react";
-import Link from "next/link";
+import * as React from 'react';
+import Link from 'next/link';
 
-export const ExternalLink: React.FC<React.ComponentPropsWithoutRef<"a">> = ({
+import { cn } from '@/lib/utils';
+
+export const ExternalLink: React.FC<React.ComponentPropsWithoutRef<'a'>> = ({
   href,
+  className,
   children,
   ...props
 }) => {
-  const className = "";
-  if (href?.startsWith("/")) {
+  const c = cn('font-medium');
+  if (href?.startsWith('/')) {
     return (
-      <Link href={href} className={className} {...props}>
+      <Link href={href} className={cn(c, className)} {...props}>
         {children}
       </Link>
     );
   }
-  if (href?.startsWith("#")) {
+  if (href?.startsWith('#')) {
     return (
-      <a href={href} className={className} {...props}>
+      <a href={href} className={cn(c, className)} {...props}>
         {children}
       </a>
     );
@@ -24,9 +27,9 @@ export const ExternalLink: React.FC<React.ComponentPropsWithoutRef<"a">> = ({
   return (
     <a
       href={href}
-      target="_blank"
-      rel="noopener noreferrer"
-      className={className}
+      target='_blank'
+      rel='noopener noreferrer'
+      className={cn(c, className)}
       {...props}
     >
       {children}

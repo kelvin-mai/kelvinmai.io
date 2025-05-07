@@ -16,6 +16,7 @@ import {
 } from '@/components/ui/table';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { ExternalLink } from '@/components/ui/external-link';
+import { cn } from '@/lib/utils';
 import {
   Blockquote,
   H1,
@@ -27,9 +28,14 @@ import {
   UnorderedList,
 } from './typography';
 import { Step, Steps } from './steps';
-import { ComponentPreview } from './component-preview';
-import { ComponentSource } from './component-source';
-import { Code, InlineCode, NpmCommand } from './code';
+import {
+  Code,
+  InlineCode,
+  NpmCommand,
+  ComponentPreview,
+  ComponentSource,
+} from './code';
+import { References } from './references';
 
 const chConfig: CodeHikeConfig = {
   components: {
@@ -47,7 +53,9 @@ const components: MDXRemoteProps['components'] = {
   blockquote: Blockquote,
   ul: UnorderedList,
   ol: OrderedList,
-  a: ExternalLink,
+  a: ({ className, ...props }) => (
+    <ExternalLink className='underline underline-offset-4' {...props} />
+  ),
   table: Table,
   thead: TableHeader,
   tbody: TableBody,
@@ -61,10 +69,19 @@ const components: MDXRemoteProps['components'] = {
   NpmCommand,
   Step,
   Steps,
-  Tabs,
+  Table,
+  TableHeader,
+  TableBody,
+  TableRow,
+  TableHead,
+  TableCell,
+  Tabs: ({ className, ...props }) => (
+    <Tabs className={cn('relative my-6 w-full', className)} {...props} />
+  ),
   TabsList,
   TabsTrigger,
   TabsContent,
+  References,
 };
 
 const options: MDXRemoteProps['options'] = {

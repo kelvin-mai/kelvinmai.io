@@ -1,34 +1,8 @@
-import {
-  highlight,
-  type HighlightedCode,
-  Inline,
-  Pre,
-  type RawCode,
-} from 'codehike/code';
+import * as React from 'react';
+import { highlight, type HighlightedCode, Pre } from 'codehike/code';
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { CopyButton } from '@/components/ui/copy-button';
-
-type CodeProps = { codeblock: RawCode };
-
-export const InlineCode: React.FC<CodeProps> = async ({ codeblock }) => {
-  const highlighted = await highlight(codeblock, 'github-dark');
-  return <Inline code={highlighted} style={highlighted.style} />;
-};
-
-export const Code: React.FC<CodeProps> = async ({ codeblock }) => {
-  const highlighted = await highlight(codeblock, 'github-dark');
-  return (
-    <div className='relative'>
-      <CopyButton className='absolute top-1 right-2' value={highlighted.code} />
-      <Pre
-        className='rounded-xl p-2'
-        code={highlighted}
-        style={highlighted.style}
-      />
-    </div>
-  );
-};
 
 const convertNpmCommand = (pm: 'pnpm' | 'yarn' | 'bun', npmCommand: string) => {
   const conversion = {
@@ -105,24 +79,32 @@ export const NpmCommand = async ({ value }: { value: string }) => {
   };
 
   return (
-    <Tabs defaultValue='npm' className='gap-0 rounded-xl bg-zinc-800'>
-      <TabsList>
+    <Tabs
+      defaultValue='npm'
+      className='relative gap-0 rounded-lg bg-neutral-800'
+    >
+      <TabsList className='rounded-b-none bg-neutral-800'>
         {pms.map((pm) => (
-          <TabsTrigger key={pm} value={pm}>
-            {pm}
-          </TabsTrigger>
+          <React.Fragment key={pm}>
+            <CopyButton
+              className='absolute top-2 right-2'
+              value={npmCommands[pm]!.value}
+            />
+            <TabsTrigger
+              value={pm}
+              className='rounded-none text-neutral-400 data-[state=active]:border-b-neutral-200 data-[state=active]:bg-neutral-800 data-[state=active]:text-neutral-200 dark:text-neutral-400 dark:data-[state=active]:border-x-neutral-800 dark:data-[state=active]:border-t-neutral-800 dark:data-[state=active]:border-b-neutral-200 dark:data-[state=active]:bg-neutral-800'
+            >
+              {pm}
+            </TabsTrigger>
+          </React.Fragment>
         ))}
       </TabsList>
       {pms.map((pm) => (
-        <TabsContent key={pm} value={pm} className='relative'>
-          <CopyButton
-            className='absolute top-1 right-2'
-            value={npmCommands[pm]!.value}
-          />
+        <TabsContent key={pm} value={pm}>
           <Pre
             code={npmCommands[pm]!}
             style={npmCommands[pm]!.style}
-            className='rounded-b-xl p-2'
+            className='rounded-b-lg p-2'
           />
         </TabsContent>
       ))}

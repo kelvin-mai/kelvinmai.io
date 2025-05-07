@@ -12,4 +12,15 @@ export const examples: Registry['items'] = [
       },
     ],
   },
+  {
+    name: 'color-picker-demo',
+    type: 'registry:example',
+    registryDependencies: ['https://kelvinmai.io/r/color-picker.json'],
+    files: [
+      {
+        path: 'default/examples/color-picker-demo.tsx',
+        type: 'registry:example',
+      },
+    ],
+  },
 ];
