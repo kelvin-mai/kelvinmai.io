@@ -14,6 +14,8 @@ import {
 } from '@/components/ui/breadcrumb';
 import { MDX } from '@/components/mdx';
 import { BuyMeCofffeeBanner } from '@/components/buy-me-coffee-banner';
+import { TableOfContents } from '@/components/docs/table-of-contents';
+import { buildToc } from '@/components/docs/toc';
 
 type RegistryPageProps = {
   params: Promise<{
@@ -28,33 +30,47 @@ export default async function RegistryPage({ params }: RegistryPageProps) {
     notFound();
   }
 
+  const toc = buildToc(doc.content);
+  console.log(slug);
+
   return (
     <>
-      <header className='flex h-16 shrink-0 items-center gap-2 px-4'>
-        <SidebarTrigger className='-ml-1' />
-        <Separator orientation='vertical' className='mr-2 h-4' />
-        <Breadcrumb>
-          <BreadcrumbList>
-            <BreadcrumbSeparator />
-            <BreadcrumbItem>
-              <BreadcrumbPage>{doc.metadata.title}</BreadcrumbPage>
-            </BreadcrumbItem>
-          </BreadcrumbList>
-        </Breadcrumb>
-      </header>
-      <main className='mx-4 mb-6'>
-        <div className='space-y-2'>
-          <h1 className='scroll-m-20 text-3xl font-bold tracking-tight'>
-            {doc.metadata.title}
-          </h1>
-          <p className='text-muted-foreground text-base'>
-            {doc.metadata.description}
-          </p>
+      <main className='container'>
+        <aside className='mt-4 flex h-8 shrink-0 items-center gap-2 px-4'>
+          <SidebarTrigger className='-ml-4' />
+          <Separator orientation='vertical' className='mr-2' />
+          <Breadcrumb>
+            <BreadcrumbList>
+              <BreadcrumbItem>
+                <span className='text-muted-foreground capitalize'>
+                  {slug.length > 1 ? slug[0] : 'Getting Started'}
+                </span>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator />
+              <BreadcrumbItem>
+                <BreadcrumbPage>{doc.metadata.title}</BreadcrumbPage>
+              </BreadcrumbItem>
+            </BreadcrumbList>
+          </Breadcrumb>
+        </aside>
+        <div className='flex py-6 lg:gap-10 lg:py-8 xl:grid xl:grid-cols-[1fr_300px]'>
+          <div className='space-y-2'>
+            <h1 className='scroll-m-20 text-3xl font-bold tracking-tight'>
+              {doc.metadata.title}
+            </h1>
+            <p className='text-muted-foreground text-base'>
+              {doc.metadata.description}
+            </p>
+            <div className='mb-12'>
+              <MDX raw={doc.content} />
+            </div>
+            <BuyMeCofffeeBanner />
+          </div>
+          <TableOfContents
+            className='hidden md:sticky md:top-16 md:block md:self-start'
+            items={toc}
+          />
         </div>
-        <div className='mb-12'>
-          <MDX raw={doc.content} />
-        </div>
-        <BuyMeCofffeeBanner />
       </main>
     </>
   );

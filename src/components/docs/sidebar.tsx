@@ -46,7 +46,9 @@ export const DocsSidebar: React.FC<
       <SidebarContent>
         {items.map((item) => (
           <SidebarGroup key={item.title}>
-            <SidebarGroupLabel>{item.title}</SidebarGroupLabel>
+            <SidebarGroupLabel className='text-sm font-semibold'>
+              {item.title}
+            </SidebarGroupLabel>
             {item.items && item.items.length > 0 && (
               <SidebarGroupContent>
                 <SidebarMenu>

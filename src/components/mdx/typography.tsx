@@ -1,59 +1,132 @@
 import React, { ComponentPropsWithoutRef } from 'react';
+import { Link } from 'lucide-react';
 
 import { cn } from '@/lib/utils';
 
-export const H1: React.FC<ComponentPropsWithoutRef<'h1'>> = ({ ...props }) => {
-  return <h1 className='mt-2 scroll-m-20 text-4xl font-bold' {...props} />;
+const createId = (children: React.ReactNode): string => {
+  if (typeof children === 'string') {
+    return children
+      .toLowerCase()
+      .replace(/[^\w\s-]/g, '')
+      .replace(/\s+/g, '-');
+  }
+  return '';
 };
 
-export const H2: React.FC<ComponentPropsWithoutRef<'h2'>> = ({ ...props }) => {
+export const H1: React.FC<ComponentPropsWithoutRef<'h1'>> = ({
+  className,
+  children,
+  ...props
+}) => {
+  const id = createId(children);
+  return (
+    <h1
+      id={id}
+      className={cn('mt-2 scroll-m-20 text-4xl font-bold', className)}
+      {...props}
+    >
+      <a className='peer' href={`#${id}`}>
+        {children}
+      </a>
+    </h1>
+  );
+};
+
+export const H2: React.FC<ComponentPropsWithoutRef<'h2'>> = ({
+  className,
+  children,
+  ...props
+}) => {
+  const id = createId(children);
   return (
     <h2
-      className='mt-8 scroll-m-20 border-b pb-4 text-xl font-semibold tracking-tight first:mt-0'
+      id={id}
+      className={cn(
+        'mt-8 inline-flex w-full scroll-m-20 items-center gap-2 border-b pb-2 text-xl font-semibold tracking-tight first:mt-0',
+        className,
+      )}
       {...props}
-    />
+    >
+      <a className='peer' href={`#${id}`}>
+        {children}
+      </a>
+      <Link className='text-muted-foreground size-3 shrink-0 opacity-0 transition-opacity peer-hover:opacity-100' />
+    </h2>
   );
 };
 
 export const H3: React.FC<ComponentPropsWithoutRef<'h3'>> = ({
   className,
+  children,
   ...props
 }) => {
+  const id = createId(children);
   return (
     <h3
+      id={id}
       className={cn(
-        'mt-8 scroll-m-20 text-lg font-semibold tracking-tight',
+        'mt-8 inline-flex w-full scroll-m-20 gap-2 text-lg font-semibold tracking-tight',
         className,
       )}
       {...props}
-    />
+    >
+      <a href={`#${id}`}>{children}</a>
+      <Link className='text-muted-foreground size-3 shrink-0 opacity-0 transition-opacity peer-hover:opacity-100' />
+    </h3>
   );
 };
 
-export const H4: React.FC<ComponentPropsWithoutRef<'h4'>> = ({ ...props }) => {
+export const H4: React.FC<ComponentPropsWithoutRef<'h4'>> = ({
+  className,
+  children,
+  ...props
+}) => {
+  const id = createId(children);
   return (
     <h4
-      className='mt-8 scroll-m-20 text-lg font-semibold tracking-tight'
+      id={id}
+      className='mt-8 inline-flex w-full scroll-m-20 gap-2 text-lg font-semibold tracking-tight'
       {...props}
-    />
+    >
+      <a href={`#${id}`}>{children}</a>
+      <Link className='text-muted-foreground size-3 shrink-0 opacity-0 transition-opacity peer-hover:opacity-100' />
+    </h4>
   );
 };
 
-export const H5: React.FC<ComponentPropsWithoutRef<'h5'>> = ({ ...props }) => {
+export const H5: React.FC<ComponentPropsWithoutRef<'h5'>> = ({
+  className,
+  children,
+  ...props
+}) => {
+  const id = createId(children);
   return (
     <h5
-      className='mt-8 scroll-m-20 text-lg font-semibold tracking-tight'
+      id={id}
+      className='mt-8 inline-flex w-full scroll-m-20 gap-2 text-lg font-semibold tracking-tight'
       {...props}
-    />
+    >
+      <a href={`#${id}`}>{children}</a>
+      <Link className='text-muted-foreground size-3 shrink-0 opacity-0 transition-opacity peer-hover:opacity-100' />
+    </h5>
   );
 };
 
-export const H6: React.FC<ComponentPropsWithoutRef<'h6'>> = ({ ...props }) => {
+export const H6: React.FC<ComponentPropsWithoutRef<'h6'>> = ({
+  className,
+  children,
+  ...props
+}) => {
+  const id = createId(children);
   return (
     <h6
-      className='mt-9 scroll-m-20 text-lg font-semibold tracking-tight'
+      id={id}
+      className='mt-9 inline-flex w-full scroll-m-20 gap-2 text-lg font-semibold tracking-tight'
       {...props}
-    />
+    >
+      <a href={`#${id}`}>{children}</a>
+      <Link className='text-muted-foreground size-3 shrink-0 opacity-0 transition-opacity peer-hover:opacity-100' />
+    </h6>
   );
 };
 

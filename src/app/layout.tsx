@@ -1,10 +1,12 @@
+import '@/styles/globals.css';
+
 import type { Metadata } from 'next';
 import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 
-import './globals.css';
 import { ubuntu, ubuntuMono } from '@/lib/fonts';
 import { resume } from '@/lib/constants';
+import { ThemeProvider } from 'next-themes';
 
 export const metadata: Metadata = {
   metadataBase: new URL(
@@ -27,11 +29,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang='en'>
+    <html lang='en' suppressHydrationWarning>
       <body className={`${ubuntu.variable} ${ubuntuMono.variable} antialiased`}>
-        {children}
-        <Analytics />
-        <SpeedInsights />
+        <ThemeProvider attribute='class' defaultTheme='system' enableSystem>
+          {children}
+          <Analytics />
+          <SpeedInsights />
+        </ThemeProvider>
       </body>
     </html>
   );
