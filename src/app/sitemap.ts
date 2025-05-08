@@ -1,14 +1,22 @@
 import { MetadataRoute } from 'next';
 
-import { getBaseUrl } from '@/lib/utils';
+import { siteConfig } from '@/lib/constants';
+import { getContent } from '@/content';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const docs = getContent().map((d) => ({
+    url: `${siteConfig.url}/registry/${d.slug}`,
+    lastModified: new Date(),
+  }));
   return [
     {
-      url: `${getBaseUrl}/`,
+      url: `${siteConfig.url}/`,
       lastModified: new Date(),
-      changeFrequency: 'yearly',
-      priority: 1,
     },
+    {
+      url: `${siteConfig.url}/resume`,
+      lastModified: new Date(),
+    },
+    ...docs,
   ];
 }

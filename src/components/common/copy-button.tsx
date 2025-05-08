@@ -4,7 +4,7 @@ import * as React from 'react';
 import { CheckIcon, CopyIcon } from 'lucide-react';
 
 import { cn } from '@/lib/utils';
-import { Button } from './button';
+import { Button } from '../ui/button';
 
 type CopyButtonProps = Omit<React.ComponentProps<typeof Button>, 'value'> & {
   value: string;

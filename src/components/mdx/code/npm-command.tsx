@@ -1,11 +1,24 @@
 import * as React from 'react';
-import { highlight, type HighlightedCode, Pre } from 'codehike/code';
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { CopyButton } from '@/components/ui/copy-button';
+import { CopyButton } from '@/components/common/copy-button';
+import { Pre } from './code';
 
-const convertNpmCommand = (pm: 'pnpm' | 'yarn' | 'bun', npmCommand: string) => {
-  const conversion = {
+type NonNpmManager = 'pnpm' | 'yarn' | 'bun';
+type PackageManager = 'npm' | NonNpmManager;
+type ConversionCommands =
+  | 'npm install'
+  | 'npx create-'
+  | 'npm create'
+  | 'npx'
+  | 'npm run';
+
+const convertNpmCommand = (pm: PackageManager, npmCommand: string) => {
+  if (pm === 'npm') return npmCommand;
+
+  const conversion: {
+    [k in ConversionCommands]: { [pm in NonNpmManager]: string };
+  } = {
     'npm install': {
       pnpm: 'pnpm add',
       yarn: 'yarn add',
@@ -35,48 +48,22 @@ const convertNpmCommand = (pm: 'pnpm' | 'yarn' | 'bun', npmCommand: string) => {
   if (npmCommand.startsWith('npm install')) {
     return npmCommand.replace('npm install', conversion['npm install'][pm]);
   }
-
   if (npmCommand.startsWith('npx create-')) {
     return npmCommand.replace('npm create-', conversion['npx create-'][pm]);
   }
-
   if (npmCommand.startsWith('npm create')) {
     return npmCommand.replace('npm create', conversion['npm create'][pm]);
   }
-
   if (npmCommand.startsWith('npm run')) {
     return npmCommand.replace('npm run', conversion['npm run'][pm]);
   }
-
   if (npmCommand.startsWith('npx')) {
     return npmCommand.replace('npx', conversion.npx[pm]);
   }
-
-  return npmCommand;
 };
 
 export const NpmCommand = async ({ value }: { value: string }) => {
-  const pms = ['npm', 'pnpm', 'yarn', 'bun'];
-  const createCodeblock = (value: string) => ({
-    lang: 'bash',
-    meta: '',
-    value,
-  });
-  const npmCommands: { [key: string]: HighlightedCode } = {
-    npm: await highlight(createCodeblock(value), 'github-dark'),
-    pnpm: await highlight(
-      createCodeblock(convertNpmCommand('pnpm', value)!),
-      'github-dark',
-    ),
-    yarn: await highlight(
-      createCodeblock(convertNpmCommand('yarn', value)!),
-      'github-dark',
-    ),
-    bun: await highlight(
-      createCodeblock(convertNpmCommand('bun', value)!),
-      'github-dark',
-    ),
-  };
+  const pms: PackageManager[] = ['npm', 'pnpm', 'yarn', 'bun'];
 
   return (
     <Tabs
@@ -88,7 +75,7 @@ export const NpmCommand = async ({ value }: { value: string }) => {
           <React.Fragment key={pm}>
             <CopyButton
               className='absolute top-2 right-2'
-              value={npmCommands[pm]!.value}
+              value={convertNpmCommand(pm, value) || ''}
             />
             <TabsTrigger
               value={pm}
@@ -102,8 +89,7 @@ export const NpmCommand = async ({ value }: { value: string }) => {
       {pms.map((pm) => (
         <TabsContent key={pm} value={pm}>
           <Pre
-            code={npmCommands[pm]!}
-            style={npmCommands[pm]!.style}
+            codeblock={{ lang: 'bash', meta: '', value }}
             className='rounded-b-lg p-2'
           />
         </TabsContent>

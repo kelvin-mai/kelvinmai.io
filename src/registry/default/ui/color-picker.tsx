@@ -63,24 +63,24 @@ export const ColorPicker = React.forwardRef<HTMLInputElement, ColorPickerProps>(
               {value ? (
                 <div
                   className={cn(
-                    'h-4 w-4 rounded border !bg-cover !bg-center transition-all',
+                    'size-4 rounded border !bg-cover !bg-center transition-all',
                   )}
                   style={{ background: value }}
                 />
               ) : (
-                <Paintbrush className='h-4 w-4' />
+                <Paintbrush className='size-4' />
               )}
             </div>
           </Button>
         </PopoverTrigger>
         <PopoverContent className='w-64'>
-          <Tabs defaultValue='preset' className='w-full'>
+          <Tabs defaultValue='picker' className='w-full'>
             <TabsList className='mb-4 w-full'>
-              <TabsTrigger className='flex-1' value='preset'>
-                Presets
-              </TabsTrigger>
               <TabsTrigger className='flex-1' value='picker'>
                 Picker
+              </TabsTrigger>
+              <TabsTrigger className='flex-1' value='preset'>
+                Presets
               </TabsTrigger>
             </TabsList>
 
@@ -92,7 +92,7 @@ export const ColorPicker = React.forwardRef<HTMLInputElement, ColorPickerProps>(
                 <div
                   key={c}
                   style={{ background: c }}
-                  className='h-6 w-6 cursor-pointer rounded-md border active:scale-105'
+                  className='size-6 cursor-pointer rounded-md border active:scale-105'
                   onClick={() => onChange(c)}
                 />
               ))}

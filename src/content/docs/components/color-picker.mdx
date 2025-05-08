@@ -1,8 +1,6 @@
 ---
 title: Color Picker
 description: An input wrapper for react-colorful's color picker.
-createdAt: 2025-04-11
-updatedAt: 2025-04-11
 ---
 
 <References
@@ -14,6 +12,8 @@ updatedAt: 2025-04-11
   ]}
 />
 
+## Preview
+
 <ComponentPreview
   name='color-picker-demo'
   v0Url='https://kelvinmai.io/r/color-picker.json'
@@ -21,20 +21,11 @@ updatedAt: 2025-04-11
 
 ## Installation
 
-<Tabs defaultValue='cli'>
-
-<TabsList>
-  <TabsTrigger value='cli'>CLI</TabsTrigger>
-  <TabsTrigger value='manual'>Manual</TabsTrigger>
-</TabsList>
-
-<TabsContent value="cli">
+### CLI
 
 <NpmCommand value='npx shadcn@latest add https://kelvinmai.io/r/color-picker.json' />
 
-</TabsContent>
-
-<TabsContent value="manual">
+### Manual
 
 <Steps>
 
@@ -61,9 +52,6 @@ export const cn = (...inputs: ClassValue[]) => {
 
 </Steps>
 
-</TabsContent>
-</Tabs>
-
 ## Usage
 
 ```ts
@@ -77,31 +65,6 @@ export default function ColorPickerDemo() {
 
 ## Props
 
-<Table>
-  <TableHeader>
-    <TableRow>
-      <TableHead>Name</TableHead>
-      <TableHead>Type</TableHead>
-      <TableHead>Required</TableHead>
-      <TableHead>Default</TableHead>
-      <TableHead>Description</TableHead>
-    </TableRow>
-  </TableHeader>
-  <TableBody>
-    <TableRow>
-      <TableCell>
-        <InlineCode codeblock={{ value: 'options', lang: 'ts' }} />
-      </TableCell>
-      <TableCell>
-        <InlineCode codeblock={{ value: 'string[]', lang: 'ts' }} />
-      </TableCell>
-      <TableCell>No</TableCell>
-      <TableCell>
-        <InlineCode codeblock={{ value: 'PRESET_COLORS', lang: 'ts' }} />
-      </TableCell>
-      <TableCell>
-        An array of hex code colors, the preset uses 8 tailwind colors.
-      </TableCell>
-    </TableRow>
-  </TableBody>
-</Table>
+| Name        | Type         | Required | Default           | Description                                                |
+| ----------- | ------------ | -------- | ----------------- | ---------------------------------------------------------- |
+| _`options`_ | _`string[]`_ | No       | _`PRESET_COLORS`_ | An array of hex colors, the preset uses 8 tailwind colors. |

@@ -23,6 +23,19 @@ type RegistryPageProps = {
   }>;
 };
 
+export async function generateMetadata({ params }: RegistryPageProps) {
+  const { slug } = await params;
+  const doc = getContentBySlugParam(slug);
+  if (!doc) {
+    return {};
+  }
+
+  return {
+    title: doc.metadata.title,
+    description: doc.metadata.description,
+  };
+}
+
 export default async function RegistryPage({ params }: RegistryPageProps) {
   const { slug } = await params;
   const doc = getContentBySlugParam(slug);
@@ -31,11 +44,10 @@ export default async function RegistryPage({ params }: RegistryPageProps) {
   }
 
   const toc = buildToc(doc.content);
-  console.log(slug);
 
   return (
     <>
-      <main className='container'>
+      <main className='container font-sans'>
         <aside className='mt-4 flex h-8 shrink-0 items-center gap-2 px-4'>
           <SidebarTrigger className='-ml-4' />
           <Separator orientation='vertical' className='mr-2' />
@@ -53,7 +65,7 @@ export default async function RegistryPage({ params }: RegistryPageProps) {
             </BreadcrumbList>
           </Breadcrumb>
         </aside>
-        <div className='flex py-6 lg:gap-10 lg:py-8 xl:grid xl:grid-cols-[1fr_300px]'>
+        <div className='flex py-6 md:grid md:grid-cols-[1fr_300px] md:gap-4 md:py-8'>
           <div className='space-y-2'>
             <h1 className='scroll-m-20 text-3xl font-bold tracking-tight'>
               {doc.metadata.title}
@@ -67,7 +79,7 @@ export default async function RegistryPage({ params }: RegistryPageProps) {
             <BuyMeCofffeeBanner />
           </div>
           <TableOfContents
-            className='hidden md:sticky md:top-16 md:block md:self-start'
+            className='hidden shrink-0 md:sticky md:top-16 md:block md:self-start'
             items={toc}
           />
         </div>

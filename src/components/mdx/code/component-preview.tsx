@@ -4,7 +4,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { cn } from '@/lib/utils';
 import { Index } from '@/__registry__/index';
 import { Code } from './code';
-import { OpenInV0Button } from '../../ui/v0-button';
+import { OpenInV0Button } from '../../common/v0-button';
 import { ComponentPreviewContent } from './component-preview.client';
 import { CollapsibleCode } from './code.client';
 

@@ -15,7 +15,7 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { ExternalLink } from '@/components/ui/external-link';
+import { ExternalLink } from '@/components/common/external-link';
 import { cn } from '@/lib/utils';
 import {
   Blockquote,

@@ -1,18 +1,16 @@
 import '@/styles/globals.css';
 
 import type { Metadata } from 'next';
+import { ThemeProvider } from 'next-themes';
 import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 
-import { ubuntu, ubuntuMono } from '@/lib/fonts';
-import { resume } from '@/lib/constants';
-import { ThemeProvider } from 'next-themes';
+import { fontVariables } from '@/lib/fonts';
+import { resume, siteConfig } from '@/lib/constants';
+import { cn, getBaseUrl } from '@/lib/utils';
 
 export const metadata: Metadata = {
-  metadataBase: new URL(
-    'https://kelvinmai.io',
-    process.env.NEXT_PUBLIC_URL || 'http://localhost:3000',
-  ),
+  metadataBase: new URL(siteConfig.url),
   alternates: {
     canonical: '/',
   },
@@ -21,6 +19,8 @@ export const metadata: Metadata = {
     default: 'Kelvin Mai',
   },
   description: resume.basics.summary,
+  creator: 'kelvin-mai',
+  authors: [{ name: 'kelvin-mai', url: siteConfig.url }],
 };
 
 export default function RootLayout({
@@ -30,7 +30,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='en' suppressHydrationWarning>
-      <body className={`${ubuntu.variable} ${ubuntuMono.variable} antialiased`}>
+      <body className={cn(fontVariables, 'antialiased')}>
         <ThemeProvider attribute='class' defaultTheme='system' enableSystem>
           {children}
           <Analytics />

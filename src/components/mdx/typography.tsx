@@ -65,7 +65,7 @@ export const H3: React.FC<ComponentPropsWithoutRef<'h3'>> = ({
     <h3
       id={id}
       className={cn(
-        'mt-8 inline-flex w-full scroll-m-20 gap-2 text-lg font-semibold tracking-tight',
+        'mt-8 inline-flex w-full scroll-m-20 gap-2 pb-2 text-lg font-semibold tracking-tight',
         className,
       )}
       {...props}

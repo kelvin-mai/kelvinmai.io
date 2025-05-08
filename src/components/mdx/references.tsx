@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import { ExternalLink } from 'lucide-react';
-import { ExternalLink as Link } from '@/components/ui/external-link';
+import { ExternalLink as Link } from '@/components/common/external-link';
 import { badgeVariants } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
 
@@ -27,7 +27,7 @@ export const References: React.FC<ReferencesProps> = ({ links }) => {
           href={l.href}
         >
           {l.label}
-          <ExternalLink className='h-3 w-3' />
+          <ExternalLink className='size-3' />
         </Link>
       ))}
     </div>

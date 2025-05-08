@@ -1,8 +1,6 @@
 ---
 title: Theme Switch
 description: A theme switch component for Next.js apps with next-themes and Tailwind CSS, supporting system, light, and dark modes.
-createdAt: 2025-04-11
-updatedAt: 2025-04-11
 ---
 
 <References
@@ -21,20 +19,11 @@ updatedAt: 2025-04-11
 
 ## Installation
 
-<Tabs defaultValue='cli'>
-
-<TabsList>
-  <TabsTrigger value='cli'>CLI</TabsTrigger>
-  <TabsTrigger value='manual'>Manual</TabsTrigger>
-</TabsList>
-
-<TabsContent value="cli">
+### CLI
 
 <NpmCommand value='npx shadcn@latest add https://kelvinmai.io/r/theme-switch.json' />
 
-</TabsContent>
-
-<TabsContent value="manual">
+### Manual
 
 <Steps>
 
@@ -53,6 +42,24 @@ export const cn = (...inputs: ClassValue[]) => {
 };
 ```
 
+<Step>Set up next-themes in your Next.js app</Step>
+
+```tsx app/layout.tsx
+import { ThemeProvider } from 'next-themes';
+
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  return (
+    <ThemeProvider attribute='class' defaultTheme='system' enableSystem>
+      {children}
+    </ThemeProvider>
+  );
+}
+```
+
 <Step>Copy and paste the following code into your project</Step>
 
 <ComponentSource name='theme-switch' title='components/theme-switch.tsx' />
@@ -60,9 +67,6 @@ export const cn = (...inputs: ClassValue[]) => {
 <Step>Update the import paths to match your project setup</Step>
 
 </Steps>
-
-</TabsContent>
-</Tabs>
 
 ## Usage
 
