@@ -12,7 +12,7 @@ export const BuyMeCofffeeBanner = () => {
       <div
         className={cn(
           spaceGrotesk.className,
-          'mr-8 hidden text-center text-xl font-bold text-black sm:block',
+          'mr-8 hidden text-center text-xl font-bold text-black md:block',
         )}
       >
         Want to support?
