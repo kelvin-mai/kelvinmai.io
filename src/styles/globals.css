@@ -136,3 +136,28 @@
     max-width: 1400px;
   }
 }
+
+/* mesh-gradient generated with https://csshero.org/mesher/ */
+.bg-mesh-gradient-eldritch {
+  background-color: hsla(234, 25%, 17%, 1);
+  background-image:
+    radial-gradient(at 30% 38%, hsla(189, 96%, 49%, 1) 0px, transparent 50%),
+    radial-gradient(at 13% 72%, hsla(151, 89%, 58%, 1) 0px, transparent 50%),
+    radial-gradient(at 27% 92%, hsla(35, 88%, 73%, 1) 0px, transparent 50%),
+    radial-gradient(at 77% 12%, hsla(325, 84%, 67%, 1) 0px, transparent 50%),
+    radial-gradient(at 61% 21%, hsla(254, 79%, 74%, 1) 0px, transparent 50%),
+    radial-gradient(at 43% 63%, hsla(355, 82%, 68%, 1) 0px, transparent 50%),
+    radial-gradient(at 69% 69%, hsla(65, 95%, 73%, 1) 0px, transparent 50%);
+}
+
+.bg-mesh-gradient-dracula-pro {
+  background-color: hsla(245, 14%, 15%, 1);
+  background-image:
+    radial-gradient(at 30% 38%, hsla(170, 100%, 75%, 1) 0px, transparent 50%),
+    radial-gradient(at 13% 72%, hsla(115, 100%, 75%, 1) 0px, transparent 50%),
+    radial-gradient(at 27% 92%, hsla(34, 100%, 75%, 1) 0px, transparent 50%),
+    radial-gradient(at 77% 12%, hsla(330, 100%, 75%, 1) 0px, transparent 50%),
+    radial-gradient(at 61% 21%, hsla(249, 100%, 75%, 1) 0px, transparent 50%),
+    radial-gradient(at 43% 63%, hsla(9, 100%, 75%, 1) 0px, transparent 50%),
+    radial-gradient(at 69% 69%, hsla(60, 100%, 75%, 1) 0px, transparent 50%);
+}
