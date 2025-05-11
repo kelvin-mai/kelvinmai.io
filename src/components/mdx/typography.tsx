@@ -85,7 +85,10 @@ export const H4: React.FC<ComponentPropsWithoutRef<'h4'>> = ({
   return (
     <h4
       id={id}
-      className='mt-8 inline-flex w-full scroll-m-20 gap-2 text-lg font-semibold tracking-tight'
+      className={cn(
+        'mt-8 inline-flex w-full scroll-m-20 gap-2 text-lg font-semibold tracking-tight',
+        className,
+      )}
       {...props}
     >
       <a href={`#${id}`}>{children}</a>
@@ -103,7 +106,10 @@ export const H5: React.FC<ComponentPropsWithoutRef<'h5'>> = ({
   return (
     <h5
       id={id}
-      className='mt-8 inline-flex w-full scroll-m-20 gap-2 text-lg font-semibold tracking-tight'
+      className={cn(
+        'mt-8 inline-flex w-full scroll-m-20 gap-2 text-lg font-semibold tracking-tight',
+        className,
+      )}
       {...props}
     >
       <a href={`#${id}`}>{children}</a>
@@ -121,7 +127,10 @@ export const H6: React.FC<ComponentPropsWithoutRef<'h6'>> = ({
   return (
     <h6
       id={id}
-      className='mt-9 inline-flex w-full scroll-m-20 gap-2 text-lg font-semibold tracking-tight'
+      className={cn(
+        'mt-9 inline-flex w-full scroll-m-20 gap-2 text-lg font-semibold tracking-tight',
+        className,
+      )}
       {...props}
     >
       <a href={`#${id}`}>{children}</a>

@@ -13,16 +13,13 @@ export type ColorPickerProps = Omit<
   value?: string;
   alpha?: boolean;
   onChange: (value: string) => void;
-  onBlur?: () => void;
 };
 
 export const ColorPicker: React.FC<ColorPickerProps> = ({
   className,
   value,
-  disabled,
   alpha,
   onChange,
-  onBlur,
   ...props
 }) => {
   return (

@@ -33,9 +33,9 @@ export default function Home() {
                 Get In Touch
               </h3>
               <p className='text-neutral-600'>
-                I'm currently open to freelance opportunities and interesting
-                projects. Feel free to reach out if you'd like to collaborate or
-                just a friendly hello.
+                I&apos;m currently open to freelance opportunities and
+                interesting projects. Feel free to reach out if you&apos;d like
+                to collaborate or just a friendly hello.
               </p>
               <Button
                 className='bg-violet-600 text-white shadow hover:bg-violet-500'

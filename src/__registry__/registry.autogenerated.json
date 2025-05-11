@@ -8,16 +8,8 @@
       "type": "registry:component",
       "title": "Color Picker",
       "description": "A color picker component",
-      "dependencies": [
-        "react-colorful",
-        "lucide-react"
-      ],
-      "registryDependencies": [
-        "button",
-        "input",
-        "popover",
-        "tabs"
-      ],
+      "dependencies": ["react-colorful", "lucide-react"],
+      "registryDependencies": ["button", "input", "popover", "tabs"],
       "files": [
         {
           "path": "src/registry/default/ui/color-picker.tsx",
@@ -31,10 +23,7 @@
       "title": "Floating Label Input",
       "description": "Material UI floating label input",
       "dependencies": [],
-      "registryDependencies": [
-        "label",
-        "input"
-      ],
+      "registryDependencies": ["label", "input"],
       "files": [
         {
           "path": "src/registry/default/ui/floating-label-input.tsx",
@@ -47,11 +36,7 @@
       "type": "registry:component",
       "title": "Theme Switch",
       "description": "Animated theme switch",
-      "dependencies": [
-        "next-themes",
-        "lucide-react",
-        "motion"
-      ],
+      "dependencies": ["next-themes", "lucide-react", "motion"],
       "registryDependencies": [],
       "files": [
         {

@@ -54,7 +54,10 @@ const components: MDXRemoteProps['components'] = {
   ul: UnorderedList,
   ol: OrderedList,
   a: ({ className, ...props }) => (
-    <ExternalLink className='underline underline-offset-4' {...props} />
+    <ExternalLink
+      className={cn('underline underline-offset-4', className)}
+      {...props}
+    />
   ),
   table: Table,
   thead: TableHeader,

@@ -17,7 +17,6 @@ export const ComponentPreview: React.FC<ComponentPreviewProps> = ({
   className,
   name,
   v0Url,
-  children,
   ...props
 }) => {
   return (

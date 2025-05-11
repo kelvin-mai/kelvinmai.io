@@ -2,6 +2,15 @@ import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
 
+type DocItem = {
+  slug: string;
+  slugAsParams: string[];
+  metadata: {
+    [key: string]: any;
+  };
+  content: string;
+};
+
 const getFilepathsRecursively = (dir: string): string[] => {
   const files = fs.readdirSync(dir);
   return files.flatMap((file) => {
@@ -17,7 +26,7 @@ const getFilepathsRecursively = (dir: string): string[] => {
   });
 };
 
-export const getContent = (dir = 'docs') => {
+export const getContent = (dir = 'docs'): DocItem[] => {
   const contentDir = path.join(process.cwd(), 'src', 'content', dir);
   const filepaths = getFilepathsRecursively(contentDir);
   return filepaths.map((filepath) => {
@@ -60,13 +69,12 @@ export const getNav = ({
     }));
   const subItems = docs
     .filter((d) => d.slugAsParams.length > 1)
-    .map(({ content, ...rest }) => ({ ...rest }))
     .reduce((acc: any, curr) => {
-      const k = curr.slugAsParams[0];
+      const k = curr.slugAsParams[0] as string | undefined;
       if (k) {
         acc[k] = acc[k] ? [...acc[k], curr] : [curr];
       }
-      return acc;
+      return acc as { [key: string]: DocItem };
     }, {});
   return [
     {
@@ -77,7 +85,7 @@ export const getNav = ({
     ...Object.keys(subItems).map((k) => ({
       title: k.charAt(0).toUpperCase() + k.slice(1),
       url: '#',
-      items: subItems[k].map((i: any) => ({
+      items: subItems[k].map((i: DocItem) => ({
         title: i.metadata.title,
         url: `${docsUrl}/${i.slug}`,
       })),
