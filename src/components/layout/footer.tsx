@@ -2,14 +2,13 @@ import Link from 'next/link';
 
 import { resume } from '@/lib/constants';
 import { SocialLinks } from '../about';
-import { ThemeSwitch } from '@/registry/default/ui/theme-switch';
 
 export const Footer: React.FC = () => {
   return (
     <footer className='container'>
-      <div className='mb-4 rounded-lg bg-neutral-900 p-4 text-neutral-200'>
-        <div className='grid grid-cols-3'>
-          <div>
+      <div className='mb-2 rounded-lg bg-neutral-900 p-4 text-neutral-200'>
+        <div className='grid grid-cols-4'>
+          <div className='col-span-2'>
             <h4 className='mb-4 text-xl font-bold tracking-tight'>
               {resume.basics.name}
             </h4>

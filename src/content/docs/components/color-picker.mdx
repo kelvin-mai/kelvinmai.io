@@ -63,8 +63,24 @@ export default function ColorPickerDemo() {
 }
 ```
 
-## Props
+## API Reference
 
-| Name        | Type         | Required | Default           | Description                                                |
-| ----------- | ------------ | -------- | ----------------- | ---------------------------------------------------------- |
-| _`options`_ | _`string[]`_ | No       | _`PRESET_COLORS`_ | An array of hex colors, the preset uses 8 tailwind colors. |
+| Name      | Type        | Required | Default       | Description                                                      |
+| --------- | ----------- | -------- | ------------- | ---------------------------------------------------------------- |
+| _`alpha`_ | _`boolean`_ | No       | _`undefined`_ | A boolean to check whether or not to include color alpha picker. |
+
+## Examples
+
+### With Alpha Picker
+
+<ComponentPreview
+  name='color-picker-alpha-demo'
+  v0Url='https://kelvinmai.io/r/color-picker.json'
+/>
+
+### In Popover
+
+<ComponentPreview
+  name='color-picker-popover-demo'
+  v0Url='https://kelvinmai.io/r/color-picker.json'
+/>

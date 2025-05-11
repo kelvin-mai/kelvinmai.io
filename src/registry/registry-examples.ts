@@ -2,23 +2,56 @@ import type { Registry } from 'shadcn/registry';
 
 export const examples: Registry['items'] = [
   {
-    name: 'theme-switch-demo',
-    type: 'registry:example',
-    registryDependencies: ['https://kelvinmai.io/r/theme-switch.json'],
-    files: [
-      {
-        path: 'default/examples/theme-switch-demo.tsx',
-        type: 'registry:example',
-      },
-    ],
-  },
-  {
     name: 'color-picker-demo',
     type: 'registry:example',
     registryDependencies: ['https://kelvinmai.io/r/color-picker.json'],
     files: [
       {
         path: 'default/examples/color-picker-demo.tsx',
+        type: 'registry:example',
+      },
+    ],
+  },
+  {
+    name: 'color-picker-alpha-demo',
+    type: 'registry:example',
+    registryDependencies: ['https://kelvinmai.io/r/color-picker.json'],
+    files: [
+      {
+        path: 'default/examples/color-picker-alpha-demo.tsx',
+        type: 'registry:example',
+      },
+    ],
+  },
+  {
+    name: 'color-picker-popover-demo',
+    type: 'registry:example',
+    registryDependencies: ['https://kelvinmai.io/r/color-picker.json'],
+    files: [
+      {
+        path: 'default/examples/color-picker-popover-demo.tsx',
+        type: 'registry:example',
+      },
+    ],
+  },
+  {
+    name: 'floating-label-input-demo',
+    type: 'registry:example',
+    registryDependencies: ['https://kelvinmai.io/r/floating-label-input.json'],
+    files: [
+      {
+        path: 'default/examples/floating-label-input-demo.tsx',
+        type: 'registry:example',
+      },
+    ],
+  },
+  {
+    name: 'theme-switch-demo',
+    type: 'registry:example',
+    registryDependencies: ['https://kelvinmai.io/r/theme-switch.json'],
+    files: [
+      {
+        path: 'default/examples/theme-switch-demo.tsx',
         type: 'registry:example',
       },
     ],

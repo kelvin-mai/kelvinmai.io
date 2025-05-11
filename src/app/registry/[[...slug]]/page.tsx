@@ -13,17 +13,17 @@ import {
   BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb';
 import { MDX } from '@/components/mdx';
-import { BuyMeCofffeeBanner } from '@/components/buy-me-coffee-banner';
+import { BuyMeCofffeeBanner } from '@/components/common/buy-me-coffee-banner';
 import { TableOfContents } from '@/components/docs/table-of-contents';
 import { buildToc } from '@/components/docs/toc';
 
-type RegistryPageProps = {
+type RegistryDocsPageProps = {
   params: Promise<{
     slug: string[];
   }>;
 };
 
-export async function generateMetadata({ params }: RegistryPageProps) {
+export async function generateMetadata({ params }: RegistryDocsPageProps) {
   const { slug } = await params;
   const doc = getContentBySlugParam(slug);
   if (!doc) {
@@ -36,7 +36,9 @@ export async function generateMetadata({ params }: RegistryPageProps) {
   };
 }
 
-export default async function RegistryPage({ params }: RegistryPageProps) {
+export default async function RegistryDocsPage({
+  params,
+}: RegistryDocsPageProps) {
   const { slug } = await params;
   const doc = getContentBySlugParam(slug);
   if (!doc) {
@@ -47,24 +49,24 @@ export default async function RegistryPage({ params }: RegistryPageProps) {
 
   return (
     <>
+      <aside className='container mt-4 flex h-8 shrink-0 items-center gap-2'>
+        <SidebarTrigger className='-ml-4' />
+        <Separator orientation='vertical' className='mr-2' />
+        <Breadcrumb>
+          <BreadcrumbList>
+            <BreadcrumbItem>
+              <span className='text-muted-foreground capitalize'>
+                {slug.length > 1 ? slug[0] : 'Getting Started'}
+              </span>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              <BreadcrumbPage>{doc.metadata.title}</BreadcrumbPage>
+            </BreadcrumbItem>
+          </BreadcrumbList>
+        </Breadcrumb>
+      </aside>
       <main className='container font-sans'>
-        <aside className='mt-4 flex h-8 shrink-0 items-center gap-2 px-4'>
-          <SidebarTrigger className='-ml-4' />
-          <Separator orientation='vertical' className='mr-2' />
-          <Breadcrumb>
-            <BreadcrumbList>
-              <BreadcrumbItem>
-                <span className='text-muted-foreground capitalize'>
-                  {slug.length > 1 ? slug[0] : 'Getting Started'}
-                </span>
-              </BreadcrumbItem>
-              <BreadcrumbSeparator />
-              <BreadcrumbItem>
-                <BreadcrumbPage>{doc.metadata.title}</BreadcrumbPage>
-              </BreadcrumbItem>
-            </BreadcrumbList>
-          </Breadcrumb>
-        </aside>
         <div className='flex py-6 md:grid md:grid-cols-[1fr_300px] md:gap-4 md:py-8'>
           <div className='space-y-2'>
             <h1 className='scroll-m-20 text-3xl font-bold tracking-tight'>

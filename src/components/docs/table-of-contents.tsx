@@ -95,7 +95,7 @@ export const TableOfContents: React.FC<TableOfContentsProps> = ({
               style={{
                 paddingLeft: `${(item.depth - 1) * 16}px`,
               }}
-              className='relative'
+              className={cn('relative mb-0')}
             >
               <a
                 href={item.url}

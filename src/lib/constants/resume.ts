@@ -26,11 +26,11 @@ export const resume = {
         url: 'https://youtube.com/c/kelvinmai',
         username: 'kelvinmai',
       },
-      {
-        network: 'Twitter',
-        url: 'https://twitter.com/kelvinmai',
-        username: 'kelvinmai',
-      },
+      // {
+      //   network: 'Twitter',
+      //   url: 'https://twitter.com/kelvinmai',
+      //   username: 'kelvinmai',
+      // },
       {
         network: 'Github',
         url: 'https://github.com/kelvin-mai',

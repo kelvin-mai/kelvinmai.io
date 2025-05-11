@@ -16,6 +16,20 @@ export const ui: Registry['items'] = [
     registryDependencies: ['button', 'input', 'popover', 'tabs'],
   },
   {
+    name: 'floating-label-input',
+    type: 'registry:component',
+    title: 'Floating Label Input',
+    description: 'Material UI floating label input',
+    files: [
+      {
+        path: 'default/ui/floating-label-input.tsx',
+        type: 'registry:component',
+      },
+    ],
+    dependencies: [],
+    registryDependencies: ['label', 'input'],
+  },
+  {
     name: 'theme-switch',
     type: 'registry:component',
     title: 'Theme Switch',

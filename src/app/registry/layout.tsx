@@ -1,4 +1,5 @@
 import { DocsSidebar } from '@/components/docs/sidebar';
+import { Footer } from '@/components/layout';
 import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar';
 import { getNav } from '@/content';
 
@@ -11,7 +12,10 @@ export default function RegistryLayout({
       style={{ '--sidebar-width': '19rem' } as React.CSSProperties}
     >
       <DocsSidebar items={nav} />
-      <SidebarInset>{children}</SidebarInset>
+      <SidebarInset>
+        {children}
+        <Footer />
+      </SidebarInset>
     </SidebarProvider>
   );
 }

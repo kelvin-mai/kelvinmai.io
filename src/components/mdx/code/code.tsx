@@ -39,7 +39,7 @@ export const Code: React.FC<CodeProps> = async ({ className, codeblock }) => {
       )}
       <CodehikePre
         className={cn(
-          'overflow-x-auto p-2',
+          'overflow-x-auto p-2 font-mono',
           codeblock.meta ? 'rounded-b-lg' : 'rounded-lg',
         )}
         code={highlighted}
@@ -54,7 +54,7 @@ export const Pre: React.FC<CodeProps> = async ({ className, codeblock }) => {
   const highlighted = await highlight(codeblock, eldritch);
   return (
     <CodehikePre
-      className={cn(className)}
+      className={cn('font-mono', className)}
       code={highlighted}
       style={highlighted.style}
     />

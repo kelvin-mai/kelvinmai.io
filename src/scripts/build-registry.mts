@@ -28,6 +28,7 @@ import React from "react";
 
 export const Index: Record<string, any> = {`;
   for (const item of registry.items) {
+    console.log(`Adding ${item.name} to registry`);
     if (!Array.isArray(item.files) || !item.files?.length) {
       continue;
     }

@@ -26,6 +26,23 @@
       ]
     },
     {
+      "name": "floating-label-input",
+      "type": "registry:component",
+      "title": "Floating Label Input",
+      "description": "Material UI floating label input",
+      "dependencies": [],
+      "registryDependencies": [
+        "label",
+        "input"
+      ],
+      "files": [
+        {
+          "path": "src/registry/default/ui/floating-label-input.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
       "name": "theme-switch",
       "type": "registry:component",
       "title": "Theme Switch",

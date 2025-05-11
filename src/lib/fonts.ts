@@ -5,7 +5,29 @@ import {
   Ubuntu_Mono,
   Space_Grotesk,
 } from 'next/font/google';
+import localFont from 'next/font/local';
 import { cn } from './utils';
+
+const zxProto = localFont({
+  src: [
+    {
+      path: '../../public/fonts/0xProto-Regular.woff2',
+      weight: '400',
+      style: 'normal',
+    },
+    {
+      path: '../../public/fonts/0xProto-Italic.woff2',
+      weight: '400',
+      style: 'italic',
+    },
+    {
+      path: '../../public/fonts/0xProto-Bold.woff2',
+      weight: '700',
+      style: 'normal',
+    },
+  ],
+  variable: '--font-0xproto',
+});
 
 export const ubuntu = Ubuntu({
   weight: ['400', '500', '700'],
@@ -16,7 +38,7 @@ export const ubuntu = Ubuntu({
 export const ubuntuMono = Ubuntu_Mono({
   weight: ['400', '700'],
   subsets: ['latin'],
-  variable: '--font-ubunut-mono',
+  variable: '--font-ubuntu-mono',
 });
 
 export const spaceGrotesk = Space_Grotesk({
@@ -35,8 +57,9 @@ export const geistmono = Geist_Mono({
 });
 
 export const fontVariables = cn(
+  geist.variable,
   ubuntu.variable,
   ubuntuMono.variable,
   spaceGrotesk.variable,
-  geist.variable,
+  zxProto.variable,
 );

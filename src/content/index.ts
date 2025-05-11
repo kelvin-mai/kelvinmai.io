@@ -45,13 +45,19 @@ export type NavItem = {
 export const getNav = ({
   dir = 'docs',
   docsUrl = '/registry',
-  rootTitle = 'Getting Started',
+  rootTitle = 'Documentation',
 }: {
   dir?: string;
   docsUrl?: string;
   rootTitle?: string;
 }): NavItem[] => {
   const docs = getContent(dir);
+  const rootItems = docs
+    .filter((d) => d.slugAsParams.length === 1)
+    .map(({ metadata, slug }) => ({
+      title: metadata.title,
+      url: `${docsUrl}/${slug}`,
+    }));
   const subItems = docs
     .filter((d) => d.slugAsParams.length > 1)
     .map(({ content, ...rest }) => ({ ...rest }))
@@ -66,12 +72,7 @@ export const getNav = ({
     {
       title: rootTitle,
       url: '#',
-      items: docs
-        .filter((d) => d.slugAsParams.length === 1)
-        .map(({ metadata, slug }) => ({
-          title: metadata.title,
-          url: `${docsUrl}/${slug}`,
-        })),
+      items: rootItems,
     },
     ...Object.keys(subItems).map((k) => ({
       title: k.charAt(0).toUpperCase() + k.slice(1),

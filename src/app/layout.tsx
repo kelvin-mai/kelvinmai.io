@@ -7,7 +7,7 @@ import { SpeedInsights } from '@vercel/speed-insights/next';
 
 import { fontVariables } from '@/lib/fonts';
 import { resume, siteConfig } from '@/lib/constants';
-import { cn, getBaseUrl } from '@/lib/utils';
+import { cn } from '@/lib/utils';
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
