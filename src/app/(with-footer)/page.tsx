@@ -1,4 +1,3 @@
-// TODO: background mesh gradient https://csshero.org/mesher/
 import { Mail } from 'lucide-react';
 
 import { resume, yearsSinceStart } from '@/lib/constants';
@@ -33,15 +32,12 @@ export default function Home() {
                 Get In Touch
               </h3>
               <p className='text-neutral-600'>
-                I'm currently open to freelance opportunities and interesting
-                projects. Feel free to reach out if you'd like to collaborate or
-                just a friendly hello.
+                I&apos;m currently open to freelance opportunities and
+                interesting projects. Feel free to reach out if you&apos;d like
+                to collaborate or just a friendly hello.
               </p>
-              <Button
-                className='bg-violet-600 text-white shadow hover:bg-violet-500'
-                asChild
-              >
-                <a href='mailto:kelvin.mai002@gmail.com'>
+              <Button variant='home' asChild>
+                <a href='mailto:kelvin.mai002@gmail.com' className='text-white'>
                   <Mail />
                   Contact Me
                 </a>

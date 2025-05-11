@@ -27,11 +27,6 @@ export const resume = {
         username: 'kelvinmai',
       },
       {
-        network: 'Twitter',
-        url: 'https://twitter.com/kelvinmai',
-        username: 'kelvinmai',
-      },
-      {
         network: 'Github',
         url: 'https://github.com/kelvin-mai',
         username: 'kelvinmai',

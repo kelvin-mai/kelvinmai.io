@@ -1,8 +1,7 @@
 import Link from 'next/link';
 
 import { resume } from '@/lib/constants';
-import { SocialLinks } from '../about';
-import { ThemeSwitch } from '@/registry/default/ui/theme-switch';
+import { SocialLinks } from '@/components/about';
 
 export const Footer: React.FC = () => {
   return (
@@ -41,9 +40,6 @@ export const Footer: React.FC = () => {
               </li>
               <li>
                 <Link href='/resume'>Resume</Link>
-              </li>
-              <li>
-                <Link href='/registry/introduction'>Registry</Link>
               </li>
             </ul>
           </div>

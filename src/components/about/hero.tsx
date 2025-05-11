@@ -26,19 +26,13 @@ export const HeroSection = () => {
         <p className='font-medium'>{resume.basics.summary}</p>
       </div>
       <div className='flex flex-col gap-4 sm:flex-row sm:items-center'>
-        <Button
-          className='bg-violet-600 text-white shadow hover:bg-violet-500'
-          asChild
-        >
+        <Button variant='home' asChild>
           <Link href='/resume'>
             <FileHeart />
             View Resume
           </Link>
         </Button>
-        <Button
-          className='bg-violet-600 text-white shadow hover:bg-violet-500'
-          asChild
-        >
+        <Button variant='home' asChild>
           <PDFDownloadLink document={<ResumeDocument resume={resume} />}>
             <Download />
             Download Resume

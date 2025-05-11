@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 
-import './globals.css';
+import '../styles/globals.css';
 import { ubuntu, ubuntuMono } from '@/lib/fonts';
 import { resume } from '@/lib/constants';
 
