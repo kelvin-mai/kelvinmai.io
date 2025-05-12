@@ -24,7 +24,9 @@ export const getMDXComponents = (components?: MDXComponents): MDXComponents => {
     ol: (props) => (
       <ol className='my-6 ml-6 list-decimal [&>li]:mt-2' {...props} />
     ),
-    a: ExternalLink,
+    a: (props) => (
+      <ExternalLink className='underline underline-offset-4' {...props} />
+    ),
     Steps,
     Step,
     ...components,

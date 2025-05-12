@@ -16,6 +16,15 @@ const config: NextConfig = {
   experimental: {
     esmExternals: "loose",
   },
+  async redirects() {
+    return [
+      {
+        source: "/registry",
+        destination: "/registry/introduction",
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default withMDX(config);

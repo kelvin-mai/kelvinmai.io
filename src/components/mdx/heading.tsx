@@ -33,8 +33,11 @@ export const Heading: React.FC<HeadingProps> = ({
         headingClasses[as ?? 'h1'],
         className,
       )}
+      {...props}
     >
-      <a className='peer'>{props.children}</a>
+      <a href={`#${props.id}`} className='peer'>
+        {props.children}
+      </a>
       <Link
         className='text-muted-foreground size-3.5 shrink-0 opacity-0 transition-opacity peer-hover:opacity-100'
         aria-label='Link to section'

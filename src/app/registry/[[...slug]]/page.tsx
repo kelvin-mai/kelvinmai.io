@@ -1,49 +1,53 @@
-import * as React from 'react';
 import { notFound } from 'next/navigation';
+import { AnchorProvider } from 'fumadocs-core/toc';
 
-import { SidebarTrigger } from '@/components/ui/sidebar';
-import { Separator } from '@/components/ui/separator';
-import { getContentBySlugParam } from '@/content';
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbList,
-  BreadcrumbLink,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-} from '@/components/ui/breadcrumb';
-import { MDX } from '@/components/mdx';
+import { source } from '@/lib/source';
+import { getMDXComponents } from '@/components/mdx';
+import { TableOfContents } from '@/components/docs';
 
-type RegistryPageProps = {
-  params: Promise<{
-    slug: string[];
-  }>;
-};
+export default async function DocsPage(props: {
+  params: Promise<{ slug?: string[] }>;
+}) {
+  const params = await props.params;
+  const page = source.getPage(params.slug);
+  if (!page) notFound();
 
-export default async function RegistryPage({ params }: RegistryPageProps) {
-  const { slug } = await params;
-  const doc = getContentBySlugParam(slug);
-  if (!doc) {
-    notFound();
-  }
-  console.log(doc);
+  const MDX = page.data.body;
+  console.log(page);
+
   return (
-    <>
-      <header className='flex h-16 shrink-0 items-center gap-2 px-4'>
-        <SidebarTrigger className='-ml-1' />
-        <Separator orientation='vertical' className='mr-2 h-4' />
-        <Breadcrumb>
-          <BreadcrumbList>
-            <BreadcrumbSeparator />
-            <BreadcrumbItem>
-              <BreadcrumbPage>{doc.metadata.title}</BreadcrumbPage>
-            </BreadcrumbItem>
-          </BreadcrumbList>
-        </Breadcrumb>
-      </header>
-      <main className='mx-4'>
-        <MDX raw={doc.content} />
-      </main>
-    </>
+    <AnchorProvider toc={page.data.toc} single={false}>
+      <div className='flex py-6 lg:grid lg:grid-cols-[1fr_300px] lg:gap-4'>
+        <div className=''>
+          <h1 className='text-4xl font-bold tracking-tight'>
+            {page.data.title}
+          </h1>
+          <p className='text-muted-foreground mb-8 text-lg'>
+            {page.data.description}
+          </p>
+          <article>
+            <MDX components={getMDXComponents()} />
+          </article>
+        </div>
+        <TableOfContents items={page.data.toc} />
+      </div>
+    </AnchorProvider>
   );
+}
+
+export async function generateStaticParams() {
+  return source.generateParams();
+}
+
+export async function generateMetadata(props: {
+  params: Promise<{ slug?: string[] }>;
+}) {
+  const params = await props.params;
+  const page = source.getPage(params.slug);
+  if (!page) notFound();
+
+  return {
+    title: page.data.title,
+    description: page.data.description,
+  };
 }
