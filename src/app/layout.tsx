@@ -2,7 +2,8 @@ import type { Metadata } from 'next';
 import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 
-import '../styles/globals.css';
+import '@/styles/globals.css';
+import { RootProvider } from '@/providers';
 import { ubuntu, ubuntuMono } from '@/lib/fonts';
 import { resume } from '@/lib/constants';
 
@@ -22,9 +23,11 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body className={`${ubuntu.variable} ${ubuntuMono.variable} antialiased`}>
-        {children}
-        <Analytics />
-        <SpeedInsights />
+        <RootProvider>
+          {children}
+          <Analytics />
+          <SpeedInsights />
+        </RootProvider>
       </body>
     </html>
   );

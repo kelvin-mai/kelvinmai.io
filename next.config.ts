@@ -1,6 +1,9 @@
 import type { NextConfig } from "next";
+import { createMDX } from "fumadocs-mdx/next";
 
-const nextConfig: NextConfig = {
+const withMDX = createMDX();
+
+const config: NextConfig = {
   serverExternalPackages: ["@react-pdf/renderer"],
   images: {
     localPatterns: [
@@ -15,4 +18,4 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default nextConfig;
+export default withMDX(config);

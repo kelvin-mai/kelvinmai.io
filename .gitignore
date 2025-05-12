@@ -42,3 +42,6 @@ next-env.d.ts
 
 # continue
 e2e.log
+
+# fumadocs
+.source/

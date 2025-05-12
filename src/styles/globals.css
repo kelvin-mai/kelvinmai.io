@@ -1,5 +1,5 @@
-@import 'tailwindcss';
-@import 'tw-animate-css';
+@import "tailwindcss";
+@import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -140,8 +140,11 @@
 /* mesh-gradient generated with https://csshero.org/mesher/ */
 .bg-mesh-gradient-eldritch {
   background-color: hsla(234, 25%, 17%, 1);
-  background-image:
-    radial-gradient(at 30% 38%, hsla(189, 96%, 49%, 1) 0px, transparent 50%),
+  background-image: radial-gradient(
+      at 30% 38%,
+      hsla(189, 96%, 49%, 1) 0px,
+      transparent 50%
+    ),
     radial-gradient(at 13% 72%, hsla(151, 89%, 58%, 1) 0px, transparent 50%),
     radial-gradient(at 27% 92%, hsla(35, 88%, 73%, 1) 0px, transparent 50%),
     radial-gradient(at 77% 12%, hsla(325, 84%, 67%, 1) 0px, transparent 50%),
@@ -152,8 +155,11 @@
 
 .bg-mesh-gradient-dracula-pro {
   background-color: hsla(245, 14%, 15%, 1);
-  background-image:
-    radial-gradient(at 30% 38%, hsla(170, 100%, 75%, 1) 0px, transparent 50%),
+  background-image: radial-gradient(
+      at 30% 38%,
+      hsla(170, 100%, 75%, 1) 0px,
+      transparent 50%
+    ),
     radial-gradient(at 13% 72%, hsla(115, 100%, 75%, 1) 0px, transparent 50%),
     radial-gradient(at 27% 92%, hsla(34, 100%, 75%, 1) 0px, transparent 50%),
     radial-gradient(at 77% 12%, hsla(330, 100%, 75%, 1) 0px, transparent 50%),
