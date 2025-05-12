@@ -1,4 +1,5 @@
 import { Geist, Ubuntu, Ubuntu_Mono, Space_Grotesk } from 'next/font/google';
+import { cn } from './utils';
 
 export const ubuntu = Ubuntu({
   weight: ['400', '500', '700'],
@@ -23,3 +24,9 @@ export const geist = Geist({
   subsets: ['latin'],
   variable: '--font-geist',
 });
+
+export const fontVariables = cn(
+  ubuntu.variable,
+  ubuntuMono.variable,
+  spaceGrotesk.variable,
+);

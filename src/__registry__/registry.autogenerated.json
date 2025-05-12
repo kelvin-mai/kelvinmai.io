@@ -4,6 +4,42 @@
   "homepage": "https://kelvinmai.io",
   "items": [
     {
+      "name": "color-picker",
+      "type": "registry:component",
+      "title": "Color Picker",
+      "description": "A color picker component",
+      "dependencies": [
+        "react-colorful"
+      ],
+      "registryDependencies": [
+        "input"
+      ],
+      "files": [
+        {
+          "path": "src/registry/default/ui/color-picker.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "floating-label-input",
+      "type": "registry:component",
+      "title": "Floating Label Input",
+      "description": "Material UI floating label input",
+      "dependencies": [
+        "@radix-ui/react-label"
+      ],
+      "registryDependencies": [
+        "input"
+      ],
+      "files": [
+        {
+          "path": "src/registry/default/ui/floating-label-input.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
       "name": "theme-switch",
       "type": "registry:component",
       "title": "Theme Switch",

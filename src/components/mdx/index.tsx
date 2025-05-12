@@ -1,8 +1,23 @@
 import type { MDXComponents } from 'mdx/types';
 
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
+import { ExternalLink } from '@/components/common';
 import { Heading } from './heading';
+import {
+  Code,
+  InlineCode,
+  NpmCommand,
+  ComponentPreview,
+  ComponentSource,
+} from './code';
 import { Steps, Step } from './steps';
-import { ExternalLink } from '../common';
 
 export const getMDXComponents = (components?: MDXComponents): MDXComponents => {
   return {
@@ -27,6 +42,17 @@ export const getMDXComponents = (components?: MDXComponents): MDXComponents => {
     a: (props) => (
       <ExternalLink className='underline underline-offset-4' {...props} />
     ),
+    table: Table,
+    thead: TableHeader,
+    tbody: TableBody,
+    tr: TableRow,
+    th: TableHead,
+    td: TableCell,
+    Code,
+    InlineCode,
+    NpmCommand,
+    ComponentPreview,
+    ComponentSource,
     Steps,
     Step,
     ...components,

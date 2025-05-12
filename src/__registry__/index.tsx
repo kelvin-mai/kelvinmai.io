@@ -7,6 +7,26 @@
 import React from "react";
 
 export const Index: Record<string, any> = {
+  "color-picker": {
+    name: "color-picker",
+    description: "A color picker component",
+    type: "registry:component",
+    files: [{
+      path: "src/registry/default/ui/color-picker.tsx",
+      content: "'use client';\n\nimport * as React from 'react';\nimport { HexAlphaColorPicker, HexColorPicker } from 'react-colorful';\n\nimport { Input } from '@/components/ui/input';\nimport { cn } from '@/lib/utils';\n\nexport type ColorPickerProps = Omit<\n  React.ComponentProps<typeof Input>,\n  'value' | 'onChange' | 'onBlur'\n> & {\n  value?: string;\n  alpha?: boolean;\n  onChange: (value: string) => void;\n};\n\nexport const ColorPicker: React.FC<ColorPickerProps> = ({\n  className,\n  value,\n  alpha,\n  onChange,\n  ...props\n}) => {\n  return (\n    <div className={cn('space-y-2', className)}>\n      {alpha ? (\n        <HexAlphaColorPicker color={value} onChange={onChange} {...props} />\n      ) : (\n        <HexColorPicker color={value} onChange={onChange} {...props} />\n      )}\n\n      <Input\n        id='custom'\n        value={value}\n        className='h-8 w-[200px]'\n        onChange={(e) => onChange(e.currentTarget.value)}\n        {...props}\n      />\n    </div>\n  );\n};\nColorPicker.displayName = 'ColorPicker';\n",
+      type: "registry:component",
+    }],
+  },
+  "floating-label-input": {
+    name: "floating-label-input",
+    description: "Material UI floating label input",
+    type: "registry:component",
+    files: [{
+      path: "src/registry/default/ui/floating-label-input.tsx",
+      content: "import * as React from 'react';\n\nimport { cn } from '@/lib/utils';\nimport { Label } from '@radix-ui/react-label';\nimport { Input } from '@/components/ui/input';\n\nexport const FloatingLabel: React.FC<React.ComponentProps<typeof Label>> = ({\n  className,\n  ...props\n}) => {\n  return (\n    <Label\n      className={cn(\n        'peer-has-focus:secondary bg-background absolute start-2 top-2 z-10 origin-[0] -translate-y-4 scale-75 transform cursor-text px-2 text-sm text-gray-500 duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:px-2 rtl:peer-focus:left-auto rtl:peer-focus:translate-x-1/4',\n        className,\n      )}\n      {...props}\n    />\n  );\n};\n\nexport const FloatingInput: React.FC<\n  React.ComponentProps<'input'> & {\n    label: string;\n  }\n> = ({ id, label, className, ...props }) => {\n  return (\n    <div className='relative'>\n      <Input\n        id={id}\n        className={cn('peer dark:bg-background', className)}\n        placeholder=' '\n        {...props}\n      />\n      <FloatingLabel htmlFor={id}>{label}</FloatingLabel>\n    </div>\n  );\n};\n",
+      type: "registry:component",
+    }],
+  },
   "theme-switch": {
     name: "theme-switch",
     description: "Animated theme switch",
@@ -16,6 +36,54 @@ export const Index: Record<string, any> = {
       content: "'use client';\n\nimport React, { type JSX, useEffect, useState } from 'react';\nimport { MonitorIcon, MoonStarIcon, SunIcon } from 'lucide-react';\nimport { motion } from 'motion/react';\nimport { useTheme } from 'next-themes';\n\nimport { cn } from '@/lib/utils';\n\nconst ThemeOption = ({\n  icon,\n  value,\n  isActive,\n  onClick,\n}: {\n  icon: JSX.Element;\n  value: string;\n  isActive?: boolean;\n  onClick: (value: string) => void;\n}) => {\n  return (\n    <button\n      className={cn(\n        'relative flex size-8 cursor-default items-center justify-center rounded-full transition-all [&_svg]:size-4',\n        isActive\n          ? 'text-zinc-950 dark:text-zinc-50'\n          : 'text-zinc-400 hover:text-zinc-950 dark:text-zinc-500 dark:hover:text-zinc-50',\n      )}\n      role='radio'\n      aria-checked={isActive}\n      aria-label={\`Switch to \${value} theme\`}\n      onClick={() => onClick(value)}\n    >\n      {icon}\n\n      {isActive && (\n        <motion.div\n          layoutId='theme-option'\n          transition={{ type: 'spring', bounce: 0.3, duration: 0.6 }}\n          className='absolute inset-0 rounded-full border border-zinc-200 dark:border-zinc-700'\n        />\n      )}\n    </button>\n  );\n};\n\nconst THEME_OPTIONS = [\n  {\n    icon: <MonitorIcon />,\n    value: 'system',\n  },\n  {\n    icon: <SunIcon />,\n    value: 'light',\n  },\n  {\n    icon: <MoonStarIcon />,\n    value: 'dark',\n  },\n];\n\nconst ThemeSwitch = () => {\n  const { theme, setTheme } = useTheme();\n\n  const [isMounted, setIsMounted] = useState(false);\n\n  useEffect(() => {\n    setIsMounted(true);\n  }, []);\n\n  if (!isMounted) {\n    return <div className='flex h-8 w-24' />;\n  }\n\n  return (\n    <motion.div\n      key={String(isMounted)}\n      initial={{ opacity: 0 }}\n      animate={{ opacity: 1 }}\n      transition={{ duration: 0.3 }}\n      className='inline-flex items-center overflow-hidden rounded-full bg-white ring-1 ring-zinc-200 ring-inset dark:bg-zinc-950 dark:ring-zinc-700'\n      role='radiogroup'\n    >\n      {THEME_OPTIONS.map((option) => (\n        <ThemeOption\n          key={option.value}\n          icon={option.icon}\n          value={option.value}\n          isActive={theme === option.value}\n          onClick={setTheme}\n        />\n      ))}\n    </motion.div>\n  );\n};\n\nexport { ThemeSwitch };\n",
       type: "registry:component",
     }],
+  },
+  "color-picker-demo": {
+    name: "color-picker-demo",
+    description: "",
+    type: "registry:example",
+    files: [{
+      path: "src/registry/default/examples/color-picker-demo.tsx",
+      content: "'use client';\n\nimport * as React from 'react';\n\nimport { ColorPicker } from '@/registry/default/ui/color-picker';\n\nexport default function ColorPickerDemo() {\n  const [color, setColor] = React.useState<string>('#06b6d4');\n  return <ColorPicker value={color} onChange={setColor} />;\n}\n",
+      type: "registry:example",
+    }],
+    component: React.lazy(() => import("@/registry/default/examples/color-picker-demo.tsx")),
+    source: "'use client';\n\nimport * as React from 'react';\n\nimport { ColorPicker } from '@/registry/default/ui/color-picker';\n\nexport default function ColorPickerDemo() {\n  const [color, setColor] = React.useState<string>('#06b6d4');\n  return <ColorPicker value={color} onChange={setColor} />;\n}\n",
+  },
+  "color-picker-alpha-demo": {
+    name: "color-picker-alpha-demo",
+    description: "",
+    type: "registry:example",
+    files: [{
+      path: "src/registry/default/examples/color-picker-alpha-demo.tsx",
+      content: "'use client';\n\nimport * as React from 'react';\n\nimport { ColorPicker } from '@/registry/default/ui/color-picker';\n\nexport default function ColorPickerDemo() {\n  const [color, setColor] = React.useState<string>('#7c3aed');\n  return <ColorPicker value={color} onChange={setColor} alpha />;\n}\n",
+      type: "registry:example",
+    }],
+    component: React.lazy(() => import("@/registry/default/examples/color-picker-alpha-demo.tsx")),
+    source: "'use client';\n\nimport * as React from 'react';\n\nimport { ColorPicker } from '@/registry/default/ui/color-picker';\n\nexport default function ColorPickerDemo() {\n  const [color, setColor] = React.useState<string>('#7c3aed');\n  return <ColorPicker value={color} onChange={setColor} alpha />;\n}\n",
+  },
+  "color-picker-popover-demo": {
+    name: "color-picker-popover-demo",
+    description: "",
+    type: "registry:example",
+    files: [{
+      path: "src/registry/default/examples/color-picker-popover-demo.tsx",
+      content: "'use client';\n\nimport * as React from 'react';\nimport { Paintbrush } from 'lucide-react';\n\nimport { Button } from '@/components/ui/button';\nimport {\n  Popover,\n  PopoverContent,\n  PopoverTrigger,\n} from '@/components/ui/popover';\nimport { cn } from '@/lib/utils';\nimport { ColorPicker } from '@/registry/default/ui/color-picker';\n\nexport default function ColorPickerDemo() {\n  const [color, setColor] = React.useState<string>('');\n\n  return (\n    <Popover>\n      <PopoverTrigger asChild>\n        <Button variant='outline' className={cn(!color && 'text-slate-500')}>\n          <div className='flex w-full items-center gap-2'>\n            {color ? (\n              <div\n                className={cn(\n                  'size-4 rounded border !bg-cover !bg-center transition-all',\n                )}\n                style={{ background: color }}\n              />\n            ) : (\n              <Paintbrush className='size-4' />\n            )}\n          </div>\n        </Button>\n      </PopoverTrigger>\n      <PopoverContent className='w-60 space-y-2'>\n        <ColorPicker value={color} onChange={setColor} />\n      </PopoverContent>\n    </Popover>\n  );\n}\n",
+      type: "registry:example",
+    }],
+    component: React.lazy(() => import("@/registry/default/examples/color-picker-popover-demo.tsx")),
+    source: "'use client';\n\nimport * as React from 'react';\nimport { Paintbrush } from 'lucide-react';\n\nimport { Button } from '@/components/ui/button';\nimport {\n  Popover,\n  PopoverContent,\n  PopoverTrigger,\n} from '@/components/ui/popover';\nimport { cn } from '@/lib/utils';\nimport { ColorPicker } from '@/registry/default/ui/color-picker';\n\nexport default function ColorPickerDemo() {\n  const [color, setColor] = React.useState<string>('');\n\n  return (\n    <Popover>\n      <PopoverTrigger asChild>\n        <Button variant='outline' className={cn(!color && 'text-slate-500')}>\n          <div className='flex w-full items-center gap-2'>\n            {color ? (\n              <div\n                className={cn(\n                  'size-4 rounded border !bg-cover !bg-center transition-all',\n                )}\n                style={{ background: color }}\n              />\n            ) : (\n              <Paintbrush className='size-4' />\n            )}\n          </div>\n        </Button>\n      </PopoverTrigger>\n      <PopoverContent className='w-60 space-y-2'>\n        <ColorPicker value={color} onChange={setColor} />\n      </PopoverContent>\n    </Popover>\n  );\n}\n",
+  },
+  "floating-label-input-demo": {
+    name: "floating-label-input-demo",
+    description: "",
+    type: "registry:example",
+    files: [{
+      path: "src/registry/default/examples/floating-label-input-demo.tsx",
+      content: "import * as React from 'react';\nimport { FloatingInput } from '../ui/floating-label-input';\n\nexport default function FloatingInputDemo() {\n  return (\n    <FloatingInput\n      id='floating-label-input-demo'\n      label='Floating Label'\n      // placeholder='Longer Placeholder text'\n    />\n  );\n}\n",
+      type: "registry:example",
+    }],
+    component: React.lazy(() => import("@/registry/default/examples/floating-label-input-demo.tsx")),
+    source: "import * as React from 'react';\nimport { FloatingInput } from '../ui/floating-label-input';\n\nexport default function FloatingInputDemo() {\n  return (\n    <FloatingInput\n      id='floating-label-input-demo'\n      label='Floating Label'\n      // placeholder='Longer Placeholder text'\n    />\n  );\n}\n",
   },
   "theme-switch-demo": {
     name: "theme-switch-demo",

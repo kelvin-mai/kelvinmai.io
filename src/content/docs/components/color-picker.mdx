@@ -1,0 +1,77 @@
+---
+title: Color Picker
+description: An input wrapper for react-colorful's color picker.
+---
+
+## Preview
+
+<ComponentPreview
+  name='color-picker-demo'
+  v0Url='https://kelvinmai.io/r/color-picker.json'
+/>
+
+## Installation
+
+### CLI
+
+<NpmCommand value='npx shadcn@latest add https://kelvinmai.io/r/color-picker.json' />
+
+### Manual
+
+<Steps>
+
+<Step>Install the following dependencies</Step>
+
+<NpmCommand value='npm install next-themes lucide-react motion clsx tailwind-merge' />
+
+<Step>Add a classname utility function</Step>
+
+```ts
+import { clsx, type ClassValue } from 'clsx';
+import { twMerge } from 'tailwind-merge';
+
+export const cn = (...inputs: ClassValue[]) => {
+  return twMerge(clsx(inputs));
+};
+```
+
+<Step>Copy and paste the following code into your project</Step>
+
+<ComponentSource name='color-picker' title='components/color-picker.tsx' />
+
+<Step>Update the import paths to match your project setup</Step>
+
+</Steps>
+
+## Usage
+
+```ts
+import { ColorPicker } from '@/components/ui/color-picker';
+
+export default function ColorPickerDemo() {
+  const [color, setColor] = React.useState('#fff');
+  return <ColorPicker value={color} onChange={setColor} />;
+}
+```
+
+## API Reference
+
+| Name      | Type        | Required | Default       | Description                                                      |
+| --------- | ----------- | -------- | ------------- | ---------------------------------------------------------------- |
+| _`alpha`_ | _`boolean`_ | No       | _`undefined`_ | A boolean to check whether or not to include color alpha picker. |
+
+## Examples
+
+### With Alpha Picker
+
+<ComponentPreview
+  name='color-picker-alpha-demo'
+  v0Url='https://kelvinmai.io/r/color-picker.json'
+/>
+
+### In Popover
+
+<ComponentPreview
+  name='color-picker-popover-demo'
+  v0Url='https://kelvinmai.io/r/color-picker.json'
+/>
