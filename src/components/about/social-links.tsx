@@ -29,6 +29,7 @@ export const SocialLinks = () => {
         .map((p) => (
           <ExternalLink key={p.network} href={p.url}>
             <SimpleIcon icon={p.icon!} />
+            <span className='sr-only'>{p.network}</span>
           </ExternalLink>
         ))}
     </>

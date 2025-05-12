@@ -9,6 +9,7 @@ import {
 import { CopyButton } from '@/components/common';
 import { cn } from '@/lib/utils';
 import { wordWrap } from './annotations/wrap-word';
+import { eldritch } from './themes';
 
 type CodeProps = { codeblock: RawCode; className?: string };
 
@@ -16,7 +17,7 @@ export const InlineCode: React.FC<CodeProps> = async ({
   className,
   codeblock,
 }) => {
-  const highlighted = await highlight(codeblock, 'github-dark');
+  const highlighted = await highlight(codeblock, eldritch);
   return (
     <Inline
       className={cn('rounded-lg px-2 py-1', className)}
@@ -27,7 +28,7 @@ export const InlineCode: React.FC<CodeProps> = async ({
 };
 
 export const Code: React.FC<CodeProps> = async ({ className, codeblock }) => {
-  const highlighted = await highlight(codeblock, 'github-dark');
+  const highlighted = await highlight(codeblock, eldritch);
   return (
     <div className={cn('relative my-4 font-mono', className)}>
       <CopyButton className='absolute top-1 right-2' value={highlighted.code} />
@@ -50,7 +51,7 @@ export const Code: React.FC<CodeProps> = async ({ className, codeblock }) => {
 };
 
 export const Pre: React.FC<CodeProps> = async ({ className, codeblock }) => {
-  const highlighted = await highlight(codeblock, 'github-dark');
+  const highlighted = await highlight(codeblock, eldritch);
   return (
     <CodehikePre
       className={cn('font-mono', className)}

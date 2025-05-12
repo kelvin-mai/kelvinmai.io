@@ -1,13 +1,14 @@
-@import "tailwindcss";
-@import "tw-animate-css";
+@import 'tailwindcss';
+@import 'tw-animate-css';
 
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
+  --font-sans: var(--font-ubuntu);
+  --font-mono: var(--font-0xproto);
+
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-ubuntu);
-  --font-mono: var(--font-ubuntu-mono);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -110,6 +111,25 @@
   --sidebar-accent-foreground: oklch(0.985 0 0); /* neutral-50 */
   --sidebar-border: oklch(1 0 0 / 10%); /* white/10 */
   --sidebar-ring: oklch(0.556 0 0); /* neutral-500 */
+}
+
+@layer utilities {
+  /* explicit classnames for font families specified in @/lib/fonts.ts */
+  .font-geist {
+    font-family: var(--font-geist);
+  }
+  .font-ubuntu {
+    font-family: var(--font-ubuntu);
+  }
+  .font-ubuntu-mono {
+    font-family: var(--font-ubuntu-mono);
+  }
+  .font-space-grotesk {
+    font-family: var(--font-space-grotesk);
+  }
+  .font-zx-proto {
+    font-family: var(--font-0xproto);
+  }
 }
 
 @layer base {
