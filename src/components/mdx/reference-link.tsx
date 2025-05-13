@@ -22,7 +22,7 @@ export const ReferenceLinks: React.FC<ReferenceLinksProps> = ({ links }) => {
           key={l.href}
           className={cn(
             badgeVariants({ variant: 'secondary' }),
-            'gap-1 font-semibold inline-flex items-center',
+            'inline-flex items-center gap-1 font-semibold',
           )}
           href={l.href}
         >

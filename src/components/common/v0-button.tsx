@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 export function OpenInV0Button({ url }: { url: string }) {
   return (
     <Button
-      className='gap-1 font-geist bg-neutral-900 text-neutral-50 shadow hover:bg-neutral-900/90 dark:bg-neutral-200 dark:text-neutral-900 dark:hover:bg-neutral-200/90'
+      className='font-geist gap-1 bg-neutral-900 text-neutral-50 shadow hover:bg-neutral-900/90 dark:bg-neutral-200 dark:text-neutral-900 dark:hover:bg-neutral-200/90'
       asChild
     >
       <a

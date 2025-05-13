@@ -1,0 +1,20 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "color-picker",
+  "type": "registry:component",
+  "title": "Color Picker",
+  "description": "A color picker component",
+  "dependencies": [
+    "react-colorful"
+  ],
+  "registryDependencies": [
+    "input"
+  ],
+  "files": [
+    {
+      "path": "src/registry/default/ui/color-picker.tsx",
+      "content": "'use client';\n\nimport * as React from 'react';\nimport { HexAlphaColorPicker, HexColorPicker } from 'react-colorful';\n\nimport { Input } from '@/components/ui/input';\nimport { cn } from '@/lib/utils';\n\nexport type ColorPickerProps = Omit<\n  React.ComponentProps<typeof Input>,\n  'value' | 'onChange' | 'onBlur'\n> & {\n  value?: string;\n  alpha?: boolean;\n  onChange: (value: string) => void;\n};\n\nexport const ColorPicker: React.FC<ColorPickerProps> = ({\n  className,\n  value,\n  alpha,\n  onChange,\n  ...props\n}) => {\n  return (\n    <div className={cn('space-y-2', className)}>\n      {alpha ? (\n        <HexAlphaColorPicker color={value} onChange={onChange} {...props} />\n      ) : (\n        <HexColorPicker color={value} onChange={onChange} {...props} />\n      )}\n\n      <Input\n        id='custom'\n        value={value}\n        className='h-8 w-[200px]'\n        onChange={(e) => onChange(e.currentTarget.value)}\n        {...props}\n      />\n    </div>\n  );\n};\nColorPicker.displayName = 'ColorPicker';\n",
+      "type": "registry:component"
+    }
+  ]
+}
