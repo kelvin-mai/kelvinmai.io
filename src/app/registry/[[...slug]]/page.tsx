@@ -4,6 +4,7 @@ import { AnchorProvider } from 'fumadocs-core/toc';
 import { source } from '@/lib/source';
 import { getMDXComponents } from '@/components/mdx';
 import { TableOfContents } from '@/components/docs';
+import { BuyMeCofffeeBanner } from '@/components/common';
 
 export default async function DocsPage(props: {
   params: Promise<{ slug?: string[] }>;
@@ -13,7 +14,6 @@ export default async function DocsPage(props: {
   if (!page) notFound();
 
   const MDX = page.data.body;
-  console.log(page);
 
   return (
     <AnchorProvider toc={page.data.toc} single={false}>
@@ -28,6 +28,7 @@ export default async function DocsPage(props: {
           <article>
             <MDX components={getMDXComponents()} />
           </article>
+          <BuyMeCofffeeBanner />
         </div>
         <TableOfContents items={page.data.toc} />
       </div>

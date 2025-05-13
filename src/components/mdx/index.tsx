@@ -18,6 +18,7 @@ import {
   ComponentSource,
 } from './code';
 import { Steps, Step } from './steps';
+import { ReferenceLinks } from './reference-link';
 
 export const getMDXComponents = (components?: MDXComponents): MDXComponents => {
   return {
@@ -55,6 +56,7 @@ export const getMDXComponents = (components?: MDXComponents): MDXComponents => {
     ComponentSource,
     Steps,
     Step,
+    ReferenceLinks,
     ...components,
   };
 };
