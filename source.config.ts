@@ -1,4 +1,9 @@
-import { defineDocs, defineConfig } from 'fumadocs-mdx/config';
+import { z } from 'zod';
+import {
+  defineDocs,
+  defineConfig,
+  frontmatterSchema,
+} from 'fumadocs-mdx/config';
 import { remarkCodeHike, recmaCodeHike } from 'codehike/mdx';
 
 const chConfig = {
@@ -10,6 +15,11 @@ const chConfig = {
 
 export const docs = defineDocs({
   dir: 'src/content/docs',
+  docs: {
+    schema: frontmatterSchema.extend({
+      full: z.boolean().default(false),
+    }),
+  },
 });
 
 export default defineConfig({

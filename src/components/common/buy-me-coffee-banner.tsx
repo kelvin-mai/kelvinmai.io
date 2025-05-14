@@ -1,6 +1,3 @@
-import { spaceGrotesk } from '@/lib/fonts';
-import { cn } from '@/lib/utils';
-
 export const BuyMeCofffeeBanner = () => {
   return (
     <a
@@ -9,12 +6,7 @@ export const BuyMeCofffeeBanner = () => {
       target='_blank'
       rel='noopener noreferrer'
     >
-      <div
-        className={cn(
-          spaceGrotesk.className,
-          'mr-8 hidden text-center text-xl font-bold text-black md:block',
-        )}
-      >
+      <div className='font-space-grotesk mr-8 hidden text-center text-xl font-bold text-black md:block'>
         Want to support?
       </div>
       <button

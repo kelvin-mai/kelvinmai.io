@@ -30,7 +30,6 @@ import { ExternalLink, SimpleIcon } from '../common';
 
 export type NavItem = {
   name: string;
-  description: string;
   url: string;
   children?: NavItem[];
 };

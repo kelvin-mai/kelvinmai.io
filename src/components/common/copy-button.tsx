@@ -2,16 +2,13 @@
 
 import * as React from 'react';
 import { CheckIcon, CopyIcon } from 'lucide-react';
+import { toast } from 'sonner';
 
-import { cn } from '@/lib/utils';
+import { cn, copyToClipboardWithMeta } from '@/lib/utils';
 import { Button } from '../ui/button';
 
 type CopyButtonProps = Omit<React.ComponentProps<typeof Button>, 'value'> & {
   value: string;
-};
-
-const copyToClipboardWithMeta = async (value: string) => {
-  navigator.clipboard.writeText(value);
 };
 
 export const CopyButton: React.FC<CopyButtonProps> = ({
@@ -27,6 +24,12 @@ export const CopyButton: React.FC<CopyButtonProps> = ({
     }, 2000);
   }, [copied]);
 
+  const handleCopy = () => {
+    copyToClipboardWithMeta(value);
+    setCopied(true);
+    toast('Code copied to clipboard.');
+  };
+
   return (
     <Button
       size='icon'
@@ -35,10 +38,7 @@ export const CopyButton: React.FC<CopyButtonProps> = ({
         'z-10 size-6 rounded-md bg-zinc-800 text-zinc-50 hover:bg-zinc-700 hover:text-zinc-50',
         className,
       )}
-      onClick={() => {
-        copyToClipboardWithMeta(value);
-        setCopied(true);
-      }}
+      onClick={handleCopy}
       {...props}
     >
       {copied ? (
