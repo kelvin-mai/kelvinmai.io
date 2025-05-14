@@ -5,10 +5,11 @@ import { Download, FileHeart } from 'lucide-react';
 import { resume } from '@/lib/constants';
 import { Button } from '@/components/ui/button';
 import { PDFDownloadLink, ResumeDocument } from '../pdf';
+import { AnimatedHomeCard } from './animated-home-card';
 
 export const HeroSection = () => {
   return (
-    <div className='bg-glass space-y-2 rounded-lg p-4 shadow'>
+    <AnimatedHomeCard>
       <Image
         className='overflow-hidden rounded-full'
         alt='profile'
@@ -39,6 +40,6 @@ export const HeroSection = () => {
           </PDFDownloadLink>
         </Button>
       </div>
-    </div>
+    </AnimatedHomeCard>
   );
 };

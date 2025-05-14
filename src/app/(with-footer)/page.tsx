@@ -9,6 +9,7 @@ import {
   Skills,
 } from '@/components/about';
 import { Button } from '@/components/ui';
+import { AnimatedHomeCard } from '@/components/about/animated-home-card';
 
 export default function Home() {
   return (
@@ -18,16 +19,21 @@ export default function Home() {
         <div className='grid grid-cols-1 gap-4 md:grid-cols-3'>
           <section className='flex flex-col space-y-4 md:col-span-2'>
             <HeroSection />
-            <BuyMeCofffeeBanner />
+            <AnimatedHomeCard overrideClassName delay={2}>
+              <BuyMeCofffeeBanner />
+            </AnimatedHomeCard>
           </section>
           <section className='flex flex-col gap-4'>
-            <div className='bg-glass rounded-lg p-4 text-center shadow md:text-left'>
+            <AnimatedHomeCard delay={3}>
               <div className='text-2xl text-cyan-500'>{yearsSinceStart()}+</div>
               <div className='text-md font-semibold tracking-tight'>
                 Years of experience
               </div>
-            </div>
-            <div className='flex grow flex-col justify-between space-y-2 rounded-lg bg-gradient-to-br from-white to-rose-200 p-4 text-neutral-900'>
+            </AnimatedHomeCard>
+            <AnimatedHomeCard
+              className='flex grow flex-col justify-between space-y-2 rounded-lg bg-gradient-to-br from-white to-rose-200 p-4 text-neutral-900'
+              delay={2}
+            >
               <h3 className='text-center text-2xl font-semibold'>
                 Get In Touch
               </h3>
@@ -42,19 +48,20 @@ export default function Home() {
                   Contact Me
                 </a>
               </Button>
-            </div>
-            <div className='bg-glass rounded-lg p-4 text-center shadow'>
+            </AnimatedHomeCard>
+            <AnimatedHomeCard delay={3}>
               <h3 className='text-2xl font-bold'>Connect</h3>
               <SocialLinks />
-            </div>
+            </AnimatedHomeCard>
           </section>
         </div>
         <section className='flex flex-col-reverse gap-4 md:flex-col'>
-          <Skills className='bg-glass rounded-lg p-4 shadow' />
-          <Experiences
-            className='bg-glass rounded-lg p-4 shadow'
-            jobs={resume.work}
-          />
+          <AnimatedHomeCard delay={4}>
+            <Skills />
+          </AnimatedHomeCard>
+          <AnimatedHomeCard delay={5}>
+            <Experiences jobs={resume.work} />
+          </AnimatedHomeCard>
         </section>
       </main>
     </>
