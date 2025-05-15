@@ -1,10 +1,10 @@
 import { MetadataRoute } from 'next';
 
-import { getBaseUrl } from '@/lib/utils';
 import { source } from '@/lib/source';
+import { SITE_URL } from '@/lib/constants';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const url = (path: string) => new URL(path, getBaseUrl()).toString();
+  const url = (path: string) => new URL(path, SITE_URL).toString();
   return [
     {
       url: url('/'),

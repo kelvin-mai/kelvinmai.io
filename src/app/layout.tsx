@@ -5,11 +5,11 @@ import { SpeedInsights } from '@vercel/speed-insights/next';
 import '@/styles/globals.css';
 import { RootProvider } from '@/providers';
 import { fontVariables } from '@/lib/fonts';
-import { resume } from '@/lib/constants';
-import { getBaseUrl, cn } from '@/lib/utils';
+import { resume, SITE_URL } from '@/lib/constants';
+import { cn } from '@/lib/utils';
 
 export const metadata: Metadata = {
-  metadataBase: new URL(getBaseUrl()),
+  metadataBase: new URL(SITE_URL),
   alternates: {
     canonical: '/',
   },
@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   },
   description: resume.basics.summary,
   creator: 'kelvin-mai',
-  authors: [{ name: 'kelvin-mai', url: getBaseUrl() }],
+  authors: [{ name: 'kelvin-mai', url: SITE_URL }],
 };
 
 export default function RootLayout({
