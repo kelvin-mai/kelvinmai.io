@@ -5,8 +5,11 @@ import { toast } from 'sonner';
 
 import { tailwindColors } from '@/lib/constants';
 import { copyToClipboardWithMeta } from '@/lib/utils';
+import { cn } from '@/lib/utils';
 
 export type ColorSwatchProps = {
+  selected?: string;
+  fullHeight?: boolean;
   colors: {
     50: string;
     100: string;
@@ -22,7 +25,11 @@ export type ColorSwatchProps = {
   };
 };
 
-export const ColorSwatch: React.FC<ColorSwatchProps> = ({ colors }) => {
+export const ColorSwatch: React.FC<ColorSwatchProps> = ({
+  colors,
+  selected,
+  fullHeight,
+}) => {
   const [copied, setCopied] = React.useState(false);
 
   React.useEffect(() => {
@@ -46,11 +53,20 @@ export const ColorSwatch: React.FC<ColorSwatchProps> = ({ colors }) => {
   };
 
   return (
-    <div className='relative flex flex-col space-y-1 overflow-hidden rounded-lg md:flex-row md:space-y-0 md:space-x-1'>
+    <div
+      className={cn(
+        'relative flex flex-col space-y-1 rounded-lg md:flex-row md:space-y-0 md:space-x-1',
+        fullHeight && 'h-full',
+      )}
+    >
       {Object.entries(colors).map(([key, value]) => (
         <button
           key={key}
-          className='relative flex h-14 w-full flex-col justify-center rounded-lg p-2 md:h-20 md:py-4'
+          className={cn(
+            'relative flex h-14 w-full flex-col justify-center rounded-lg p-2 md:h-full md:py-4',
+            value === selected && 'ring-primary ring-2 ring-offset-2',
+            fullHeight && 'md:h-full',
+          )}
           style={{
             backgroundColor: value,
           }}
@@ -58,14 +74,13 @@ export const ColorSwatch: React.FC<ColorSwatchProps> = ({ colors }) => {
         >
           <div
             className={
-              'flex cursor-pointer items-center justify-between truncate px-4 md:mt-auto md:block md:px-0'
+              'flex cursor-pointer items-center justify-between truncate px-4 md:mt-auto md:flex-col-reverse md:px-0'
             }
+            style={{
+              color: Number(key) >= 500 ? colors[50] : colors[950],
+            }}
           >
-            <div
-              style={{
-                color: Number(key) >= 500 ? colors[50] : colors[950],
-              }}
-            >
+            <div>
               <div className='text-center text-xs font-medium lg:text-sm'>
                 {key}
               </div>
@@ -73,6 +88,11 @@ export const ColorSwatch: React.FC<ColorSwatchProps> = ({ colors }) => {
                 {value}
               </div>
             </div>
+            {value === selected && (
+              <div className='block font-bold capitalize md:hidden lg:block'>
+                base
+              </div>
+            )}
           </div>
         </button>
       ))}
