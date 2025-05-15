@@ -1,14 +1,24 @@
 'use client';
 
 import * as React from 'react';
+import {
+  highlight,
+  type RawCode,
+  Pre,
+  type HighlightedCode,
+} from 'codehike/code';
 
+import { CopyButton } from '@/components/common';
 import { Button } from '@/components/ui/button';
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
 } from '@/components/ui/collapsible';
+import { Skeleton } from '@/components/ui/skeleton';
 import { cn } from '@/lib/utils';
+import { wordWrap } from './annotations/wrap-word';
+import { eldritch } from './themes';
 
 type CollapsibleCodeProps = React.HTMLAttributes<HTMLDivElement> & {
   collapseText?: string;
@@ -56,5 +66,41 @@ export const CollapsibleCode: React.FC<CollapsibleCodeProps> = ({
         </div>
       </div>
     </Collapsible>
+  );
+};
+
+type CodeProps = { codeblock: RawCode; className?: string };
+
+export const DynamicCode: React.FC<CodeProps> = ({ className, codeblock }) => {
+  const [highlighted, setHighlighted] = React.useState<
+    HighlightedCode | undefined
+  >();
+  const updateHighlighted = async () => {
+    const highlighted = await highlight(codeblock, eldritch);
+    setHighlighted(highlighted);
+  };
+  React.useEffect(() => {
+    updateHighlighted();
+  }, [codeblock]);
+  return highlighted ? (
+    <div className={cn('relative my-4 font-mono', className)}>
+      <CopyButton className='absolute top-1 right-2' value={highlighted.code} />
+      {codeblock.meta && (
+        <div className='flex items-center justify-center rounded-t-lg bg-neutral-800 py-1 text-neutral-400 hover:text-neutral-200'>
+          {codeblock.meta}
+        </div>
+      )}
+      <Pre
+        className={cn(
+          'overflow-x-auto p-2 font-mono',
+          codeblock.meta ? 'rounded-b-lg' : 'rounded-lg',
+        )}
+        code={highlighted}
+        style={highlighted.style}
+        handlers={[wordWrap]}
+      />
+    </div>
+  ) : (
+    <Skeleton className='h-50' />
   );
 };
