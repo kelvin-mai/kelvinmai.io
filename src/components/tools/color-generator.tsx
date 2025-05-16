@@ -158,7 +158,7 @@ export const ColorGenerator = () => {
             <ColorSwatch colors={shades} selected={color} fullHeight />
           </div>
         ) : (
-          <div className='bg-card flex w-full flex-col items-center justify-center rounded border shadow-sm'>
+          <div className='bg-card flex w-full flex-col items-center justify-center rounded-lg border shadow-sm'>
             <p className='text-xl'>Preview will be shown here</p>
             <p className='text-muted-foreground text-lg'>
               Please choose a color
@@ -194,7 +194,7 @@ export const ColorGenerator = () => {
           </TabsContent>
         </Tabs>
       ) : (
-        <div className='bg-card flex h-50 w-full flex-col items-center justify-center rounded border shadow-sm'>
+        <div className='bg-card flex h-50 w-full flex-col items-center justify-center rounded-lg border shadow-sm'>
           <p className='text-xl'>Code will be shown here.</p>
           <p className='text-muted-foreground text-lg'>Please choose a color</p>
         </div>

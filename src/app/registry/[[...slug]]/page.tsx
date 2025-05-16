@@ -37,7 +37,6 @@ export default async function DocsPage(props: {
     <AnchorProvider toc={page.data.toc} single={false}>
       <div
         className={cn(
-          'py-6',
           !page.data.full && 'flex lg:grid lg:grid-cols-[1fr_300px] lg:gap-4',
         )}
       >
