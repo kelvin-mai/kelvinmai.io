@@ -56,6 +56,22 @@
           "type": "registry:component"
         }
       ]
+    },
+    {
+      "name": "use-theme",
+      "type": "registry:hook",
+      "title": "use-theme",
+      "description": "",
+      "dependencies": [
+        "next-themes"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "src/registry/default/hooks/use-theme.tsx",
+          "type": "registry:hook"
+        }
+      ]
     }
   ]
 }

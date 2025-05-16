@@ -17,7 +17,11 @@ export const Step: React.FC<ComponentPropsWithoutRef<'h3'>> = ({
   children,
   ...props
 }) => (
-  <Heading as='h3' className={cn('relative', className)} {...props}>
+  <Heading
+    as='h3'
+    className={cn('relative mt-4 pb-2 text-lg font-semibold', className)}
+    {...props}
+  >
     <span className='bg-border absolute top-0 -left-8 block h-full w-[6px] rounded-tr-full rounded-br-full' />
     {children}
   </Heading>

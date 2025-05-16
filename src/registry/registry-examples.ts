@@ -56,4 +56,15 @@ export const examples: Registry['items'] = [
       },
     ],
   },
+  {
+    name: 'use-theme-demo',
+    type: 'registry:example',
+    registryDependencies: ['https://kelvinmai.io/r/use-theme.json'],
+    files: [
+      {
+        path: 'default/examples/use-theme-demo.tsx',
+        type: 'registry:example',
+      },
+    ],
+  },
 ];

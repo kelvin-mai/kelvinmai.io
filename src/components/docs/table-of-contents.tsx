@@ -252,7 +252,7 @@ export const TableOfContents: React.FC<TableOfContentsProps> = ({
         className,
       )}
     >
-      <h3 className='text-muted-foreground inline-flex items-center gap-2'>
+      <h3 className='text-primary inline-flex items-center gap-2'>
         <Text className='size-4' /> On This Page
       </h3>
       <Base.ScrollProvider containerRef={viewRef}>

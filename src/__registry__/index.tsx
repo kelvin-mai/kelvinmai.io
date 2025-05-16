@@ -23,7 +23,7 @@ export const Index: Record<string, any> = {
     type: "registry:component",
     files: [{
       path: "src/registry/default/ui/floating-label-input.tsx",
-      content: "import * as React from 'react';\n\nimport { cn } from '@/lib/utils';\nimport { Label } from '@radix-ui/react-label';\nimport { Input } from '@/components/ui/input';\n\nexport const FloatingLabel: React.FC<React.ComponentProps<typeof Label>> = ({\n  className,\n  ...props\n}) => {\n  return (\n    <Label\n      className={cn(\n        'peer-has-focus:secondary bg-background absolute start-2 top-2 z-10 origin-[0] -translate-y-4 scale-75 transform cursor-text px-2 text-sm text-gray-500 duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:px-2 rtl:peer-focus:left-auto rtl:peer-focus:translate-x-1/4',\n        className,\n      )}\n      {...props}\n    />\n  );\n};\n\nexport const FloatingInput: React.FC<\n  React.ComponentProps<'input'> & {\n    label: string;\n  }\n> = ({ id, label, className, ...props }) => {\n  return (\n    <div className='relative'>\n      <Input\n        id={id}\n        className={cn('peer dark:bg-background', className)}\n        placeholder=' '\n        {...props}\n      />\n      <FloatingLabel htmlFor={id}>{label}</FloatingLabel>\n    </div>\n  );\n};\n",
+      content: "import * as React from 'react';\n\nimport { cn } from '@/lib/utils';\nimport { Label } from '@radix-ui/react-label';\nimport { Input } from '@/components/ui/input';\n\nexport const FloatingLabel: React.FC<React.ComponentProps<typeof Label>> = ({\n  className,\n  ...props\n}) => {\n  return (\n    <Label\n      className={cn(\n        'peer-has-focus:secondary bg-background absolute start-2 top-2 z-10 origin-[0] -translate-y-4 scale-75 transform cursor-text px-2 text-sm text-gray-500 duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:px-2 rtl:peer-focus:left-auto rtl:peer-focus:translate-x-1/4',\n        className,\n      )}\n      {...props}\n    />\n  );\n};\n\nexport const FloatingInput: React.FC<\n  React.ComponentProps<'input'> & {\n    label: string;\n  }\n> = ({ id, label, className, ...props }) => {\n  return (\n    <div className='relative'>\n      <Input\n        id={id}\n        className={cn('peer bg-background', className)}\n        placeholder=' '\n        {...props}\n      />\n      <FloatingLabel htmlFor={id}>{label}</FloatingLabel>\n    </div>\n  );\n};\n",
       type: "registry:component",
     }],
   },
@@ -35,6 +35,16 @@ export const Index: Record<string, any> = {
       path: "src/registry/default/ui/theme-switch.tsx",
       content: "'use client';\n\nimport React, { type JSX, useEffect, useState } from 'react';\nimport { MonitorIcon, MoonStarIcon, SunIcon } from 'lucide-react';\nimport { motion } from 'motion/react';\nimport { useTheme } from 'next-themes';\n\nimport { cn } from '@/lib/utils';\n\nconst ThemeOption = ({\n  icon,\n  value,\n  isActive,\n  onClick,\n}: {\n  icon: JSX.Element;\n  value: string;\n  isActive?: boolean;\n  onClick: (value: string) => void;\n}) => {\n  return (\n    <button\n      className={cn(\n        'relative flex size-8 cursor-default items-center justify-center rounded-full transition-all [&_svg]:size-4',\n        isActive\n          ? 'text-zinc-950 dark:text-zinc-50'\n          : 'text-zinc-400 hover:text-zinc-950 dark:text-zinc-500 dark:hover:text-zinc-50',\n      )}\n      role='radio'\n      aria-checked={isActive}\n      aria-label={\`Switch to \${value} theme\`}\n      onClick={() => onClick(value)}\n    >\n      {icon}\n\n      {isActive && (\n        <motion.div\n          layoutId='theme-option'\n          transition={{ type: 'spring', bounce: 0.3, duration: 0.6 }}\n          className='absolute inset-0 rounded-full border border-zinc-200 dark:border-zinc-700'\n        />\n      )}\n    </button>\n  );\n};\n\nconst THEME_OPTIONS = [\n  {\n    icon: <MonitorIcon />,\n    value: 'system',\n  },\n  {\n    icon: <SunIcon />,\n    value: 'light',\n  },\n  {\n    icon: <MoonStarIcon />,\n    value: 'dark',\n  },\n];\n\nconst ThemeSwitch = () => {\n  const { theme, setTheme } = useTheme();\n\n  const [isMounted, setIsMounted] = useState(false);\n\n  useEffect(() => {\n    setIsMounted(true);\n  }, []);\n\n  if (!isMounted) {\n    return <div className='flex h-8 w-24' />;\n  }\n\n  return (\n    <motion.div\n      key={String(isMounted)}\n      initial={{ opacity: 0 }}\n      animate={{ opacity: 1 }}\n      transition={{ duration: 0.3 }}\n      className='inline-flex items-center overflow-hidden rounded-full bg-white ring-1 ring-zinc-200 ring-inset dark:bg-zinc-950 dark:ring-zinc-700'\n      role='radiogroup'\n    >\n      {THEME_OPTIONS.map((option) => (\n        <ThemeOption\n          key={option.value}\n          icon={option.icon}\n          value={option.value}\n          isActive={theme === option.value}\n          onClick={setTheme}\n        />\n      ))}\n    </motion.div>\n  );\n};\n\nexport { ThemeSwitch };\n",
       type: "registry:component",
+    }],
+  },
+  "use-theme": {
+    name: "use-theme",
+    description: "",
+    type: "registry:hook",
+    files: [{
+      path: "src/registry/default/hooks/use-theme.tsx",
+      content: "'use client';\n\nimport * as React from 'react';\nimport { useTheme as useNextTheme } from 'next-themes';\n\n// !callout[/bubblegum/] Add your own theme names here\nconst colorThemes = ['default', 'bubblegum', 'monochrome'] as const;\nexport type ColorTheme = (typeof colorThemes)[number];\nexport type Theme = 'system' | 'light' | 'dark';\n\nexport const useTheme = () => {\n  const { setTheme, resolvedTheme } = useNextTheme();\n  const [colorTheme, setColorTheme] = React.useState<ColorTheme>('default');\n\n  React.useEffect(() => {\n    if (typeof window === 'undefined') return;\n    const saved = localStorage.getItem('color-theme') as ColorTheme | null;\n    if (saved) {\n      setColorTheme(saved);\n      document.documentElement.classList.add(\`theme-\${saved}\`);\n    }\n  }, []);\n\n  const updateColorTheme = React.useCallback((next: ColorTheme) => {\n    if (typeof window === 'undefined') return;\n    document.documentElement.classList.remove();\n    if (colorTheme !== 'default') {\n      document.documentElement.classList.add(\`theme-\${next}\`);\n    }\n    localStorage.setItem('color-theme', next);\n    setColorTheme(next);\n  }, []);\n\n  return {\n    setTheme,\n    theme: resolvedTheme as Theme,\n    colorTheme: colorTheme,\n    setColorTheme: updateColorTheme,\n  };\n};\n",
+      type: "registry:hook",
     }],
   },
   "color-picker-demo": {
@@ -96,5 +106,17 @@ export const Index: Record<string, any> = {
     }],
     component: React.lazy(() => import("@/registry/default/examples/theme-switch-demo.tsx")),
     source: "import { ThemeSwitch } from '@/registry/default/ui/theme-switch';\n\nexport default function ThemeSwitchDemo() {\n  return <ThemeSwitch />;\n}\n",
+  },
+  "use-theme-demo": {
+    name: "use-theme-demo",
+    description: "",
+    type: "registry:example",
+    files: [{
+      path: "src/registry/default/examples/use-theme-demo.tsx",
+      content: "'use client';\n\nimport { useTheme } from '@/registry/default/hooks/use-theme';\nimport { ThemeSwitch } from '@/registry/default/ui/theme-switch';\n\nexport const UseThemeDemo = () => {\n  const { colorTheme, setColorTheme } = useTheme();\n  return (\n    <div className='rounded-lg border bg-card text-card-foreground shadow-sm'>\n      <ThemeSwitch />\n    </div>\n  );\n};\n",
+      type: "registry:example",
+    }],
+    component: React.lazy(() => import("@/registry/default/examples/use-theme-demo.tsx")),
+    source: "'use client';\n\nimport { useTheme } from '@/registry/default/hooks/use-theme';\nimport { ThemeSwitch } from '@/registry/default/ui/theme-switch';\n\nexport const UseThemeDemo = () => {\n  const { colorTheme, setColorTheme } = useTheme();\n  return (\n    <div className='rounded-lg border bg-card text-card-foreground shadow-sm'>\n      <ThemeSwitch />\n    </div>\n  );\n};\n",
   },
 }

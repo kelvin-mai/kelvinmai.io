@@ -1,0 +1,99 @@
+---
+title: Use Theme
+description: Extend next-theme's use-theme hook to manage multiple shadcn color themes.
+---
+
+## Preview
+
+<ComponentPreview
+  name='use-theme-demo'
+  v0Url='https://kelvinmai.io/r/use-theme.json'
+/>
+
+## Installation
+
+### CLI
+
+<NpmCommand value='npx shadcn@latest add https://kelvinmai.io/r/theme-switch.json' />
+
+### Manual
+
+<Steps>
+
+<Step>Install the following dependencies</Step>
+
+<NpmCommand value='npm install next-themes' />
+
+<Step>Set up next-themes in your Next.js app</Step>
+
+```tsx app/layout.tsx
+import { ThemeProvider } from 'next-themes';
+
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  return (
+    <ThemeProvider attribute='class' defaultTheme='system' enableSystem>
+      {children}
+    </ThemeProvider>
+  );
+}
+```
+
+To develop your own themes you can get some inspiration or customize your own from [tweakcn](https://tweakcn.com/).
+
+<Step>Copy and paste the following code into your project</Step>
+
+<ComponentSource name='use-theme' title='hooks/use-theme.tsx' />
+
+<Step>Update the import paths to match your project setup</Step>
+
+</Steps>
+
+## Usage
+
+Add multiple custom themes to your global css file
+
+```css app/globals.css
+/* !callout[/yours/] By default this hook assumes theme names are prefixed with `theme-` */
+.theme-yours {
+  /* ... */
+}
+.theme-yours.dark {
+  /* ... */
+}
+```
+
+```tsx
+import { useTheme } from '@/hooks/use-theme';
+
+const { theme, setTheme, colorTheme, setColorTheme } = useTheme();
+```
+
+## API Reference
+
+<ReferenceLinks
+  links={[
+    {
+      href: 'https://github.com/pacocoursey/next-themes',
+      label: 'next-themes',
+    },
+    {
+      href: 'https://ui.shadcn.com/themes',
+      label: 'shadcn/ui themes',
+    },
+  ]}
+/>
+
+### Returns
+
+The _`useToggle`_ hook returns an object with the following elements:
+
+| Name              | Type                     | Description                                               |
+| ----------------- | ------------------------ | --------------------------------------------------------- |
+| _`theme`_         | _`Theme`_                | The resolved theme provided by next-themes.               |
+| _`setTheme`_      | _`(Theme) => void`_      | Function to set the next-theme theme.                     |
+| _`colorTheme`_    | _`ColorTheme`_           | The current theme of your pre-defined shadcn color theme. |
+| _`setColorTheme`_ | _`(ColorTheme) => void`_ | Function to set the the color theme.                      |

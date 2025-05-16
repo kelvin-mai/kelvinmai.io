@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "use-theme",
+  "type": "registry:hook",
+  "title": "use-theme",
+  "description": "",
+  "dependencies": [
+    "next-themes"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "src/registry/default/hooks/use-theme.tsx",
+      "content": "'use client';\n\nimport * as React from 'react';\nimport { useTheme as useNextTheme } from 'next-themes';\n\n// !callout[/bubblegum/] Add your own theme names here\nconst colorThemes = ['default', 'bubblegum', 'monochrome'] as const;\nexport type ColorTheme = (typeof colorThemes)[number];\nexport type Theme = 'system' | 'light' | 'dark';\n\nexport const useTheme = () => {\n  const { setTheme, resolvedTheme } = useNextTheme();\n  const [colorTheme, setColorTheme] = React.useState<ColorTheme>('default');\n\n  React.useEffect(() => {\n    if (typeof window === 'undefined') return;\n    const saved = localStorage.getItem('color-theme') as ColorTheme | null;\n    if (saved) {\n      setColorTheme(saved);\n      document.documentElement.classList.add(`theme-${saved}`);\n    }\n  }, []);\n\n  const updateColorTheme = React.useCallback((next: ColorTheme) => {\n    if (typeof window === 'undefined') return;\n    document.documentElement.classList.remove();\n    if (colorTheme !== 'default') {\n      document.documentElement.classList.add(`theme-${next}`);\n    }\n    localStorage.setItem('color-theme', next);\n    setColorTheme(next);\n  }, []);\n\n  return {\n    setTheme,\n    theme: resolvedTheme as Theme,\n    colorTheme: colorTheme,\n    setColorTheme: updateColorTheme,\n  };\n};\n",
+      "type": "registry:hook"
+    }
+  ]
+}

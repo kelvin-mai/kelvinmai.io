@@ -8,7 +8,7 @@ import {
 
 import { CopyButton } from '@/components/common';
 import { cn } from '@/lib/utils';
-import { wordWrap } from './annotations/wrap-word';
+import { callout, wordWrap } from './annotations';
 import { eldritch } from './themes';
 
 type CodeProps = { codeblock: RawCode; className?: string };
@@ -44,7 +44,7 @@ export const Code: React.FC<CodeProps> = async ({ className, codeblock }) => {
         )}
         code={highlighted}
         style={highlighted.style}
-        handlers={[wordWrap]}
+        handlers={[wordWrap, callout]}
       />
     </div>
   );

@@ -11,7 +11,7 @@ type HeadingProps = React.ComponentProps<HeadingType> & {
 const headingClasses: { [key in HeadingType]: string } = {
   h1: 'mt-2 text-4xl font-bold',
   h2: 'mt-8 border-b pb-2 text-xl font-semibold first:mt-0 w-full',
-  h3: 'mt-8 pb-2 text-lg font-semibold',
+  h3: 'mt-4 pb-2 text-lg font-semibold',
   h4: 'mt-8 text-lg font-semibold',
   h5: 'mt-8 text-lg font-semibold',
   h6: 'mt-8 text-lg font-semibold',

@@ -29,7 +29,7 @@ export const getMDXComponents = (components?: MDXComponents): MDXComponents => {
     h5: (props) => <Heading as='h5' {...props} />,
     h6: (props) => <Heading as='h6' {...props} />,
     p: (props) => (
-      <p className='leading-6 [&:not(:first-child)]:mt-6' {...props} />
+      <p className='leading-6 [&:not(:first-child)]:mt-2' {...props} />
     ),
     blockquote: (props) => (
       <blockquote className='mt-6 border-l-2 pl-6 italic' {...props} />
@@ -43,7 +43,7 @@ export const getMDXComponents = (components?: MDXComponents): MDXComponents => {
     a: (props) => (
       <ExternalLink className='underline underline-offset-4' {...props} />
     ),
-    table: Table,
+    table: (props) => <Table className='my-4' {...props} />,
     thead: TableHeader,
     tbody: TableBody,
     tr: TableRow,
