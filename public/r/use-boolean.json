@@ -1,0 +1,16 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "use-boolean",
+  "type": "registry:hook",
+  "title": "use-boolean",
+  "description": "A hook to manage boolean states with common methods to set the value to true, false or toggle between them",
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "src/registry/default/hooks/use-boolean.ts",
+      "content": "'use client';\n\nimport * as React from 'react';\n\nexport function useBoolean(defaultValue = false) {\n  if (typeof defaultValue !== 'boolean') {\n    throw new Error('defaultValue must be `true` or `false`');\n  }\n  const [value, setValue] = React.useState(defaultValue);\n\n  const setTrue = React.useCallback(() => {\n    setValue(true);\n  }, []);\n\n  const setFalse = React.useCallback(() => {\n    setValue(false);\n  }, []);\n\n  const toggle = React.useCallback(() => {\n    setValue((x) => !x);\n  }, []);\n\n  return { value, setValue, setTrue, setFalse, toggle };\n}\n",
+      "type": "registry:hook"
+    }
+  ]
+}

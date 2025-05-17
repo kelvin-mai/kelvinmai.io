@@ -49,7 +49,7 @@ export default function Home() {
                 </a>
               </Button>
             </AnimatedHomeCard>
-            <AnimatedHomeCard delay={3}>
+            <AnimatedHomeCard className='text-center' delay={3}>
               <h3 className='text-2xl font-bold'>Connect</h3>
               <SocialLinks />
             </AnimatedHomeCard>

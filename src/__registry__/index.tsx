@@ -37,13 +37,63 @@ export const Index: Record<string, any> = {
       type: "registry:component",
     }],
   },
-  "use-theme": {
-    name: "use-theme",
-    description: "",
+  "use-boolean": {
+    name: "use-boolean",
+    description: "A hook to manage boolean states with common methods to set the value to true, false or toggle between them",
     type: "registry:hook",
     files: [{
-      path: "src/registry/default/hooks/use-theme.tsx",
-      content: "'use client';\n\nimport * as React from 'react';\nimport { useTheme as useNextTheme } from 'next-themes';\n\n// !callout[/bubblegum/] Add your own theme names here\nconst colorThemes = ['default', 'bubblegum', 'monochrome'] as const;\nexport type ColorTheme = (typeof colorThemes)[number];\nexport type Theme = 'system' | 'light' | 'dark';\n\nexport const useTheme = () => {\n  const { setTheme, resolvedTheme } = useNextTheme();\n  const [colorTheme, setColorTheme] = React.useState<ColorTheme>('default');\n\n  React.useEffect(() => {\n    if (typeof window === 'undefined') return;\n    const saved = localStorage.getItem('color-theme') as ColorTheme | null;\n    if (saved) {\n      setColorTheme(saved);\n      document.documentElement.classList.add(\`theme-\${saved}\`);\n    }\n  }, []);\n\n  const updateColorTheme = React.useCallback((next: ColorTheme) => {\n    if (typeof window === 'undefined') return;\n    document.documentElement.classList.remove();\n    if (colorTheme !== 'default') {\n      document.documentElement.classList.add(\`theme-\${next}\`);\n    }\n    localStorage.setItem('color-theme', next);\n    setColorTheme(next);\n  }, []);\n\n  return {\n    setTheme,\n    theme: resolvedTheme as Theme,\n    colorTheme: colorTheme,\n    setColorTheme: updateColorTheme,\n  };\n};\n",
+      path: "src/registry/default/hooks/use-boolean.ts",
+      content: "'use client';\n\nimport * as React from 'react';\n\nexport function useBoolean(defaultValue = false) {\n  if (typeof defaultValue !== 'boolean') {\n    throw new Error('defaultValue must be \`true\` or \`false\`');\n  }\n  const [value, setValue] = React.useState(defaultValue);\n\n  const setTrue = React.useCallback(() => {\n    setValue(true);\n  }, []);\n\n  const setFalse = React.useCallback(() => {\n    setValue(false);\n  }, []);\n\n  const toggle = React.useCallback(() => {\n    setValue((x) => !x);\n  }, []);\n\n  return { value, setValue, setTrue, setFalse, toggle };\n}\n",
+      type: "registry:hook",
+    }],
+  },
+  "use-mounted": {
+    name: "use-mounted",
+    description: "A hook that returns a boolean to check when the component has mounted",
+    type: "registry:hook",
+    files: [{
+      path: "src/registry/default/hooks/use-mounted.ts",
+      content: "'use client';\n\nimport * as React from 'react';\n\nexport const useMounted = () => {\n  const [mounted, setMounted] = React.useState<boolean>(false);\n  React.useEffect(() => {\n    setMounted(true);\n  }, []);\n  return mounted;\n};\n",
+      type: "registry:hook",
+    }],
+  },
+  "use-interval": {
+    name: "use-interval",
+    description: "A hook that executes a callback function at specified delays using the useInterval API",
+    type: "registry:hook",
+    files: [{
+      path: "src/registry/default/hooks/use-interval.ts",
+      content: "'use client';\n\nimport * as React from 'react';\n\nexport const useInterval = (callback: () => void, delay: number | null) => {\n  const ref = React.useRef(callback);\n  React.useEffect(() => {\n    ref.current = callback;\n  }, [callback]);\n\n  React.useEffect(() => {\n    if (delay === null || typeof delay !== 'number') {\n      return;\n    }\n    const tick = () => ref.current();\n    const id = setInterval(tick, delay);\n    return () => clearInterval(id);\n  }, [delay]);\n};\n",
+      type: "registry:hook",
+    }],
+  },
+  "use-theme": {
+    name: "use-theme",
+    description: "An extension to next-theme's use-theme hook to manage multiple shadcn color theme",
+    type: "registry:hook",
+    files: [{
+      path: "src/registry/default/hooks/use-theme.ts",
+      content: "'use client';\n\nimport * as React from 'react';\nimport { useTheme as useNextTheme } from 'next-themes';\n\n// !callout[/colorThemes/] Add your own theme names here\nexport const colorThemes = [\n  'default',\n  'bubblegum',\n  'monochrome',\n  'supabase',\n  'twitter',\n  'vercel',\n] as const;\n\nexport type ColorTheme = (typeof colorThemes)[number];\nexport type Theme = 'system' | 'light' | 'dark';\n\nexport const useTheme = () => {\n  const { setTheme, resolvedTheme } = useNextTheme();\n  const [colorTheme, setColorTheme] = React.useState<ColorTheme>('default');\n\n  React.useEffect(() => {\n    if (typeof window === 'undefined') return;\n    const saved = localStorage.getItem('color-theme') as ColorTheme | null;\n    if (saved) {\n      setColorTheme(saved);\n      document.documentElement.classList.add(\`theme-\${saved}\`);\n    }\n  }, []);\n\n  const updateColorTheme = React.useCallback((next: ColorTheme) => {\n    if (typeof window === 'undefined') return;\n\n    document.documentElement.classList.remove(\n      ...colorThemes.map((c) => \`theme-\${c}\`),\n    );\n    if (next !== 'default') {\n      document.documentElement.classList.add(\`theme-\${next}\`);\n    }\n    localStorage.setItem('color-theme', next);\n    setColorTheme(next);\n  }, []);\n\n  return {\n    setTheme,\n    theme: resolvedTheme as Theme,\n    colorTheme: colorTheme,\n    setColorTheme: updateColorTheme,\n  };\n};\n",
+      type: "registry:hook",
+    }],
+  },
+  "use-timeout": {
+    name: "use-timeout",
+    description: "A hook that executes a callback function after a specified delay using the setTimeout API",
+    type: "registry:hook",
+    files: [{
+      path: "src/registry/default/hooks/use-interval.ts",
+      content: "'use client';\n\nimport * as React from 'react';\n\nexport const useInterval = (callback: () => void, delay: number | null) => {\n  const ref = React.useRef(callback);\n  React.useEffect(() => {\n    ref.current = callback;\n  }, [callback]);\n\n  React.useEffect(() => {\n    if (delay === null || typeof delay !== 'number') {\n      return;\n    }\n    const tick = () => ref.current();\n    const id = setInterval(tick, delay);\n    return () => clearInterval(id);\n  }, [delay]);\n};\n",
+      type: "registry:hook",
+    }],
+  },
+  "use-unmount": {
+    name: "use-unmount",
+    description: "A hook that runs a cleanup function when the component is unmounted",
+    type: "registry:hook",
+    files: [{
+      path: "src/registry/default/hooks/use-unmount.ts",
+      content: "import * as React from 'react';\n\nexport const useUnmount = (f: () => void) => {\n  const fRef = React.useRef(f);\n  fRef.current = f;\n  React.useEffect(\n    () => () => {\n      fRef.current();\n    },\n    [],\n  );\n};\n",
       type: "registry:hook",
     }],
   },
@@ -107,16 +157,40 @@ export const Index: Record<string, any> = {
     component: React.lazy(() => import("@/registry/default/examples/theme-switch-demo.tsx")),
     source: "import { ThemeSwitch } from '@/registry/default/ui/theme-switch';\n\nexport default function ThemeSwitchDemo() {\n  return <ThemeSwitch />;\n}\n",
   },
+  "use-interval-demo": {
+    name: "use-interval-demo",
+    description: "",
+    type: "registry:example",
+    files: [{
+      path: "src/registry/default/examples/use-interval-demo.tsx",
+      content: "import * as React from 'react';\n\nimport { useInterval } from '@/registry/default/hooks/use-interval';\n\nexport function UseIntervalDemo() {\n  const colors = [\n    '#7081d0',\n    '#04d1f9',\n    '#37f499',\n    '#f7c67f',\n    '#f265b5',\n    '#a48cf2',\n    '#f16c75',\n    '#f1fc79',\n  ];\n  const [index, setIndex] = React.useState(0);\n\n  useInterval(() => setIndex((index) => index + 1), 1000);\n\n  const color = colors[index % colors.length];\n\n  return (\n    <div\n      className='size-48 rounded-xl transition-all duration-300 ease-in'\n      style={{\n        background: color,\n      }}\n    />\n  );\n}\n",
+      type: "registry:example",
+    }],
+    component: React.lazy(() => import("@/registry/default/examples/use-interval-demo.tsx")),
+    source: "import * as React from 'react';\n\nimport { useInterval } from '@/registry/default/hooks/use-interval';\n\nexport function UseIntervalDemo() {\n  const colors = [\n    '#7081d0',\n    '#04d1f9',\n    '#37f499',\n    '#f7c67f',\n    '#f265b5',\n    '#a48cf2',\n    '#f16c75',\n    '#f1fc79',\n  ];\n  const [index, setIndex] = React.useState(0);\n\n  useInterval(() => setIndex((index) => index + 1), 1000);\n\n  const color = colors[index % colors.length];\n\n  return (\n    <div\n      className='size-48 rounded-xl transition-all duration-300 ease-in'\n      style={{\n        background: color,\n      }}\n    />\n  );\n}\n",
+  },
   "use-theme-demo": {
     name: "use-theme-demo",
     description: "",
     type: "registry:example",
     files: [{
       path: "src/registry/default/examples/use-theme-demo.tsx",
-      content: "'use client';\n\nimport { useTheme } from '@/registry/default/hooks/use-theme';\nimport { ThemeSwitch } from '@/registry/default/ui/theme-switch';\n\nexport const UseThemeDemo = () => {\n  const { colorTheme, setColorTheme } = useTheme();\n  return (\n    <div className='rounded-lg border bg-card text-card-foreground shadow-sm'>\n      <ThemeSwitch />\n    </div>\n  );\n};\n",
+      content: "'use client';\n\nimport {\n  Select,\n  SelectContent,\n  SelectItem,\n  SelectTrigger,\n  SelectValue,\n} from '@/components/ui';\nimport {\n  useTheme,\n  colorThemes,\n  type ColorTheme,\n} from '@/registry/default/hooks/use-theme';\nimport { ThemeSwitch } from '@/registry/default/ui/theme-switch';\n\nexport default function UseThemeDemo() {\n  const { colorTheme, setColorTheme } = useTheme();\n  return (\n    <div className='bg-card text-card-foreground space-y-2 rounded-lg border p-4 shadow-sm'>\n      <div className='flex items-center justify-center'>\n        <ThemeSwitch />\n      </div>\n      <div className='flex flex-col gap-2'>\n        <Select\n          value={colorTheme}\n          onValueChange={(v: ColorTheme) => setColorTheme(v)}\n        >\n          <SelectTrigger className='capitalize'>\n            <SelectValue placeholder='Choose a theme' />\n          </SelectTrigger>\n          <SelectContent>\n            {colorThemes.map((theme) => (\n              <SelectItem key={theme} className='capitalize' value={theme}>\n                {theme}\n              </SelectItem>\n            ))}\n          </SelectContent>\n        </Select>\n      </div>\n    </div>\n  );\n}\n",
       type: "registry:example",
     }],
     component: React.lazy(() => import("@/registry/default/examples/use-theme-demo.tsx")),
-    source: "'use client';\n\nimport { useTheme } from '@/registry/default/hooks/use-theme';\nimport { ThemeSwitch } from '@/registry/default/ui/theme-switch';\n\nexport const UseThemeDemo = () => {\n  const { colorTheme, setColorTheme } = useTheme();\n  return (\n    <div className='rounded-lg border bg-card text-card-foreground shadow-sm'>\n      <ThemeSwitch />\n    </div>\n  );\n};\n",
+    source: "'use client';\n\nimport {\n  Select,\n  SelectContent,\n  SelectItem,\n  SelectTrigger,\n  SelectValue,\n} from '@/components/ui';\nimport {\n  useTheme,\n  colorThemes,\n  type ColorTheme,\n} from '@/registry/default/hooks/use-theme';\nimport { ThemeSwitch } from '@/registry/default/ui/theme-switch';\n\nexport default function UseThemeDemo() {\n  const { colorTheme, setColorTheme } = useTheme();\n  return (\n    <div className='bg-card text-card-foreground space-y-2 rounded-lg border p-4 shadow-sm'>\n      <div className='flex items-center justify-center'>\n        <ThemeSwitch />\n      </div>\n      <div className='flex flex-col gap-2'>\n        <Select\n          value={colorTheme}\n          onValueChange={(v: ColorTheme) => setColorTheme(v)}\n        >\n          <SelectTrigger className='capitalize'>\n            <SelectValue placeholder='Choose a theme' />\n          </SelectTrigger>\n          <SelectContent>\n            {colorThemes.map((theme) => (\n              <SelectItem key={theme} className='capitalize' value={theme}>\n                {theme}\n              </SelectItem>\n            ))}\n          </SelectContent>\n        </Select>\n      </div>\n    </div>\n  );\n}\n",
+  },
+  "use-timeout-demo": {
+    name: "use-timeout-demo",
+    description: "",
+    type: "registry:example",
+    files: [{
+      path: "src/registry/default/examples/use-timeout-demo.tsx",
+      content: "'use client';\n\nimport React from 'react';\nimport { RefreshCwIcon } from 'lucide-react';\n\nimport { Button } from '@/components/ui/button';\nimport { useTimeout } from '@/registry/default/hooks/use-timeout';\n\nexport function UseTimeoutDemo() {\n  const [hasDefused, setHasDefused] = React.useState(false);\n  const [hasExploded, setHasExploded] = React.useState(false);\n\n  useTimeout(\n    () => {\n      setHasExploded(!hasExploded);\n    },\n    hasDefused ? null : 1000,\n  );\n\n  return (\n    <div className='flex flex-col items-center gap-8'>\n      <Button\n        onClick={() => {\n          setHasDefused(false);\n          setHasExploded(false);\n        }}\n        disabled={!(hasDefused || hasExploded)}\n      >\n        Replay <RefreshCwIcon className='size-4' />\n      </Button>\n      <p>You have 1s to defuse (click) the bomb or it will explode</p>\n      {hasExploded ? (\n        <figure className='flex flex-col items-center gap-1'>\n          <span role='img' aria-label='Explosion Emoji' className='text-5xl'>\n            💥\n          </span>\n          <figcaption>You lose</figcaption>\n        </figure>\n      ) : hasDefused ? (\n        <figure className='flex flex-col items-center gap-1'>\n          <span role='img' aria-label='Explosion Emoji' className='text-5xl'>\n            🎉\n          </span>\n          <figcaption>You Win</figcaption>\n        </figure>\n      ) : (\n        <button\n          className='text-5xl'\n          onClick={() => setHasDefused((hasDefused) => !hasDefused)}\n        >\n          <span role='img' aria-label='Dynamite Emoji'>\n            🧨\n          </span>\n        </button>\n      )}\n    </div>\n  );\n}\n",
+      type: "registry:example",
+    }],
+    component: React.lazy(() => import("@/registry/default/examples/use-timeout-demo.tsx")),
+    source: "'use client';\n\nimport React from 'react';\nimport { RefreshCwIcon } from 'lucide-react';\n\nimport { Button } from '@/components/ui/button';\nimport { useTimeout } from '@/registry/default/hooks/use-timeout';\n\nexport function UseTimeoutDemo() {\n  const [hasDefused, setHasDefused] = React.useState(false);\n  const [hasExploded, setHasExploded] = React.useState(false);\n\n  useTimeout(\n    () => {\n      setHasExploded(!hasExploded);\n    },\n    hasDefused ? null : 1000,\n  );\n\n  return (\n    <div className='flex flex-col items-center gap-8'>\n      <Button\n        onClick={() => {\n          setHasDefused(false);\n          setHasExploded(false);\n        }}\n        disabled={!(hasDefused || hasExploded)}\n      >\n        Replay <RefreshCwIcon className='size-4' />\n      </Button>\n      <p>You have 1s to defuse (click) the bomb or it will explode</p>\n      {hasExploded ? (\n        <figure className='flex flex-col items-center gap-1'>\n          <span role='img' aria-label='Explosion Emoji' className='text-5xl'>\n            💥\n          </span>\n          <figcaption>You lose</figcaption>\n        </figure>\n      ) : hasDefused ? (\n        <figure className='flex flex-col items-center gap-1'>\n          <span role='img' aria-label='Explosion Emoji' className='text-5xl'>\n            🎉\n          </span>\n          <figcaption>You Win</figcaption>\n        </figure>\n      ) : (\n        <button\n          className='text-5xl'\n          onClick={() => setHasDefused((hasDefused) => !hasDefused)}\n        >\n          <span role='img' aria-label='Dynamite Emoji'>\n            🧨\n          </span>\n        </button>\n      )}\n    </div>\n  );\n}\n",
   },
 }

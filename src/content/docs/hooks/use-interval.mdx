@@ -1,0 +1,54 @@
+---
+title: Use Interval
+description: A hook that executes a callback function at specified delays using the useInterval API.
+---
+
+## Preview
+
+<ComponentPreview name='use-interval-demo' />
+
+## Installation
+
+### CLI
+
+<NpmCommand value='npx shadcn@latest add https://kelvinmai.io/r/use-interval.json' />
+
+### Manual
+
+<Steps>
+
+<Step>Copy and paste the following code into your project</Step>
+
+<ComponentSource name='use-interval' title='hooks/use-interval.ts' />
+
+<Step>Update the import paths to match your project setup</Step>
+
+</Steps>
+
+## Usage
+
+```tsx
+import { useInterval } from '@/hooks/use-interval';
+
+useInterval(() => {
+  func();
+}, 1000);
+```
+
+## API Reference
+
+<ReferenceLinks
+  links={[
+    {
+      href: 'https://developer.mozilla.org/en-US/docs/Web/API/Window/setInterval',
+      label: 'setInterval API',
+    },
+  ]}
+/>
+
+### Parameters
+
+| Name         | Type               | Description                                                                                             |
+| ------------ | ------------------ | ------------------------------------------------------------------------------------------------------- |
+| _`callback`_ | _`() => void`_     | The function to be invoked at each interval.                                                            |
+| _`delay`_    | _`number \| null`_ | The interval time in milliseconds between each callback invocation. Use _`null`_ to clear the interval. |

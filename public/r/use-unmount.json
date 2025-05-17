@@ -1,0 +1,16 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "use-unmount",
+  "type": "registry:hook",
+  "title": "use-unmount",
+  "description": "A hook that runs a cleanup function when the component is unmounted",
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "src/registry/default/hooks/use-unmount.ts",
+      "content": "import * as React from 'react';\n\nexport const useUnmount = (f: () => void) => {\n  const fRef = React.useRef(f);\n  fRef.current = f;\n  React.useEffect(\n    () => () => {\n      fRef.current();\n    },\n    [],\n  );\n};\n",
+      "type": "registry:hook"
+    }
+  ]
+}

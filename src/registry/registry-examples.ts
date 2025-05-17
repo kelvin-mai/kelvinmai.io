@@ -57,12 +57,34 @@ export const examples: Registry['items'] = [
     ],
   },
   {
+    name: 'use-interval-demo',
+    type: 'registry:example',
+    registryDependencies: ['https://kelvinmai.io/r/use-interval.json'],
+    files: [
+      {
+        path: 'default/examples/use-interval-demo.tsx',
+        type: 'registry:example',
+      },
+    ],
+  },
+  {
     name: 'use-theme-demo',
     type: 'registry:example',
     registryDependencies: ['https://kelvinmai.io/r/use-theme.json'],
     files: [
       {
         path: 'default/examples/use-theme-demo.tsx',
+        type: 'registry:example',
+      },
+    ],
+  },
+  {
+    name: 'use-timeout-demo',
+    type: 'registry:example',
+    registryDependencies: ['https://kelvinmai.io/r/use-timeout.json'],
+    files: [
+      {
+        path: 'default/examples/use-timeout-demo.tsx',
         type: 'registry:example',
       },
     ],

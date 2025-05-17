@@ -1,0 +1,54 @@
+---
+title: Use Timeout
+description: A hook that executes a callback function after a specified delay using the setTimeout API.
+---
+
+## Preview
+
+<ComponentPreview name='use-timeout-demo' />
+
+## Installation
+
+### CLI
+
+<NpmCommand value='npx shadcn@latest add https://kelvinmai.io/r/use-timeout.json' />
+
+### Manual
+
+<Steps>
+
+<Step>Copy and paste the following code into your project</Step>
+
+<ComponentSource name='use-timeout' title='hooks/use-timeout.ts' />
+
+<Step>Update the import paths to match your project setup</Step>
+
+</Steps>
+
+## Usage
+
+```tsx
+import { useTimout } from '@/hooks/use-timeout';
+
+useTimeout(() => {
+  func();
+}, 1000);
+```
+
+## API Reference
+
+<ReferenceLinks
+  links={[
+    {
+      href: 'https://developer.mozilla.org/en-US/docs/Web/API/Window/setInterval',
+      label: 'setInterval API',
+    },
+  ]}
+/>
+
+### Parameters
+
+| Name         | Type               | Description                                                                            |
+| ------------ | ------------------ | -------------------------------------------------------------------------------------- |
+| _`callback`_ | _`() => void`_     | The function to be invoked at the end of the delay.                                    |
+| _`delay`_    | _`number \| null`_ | The duration time in milliseconds for the timeout. Use _`null`_ to clear the interval. |
