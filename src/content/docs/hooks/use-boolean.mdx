@@ -1,0 +1,50 @@
+---
+title: Use Boolean
+description: A hook to manage boolean states with common methods to set the value to true, false or toggle between them.
+---
+
+## Installation
+
+### CLI
+
+<NpmCommand value='npx shadcn@latest add https://kelvinmai.io/r/use-boolean.json' />
+
+### Manual
+
+<Steps>
+
+<Step>Copy and paste the following code into your project</Step>
+
+<ComponentSource name='use-boolean' title='hooks/use-boolean.ts' />
+
+<Step>Update the import paths to match your project setup</Step>
+
+</Steps>
+
+## Usage
+
+```tsx
+import { useMount } from '@/hooks/use-mounted';
+
+const mounted = useMounted();
+```
+
+## API Reference
+
+### Parameters
+
+| Name              | Type        | Description                                                                             |
+| ----------------- | ----------- | --------------------------------------------------------------------------------------- |
+| _`defaultValue?`_ | _`boolean`_ | An optional parameter for the initial value of the boolean. The default is set to false |
+
+### Returns
+
+The _`useBoolean`_ hook returns an object with the following elements:
+
+| Name         | Type                                  | Description                                     |
+| ------------ | ------------------------------------- | ----------------------------------------------- |
+| _`value`_    | _`boolean`_                           | The current boolean state value.                |
+| _`setTrue`_  | _`() => void`_                        | Function to set the boolean state to _`true`_.  |
+| _`setFalse`_ | _`() => void`_                        | Function to set the boolean state to _`false`_. |
+| _`toggle`_   | _`() => void`_                        | Function to toggle the boolean state.           |
+| _`setValue`_ | _`Dispatch<SetStateAction<boolean>>`_ | Function to directly set the boolean state.     |

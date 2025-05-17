@@ -1,0 +1,48 @@
+---
+title: Use Unmount
+description: A hook that runs a cleanup function when the component is unmounted.
+---
+
+## Installation
+
+### CLI
+
+<NpmCommand value='npx shadcn@latest add https://kelvinmai.io/r/use-unmount.json' />
+
+### Manual
+
+<Steps>
+
+<Step>Copy and paste the following code into your project</Step>
+
+<ComponentSource name='use-unmount' title='hooks/use-unmount.ts' />
+
+<Step>Update the import paths to match your project setup</Step>
+
+</Steps>
+
+## Usage
+
+```tsx
+import { useMount } from '@/hooks/use-unmount';
+
+export default function Component() {
+  useUnmount(() => {
+    // Cleanup logic here
+  });
+
+  return <div>Hello world</div>;
+}
+```
+
+## API Reference
+
+### Parameters
+
+| Name     | Type           | Description                                     |
+| -------- | -------------- | ----------------------------------------------- |
+| _`func`_ | _`() => void`_ | The cleanup function to be executed on unmount. |
+
+### Returns
+
+_`void`_
