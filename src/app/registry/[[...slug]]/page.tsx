@@ -6,6 +6,7 @@ import { getMDXComponents } from '@/components/mdx';
 import { TableOfContents } from '@/components/docs';
 import { BuyMeCofffeeBanner } from '@/components/common';
 import { cn } from '@/lib/utils';
+import { SITE_URL } from '@/lib/constants';
 
 export async function generateStaticParams() {
   return source.generateParams();
@@ -21,6 +22,19 @@ export async function generateMetadata(props: {
   return {
     title: page.data.title,
     description: page.data.description,
+    openGraph: {
+      type: 'article',
+      title: page.data.title,
+      description: page.data.description,
+      images: [
+        {
+          url: `${SITE_URL}/api/og?title=${page.data.title}&description=${page.data.description}`,
+          height: 1200,
+          width: 630,
+          alt: `Preview image for ${page.data.title}`,
+        },
+      ],
+    },
   };
 }
 

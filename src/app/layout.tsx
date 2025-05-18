@@ -20,6 +20,20 @@ export const metadata: Metadata = {
   description: resume.basics.summary,
   creator: 'kelvin-mai',
   authors: [{ name: 'kelvin-mai', url: SITE_URL }],
+  openGraph: {
+    url: SITE_URL,
+    type: 'website',
+    title: 'Kelvin Mai',
+    description: resume.basics.summary,
+    images: [
+      {
+        url: `${SITE_URL}/api/og`,
+        height: 1200,
+        width: 630,
+        alt: 'website opengraph image',
+      },
+    ],
+  },
 };
 
 export default function RootLayout({
