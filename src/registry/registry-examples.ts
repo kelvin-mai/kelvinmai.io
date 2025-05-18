@@ -46,12 +46,34 @@ export const examples: Registry['items'] = [
     ],
   },
   {
+    name: 'overflow-tooltip-demo',
+    type: 'registry:example',
+    registryDependencies: ['https://kelvinmai.io/r/oveflow-tooltip.json'],
+    files: [
+      {
+        path: 'default/examples/overflow-tooltip-demo.tsx',
+        type: 'registry:example',
+      },
+    ],
+  },
+  {
     name: 'theme-switch-demo',
     type: 'registry:example',
     registryDependencies: ['https://kelvinmai.io/r/theme-switch.json'],
     files: [
       {
         path: 'default/examples/theme-switch-demo.tsx',
+        type: 'registry:example',
+      },
+    ],
+  },
+  {
+    name: 'use-file-upload-demo',
+    type: 'registry:example',
+    registryDependencies: ['https://kelvinmai.io/r/use-file-upload.json'],
+    files: [
+      {
+        path: 'default/examples/use-file-upload-demo.tsx',
         type: 'registry:example',
       },
     ],

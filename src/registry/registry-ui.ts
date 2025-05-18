@@ -30,6 +30,20 @@ export const ui: Registry['items'] = [
     registryDependencies: ['input'],
   },
   {
+    name: 'overflow-tooltip',
+    type: 'registry:component',
+    title: 'Overflow Tooltip',
+    description: '',
+    files: [
+      {
+        path: 'default/ui/overflow-tooltip.tsx',
+        type: 'registry:component',
+      },
+    ],
+    dependencies: [],
+    registryDependencies: ['tooltip'],
+  },
+  {
     name: 'theme-switch',
     type: 'registry:component',
     title: 'Theme Switch',

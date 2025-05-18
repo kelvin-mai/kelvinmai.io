@@ -17,6 +17,21 @@ export const hooks: Registry['items'] = [
     registryDependencies: [],
   },
   {
+    name: 'use-file-upload',
+    type: 'registry:hook',
+    title: 'use-file-upload',
+    description:
+      'A flexible and feature-rich React hook for handling file uploads with drag-and-drop support, file validation, and preview generation.',
+    files: [
+      {
+        path: 'default/hooks/use-file-upload.ts',
+        type: 'registry:hook',
+      },
+    ],
+    dependencies: [],
+    registryDependencies: [],
+  },
+  {
     name: 'use-mounted',
     type: 'registry:hook',
     title: 'use-mounted',

@@ -40,6 +40,22 @@
       ]
     },
     {
+      "name": "overflow-tooltip",
+      "type": "registry:component",
+      "title": "Overflow Tooltip",
+      "description": "",
+      "dependencies": [],
+      "registryDependencies": [
+        "tooltip"
+      ],
+      "files": [
+        {
+          "path": "src/registry/default/ui/overflow-tooltip.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
       "name": "theme-switch",
       "type": "registry:component",
       "title": "Theme Switch",
@@ -67,6 +83,20 @@
       "files": [
         {
           "path": "src/registry/default/hooks/use-boolean.ts",
+          "type": "registry:hook"
+        }
+      ]
+    },
+    {
+      "name": "use-file-upload",
+      "type": "registry:hook",
+      "title": "use-file-upload",
+      "description": "A flexible and feature-rich React hook for handling file uploads with drag-and-drop support, file validation, and preview generation.",
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "src/registry/default/hooks/use-file-upload.ts",
           "type": "registry:hook"
         }
       ]

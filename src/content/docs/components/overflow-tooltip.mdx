@@ -1,0 +1,69 @@
+---
+title: Overflow Tooltip
+description: A tooltip that only shows when text is too long.
+---
+
+## Preview
+
+<ComponentPreview
+  name='overflow-tooltip-demo'
+  v0Url='https://kelvinmai.io/r/overflow-tooltip.json'
+/>
+
+## Installation
+
+### CLI
+
+<NpmCommand value='npx shadcn@latest add https://kelvinmai.io/r/overflow-tooltip.json' />
+
+### Manual
+
+<Steps>
+
+<Step>Install the following dependencies</Step>
+
+<NpmCommand value='npm install clsx tailwind-merge' />
+
+<Step>Add a classname utility function</Step>
+
+```ts
+import { clsx, type ClassValue } from 'clsx';
+import { twMerge } from 'tailwind-merge';
+
+export const cn = (...inputs: ClassValue[]) => {
+  return twMerge(clsx(inputs));
+};
+```
+
+<Step>Copy and paste the following code into your project</Step>
+
+<ComponentSource
+  name='overflow-tooltip'
+  title='components/overflow-tooltip.tsx'
+/>
+
+<Step>Update the import paths to match your project setup</Step>
+
+</Steps>
+
+## Usage
+
+```tsx
+import { OverflowTooltip } from '@/components/ui/overflow-tooltip';
+
+export default function Demo() {
+  return (
+    <OverflowTooltip>
+      The text in here is just a little too long
+    </OverflowTooltip>
+  );
+}
+```
+
+## API Reference
+
+### Props
+
+| Name      | Type        | Required | Default       | Description                                                      |
+| --------- | ----------- | -------- | ------------- | ---------------------------------------------------------------- |
+| _`alpha`_ | _`boolean`_ | No       | _`undefined`_ | A boolean to check whether or not to include color alpha picker. |

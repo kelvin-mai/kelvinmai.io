@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "overflow-tooltip",
+  "type": "registry:component",
+  "title": "Overflow Tooltip",
+  "description": "",
+  "dependencies": [],
+  "registryDependencies": [
+    "tooltip"
+  ],
+  "files": [
+    {
+      "path": "src/registry/default/ui/overflow-tooltip.tsx",
+      "content": "'use client';\n\nimport * as React from 'react';\n\nimport {\n  Tooltip,\n  TooltipProvider,\n  TooltipContent,\n  TooltipTrigger,\n} from '@/components/ui/tooltip';\nimport { cn } from '@/lib/utils';\n\nexport const OverflowTooltip: React.FC<\n  React.ComponentProps<typeof TooltipContent>\n> = ({ className, children, ...props }) => {\n  const [overflowed, setOverflowed] = React.useState(false);\n  const ref = React.useRef<HTMLDivElement>(null);\n  React.useEffect(() => {\n    if (ref.current && ref.current?.scrollWidth > ref.current?.clientWidth) {\n      setOverflowed(true);\n    }\n  }, []);\n  return (\n    <TooltipProvider>\n      <Tooltip>\n        <TooltipTrigger asChild>\n          <div className='truncate' ref={ref}>\n            {children}\n          </div>\n        </TooltipTrigger>\n        {overflowed && (\n          <TooltipContent className={cn('text-sm', className)} {...props}>\n            {children}\n          </TooltipContent>\n        )}\n      </Tooltip>\n    </TooltipProvider>\n  );\n};\n",
+      "type": "registry:component"
+    }
+  ]
+}

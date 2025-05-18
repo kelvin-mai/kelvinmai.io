@@ -48,13 +48,14 @@ const DocsSidebarItems: React.FC<{ item: NavItem }> = ({ item }) => {
 
 const DocsSidebarCategories: React.FC<{ item: NavItem }> = ({ item }) => {
   const pathname = usePathname();
+  const categoryIsActive = item.children?.map((i) => i.url).includes(pathname);
   return (
     <SidebarGroup>
       <SidebarMenu>
         <Collapsible defaultOpen className='group/collapsible'>
           <SidebarMenuItem>
             <CollapsibleTrigger asChild>
-              <SidebarMenuButton>
+              <SidebarMenuButton isActive={categoryIsActive}>
                 {item.name}{' '}
                 <Plus className='ml-auto group-data-[state=open]/collapsible:hidden' />
                 <Minus className='ml-auto group-data-[state=closed]/collapsible:hidden' />
@@ -64,10 +65,7 @@ const DocsSidebarCategories: React.FC<{ item: NavItem }> = ({ item }) => {
               <SidebarMenuSub>
                 {item.children?.map((i) => (
                   <SidebarMenuSubItem key={i.name}>
-                    <SidebarMenuSubButton
-                      asChild
-                      isActive={pathname === item.url}
-                    >
+                    <SidebarMenuSubButton asChild isActive={pathname === i.url}>
                       <Link href={i.url}>{i.name}</Link>
                     </SidebarMenuSubButton>
                   </SidebarMenuSubItem>

@@ -8,7 +8,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { ExternalLink } from '@/components/common';
+import { ExternalLink, OverflowTooltip } from '@/components/common';
 import { Heading } from './heading';
 import {
   Code,
@@ -43,12 +43,22 @@ export const getMDXComponents = (components?: MDXComponents): MDXComponents => {
     a: (props) => (
       <ExternalLink className='underline underline-offset-4' {...props} />
     ),
-    table: (props) => <Table className='my-4' {...props} />,
+    table: ({ children, ...props }) => (
+      <Table className='my-4 table-fixed' {...props}>
+        {children}
+      </Table>
+    ),
     thead: TableHeader,
     tbody: TableBody,
     tr: TableRow,
     th: TableHead,
-    td: TableCell,
+    td: ({ children, ...props }) => (
+      <TableCell {...props}>
+        <OverflowTooltip side='bottom' sideOffset={8}>
+          {children}
+        </OverflowTooltip>
+      </TableCell>
+    ),
     Code,
     InlineCode,
     NpmCommand,

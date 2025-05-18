@@ -1,0 +1,158 @@
+---
+title: Use File Upload
+description: A flexible and feature-rich React hook for handling file uploads with drag-and-drop support, file validation, and preview generation.,
+---
+
+## Preview
+
+<ComponentPreview name='use-file-upload-demo' />
+
+## Installation
+
+### CLI
+
+<NpmCommand value='npx shadcn@latest add https://kelvinmai.io/r/use-file-upload.json' />
+
+### Manual
+
+<Steps>
+
+<Step>Copy and paste the following code into your project</Step>
+
+<ComponentSource name='use-file-upload' title='hooks/use-file-upload.ts' />
+
+<Step>Update the import paths to match your project setup</Step>
+
+</Steps>
+
+## Usage
+
+```tsx
+import { useFileUpload } from '@/hooks/use-file-upload';
+
+function FileUploadComponent() {
+  const [
+    { files, isDragging, errors },
+    {
+      handleDragEnter,
+      handleDragLeave,
+      handleDragOver,
+      handleDrop,
+      handleFileChange,
+      openFileDialog,
+      removeFile,
+      clearFiles,
+      getInputProps,
+    },
+  ] = useFileUpload({
+    multiple: true,
+    maxFiles: 5,
+    maxSize: 5 * 1024 * 1024, // 5MB
+    accept: 'image/*',
+  });
+
+  return (
+    <div
+      onDragEnter={handleDragEnter}
+      onDragLeave={handleDragLeave}
+      onDragOver={handleDragOver}
+      onDrop={handleDrop}
+    >
+      <input {...getInputProps()} />
+
+      <button onClick={openFileDialog}>Select Files</button>
+
+      {files.length > 0 && (
+        <div>
+          <h3>Selected Files:</h3>
+          <ul>
+            {files.map((file) => (
+              <li key={file.id}>
+                {file.file.name} ({formatBytes(file.file.size)})
+                <button onClick={() => removeFile(file.id)}>Remove</button>
+              </li>
+            ))}
+          </ul>
+          <button onClick={clearFiles}>Clear All</button>
+        </div>
+      )}
+
+      {errors.length > 0 && (
+        <div style={{ color: 'red' }}>
+          {errors.map((error, index) => (
+            <p key={index}>{error}</p>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+```
+
+## API Reference
+
+<ReferenceLinks
+  links={[
+    {
+      href: 'https://originui.com/file-upload',
+      label: 'origin ui',
+    },
+  ]}
+/>
+
+### Parameters
+
+The _`useFileUpload`_ hook accepts a configuration object with the following options:
+
+| Option            | Type                                        | Default       | Description                                                                     |
+| ----------------- | ------------------------------------------- | ------------- | ------------------------------------------------------------------------------- |
+| _`maxFiles`_      | _`number`_                                  | _`Infinity`_  | Maximum number of files allowed (only used when `multiple` is `true`)           |
+| _`maxSize`_       | _`number`_                                  | _`Infinity`_  | Maximum file size in bytes                                                      |
+| _`accept`_        | _`string`_                                  | _`"*"`_       | Comma-separated list of accepted file types (e.g., `"image/*,application/pdf"`) |
+| _`multiple`_      | _`boolean`_                                 | _`false`_     | Whether to allow multiple file selection                                        |
+| _`initialFiles`_  | _`FileMetadata[]`_                          | _`[]`_        | Initial files to populate the uploader with                                     |
+| _`onFilesChange`_ | _`(files: FileWithPreview[]) => void`_      | _`undefined`_ | Callback function called whenever the files array changes                       |
+| _`onFilesAdded`_  | _`(addedFiles: FileWithPreview[]) => void`_ | _`undefined`_ | Callback function called when new files are added                               |
+
+### Returns
+
+The hook returns a tuple with two elements:
+
+#### State Object
+
+| Property       | Type                  | Description                                        |
+| -------------- | --------------------- | -------------------------------------------------- |
+| _`files`_      | _`FileWithPreview[]`_ | Array of files with preview URLs                   |
+| _`isDragging`_ | _`boolean`_           | Whether files are being dragged over the drop area |
+| _`errors`_     | _`string[]`_          | Array of error messages                            |
+
+#### Actions Object
+
+| Method               | Type                                                                                                                                | Description                          |
+| -------------------- | ----------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------ |
+| _`addFiles`_         | _`(files: FileList \| File[]) => void`_                                                                                             | Add files programmatically           |
+| _`removeFile`_       | _`(id: string) => void`_                                                                                                            | Remove a file by its ID              |
+| _`clearFiles`_       | _`() => void`_                                                                                                                      | Remove all files                     |
+| _`clearErrors`_      | _`() => void`_                                                                                                                      | Clear all error messages             |
+| _`handleDragEnter`_  | _`(e: DragEvent<HTMLElement>) => void`_                                                                                             | Handle drag enter event              |
+| _`handleDragLeave`_  | _`(e: DragEvent<HTMLElement>) => void`_                                                                                             | Handle drag leave event              |
+| _`handleDragOver`_   | _`(e: DragEvent<HTMLElement>) => void`_                                                                                             | Handle drag over event               |
+| _`handleDrop`_       | _`(e: DragEvent<HTMLElement>) => void`_                                                                                             | Handle drop event                    |
+| _`handleFileChange`_ | _`(e: ChangeEvent<HTMLInputElement>) => void`_                                                                                      | Handle file input change event       |
+| _`openFileDialog`_   | _`() => void`_                                                                                                                      | Open the file selection dialog       |
+| _`getInputProps`_    | _`(props?: InputHTMLAttributes<HTMLInputElement>) => InputHTMLAttributes<HTMLInputElement> & { ref: React.Ref<HTMLInputElement> }`_ | Get props for the file input element |
+
+## Helper Functions
+
+### formatBytes
+
+Formats a byte value into a human-readable string.
+
+```typescript
+function formatBytes(bytes: number, decimals = 2): string;
+```
+
+```tsx
+formatBytes(1024); // "1 KB"
+formatBytes(1536, 1); // "1.5 KB"
+```
