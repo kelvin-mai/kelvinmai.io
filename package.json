@@ -28,6 +28,7 @@
     "prepare": "husky"
   },
   "dependencies": {
+    "@origin-space/image-cropper": "^0.1.9",
     "@radix-ui/react-accordion": "^1.2.10",
     "@radix-ui/react-collapsible": "^1.1.10",
     "@radix-ui/react-dialog": "^1.1.11",

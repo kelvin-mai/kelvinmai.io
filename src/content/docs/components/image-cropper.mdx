@@ -1,0 +1,112 @@
+---
+title: Image Cropper
+description: An image cropper built on top of @origin-space/image-cropper.
+---
+
+## Preview
+
+<ComponentPreview
+  name='image-cropper-demo'
+  v0Url='https://kelvinmai.io/r/image-cropper.json'
+/>
+
+## Installation
+
+### CLI
+
+<NpmCommand value='npx shadcn@latest add https://kelvinmai.io/r/image-cropper.json' />
+
+### Manual
+
+<Steps>
+
+<Step>Install the following dependencies</Step>
+
+<NpmCommand value='npm install clsx tailwind-merge @origin-space/image-cropper' />
+
+<Step>Add a classname utility function</Step>
+
+```ts
+import { clsx, type ClassValue } from 'clsx';
+import { twMerge } from 'tailwind-merge';
+
+export const cn = (...inputs: ClassValue[]) => {
+  return twMerge(clsx(inputs));
+};
+```
+
+<Step>Copy and paste the following code into your project</Step>
+
+<ComponentSource name='image-cropper' title='components/image-cropper.tsx' />
+
+<Step>Update the import paths to match your project setup</Step>
+
+</Steps>
+
+## Usage
+
+```tsx
+import { ImageCropper } from '@/components/ui/image-cropper';
+
+export default function ColorPickerDemo() {
+  const [cropData, setCropData] = React.useState<Area | null>(null);
+  return (
+    <ImageCropper image='https://image.url' onCropChange={setCropData}>
+      <ImageCropperImage />
+      <ImageCropperArea />
+    </ImageCropper>
+  );
+}
+```
+
+## API Reference
+
+<ReferenceLinks
+  links={[
+    {
+      href: 'https://github.com/origin-space/image-cropper',
+      label: '@origin-space/image-cropper',
+    },
+  ]}
+/>
+
+### Props
+
+| Name                | Type                               | Default       | Description                                                                                                  |
+| ------------------- | ---------------------------------- | ------------- | ------------------------------------------------------------------------------------------------------------ |
+| _`image`_           | _`string`_                         | **Required**  | URL of the image to crop.                                                                                    |
+| _`children`_        | _`React.ReactNode`_                | **Required**  | Should include `Cropper.Image`, `Cropper.CropArea`, and `Cropper.Description`.                               |
+| _`aspectRatio`_     | _`number`_                         | _`1`_         | The desired width/height aspect ratio (e.g., `1`, `1.5`, `4 / 3`, `16 / 9`).                                 |
+| _`cropPadding`_     | _`number`_                         | _`25`_        | Minimum padding (in pixels) between the crop area edges and the container edges.                             |
+| _`minZoom`_         | _`number`_                         | _`1`_         | Minimum zoom level (1 = 100% original size relative to crop area).                                           |
+| _`maxZoom`_         | _`number`_                         | _`3`_         | Maximum zoom level.                                                                                          |
+| _`zoomSensitivity`_ | _`number`_                         | _`0.005`_     | Multiplier for mouse wheel delta to control zoom speed.                                                      |
+| _`keyboardStep`_    | _`number`_                         | _`10`_        | Number of pixels to pan the image when using arrow keys.                                                     |
+| _`zoom`_            | _`number`_                         | _`undefined`_ | Controlled zoom level. If provided, component zoom state is controlled externally.                           |
+| _`onCropChange`_    | _`(pixels: Area \| null) => void`_ | _`undefined`_ | Callback function triggered whenever the crop area changes. Receives pixel data or `null` if invalid.        |
+| _`onZoomChange`_    | _`(zoom: number) => void`_         | _`undefined`_ | Callback function triggered when the zoom level changes interactively. Essential for controlled `zoom` prop. |
+
+The _`Area`_ object received by _`onCropChange`_ contains the following properties relative to the _original_ image dimensions:
+
+| Name       | Type       | Description                                                  |
+| ---------- | ---------- | ------------------------------------------------------------ |
+| _`x`_      | _`number`_ | The x-coordinate of the top-left corner of the cropped area. |
+| _`y`_      | _`number`_ | The y-coordinate of the top-left corner of the cropped area. |
+| _`width`_  | _`number`_ | The width of the cropped area in pixels.                     |
+| _`height`_ | _`number`_ | The width of the cropped area in pixels.                     |
+
+## Examples
+
+### With Mask
+
+<ComponentPreview
+  name='image-cropper-mask-demo'
+  v0Url='https://kelvinmai.io/r/image-cropper.json'
+/>
+
+### With Preview
+
+<ComponentPreview
+  name='image-cropper-preview-demo'
+  v0Url='https://kelvinmai.io/r/image-cropper.json'
+/>

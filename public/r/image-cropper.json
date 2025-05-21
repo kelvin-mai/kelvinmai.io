@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "image-cropper",
+  "type": "registry:component",
+  "title": "Image Cropper",
+  "description": "",
+  "dependencies": [
+    "@origin-space/image-cropper"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "src/registry/default/ui/image-cropper.tsx",
+      "content": "'use client';\n\nimport * as React from 'react';\nimport { Cropper } from '@origin-space/image-cropper';\n\nimport { cn } from '@/lib/utils';\n\nexport type Area = { x: number; y: number; width: number; height: number };\n\nexport const ImageCropper: React.FC<\n  React.ComponentProps<typeof Cropper.Root>\n> = ({ className, children, ...props }) => {\n  return (\n    <Cropper.Root\n      data-slot='cropper'\n      className={cn(\n        'relative flex w-full cursor-move touch-none items-center justify-center overflow-hidden focus:outline-none',\n        className,\n      )}\n      {...props}\n    >\n      <Cropper.Description\n        data-slot='cropper-description'\n        className='sr-only'\n      />\n      {children}\n    </Cropper.Root>\n  );\n};\n\nexport const ImageCropperImage: React.FC<\n  React.ComponentProps<typeof Cropper.Image>\n> = ({ className, ...props }) => {\n  return (\n    <Cropper.Image\n      data-slot='cropper-image'\n      className={cn(\n        'pointer-events-none h-full w-full object-cover',\n        className,\n      )}\n      {...props}\n    />\n  );\n};\n\nexport const ImageCropperArea: React.FC<\n  React.ComponentProps<typeof Cropper.CropArea>\n> = ({ className, ...props }) => {\n  return (\n    <Cropper.CropArea\n      data-slot='cropper-crop-area'\n      className={cn(\n        'pointer-events-none absolute border-3 border-white shadow-[0_0_0_9999px_rgba(0,0,0,0.3)] in-[[data-slot=cropper]:focus-visible]:ring-[3px] in-[[data-slot=cropper]:focus-visible]:ring-white/5',\n        className,\n      )}\n      {...props}\n    />\n  );\n};\n",
+      "type": "registry:component"
+    }
+  ]
+}

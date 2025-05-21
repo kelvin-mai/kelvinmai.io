@@ -46,6 +46,39 @@ export const examples: Registry['items'] = [
     ],
   },
   {
+    name: 'image-cropper-demo',
+    type: 'registry:example',
+    registryDependencies: ['https://kelvinmai.io/r/image-cropper.json'],
+    files: [
+      {
+        path: 'default/examples/image-cropper-demo.tsx',
+        type: 'registry:example',
+      },
+    ],
+  },
+  {
+    name: 'image-cropper-mask-demo',
+    type: 'registry:example',
+    registryDependencies: ['https://kelvinmai.io/r/image-cropper.json'],
+    files: [
+      {
+        path: 'default/examples/image-cropper-mask-demo.tsx',
+        type: 'registry:example',
+      },
+    ],
+  },
+  {
+    name: 'image-cropper-preview-demo',
+    type: 'registry:example',
+    registryDependencies: ['https://kelvinmai.io/r/image-cropper.json'],
+    files: [
+      {
+        path: 'default/examples/image-cropper-preview-demo.tsx',
+        type: 'registry:example',
+      },
+    ],
+  },
+  {
     name: 'overflow-tooltip-demo',
     type: 'registry:example',
     registryDependencies: ['https://kelvinmai.io/r/oveflow-tooltip.json'],

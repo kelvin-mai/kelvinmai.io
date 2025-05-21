@@ -30,6 +30,20 @@ export const ui: Registry['items'] = [
     registryDependencies: ['input'],
   },
   {
+    name: 'image-cropper',
+    type: 'registry:component',
+    title: 'Image Cropper',
+    description: '',
+    files: [
+      {
+        path: 'default/ui/image-cropper.tsx',
+        type: 'registry:component',
+      },
+    ],
+    dependencies: ['@origin-space/image-cropper'],
+    registryDependencies: [],
+  },
+  {
     name: 'overflow-tooltip',
     type: 'registry:component',
     title: 'Overflow Tooltip',

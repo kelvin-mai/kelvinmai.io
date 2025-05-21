@@ -40,6 +40,22 @@
       ]
     },
     {
+      "name": "image-cropper",
+      "type": "registry:component",
+      "title": "Image Cropper",
+      "description": "",
+      "dependencies": [
+        "@origin-space/image-cropper"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "src/registry/default/ui/image-cropper.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
       "name": "overflow-tooltip",
       "type": "registry:component",
       "title": "Overflow Tooltip",
