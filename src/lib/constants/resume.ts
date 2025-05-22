@@ -345,8 +345,8 @@ export const resume = {
       ],
     },
     {
-      name: 'Next Daggerheart',
-      url: 'https://next-daggerheart.vercel.app/',
+      name: 'Daggerheart Brews',
+      url: 'https://www.daggerheartbrews.com/',
       startDate: '2024-03-22',
       endDate: null,
       description:
