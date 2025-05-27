@@ -33,7 +33,7 @@ export const ColorPicker: React.FC<ColorPickerProps> = ({
       <Input
         id='custom'
         value={value}
-        className='h-8 w-[200px]'
+        className={cn('bg-background h-8 w-[200px]')}
         onChange={(e) => onChange(e.currentTarget.value)}
         {...props}
       />

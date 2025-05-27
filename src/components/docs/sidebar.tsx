@@ -101,7 +101,7 @@ export const DocsSidebar: React.FC<DocsSidebarProps> = ({
                 width={40}
               />
               <div className='flex flex-col gap-1 leading-none'>
-                <span className='font-semibold'>Component Registry</span>
+                <span className='font-semibold'>Registry</span>
                 <span className='text-muted-foreground'>
                   kelvinmai.io/registry
                 </span>

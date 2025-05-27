@@ -1,15 +1,16 @@
-import { Mail } from 'lucide-react';
+import Link from 'next/link';
 
 import { resume, yearsSinceStart } from '@/lib/constants';
 import { BuyMeCofffeeBanner } from '@/components/common';
 import {
+  AnimatedHomeCard,
+  ContactForm,
   HeroSection,
   Experiences,
   SocialLinks,
   Skills,
 } from '@/components/about';
 import { Button } from '@/components/ui';
-import { AnimatedHomeCard } from '@/components/about/animated-home-card';
 
 export default function Home() {
   return (
@@ -31,22 +32,24 @@ export default function Home() {
               </div>
             </AnimatedHomeCard>
             <AnimatedHomeCard
-              className='flex grow flex-col justify-between space-y-2 rounded-lg bg-gradient-to-br from-white to-rose-200 p-4 text-neutral-900'
+              className='bg-card text-card-foreground flex grow flex-col justify-between space-y-2 rounded-lg p-4'
               delay={2}
             >
               <h3 className='text-center text-2xl font-semibold'>
-                Get In Touch
+                Personal Registry
               </h3>
-              <p className='text-neutral-600'>
-                I&apos;m currently open to freelance opportunities and
-                interesting projects. Feel free to reach out if you&apos;d like
-                to collaborate or just a friendly hello.
+              <p className='text-muted-foreground'>
+                Get started with the Kelvin Mai&apos;s personal{' '}
+                <a
+                  href='https://ui.shadcn.com/docs/registry'
+                  className='underline underline-offset-4'
+                >
+                  shadcn/ui
+                </a>{' '}
+                registry. Featuring multiple useful components, hooks and tools.
               </p>
-              <Button variant='home' asChild>
-                <a href='mailto:kelvin.mai002@gmail.com' className='text-white'>
-                  <Mail />
-                  Contact Me
-                </a>
+              <Button asChild>
+                <Link href='/registry'>Get Started</Link>
               </Button>
             </AnimatedHomeCard>
             <AnimatedHomeCard className='text-center' delay={3}>
@@ -62,6 +65,9 @@ export default function Home() {
           <AnimatedHomeCard delay={5}>
             <Experiences jobs={resume.work} />
           </AnimatedHomeCard>
+        </section>
+        <section>
+          <ContactForm />
         </section>
       </main>
     </>
