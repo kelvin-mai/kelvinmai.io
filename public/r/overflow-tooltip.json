@@ -3,7 +3,7 @@
   "name": "overflow-tooltip",
   "type": "registry:component",
   "title": "Overflow Tooltip",
-  "description": "",
+  "description": "A tooltip that only shows when text is too long",
   "dependencies": [],
   "registryDependencies": [
     "tooltip"

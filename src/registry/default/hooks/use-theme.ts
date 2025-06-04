@@ -6,6 +6,7 @@ import { useTheme as useNextTheme } from 'next-themes';
 // !callout[/colorThemes/] Add your own theme names here
 export const colorThemes = [
   'default',
+  'daggerheart-brews',
   'bubblegum',
   'monochrome',
   'supabase',

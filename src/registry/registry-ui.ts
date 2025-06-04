@@ -33,7 +33,7 @@ export const ui: Registry['items'] = [
     name: 'image-cropper',
     type: 'registry:component',
     title: 'Image Cropper',
-    description: '',
+    description: 'An image cropper built on top of @origin-space/image-cropper',
     files: [
       {
         path: 'default/ui/image-cropper.tsx',
@@ -47,7 +47,7 @@ export const ui: Registry['items'] = [
     name: 'overflow-tooltip',
     type: 'registry:component',
     title: 'Overflow Tooltip',
-    description: '',
+    description: 'A tooltip that only shows when text is too long',
     files: [
       {
         path: 'default/ui/overflow-tooltip.tsx',
@@ -56,6 +56,34 @@ export const ui: Registry['items'] = [
     ],
     dependencies: [],
     registryDependencies: ['tooltip'],
+  },
+  {
+    name: 'password-input',
+    type: 'registry:component',
+    title: 'Password Input',
+    description: 'Password input with toggle password and text type',
+    files: [
+      {
+        path: 'default/ui/password-input.tsx',
+        type: 'registry:component',
+      },
+    ],
+    dependencies: ['lucide-react'],
+    registryDependencies: ['input', 'https://kelvinmai.io/r/use-boolean.json'],
+  },
+  {
+    name: 'password-strength-meter',
+    type: 'registry:component',
+    title: 'Password Strength Meter',
+    description: 'Component to measure password strength',
+    files: [
+      {
+        path: 'default/ui/password-strength-meter.tsx',
+        type: 'registry:component',
+      },
+    ],
+    dependencies: ['lucide-react'],
+    registryDependencies: [],
   },
   {
     name: 'theme-switch',

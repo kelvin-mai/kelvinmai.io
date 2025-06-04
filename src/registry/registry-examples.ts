@@ -90,6 +90,30 @@ export const examples: Registry['items'] = [
     ],
   },
   {
+    name: 'password-input-demo',
+    type: 'registry:example',
+    registryDependencies: ['https://kelvinmai.io/r/password-input.json'],
+    files: [
+      {
+        path: 'default/examples/password-input-demo.tsx',
+        type: 'registry:example',
+      },
+    ],
+  },
+  {
+    name: 'password-strength-meter-demo',
+    type: 'registry:example',
+    registryDependencies: [
+      'https://kelvinmai.io/r/password-strength-meter.json',
+    ],
+    files: [
+      {
+        path: 'default/examples/password-strength-meter-demo.tsx',
+        type: 'registry:example',
+      },
+    ],
+  },
+  {
     name: 'theme-switch-demo',
     type: 'registry:example',
     registryDependencies: ['https://kelvinmai.io/r/theme-switch.json'],

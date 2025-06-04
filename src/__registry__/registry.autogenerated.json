@@ -43,7 +43,7 @@
       "name": "image-cropper",
       "type": "registry:component",
       "title": "Image Cropper",
-      "description": "",
+      "description": "An image cropper built on top of @origin-space/image-cropper",
       "dependencies": [
         "@origin-space/image-cropper"
       ],
@@ -59,7 +59,7 @@
       "name": "overflow-tooltip",
       "type": "registry:component",
       "title": "Overflow Tooltip",
-      "description": "",
+      "description": "A tooltip that only shows when text is too long",
       "dependencies": [],
       "registryDependencies": [
         "tooltip"
@@ -67,6 +67,41 @@
       "files": [
         {
           "path": "src/registry/default/ui/overflow-tooltip.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "password-input",
+      "type": "registry:component",
+      "title": "Password Input",
+      "description": "Password input with toggle password and text type",
+      "dependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "input",
+        "https://kelvinmai.io/r/use-boolean.json"
+      ],
+      "files": [
+        {
+          "path": "src/registry/default/ui/password-input.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "password-strength-meter",
+      "type": "registry:component",
+      "title": "Password Strength Meter",
+      "description": "Component to measure password strength",
+      "dependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "src/registry/default/ui/password-strength-meter.tsx",
           "type": "registry:component"
         }
       ]

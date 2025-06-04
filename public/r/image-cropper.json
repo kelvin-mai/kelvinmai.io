@@ -3,7 +3,7 @@
   "name": "image-cropper",
   "type": "registry:component",
   "title": "Image Cropper",
-  "description": "",
+  "description": "An image cropper built on top of @origin-space/image-cropper",
   "dependencies": [
     "@origin-space/image-cropper"
   ],
