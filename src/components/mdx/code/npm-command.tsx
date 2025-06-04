@@ -89,7 +89,11 @@ export const NpmCommand = async ({ value }: { value: string }) => {
       {pms.map((pm) => (
         <TabsContent key={pm} value={pm}>
           <Pre
-            codeblock={{ lang: 'bash', meta: '', value }}
+            codeblock={{
+              lang: 'bash',
+              meta: '',
+              value: convertNpmCommand(pm, value) || '',
+            }}
             className='rounded-b-lg p-2'
           />
         </TabsContent>

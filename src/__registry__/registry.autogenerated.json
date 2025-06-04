@@ -139,6 +139,20 @@
       ]
     },
     {
+      "name": "use-clipboard",
+      "type": "registry:hook",
+      "title": "use-clipboard",
+      "description": "A hook to copy text to clipboard",
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "src/registry/default/hooks/use-clipboard.ts",
+          "type": "registry:hook"
+        }
+      ]
+    },
+    {
       "name": "use-file-upload",
       "type": "registry:hook",
       "title": "use-file-upload",

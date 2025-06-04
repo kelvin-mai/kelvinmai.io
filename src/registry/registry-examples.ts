@@ -125,6 +125,17 @@ export const examples: Registry['items'] = [
     ],
   },
   {
+    name: 'use-clipboard-demo',
+    type: 'registry:example',
+    registryDependencies: ['https://kelvinmai.io/r/use-clipboard.json'],
+    files: [
+      {
+        path: 'default/examples/use-clipboard-demo.tsx',
+        type: 'registry:example',
+      },
+    ],
+  },
+  {
     name: 'use-file-upload-demo',
     type: 'registry:example',
     registryDependencies: ['https://kelvinmai.io/r/use-file-upload.json'],

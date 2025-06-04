@@ -28,7 +28,7 @@ export const FloatingInput: React.FC<
     <div className='relative'>
       <Input
         id={id}
-        className={cn('peer bg-background', className)}
+        className={cn('peer bg-background dark:bg-background', className)}
         placeholder=' '
         {...props}
       />

@@ -13,7 +13,7 @@ export const Index: Record<string, any> = {
     type: "registry:component",
     files: [{
       path: "src/registry/default/ui/color-picker.tsx",
-      content: "'use client';\n\nimport * as React from 'react';\nimport { HexAlphaColorPicker, HexColorPicker } from 'react-colorful';\n\nimport { Input } from '@/components/ui/input';\nimport { cn } from '@/lib/utils';\n\nexport type ColorPickerProps = Omit<\n  React.ComponentProps<typeof Input>,\n  'value' | 'onChange' | 'onBlur'\n> & {\n  value?: string;\n  alpha?: boolean;\n  onChange: (value: string) => void;\n};\n\nexport const ColorPicker: React.FC<ColorPickerProps> = ({\n  className,\n  value,\n  alpha,\n  onChange,\n  ...props\n}) => {\n  return (\n    <div className={cn('space-y-2', className)}>\n      {alpha ? (\n        <HexAlphaColorPicker color={value} onChange={onChange} {...props} />\n      ) : (\n        <HexColorPicker color={value} onChange={onChange} {...props} />\n      )}\n\n      <Input\n        id='custom'\n        value={value}\n        className={cn('bg-background h-8 w-[200px]')}\n        onChange={(e) => onChange(e.currentTarget.value)}\n        {...props}\n      />\n    </div>\n  );\n};\nColorPicker.displayName = 'ColorPicker';\n",
+      content: "'use client';\n\nimport * as React from 'react';\nimport { HexAlphaColorPicker, HexColorPicker } from 'react-colorful';\n\nimport { Input } from '@/components/ui/input';\nimport { cn } from '@/lib/utils';\n\nexport type ColorPickerProps = Omit<\n  React.ComponentProps<typeof Input>,\n  'value' | 'onChange' | 'onBlur'\n> & {\n  value?: string;\n  alpha?: boolean;\n  onChange: (value: string) => void;\n};\n\nexport const ColorPicker: React.FC<ColorPickerProps> = ({\n  className,\n  value,\n  alpha,\n  onChange,\n  ...props\n}) => {\n  return (\n    <div className={cn('space-y-2', className)}>\n      {alpha ? (\n        <HexAlphaColorPicker color={value} onChange={onChange} {...props} />\n      ) : (\n        <HexColorPicker color={value} onChange={onChange} {...props} />\n      )}\n\n      <Input\n        id='custom'\n        value={value}\n        className={cn('bg-background h-8 w-[200px] dark:bg-background')}\n        onChange={(e) => onChange(e.currentTarget.value)}\n        {...props}\n      />\n    </div>\n  );\n};\nColorPicker.displayName = 'ColorPicker';\n",
       type: "registry:component",
     }],
   },
@@ -23,7 +23,7 @@ export const Index: Record<string, any> = {
     type: "registry:component",
     files: [{
       path: "src/registry/default/ui/floating-label-input.tsx",
-      content: "import * as React from 'react';\n\nimport { cn } from '@/lib/utils';\nimport { Label } from '@radix-ui/react-label';\nimport { Input } from '@/components/ui/input';\n\nexport const FloatingLabel: React.FC<React.ComponentProps<typeof Label>> = ({\n  className,\n  ...props\n}) => {\n  return (\n    <Label\n      className={cn(\n        'peer-has-focus:secondary bg-background absolute start-2 top-2 z-10 origin-[0] -translate-y-4 scale-75 transform cursor-text px-2 text-sm text-gray-500 duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:px-2 rtl:peer-focus:left-auto rtl:peer-focus:translate-x-1/4',\n        className,\n      )}\n      {...props}\n    />\n  );\n};\n\nexport const FloatingInput: React.FC<\n  React.ComponentProps<'input'> & {\n    label: string;\n  }\n> = ({ id, label, className, ...props }) => {\n  return (\n    <div className='relative'>\n      <Input\n        id={id}\n        className={cn('peer bg-background', className)}\n        placeholder=' '\n        {...props}\n      />\n      <FloatingLabel htmlFor={id}>{label}</FloatingLabel>\n    </div>\n  );\n};\n",
+      content: "import * as React from 'react';\n\nimport { cn } from '@/lib/utils';\nimport { Label } from '@radix-ui/react-label';\nimport { Input } from '@/components/ui/input';\n\nexport const FloatingLabel: React.FC<React.ComponentProps<typeof Label>> = ({\n  className,\n  ...props\n}) => {\n  return (\n    <Label\n      className={cn(\n        'peer-has-focus:secondary bg-background absolute start-2 top-2 z-10 origin-[0] -translate-y-4 scale-75 transform cursor-text px-2 text-sm text-gray-500 duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:px-2 rtl:peer-focus:left-auto rtl:peer-focus:translate-x-1/4',\n        className,\n      )}\n      {...props}\n    />\n  );\n};\n\nexport const FloatingInput: React.FC<\n  React.ComponentProps<'input'> & {\n    label: string;\n  }\n> = ({ id, label, className, ...props }) => {\n  return (\n    <div className='relative'>\n      <Input\n        id={id}\n        className={cn('peer bg-background dark:bg-background', className)}\n        placeholder=' '\n        {...props}\n      />\n      <FloatingLabel htmlFor={id}>{label}</FloatingLabel>\n    </div>\n  );\n};\n",
       type: "registry:component",
     }],
   },
@@ -84,6 +84,16 @@ export const Index: Record<string, any> = {
     files: [{
       path: "src/registry/default/hooks/use-boolean.ts",
       content: "'use client';\n\nimport * as React from 'react';\n\nexport function useBoolean(defaultValue = false) {\n  if (typeof defaultValue !== 'boolean') {\n    throw new Error('defaultValue must be \`true\` or \`false\`');\n  }\n  const [value, setValue] = React.useState(defaultValue);\n\n  const setTrue = React.useCallback(() => {\n    setValue(true);\n  }, []);\n\n  const setFalse = React.useCallback(() => {\n    setValue(false);\n  }, []);\n\n  const toggle = React.useCallback(() => {\n    setValue((x) => !x);\n  }, []);\n\n  return { value, setValue, setTrue, setFalse, toggle };\n}\n",
+      type: "registry:hook",
+    }],
+  },
+  "use-clipboard": {
+    name: "use-clipboard",
+    description: "A hook to copy text to clipboard",
+    type: "registry:hook",
+    files: [{
+      path: "src/registry/default/hooks/use-clipboard.ts",
+      content: "'use client';\n\nimport * as React from 'react';\n\ntype CopyFn = (text: string) => Promise<boolean>;\n\nexport const useClipboard = (delay = 2000): [CopyFn, boolean] => {\n  const [copied, setCopied] = React.useState(false);\n\n  React.useEffect(() => {\n    if (!copied) {\n      return;\n    }\n    const timer = setTimeout(() => {\n      setCopied(false);\n    }, delay);\n\n    return () => clearTimeout(timer);\n  }, [copied, delay]);\n\n  const copy = React.useCallback(async (text: string) => {\n    if (!navigator?.clipboard) {\n      console.warn('Clipboard not supported');\n      return false;\n    }\n    try {\n      await navigator.clipboard.writeText(text);\n      setCopied(true);\n      return true;\n    } catch (error) {\n      console.warn('Copy failed', error);\n      return false;\n    }\n  }, []);\n\n  return [copy, copied];\n};\n",
       type: "registry:hook",
     }],
   },
@@ -249,11 +259,11 @@ export const Index: Record<string, any> = {
     type: "registry:example",
     files: [{
       path: "src/registry/default/examples/password-input-demo.tsx",
-      content: "import { PasswordInput } from '../ui/password-input';\n\nexport default function Demo() {\n  return (\n    <PasswordInput\n      id='password'\n      className='bg-background'\n      placeholder='Password'\n    />\n  );\n}\n",
+      content: "import { PasswordInput } from '../ui/password-input';\n\nexport default function Demo() {\n  return (\n    <PasswordInput\n      id='password'\n      className='bg-background dark:bg-background'\n      placeholder='Password'\n    />\n  );\n}\n",
       type: "registry:example",
     }],
     component: React.lazy(() => import("@/registry/default/examples/password-input-demo.tsx")),
-    source: "import { PasswordInput } from '../ui/password-input';\n\nexport default function Demo() {\n  return (\n    <PasswordInput\n      id='password'\n      className='bg-background'\n      placeholder='Password'\n    />\n  );\n}\n",
+    source: "import { PasswordInput } from '../ui/password-input';\n\nexport default function Demo() {\n  return (\n    <PasswordInput\n      id='password'\n      className='bg-background dark:bg-background'\n      placeholder='Password'\n    />\n  );\n}\n",
   },
   "password-strength-meter-demo": {
     name: "password-strength-meter-demo",
@@ -278,6 +288,18 @@ export const Index: Record<string, any> = {
     }],
     component: React.lazy(() => import("@/registry/default/examples/theme-switch-demo.tsx")),
     source: "import { ThemeSwitch } from '@/ui/theme-switch';\n\nexport default function ThemeSwitchDemo() {\n  return <ThemeSwitch />;\n}\n",
+  },
+  "use-clipboard-demo": {
+    name: "use-clipboard-demo",
+    description: "",
+    type: "registry:example",
+    files: [{
+      path: "src/registry/default/examples/use-clipboard-demo.tsx",
+      content: "'use client';\n\nimport { ClipboardCheckIcon, ClipboardIcon } from 'lucide-react';\nimport { toast } from 'sonner';\n\nimport { Button } from '@/components/ui/button';\nimport { useClipboard } from '@/hooks/use-clipboard';\n\nexport default function Demo() {\n  const [copy, copied] = useClipboard();\n\n  return (\n    <Button\n      className='gap-2 text-sm'\n      onClick={() =>\n        copy('Hello world').then(() =>\n          toast('Text Copied to your clipboard 🎉.'),\n        )\n      }\n    >\n      Click me to copy\n      {copied ? <ClipboardCheckIcon size={10} /> : <ClipboardIcon size={10} />}\n    </Button>\n  );\n}\n",
+      type: "registry:example",
+    }],
+    component: React.lazy(() => import("@/registry/default/examples/use-clipboard-demo.tsx")),
+    source: "'use client';\n\nimport { ClipboardCheckIcon, ClipboardIcon } from 'lucide-react';\nimport { toast } from 'sonner';\n\nimport { Button } from '@/components/ui/button';\nimport { useClipboard } from '@/hooks/use-clipboard';\n\nexport default function Demo() {\n  const [copy, copied] = useClipboard();\n\n  return (\n    <Button\n      className='gap-2 text-sm'\n      onClick={() =>\n        copy('Hello world').then(() =>\n          toast('Text Copied to your clipboard 🎉.'),\n        )\n      }\n    >\n      Click me to copy\n      {copied ? <ClipboardCheckIcon size={10} /> : <ClipboardIcon size={10} />}\n    </Button>\n  );\n}\n",
   },
   "use-file-upload-demo": {
     name: "use-file-upload-demo",

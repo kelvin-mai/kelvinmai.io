@@ -1,0 +1,51 @@
+---
+title: Use Clipboard
+description: A hook to copy text to clipboard and track if copy action was successful
+---
+
+## Preview
+
+<ComponentPreview name='use-clipboard-demo' />
+
+## Installation
+
+### CLI
+
+<NpmCommand value='npx shadcn@latest add https://kelvinmai.io/r/use-clipboard.json' />
+
+### Manual
+
+<Steps>
+
+<Step>Copy and paste the following code into your project</Step>
+
+<ComponentSource name='use-clipboard' title='hooks/use-clipboard.ts' />
+
+<Step>Update the import paths to match your project setup</Step>
+
+</Steps>
+
+## Usage
+
+```tsx
+import { useMount } from '@/hooks/use-mounted';
+
+const mounted = useMounted();
+```
+
+## API Reference
+
+### Parameters
+
+| Name       | Type       | Default  | Description                              |
+| ---------- | ---------- | -------- | ---------------------------------------- |
+| _`delay?`_ | _`number`_ | _`2000`_ | Time in milliseconds to reset copy value |
+
+### Returns
+
+The _`useClipboard`_ hook returns a tuple with the following elements:
+
+| Name       | Type                                   | Description                                                       |
+| ---------- | -------------------------------------- | ----------------------------------------------------------------- |
+| _`copy`_   | _`(text: string) => Promise<boolean>`_ | Function to copy text to clipboard.                               |
+| _`copied`_ | _`boolean`_                            | Indicates if last copy was successful, resetting after the delay. |

@@ -4,7 +4,7 @@ export default function Demo() {
   return (
     <PasswordInput
       id='password'
-      className='bg-background'
+      className='bg-background dark:bg-background'
       placeholder='Password'
     />
   );

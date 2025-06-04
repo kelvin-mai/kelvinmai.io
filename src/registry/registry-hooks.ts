@@ -17,6 +17,20 @@ export const hooks: Registry['items'] = [
     registryDependencies: [],
   },
   {
+    name: 'use-clipboard',
+    type: 'registry:hook',
+    title: 'use-clipboard',
+    description: 'A hook to copy text to clipboard',
+    files: [
+      {
+        path: 'default/hooks/use-clipboard.ts',
+        type: 'registry:hook',
+      },
+    ],
+    dependencies: [],
+    registryDependencies: [],
+  },
+  {
     name: 'use-file-upload',
     type: 'registry:hook',
     title: 'use-file-upload',
