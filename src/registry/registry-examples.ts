@@ -90,6 +90,17 @@ export const examples: Registry['items'] = [
     ],
   },
   {
+    name: 'pagination-demo',
+    type: 'registry:example',
+    registryDependencies: ['https://kelvinmai.io/r/pagination.json'],
+    files: [
+      {
+        path: 'default/examples/pagination-demo.tsx',
+        type: 'registry:example',
+      },
+    ],
+  },
+  {
     name: 'password-input-demo',
     type: 'registry:example',
     registryDependencies: ['https://kelvinmai.io/r/password-input.json'],

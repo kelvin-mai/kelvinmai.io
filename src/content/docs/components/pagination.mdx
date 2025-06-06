@@ -1,0 +1,95 @@
+---
+title: Pagination
+description: A pre composed pagination component
+---
+
+## Preview
+
+<ComponentPreview
+  name='pagination-demo'
+  v0Url='https://kelvinmai.io/r/pagination.json'
+/>
+
+## Installation
+
+### CLI
+
+<NpmCommand value='npx shadcn@latest add https://kelvinmai.io/r/pagination.json' />
+
+### Manual
+
+<Steps>
+
+<Step>Install the following dependencies</Step>
+
+<NpmCommand value='npm install clsx tailwind-merge' />
+
+<Step>Add a classname utility function</Step>
+
+```ts
+import { clsx, type ClassValue } from 'clsx';
+import { twMerge } from 'tailwind-merge';
+
+export const cn = (...inputs: ClassValue[]) => {
+  return twMerge(clsx(inputs));
+};
+```
+
+<Step>Copy and paste the following code into your project</Step>
+
+<ComponentSource name='pagination' title='components/pagination.tsx' />
+
+<Step>Update the import paths to match your project setup</Step>
+
+</Steps>
+
+## Usage
+
+```tsx
+import { Pagination } from '@/components/ui/pagination';
+
+export default function PaginationDemo() {
+  const [pagination, setPagination] = React.useState({
+    currentPage: 1,
+    pages: 10,
+  });
+  const [limit, setLimit] = React.useState(10);
+  const buttonProps = { variant: 'ghost' };
+  return (
+    <Pagination
+      currentPage={pagination.currentPage}
+      pages={pagination.pages}
+      onPage={(page) => setPagination({ ...pagination, currentPage: page })}
+      buttonProps={buttonProps}
+    >
+      <PaginationPageSizeDropDown
+        total={1000}
+        pageSize={limit}
+        onPageSize={(pageSize) => setLimit(pageSize)}
+        buttonProps={buttonProps}
+      />
+    </Pagination>
+  );
+}
+```
+
+## API Reference
+
+### Pagination props
+
+| Name            | Type                                    | Required | Description                               |
+| --------------- | --------------------------------------- | -------- | ----------------------------------------- |
+| _`currentPage`_ | _`number`_                              | Yes      | The value of the current page.            |
+| _`pages`_       | _`number`_                              | Yes      | The value of total pages of the data set. |
+| _`onPage`_      | _`(page: number) => void`_              | Yes      | Function to call when page changes.       |
+| _`buttonProps`_ | _`React.ComponentProps<typeof Button>`_ | No       | Props for each of the pagination buttons. |
+
+### PaginationPageSizeDropDown props
+
+| Name            | Type                                    | Required | Description                                                    |
+| --------------- | --------------------------------------- | -------- | -------------------------------------------------------------- |
+| _`pageSize`_    | _`number`_                              | Yes      | The value of how many items to display per page                |
+| _`total`_       | _`number`_                              | Yes      | The total value of how many items are in the data set.         |
+| _`pageSizes`_   | _`number[]`_                            | No       | The page size options. The default options are _`[5, 10, 25]`_ |
+| _`onPageSize`_  | _`(pageSize: number) => void`_          | Yes      | Function to update the item size of each page.                 |
+| _`buttonProps`_ | _`React.ComponentProps<typeof Button>`_ | No       | Props for each of the pagination buttons.                      |

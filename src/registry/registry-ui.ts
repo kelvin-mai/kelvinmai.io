@@ -58,6 +58,20 @@ export const ui: Registry['items'] = [
     registryDependencies: ['tooltip'],
   },
   {
+    name: 'pagination',
+    type: 'registry:component',
+    title: 'Pagination',
+    description: 'A pre composed pagination component',
+    files: [
+      {
+        path: 'default/ui/pagination.tsx',
+        type: 'registry:component',
+      },
+    ],
+    dependencies: ['lucide-react'],
+    registryDependencies: ['button', 'dropdown-menu'],
+  },
+  {
     name: 'password-input',
     type: 'registry:component',
     title: 'Password Input',

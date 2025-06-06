@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "pagination",
+  "type": "registry:component",
+  "title": "Pagination",
+  "description": "A pre composed pagination component",
+  "dependencies": [
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "button",
+    "dropdown-menu"
+  ],
+  "files": [
+    {
+      "path": "src/registry/default/ui/pagination.tsx",
+      "content": "import * as React from 'react';\nimport {\n  ChevronLeft,\n  ChevronRight,\n  Ellipsis,\n  EllipsisVertical,\n} from 'lucide-react';\n\nimport { Button } from '@/components/ui/button';\nimport {\n  DropdownMenu,\n  DropdownMenuContent,\n  DropdownMenuLabel,\n  DropdownMenuRadioItem,\n  DropdownMenuSeparator,\n  DropdownMenuTrigger,\n} from '@/components/ui/dropdown-menu';\nimport { cn } from '@/lib/utils';\nimport { DropdownMenuRadioGroup } from '@radix-ui/react-dropdown-menu';\n\ntype PaginationProps = React.ComponentProps<'nav'> & {\n  currentPage: number;\n  pages: number;\n  onPage: (page: number) => void;\n  buttonProps?: Omit<\n    React.ComponentProps<typeof Button>,\n    'disabled' | 'onClick'\n  >;\n};\n\nexport const Pagination: React.FC<PaginationProps> = ({\n  className,\n  currentPage,\n  pages,\n  onPage,\n  buttonProps,\n  children,\n  ...props\n}) => {\n  return (\n    <nav\n      role='navigation'\n      aria-label='pagination'\n      className={cn('mx-auto flex w-full justify-center gap-1 my-4', className)}\n      {...props}\n    >\n      <Button\n        onClick={() => onPage(currentPage - 1)}\n        disabled={currentPage <= 1}\n        {...buttonProps}\n      >\n        <ChevronLeft />\n        <span>Previous</span>\n      </Button>\n      {currentPage >= 3 && (\n        <Button disabled {...buttonProps}>\n          <Ellipsis />\n        </Button>\n      )}\n      {currentPage >= 2 && (\n        <Button onClick={() => onPage(currentPage - 1)} {...buttonProps}>\n          {currentPage - 1}\n        </Button>\n      )}\n      <Button disabled {...buttonProps}>\n        {currentPage}\n      </Button>\n      {currentPage < pages - 1 && (\n        <Button onClick={() => onPage(currentPage + 1)} {...buttonProps}>\n          {currentPage + 1}\n        </Button>\n      )}\n      {pages - currentPage >= 2 && (\n        <Button disabled {...buttonProps}>\n          <Ellipsis />\n        </Button>\n      )}\n      {currentPage !== pages && (\n        <Button onClick={() => onPage(pages)} {...buttonProps}>\n          {pages}\n        </Button>\n      )}\n      <Button\n        onClick={() => onPage(currentPage + 1)}\n        disabled={currentPage >= pages}\n        {...buttonProps}\n      >\n        <span>Next</span>\n        <ChevronRight />\n      </Button>\n      {children}\n    </nav>\n  );\n};\n\ntype PaginationPageSizeDropdownProps = React.ComponentProps<\n  typeof DropdownMenu\n> & {\n  buttonProps?: React.ComponentProps<typeof Button>;\n  pageSizes?: number[];\n  total: number;\n  pageSize: number;\n  onPageSize: (pageSize: number) => void;\n};\n\nexport const PaginationPageSizeDropdown: React.FC<\n  PaginationPageSizeDropdownProps\n> = ({\n  buttonProps,\n  pageSizes = [5, 10, 25],\n  total,\n  pageSize,\n  onPageSize,\n  ...props\n}) => {\n  return (\n    <DropdownMenu {...props}>\n      <DropdownMenuTrigger asChild>\n        <Button {...buttonProps}>\n          <EllipsisVertical />\n        </Button>\n      </DropdownMenuTrigger>\n      <DropdownMenuContent>\n        <DropdownMenuLabel>Total: {total}</DropdownMenuLabel>\n        <DropdownMenuSeparator />\n        <DropdownMenuLabel>Select Page Size</DropdownMenuLabel>\n        <DropdownMenuSeparator />\n        <DropdownMenuRadioGroup\n          value={String(pageSize)}\n          onValueChange={(v) => onPageSize(Number(v))}\n        >\n          {pageSizes.map((n) => (\n            <DropdownMenuRadioItem key={n} value={String(n)}>\n              {n}\n            </DropdownMenuRadioItem>\n          ))}\n        </DropdownMenuRadioGroup>\n      </DropdownMenuContent>\n    </DropdownMenu>\n  );\n};\n",
+      "type": "registry:component"
+    }
+  ]
+}

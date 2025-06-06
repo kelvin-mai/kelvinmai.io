@@ -72,6 +72,25 @@
       ]
     },
     {
+      "name": "pagination",
+      "type": "registry:component",
+      "title": "Pagination",
+      "description": "A pre composed pagination component",
+      "dependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "button",
+        "dropdown-menu"
+      ],
+      "files": [
+        {
+          "path": "src/registry/default/ui/pagination.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
       "name": "password-input",
       "type": "registry:component",
       "title": "Password Input",
