@@ -68,7 +68,7 @@ export const resume = {
       image: 'gravie.jpg',
       position: 'Senior Software Engineer',
       startDate: '2024-07-15T08:00:00.000Z',
-      endDate: '2025-01-01T08:00:00.000Z',
+      endDate: null,
       summary:
         'Development on internal admin tool to aid SFTP automation for insurance clients',
       highlights: [
