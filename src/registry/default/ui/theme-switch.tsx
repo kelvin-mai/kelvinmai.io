@@ -1,10 +1,11 @@
 'use client';
 
-import React, { type JSX, useEffect, useState } from 'react';
+import React, { type JSX } from 'react';
 import { MonitorIcon, MoonStarIcon, SunIcon } from 'lucide-react';
 import { motion } from 'motion/react';
 import { useTheme } from 'next-themes';
 
+import { useMounted } from '@/registry/default/hooks/use-mounted';
 import { cn } from '@/lib/utils';
 
 const ThemeOption = ({
@@ -61,12 +62,7 @@ const THEME_OPTIONS = [
 
 const ThemeSwitch = () => {
   const { theme, setTheme } = useTheme();
-
-  const [isMounted, setIsMounted] = useState(false);
-
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
+  const isMounted = useMounted();
 
   if (!isMounted) {
     return <div className='flex h-8 w-24' />;
@@ -74,7 +70,7 @@ const ThemeSwitch = () => {
 
   return (
     <motion.div
-      key={String(isMounted)}
+      key='mounted'
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.3 }}

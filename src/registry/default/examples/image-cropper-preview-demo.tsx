@@ -128,6 +128,7 @@ export default function Component() {
         </Button>
         <div className='aspect-square w-full shrink-0 overflow-hidden rounded-lg border'>
           {croppedImageUrl ? (
+            // eslint-disable-next-line @next/next/no-img-element
             <img
               src={croppedImageUrl}
               alt='Cropped result'

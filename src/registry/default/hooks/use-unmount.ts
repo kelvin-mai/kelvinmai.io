@@ -1,11 +1,10 @@
 import * as React from 'react';
 
 export const useUnmount = (f: () => void) => {
-  const fRef = React.useRef(f);
-  fRef.current = f;
+  const onUnmount = React.useEffectEvent(f);
   React.useEffect(
     () => () => {
-      fRef.current();
+      onUnmount();
     },
     [],
   );

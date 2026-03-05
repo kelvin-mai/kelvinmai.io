@@ -75,12 +75,8 @@ export const DynamicCode: React.FC<CodeProps> = ({ className, codeblock }) => {
   const [highlighted, setHighlighted] = React.useState<
     HighlightedCode | undefined
   >();
-  const updateHighlighted = async () => {
-    const highlighted = await highlight(codeblock, eldritch);
-    setHighlighted(highlighted);
-  };
   React.useEffect(() => {
-    updateHighlighted();
+    highlight(codeblock, eldritch).then(setHighlighted);
   }, [codeblock]);
   return highlighted ? (
     <div className={cn('relative my-4 font-mono', className)}>

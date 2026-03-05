@@ -77,7 +77,7 @@ const TocThumb: React.FC<TocThumbProps> = ({ containerRef, ...props }) => {
     return () => {
       observer.disconnect();
     };
-  }, [containerRef, onResize]);
+  }, [containerRef]);
 
   useOnChange(active, () => {
     if (!containerRef.current || !thumbRef.current) return;
