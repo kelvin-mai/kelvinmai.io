@@ -33,12 +33,12 @@ export async function GET(request: Request) {
       : '';
 
     const ubuntuFont = await fetch(
-      new URL(`${getBaseUrl()}/fonts/Ubuntu-Regular.ttf`, import.meta.url),
+      `${getBaseUrl()}/fonts/Ubuntu-Regular.ttf`,
     ).then((res) => res.arrayBuffer());
 
-    const image = await fetch(
-      new URL(`${getBaseUrl()}/images/me.jpg`, import.meta.url),
-    ).then((res) => res.arrayBuffer());
+    const image = await fetch(`${getBaseUrl()}/images/me.jpg`).then((res) =>
+      res.arrayBuffer(),
+    );
 
     return new ImageResponse(
       (
