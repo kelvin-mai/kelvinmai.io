@@ -1,0 +1,107 @@
+---
+title: How I built the weather app in freeCodeCamp using React and Typescript
+description: Tutorial on building a weather application using React and TypeScript for the freeCodeCamp "Show The Local Weather" project.
+date: 2018-03-29
+tags:
+  - react
+  - typescript
+  - javascript
+  - programming
+canonicalUrl: https://medium.com/free-code-camp/weather-in-react-and-typescript-4f774fc07be7
+image: https://cdn-images-1.medium.com/max/1024/1*c_otGxMhQQYeAODaylsf5A.png
+---
+
+> _Originally posted on [Medium](https://medium.com/free-code-camp/weather-in-react-and-typescript-4f774fc07be7)._
+
+I recently came back to freeCodeCamp to finish off the front-end development certification projects. Rather than just rushing through them, I decided to use each project as an opportunity to experiment with something new. For the "Show The Local Weather" project I combined React with TypeScript and documented the process as a tutorial.
+
+The motivation came from evaluating Angular 5 versus React. I prefer React's simplicity, but I appreciated Angular's use of TypeScript. TypeScript adds static typing and other features that are missing from vanilla JavaScript — even with ES6/7 enhancements. This project let me have the best of both worlds.
+
+For weather data I chose the Wunderground API because it provides temperature readings in both Fahrenheit and Celsius as well as weather condition icons, which reduces implementation complexity.
+
+## Step 0: Set Up
+
+```bash
+create-react-app weather --scripts-version=react-scripts-ts
+npm install --save core-decorators
+```
+
+After generating the project, enable experimental decorators in `tsconfig.json`:
+
+```json
+{
+  "compilerOptions": {
+    "noUnusedLocals": true,
+    "experimentalDecorators": true
+  }
+}
+```
+
+The project folder structure looks like this:
+
+```
+weather-app/
+├─ .gitignore
+├─ node_modules/
+├─ public/
+├─ src/
+  └─ assets/
+    | -- loader.svg
+    | -- logo.svg
+  └─ components/
+    | -- Weather.tsx
+    | -- WeatherDisplay.tsx
+  └─ styles/
+    | -- App.css
+    | -- WeatherDisplay.css
+  | -- index.tsx
+  | -- registerServiceWorker.ts
+  | -- App.tsx
+  | -- index.css
+  | -- config.ts
+  | -- types.ts
+├─ package.json
+├─ tsconfig.json
+├─ tsconfig.test.json
+└─ tslint.json
+```
+
+![So Close…](https://cdn-images-1.medium.com/max/1024/1*BFO5FsRp7JPwc0vc1nJlUA.png)
+
+## Step 1: Styling
+
+I reskinned the default create-react-app styles using freeCodeCamp's green theme. The styling files are available in the project's GitHub repository.
+
+## Step 2: Configuration
+
+TypeScript lets you annotate primitive types (`string`, `number`, `boolean`) and define custom object types. For example, the `WeatherData` type with a nested `DisplayLocation`:
+
+![The User Stories](https://cdn-images-1.medium.com/max/814/1*D1a6zvkRnvj7okzDiGMQeA.png)
+
+## Step 3: React Components
+
+I used the presentational/container component pattern. The `WeatherDisplay` component demonstrates `React.Fragment` — a wrapper that doesn't render any actual HTML element. Interfaces define the shape of props and state using angle-bracket syntax: `<Props, State>`.
+
+Decorators use the `@` symbol. The `@autobind` decorator automatically binds `this` to class methods, removing manual binding boilerplate:
+
+```ts
+// With arrow function — no binding issue
+classMethod = () => {
+  console.log("when you use arrows, you don't have to worry about the keyword 'this'");
+};
+
+// Without — binding required
+classMethod() {
+  console.log("because of javascript, you have to worry about the keyword 'this' here");
+}
+```
+
+The `Weather` container component manages API calls through async operations. `getCurrentPosition` returns a Promise, ensuring geolocation completes before fetching weather data. Optional type properties are marked with `?` in interfaces.
+
+## Step 4: Complete
+
+![The Finished Product](https://cdn-images-1.medium.com/max/1024/1*W_edOJ7mRloyIKi6WBJfBQ.png)
+
+The finished product shows local weather at the user's current position. Future improvements could include location search functionality and additional UI enhancements.
+
+TypeScript's biggest benefit here was the security of static typing — code won't compile if types mismatch, catching errors before runtime.

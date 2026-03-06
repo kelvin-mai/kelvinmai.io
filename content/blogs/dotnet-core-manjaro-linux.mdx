@@ -1,0 +1,61 @@
+---
+title: How to install DotNet Core in Manjaro Linux
+description: A straightforward walkthrough for setting up .NET Core development on Manjaro (and Arch) Linux.
+date: 2020-05-06
+tags:
+  - dotnet
+  - linux
+  - manjaro
+  - tutorial
+canonicalUrl: https://dev.to/kelvinmai/how-to-install-dotnet-core-in-manjaro-linux-590a
+image: https://media2.dev.to/dynamic/image/width=1000,height=420,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fi%2Fchaaa5hugghf432q9o68.jpg
+---
+
+> _Originally posted on [DEV](https://dev.to/kelvinmai/how-to-install-dotnet-core-in-manjaro-linux-590a)._
+
+I recently started picking up .NET Core again. I was a bit worried because I'm on a Linux operating system, and the [state of .NET on Arch](https://www.reddit.com/r/archlinux/comments/cx64r5/the_state_of_net_core_on_arch/) is not exactly stable. (Also the obligatory "btw I use arch" meme.) The process was mostly straightforward but required a little troubleshooting. Here is the result.
+
+## Installation
+
+Install `dotnet-sdk` and `dotnet-runtime` from the Manjaro package manager GUI, or use the terminal. This should also work on vanilla Arch using `pacaur` instead of `pacman`:
+
+```bash
+pacman -S dotnet-sdk dotnet-runtime
+```
+
+Verify the installation and check where dotnet is located — the path matters for the next step:
+
+```bash
+$ dotnet --version
+3.1.103
+$ whereis dotnet
+dotnet: /usr/bin/dotnet /usr/share/dotnet
+```
+
+## Path Configuration
+
+If the location of dotnet is **not** `/usr/share/dotnet`, create a new file at `/etc/profile.d/dotnet.sh` with the following content (requires `sudo`). After creating this file, reboot or re-login:
+
+```bash
+export DOTNET_ROOT=/opt/dotnet
+export MSBuildSDKsPath=$DOTNET_ROOT/sdk/$(${DOTNET_ROOT}/dotnet --version)/Sdks
+export PATH=${PATH}:${DOTNET_ROOT}
+```
+
+Then add the following to your `~/.bashrc` (or `~/.zshrc` if you use zsh):
+
+```bash
+# DOTNET - Required
+export PATH="$PATH:/home/YOUR_USER_NAME/.dotnet/tools"
+# DOTNET - Optional
+export DOTNET_CLI_TELEMETRY_OPTOUT=1
+export ASPNETCORE_ENVIRONMENT=Development
+```
+
+You should now be ready to start developing .NET Core applications on Manjaro.
+
+## Links
+
+- [.NET Core on Arch Wiki](https://wiki.archlinux.org/index.php/.NET_Core)
+- [The state of .NET Core on Arch](https://www.reddit.com/r/archlinux/comments/cx64r5/the_state_of_net_core_on_arch/)
+- [Manjaro dotnet setup gist](https://gist.github.com/waynebloss/55aa06b13a3f647c45b57caa31397089)

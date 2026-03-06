@@ -1,0 +1,49 @@
+---
+title: Exploring Front End Frameworks
+description: Introduction to front-end frameworks (React, Angular, Vue) and their relationships to traditional jQuery DOM manipulation.
+date: 2017-12-28
+tags:
+  - javascript
+  - react
+  - framework
+  - web-development
+  - bootcamp
+canonicalUrl: https://medium.com/digitalcrafts/exploring-front-end-frameworks-d5bf3dcd985d
+image: https://cdn-images-1.medium.com/max/1024/1*7zccGWE4o5LmxegijjK_xQ.png
+---
+
+> _Originally posted on [Medium](https://medium.com/digitalcrafts/exploring-front-end-frameworks-d5bf3dcd985d)._
+
+During a holiday break from the DigitalCrafts bootcamp I self-studied front-end frameworks. I'd been intimidated by them — phrases like "MEAN stack" made them feel like heavyweight, full-stack tools. Turns out they're much simpler than that. Frameworks primarily exist to create user interfaces.
+
+## It's Just jQuery On Steroids
+
+React, Vue, and Angular are tools for creating user interfaces and experiences — fundamentally similar to jQuery, but with key improvements.
+
+The primary distinction is how they handle the DOM. jQuery waits for the actual document to load before enabling interaction. React and similar frameworks process operations before loading the document. jQuery applications sometimes show a noticeable flicker when modifying content, especially in larger apps. Modern frameworks handle this through virtual DOM abstraction, improving user experience significantly.
+
+![Virtual DOM](https://cdn-images-1.medium.com/max/500/1*D_08sX9OYv20xIxlA2UuIQ.png)
+
+## Components: DIY HTML Elements
+
+A major advantage of frameworks is the ability to embed JavaScript in HTML (or HTML in JavaScript, in React's case) and to build reusable components. Instead of `document.createElement` gymnastics, you can write a for loop directly inside a list tag.
+
+Components take this further — you can build a custom HTML element and then use it anywhere in your markup as a self-closing tag, just like a native HTML element.
+
+## Back In The World Of Compiling
+
+The tradeoff is losing the simplicity of dropping in a `<script>` tag. Code now requires compilation into vanilla JavaScript before browsers can understand it, reintroducing the compilation step that pure JavaScript development avoids.
+
+## To Each Their Own
+
+![What each of them actually looks like](https://cdn-images-1.medium.com/max/595/1*las4ZoX0K5HPHzVQ4EoAcA.png)
+
+Vue typically earns the reputation of having the lowest learning curve, but I'd argue it depends entirely on your background.
+
+- **Vue's** single-file structure — HTML, CSS, and JavaScript in one file, similar to CodePen — suits developers with a web-first background
+- **React's** "everything is JavaScript" philosophy appeals to developers who think more programmatically
+- **Angular** requires TypeScript, presenting the steepest initial curve — but for developers coming from Java or Swift, that static typing and object-oriented structure feels right at home
+
+I personally found React more intuitive than Vue, despite Vue's reputation for accessibility. Learning curve is relative.
+
+![Comparison](https://cdn-images-1.medium.com/max/1024/1*TAQcouiYR8JD2nNb-e7DIg.png)

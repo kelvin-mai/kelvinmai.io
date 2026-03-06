@@ -1,0 +1,113 @@
+---
+title: How To Integrate HoneySQL with PostgreSQL
+description: In returning to clojure, there was one library that I wanted to check out and that one is honeysql.
+date: 2020-11-12
+tags:
+  - clojure
+  - functional
+  - sql
+  - database
+canonicalUrl: https://dev.to/kelvinmai/how-to-integrate-honeysql-with-postgresql-108l
+image: https://media2.dev.to/dynamic/image/width=1000,height=420,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fi%2Flcdlh99wwdnmsspyvpz7.jpeg
+---
+
+> _Originally posted on [DEV](https://dev.to/kelvinmai/how-to-integrate-honeysql-with-postgresql-108l)._
+
+In returning to clojure, there was one library that I wanted to check out and that one is [honeysql](https://github.com/seancorfield/honeysql). HoneySQL is a library where you can create a clojure map and use the `sql/format` function to turn that map into a raw sql query.
+
+```clojure
+(require '[honeysql.core :as sql]
+         '[honeysql.helpers :refer :all :as helpers])
+
+(def sqlmap {:select [:a :b :c]
+             :from   [:foo]
+             :where  [:= :f.a "baz"]})
+
+(sql/format sqlmap)
+;; => ["SELECT a, b, c FROM foo WHERE f.a = ?" "baz"]
+```
+
+The above example shows off the capabilities of the library, but here is the classic "get everything" query for simplicity:
+
+```clojure
+(def sqlmap {:select [:*]
+             :from   [:bar]})
+
+(sql/format sqlmap)
+;; => ["SELECT * FROM bar"]
+```
+
+There is one small problem — the library is very useful for creating raw query strings, but I couldn't find an example of actually executing these queries. That is what I want to accomplish with this post.
+
+For this post we'll be using the Clojure CLI rather than leiningen, so here is the minimum configuration of a `deps.edn` file with an nrepl alias included:
+
+```clojure
+{:paths ["src"]
+ :deps {org.clojure/clojure {:mvn/version "1.10.1"}
+        org.postgresql/postgresql {:mvn/version "42.2.2"}
+        seancorfield/next.jdbc {:mvn/version "1.1.613"}
+        honeysql/honeysql {:mvn/version "1.0.444"}}
+ :aliases {:nrepl {:extra-deps {nrepl/nrepl {:mvn/version "0.8.0"}
+                                cider/cider-nrepl {:mvn/version "0.25.2"}}
+                   :main-opts ["-m" "nrepl.cmdline" "--middleware" "[cider.nrepl/cider-middleware]"]}}}
+```
+
+Some of these versions may have been updated, so make sure to check [clojars](https://clojars.org/). For this example I'll be using postgres as the database of choice. The initial db configuration using [next.jdbc](https://github.com/seancorfield/next-jdbc) looks like this:
+
+```clojure
+(ns example.db
+  (:require [next.jdbc :as jdbc]))
+
+(def db-config
+  {:dbtype "postgresql"
+   :dbname "example_db"
+   :host "localhost"
+   :user "postgres"
+   :password "postgres"})
+
+(def db (jdbc/get-datasource db-config))
+```
+
+The connection configuration is used by `jdbc/get-datasource` and the persisted connection is held in the `db` var. Now all we need to do is execute queries by calling `jdbc/execute!`. Note that the first argument is always the database connection:
+
+```clojure
+(jdbc/execute! db ["CREATE TABLE thing (
+                     id SERIAL,
+                     title TEXT,
+                     description TEXT)"])
+;; => [#:next.jdbc{:update-count 0}]
+
+(jdbc/execute! db ["SELECT * FROM thing"])
+;; => []
+```
+
+And lastly, instead of writing raw SQL we can come full circle and use honeysql to pass in formatted SQL maps:
+
+```clojure
+(jdbc/execute! db (sql/format
+                      {:select [:*]
+                       :from [:thing]}))
+;; => []
+
+(jdbc/execute! db (sql/format
+                      {:insert-into :thing
+                       :columns [:text :description]
+                       :values [["blog" "written articles"]
+                                ["article" "blog post"]]}))
+;; => [#:next.jdbc{:update-count 2}]
+
+(jdbc/execute! db (sql/format
+                      {:select [:*]
+                       :from [:thing]}))
+;; => [#:thing{:id 1, :title "blog", :description "written articles"}
+;;     #:thing{:id 2, :title "article", :description "blog post"}]
+```
+
+And that's all there is to it.
+
+## Resources
+
+- [Clojars](https://clojars.org/)
+- [clojure/java.jdbc](https://github.com/clojure/java.jdbc)
+- [next.jdbc](https://github.com/seancorfield/next-jdbc)
+- [honeysql](https://github.com/seancorfield/honeysql)

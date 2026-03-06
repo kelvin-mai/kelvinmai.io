@@ -1,0 +1,87 @@
+---
+title: Understanding Clojure Multimethods
+description: It took me quite a while to wrap my head around clojure's multimethods, which is clojure's version of pattern matching and polymorphism.
+date: 2020-07-20
+tags:
+  - clojure
+  - functional
+  - javascript
+canonicalUrl: https://dev.to/kelvinmai/understanding-clojure-multimethods-2cd0
+image: https://media2.dev.to/dynamic/image/width=1000,height=420,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fi%2Friwk2bx6sctdi8b0mb3w.png
+---
+
+> _Originally posted on [DEV](https://dev.to/kelvinmai/understanding-clojure-multimethods-2cd0)._
+
+It took me quite a while to wrap my head around clojure's multimethods, which is clojure's version of pattern matching and polymorphism. Pattern matching is a core part of how functional languages combat the ambiguity of `null`. The big draw in typed languages like Scala and OCaml is exhausting all possibilities, but clojure is dynamically typed so the interest is different — we want branching paths, like an expanded `if` statement, that call a different function depending on the condition.
+
+JavaScript and other C-like languages have a decent impression of this with `switch`:
+
+```javascript
+const switchFn = (condition) => {
+  switch (condition) {
+    case 'true':
+      console.log(true);
+      break;
+    case 'false':
+      console.log(false);
+      break;
+    default:
+      console.log('maybe?');
+      break;
+  }
+};
+```
+
+Here is the clojure equivalent using clojure keywords (the `:` syntax) instead of strings as conditions:
+
+```clojure
+(defn switch-fn [condition]
+  (case condition
+    :true (prn true)
+    :false (prn false)
+    :default (prn "maybe?")))
+```
+
+The downside of `case` is that updating functionality requires editing the function directly. This becomes a real problem when you consider polymorphism — say you want to add a case to a third-party library. That's nearly impossible with `case`.
+
+## Multimethods
+
+That's where clojure's multimethods come in. Using `defmulti` and `defmethod` we can define the dispatch function and each case separately:
+
+```clojure
+(defmulti factorial identity)
+
+(defmethod factorial 0 [_]  1)
+(defmethod factorial :default [num]
+    (* num (factorial (dec num))))
+
+(factorial 0) ; => 1
+(factorial 1) ; => 1
+(factorial 3) ; => 6
+(factorial 7) ; => 5040
+```
+
+This implements a factorial using multimethods instead of the typical recursive alternative. The `defmulti` macro takes the name of the multimethod and a dispatch function — here `identity`, meaning whatever number is provided becomes the case. Each `defmethod` takes the multimethod name, the case to match, and a function body.
+
+The `:default` keyword works as the catch-all case, similar to `default` in a switch statement.
+
+For a more practical example, here is a React/Redux-style action dispatch system:
+
+```clojure
+(defmulti app-reducer
+  (fn [state action] (first action)))
+
+(defmethod app-reducer
+  :set-list [state [action-type payload]]
+  (or payload state))
+
+(defmethod app-reducer
+  :add-to-list [state [action-type payload]]
+  (conj state payload))
+
+;; calling the actions
+(app-reducer state [:set-list [1 2 3]])
+(app-reducer state [:add-to-list 4])
+```
+
+With a redux-style reducer you always have two arguments — state and action — but the action is divided into its type and payload. To maintain arity, the action is embedded in a vector and destructured in each `defmethod`. In the `defmulti`, `first` returns the action type to determine which method to dispatch to. In each method's body we care about the payload, not the type, so the type is ignored after dispatch.
