@@ -26,14 +26,9 @@ import {
   SidebarMenuSubButton,
   SidebarMenuSubItem,
 } from '@/components/ui/sidebar';
+import type { NavItem } from '@/lib/source';
 import { ThemeSwitch } from '@/registry/default/ui/theme-switch';
 import { ExternalLink, SimpleIcon } from '../common';
-
-export type NavItem = {
-  name: string;
-  url: string;
-  children?: NavItem[];
-};
 
 const DocsSidebarItems: React.FC<{ item: NavItem }> = ({ item }) => {
   const pathname = usePathname();

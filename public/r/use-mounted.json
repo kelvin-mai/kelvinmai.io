@@ -1,7 +1,6 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "use-mounted",
-  "type": "registry:hook",
   "title": "use-mounted",
   "description": "A hook that returns a boolean to check when the component has mounted",
   "dependencies": [],
@@ -12,5 +11,6 @@
       "content": "'use client';\n\nimport * as React from 'react';\n\nexport const useMounted = () => {\n  const [mounted, setMounted] = React.useState<boolean>(false);\n  React.useEffect(() => {\n    setMounted(true);\n  }, []);\n  return mounted;\n};\n",
       "type": "registry:hook"
     }
-  ]
+  ],
+  "type": "registry:hook"
 }

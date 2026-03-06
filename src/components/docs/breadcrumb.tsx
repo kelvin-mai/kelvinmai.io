@@ -2,8 +2,6 @@
 
 import * as React from 'react';
 import { usePathname } from 'next/navigation';
-import { useBreadcrumb } from 'fumadocs-core/breadcrumb';
-import type { PageTree } from 'fumadocs-core/server';
 
 import {
   Breadcrumb,
@@ -13,39 +11,40 @@ import {
   BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb';
 
-type DocsBreadcrumbsProps = {
-  nav: PageTree.Root;
-};
+function formatSegment(segment: string): string {
+  return segment
+    .split('-')
+    .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+    .join(' ');
+}
 
-export const DocsBreadcrumbs: React.FC<DocsBreadcrumbsProps> = ({ nav }) => {
+export const DocsBreadcrumbs: React.FC = () => {
   const pathname = usePathname();
-  const items = useBreadcrumb(pathname, nav);
+  // Strip the /registry prefix and split into segments
+  const segments = pathname
+    .replace(/^\/registry\/?/, '')
+    .split('/')
+    .filter(Boolean);
 
-  if (items.length === 0) return null;
+  if (segments.length === 0) return null;
 
   return (
     <Breadcrumb>
       <BreadcrumbList>
         <BreadcrumbItem>Registry</BreadcrumbItem>
         <BreadcrumbSeparator />
-        {items.length === 1 ? (
-          <BreadcrumbItem>
-            <BreadcrumbPage>{items[0]!.name}</BreadcrumbPage>
-          </BreadcrumbItem>
-        ) : (
-          items.map((item, i) => (
-            <React.Fragment key={i}>
-              <BreadcrumbItem>
-                {item.url && i === items.length - 1 ? (
-                  <BreadcrumbPage>{item.name}</BreadcrumbPage>
-                ) : (
-                  <span>{item.name}</span>
-                )}
-              </BreadcrumbItem>
-              {i <= items.length - 2 && <BreadcrumbSeparator />}
-            </React.Fragment>
-          ))
-        )}
+        {segments.map((segment, i) => (
+          <React.Fragment key={segment}>
+            <BreadcrumbItem>
+              {i === segments.length - 1 ? (
+                <BreadcrumbPage>{formatSegment(segment)}</BreadcrumbPage>
+              ) : (
+                <span>{formatSegment(segment)}</span>
+              )}
+            </BreadcrumbItem>
+            {i < segments.length - 1 && <BreadcrumbSeparator />}
+          </React.Fragment>
+        ))}
       </BreadcrumbList>
     </Breadcrumb>
   );

@@ -9,6 +9,10 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { ExternalLink, OverflowTooltip } from '@/components/common';
+import { ColorGenerator } from '@/components/tools/color-generator';
+import { TailwindColorSwatches } from '@/components/tools/color-swatch';
+import { Easings } from '@/components/tools/easings';
+import { GradientGenerator } from '@/components/tools/gradient-generator';
 import { Heading } from './heading';
 import {
   Code,
@@ -67,6 +71,10 @@ export const getMDXComponents = (components?: MDXComponents): MDXComponents => {
     Steps,
     Step,
     ReferenceLinks,
+    ColorGenerator,
+    TailwindColorSwatches,
+    Easings,
+    GradientGenerator,
     ...components,
   };
 };

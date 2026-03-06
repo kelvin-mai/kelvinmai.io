@@ -1,5 +1,8 @@
 import { notFound } from 'next/navigation';
-import { AnchorProvider } from 'fumadocs-core/toc';
+import { MDXRemote } from 'next-mdx-remote/rsc';
+import remarkGfm from 'remark-gfm';
+import rehypeSlug from 'rehype-slug';
+import { remarkCodeHike, recmaCodeHike } from 'codehike/mdx';
 
 import { source } from '@/lib/source';
 import { getMDXComponents } from '@/components/mdx';
@@ -7,6 +10,18 @@ import { TableOfContents } from '@/components/docs';
 import { BuyMeCofffeeBanner } from '@/components/common';
 import { cn } from '@/lib/utils';
 import { SITE_URL } from '@/lib/constants';
+
+const chConfig = {
+  components: { code: 'Code', inlineCode: 'InlineCode' },
+};
+
+const plug = <T extends unknown[]>(...args: T): T => args;
+
+const mdxOptions = {
+  remarkPlugins: [plug(remarkCodeHike, chConfig), remarkGfm],
+  rehypePlugins: [rehypeSlug],
+  recmaPlugins: [plug(recmaCodeHike, chConfig)],
+};
 
 export async function generateStaticParams() {
   return source.generateParams();
@@ -45,29 +60,27 @@ export default async function DocsPage(props: {
   const page = source.getPage(params.slug);
   if (!page) notFound();
 
-  const MDX = page.data.body;
-
   return (
-    <AnchorProvider toc={page.data.toc} single={false}>
-      <div
-        className={cn(
-          !page.data.full && 'flex lg:grid lg:grid-cols-[1fr_300px] lg:gap-4',
-        )}
-      >
-        <div>
-          <h1 className='text-4xl font-bold tracking-tight'>
-            {page.data.title}
-          </h1>
-          <p className='text-muted-foreground mb-8 text-lg'>
-            {page.data.description}
-          </p>
-          <article>
-            <MDX components={getMDXComponents()} />
-          </article>
-          <BuyMeCofffeeBanner />
-        </div>
-        {!page.data.full && <TableOfContents items={page.data.toc} />}
+    <div
+      className={cn(
+        !page.data.full && 'flex lg:grid lg:grid-cols-[1fr_300px] lg:gap-4',
+      )}
+    >
+      <div>
+        <h1 className='text-4xl font-bold tracking-tight'>{page.data.title}</h1>
+        <p className='text-muted-foreground mb-8 text-lg'>
+          {page.data.description}
+        </p>
+        <article>
+          <MDXRemote
+            source={page.data.body}
+            components={getMDXComponents()}
+            options={{ mdxOptions, blockJS: false }}
+          />
+        </article>
+        <BuyMeCofffeeBanner />
       </div>
-    </AnchorProvider>
+      {!page.data.full && <TableOfContents items={page.data.toc} />}
+    </div>
   );
 }

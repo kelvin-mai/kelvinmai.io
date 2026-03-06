@@ -1,14 +1,61 @@
-// Thanks to fumadocs ui https://github.com/fuma-nama/fumadocs/blob/dev/packages/ui/src/components/layout/toc-clerk.tsx
 'use client';
 
 import * as React from 'react';
-import * as Base from 'fumadocs-core/toc';
-import type { TOCItemType } from 'fumadocs-core/server';
-import { useEffectEvent } from 'fumadocs-core/utils/use-effect-event';
-import { useOnChange } from 'fumadocs-core/utils/use-on-change';
 import { Text } from 'lucide-react';
 
+import type { TOCItemType } from '@/lib/source';
 import { cn } from '@/lib/utils';
+
+// --- Utility hooks replacing fumadocs-core/utils ---
+
+function useEffectEvent<T extends (...args: unknown[]) => unknown>(fn: T): T {
+  const ref = React.useRef(fn);
+  React.useLayoutEffect(() => {
+    ref.current = fn;
+  });
+  return React.useCallback(
+    (...args: unknown[]) => ref.current(...args),
+    [],
+  ) as T;
+}
+
+// --- Active anchor tracking replacing fumadocs-core/toc ---
+
+function useActiveAnchors(items: TOCItemType[]): string[] {
+  const [active, setActive] = React.useState<string[]>([]);
+
+  React.useEffect(() => {
+    const ids = items.map((item) => item.url.slice(1));
+    const observer = new IntersectionObserver(
+      (entries) => {
+        setActive((prev) => {
+          let next = [...prev];
+          for (const entry of entries) {
+            const id = entry.target.id;
+            if (entry.isIntersecting) {
+              if (!next.includes(id)) next = [...next, id];
+            } else {
+              next = next.filter((a) => a !== id);
+            }
+          }
+          return next;
+        });
+      },
+      { rootMargin: '-80px 0px -40% 0px', threshold: 1.0 },
+    );
+
+    for (const id of ids) {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    }
+
+    return () => observer.disconnect();
+  }, [items]);
+
+  return active;
+}
+
+// --- TOC thumb ---
 
 type TOCThumb = [top: number, height: number];
 
@@ -22,10 +69,8 @@ const getLineOffset = (depth: number): number => {
   return depth >= 3 ? 10 : 0;
 };
 
-const calc = (container: HTMLElement, active: string[]): TOCThumb => {
-  if (active.length === 0 || container.clientHeight === 0) {
-    return [0, 0];
-  }
+const calcThumb = (container: HTMLElement, active: string[]): TOCThumb => {
+  if (active.length === 0 || container.clientHeight === 0) return [0, 0];
 
   let upper = Number.MAX_VALUE,
     lower = 0;
@@ -33,7 +78,6 @@ const calc = (container: HTMLElement, active: string[]): TOCThumb => {
   for (const item of active) {
     const element = container.querySelector<HTMLElement>(`a[href="#${item}"]`);
     if (!element) continue;
-
     const styles = getComputedStyle(element);
     upper = Math.min(upper, element.offsetTop + parseFloat(styles.paddingTop));
     lower = Math.max(
@@ -47,68 +91,70 @@ const calc = (container: HTMLElement, active: string[]): TOCThumb => {
   return [upper, lower - upper];
 };
 
-const update = (element: HTMLElement, info: TOCThumb): void => {
-  element.style.setProperty('--fd-top', `${info[0]}px`);
-  element.style.setProperty('--fd-height', `${info[1]}px`);
-};
-
 type TocThumbProps = React.ComponentProps<'div'> & {
   containerRef: React.RefObject<HTMLElement | null>;
+  active: string[];
 };
 
-const TocThumb: React.FC<TocThumbProps> = ({ containerRef, ...props }) => {
-  const active = Base.useActiveAnchors();
+const TocThumb: React.FC<TocThumbProps> = ({
+  containerRef,
+  active,
+  ...props
+}) => {
   const thumbRef = React.useRef<HTMLDivElement>(null);
 
   const onResize = useEffectEvent(() => {
     if (!containerRef.current || !thumbRef.current) return;
-
-    update(thumbRef.current, calc(containerRef.current, active));
+    const [top, height] = calcThumb(containerRef.current, active);
+    thumbRef.current.style.setProperty('--fd-top', `${top}px`);
+    thumbRef.current.style.setProperty('--fd-height', `${height}px`);
   });
 
   React.useEffect(() => {
     if (!containerRef.current) return;
     const container = containerRef.current;
-
     onResize();
     const observer = new ResizeObserver(onResize);
     observer.observe(container);
-
-    return () => {
-      observer.disconnect();
-    };
+    return () => observer.disconnect();
   }, [containerRef]);
 
-  useOnChange(active, () => {
-    if (!containerRef.current || !thumbRef.current) return;
-
-    update(thumbRef.current, calc(containerRef.current, active));
+  const prevActive = React.useRef(active);
+  React.useEffect(() => {
+    if (prevActive.current !== active) {
+      onResize();
+      prevActive.current = active;
+    }
   });
 
   return <div ref={thumbRef} role='none' {...props} />;
 };
 
+// --- TOC item ---
+
 type TOCItemProps = {
   item: TOCItemType;
   upper?: number;
   lower?: number;
+  active: string[];
 };
 
 const TOCItem: React.FC<TOCItemProps> = ({
   item,
   upper = item.depth,
   lower = item.depth,
+  active,
 }) => {
   const offset = getLineOffset(item.depth),
     upperOffset = getLineOffset(upper),
     lowerOffset = getLineOffset(lower);
+  const isActive = active.includes(item.url.slice(1));
 
   return (
-    <Base.TOCItem
+    <a
       href={item.url}
-      style={{
-        paddingInlineStart: getItemOffset(item.depth),
-      }}
+      data-active={isActive}
+      style={{ paddingInlineStart: getItemOffset(item.depth) }}
       className='prose text-muted-foreground data-[active=true]:text-primary relative py-1.5 text-sm [overflow-wrap:anywhere] transition-colors first:pt-0 last:pb-0'
     >
       {offset !== upperOffset ? (
@@ -133,17 +179,18 @@ const TOCItem: React.FC<TOCItemProps> = ({
           offset !== upperOffset && 'top-1.5',
           offset !== lowerOffset && 'bottom-1.5',
         )}
-        style={{
-          insetInlineStart: offset,
-        }}
+        style={{ insetInlineStart: offset }}
       />
       {item.title}
-    </Base.TOCItem>
+    </a>
   );
 };
 
+// --- TOC items container ---
+
 const TOCItems: React.FC<{ items: TOCItemType[] }> = ({ items }) => {
   const containerRef = React.useRef<HTMLDivElement>(null);
+  const active = useActiveAnchors(items);
 
   const [svg, setSvg] = React.useState<{
     path: string;
@@ -162,10 +209,9 @@ const TOCItems: React.FC<{ items: TOCItemType[] }> = ({ items }) => {
       const d: string[] = [];
       for (let i = 0; i < items.length; i++) {
         const element: HTMLElement | null = container.querySelector(
-          `a[href="#${items[i]!.url.slice(1)}"]`,
+          `a[href="${items[i]!.url}"]`,
         );
         if (!element) continue;
-
         const styles = getComputedStyle(element);
         const offset = getLineOffset(items[i]!.depth) + 1,
           top = element.offsetTop + parseFloat(styles.paddingTop),
@@ -173,28 +219,18 @@ const TOCItems: React.FC<{ items: TOCItemType[] }> = ({ items }) => {
             element.offsetTop +
             element.clientHeight -
             parseFloat(styles.paddingBottom);
-
         w = Math.max(offset, w);
         h = Math.max(h, bottom);
-
         d.push(`${i === 0 ? 'M' : 'L'}${offset} ${top}`);
         d.push(`L${offset} ${bottom}`);
       }
-
-      setSvg({
-        path: d.join(' '),
-        width: w + 1,
-        height: h,
-      });
+      setSvg({ path: d.join(' '), width: w + 1, height: h });
     }
 
     const observer = new ResizeObserver(onResize);
     onResize();
-
     observer.observe(container);
-    return () => {
-      observer.disconnect();
-    };
+    return () => observer.disconnect();
   }, [items]);
 
   return (
@@ -205,16 +241,14 @@ const TOCItems: React.FC<{ items: TOCItemType[] }> = ({ items }) => {
           style={{
             width: svg.width,
             height: svg.height,
-            maskImage: `url("data:image/svg+xml,${
-              // Inline SVG
-              encodeURIComponent(
-                `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${svg.width} ${svg.height}"><path d="${svg.path}" stroke="black" stroke-width="1" fill="none" /></svg>`,
-              )
-            }")`,
+            maskImage: `url("data:image/svg+xml,${encodeURIComponent(
+              `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${svg.width} ${svg.height}"><path d="${svg.path}" stroke="black" stroke-width="1" fill="none" /></svg>`,
+            )}")`,
           }}
         >
           <TocThumb
             containerRef={containerRef}
+            active={active}
             className='bg-primary mt-(--fd-top) h-(--fd-height) transition-all'
           />
         </div>
@@ -226,12 +260,15 @@ const TOCItems: React.FC<{ items: TOCItemType[] }> = ({ items }) => {
             item={item}
             upper={items[i - 1]?.depth}
             lower={items[i + 1]?.depth}
+            active={active}
           />
         ))}
       </div>
     </>
   );
 };
+
+// --- Public component ---
 
 export type TableOfContentsProps = {
   className?: string;
@@ -255,9 +292,7 @@ export const TableOfContents: React.FC<TableOfContentsProps> = ({
       <h3 className='text-primary inline-flex items-center gap-2'>
         <Text className='size-4' /> On This Page
       </h3>
-      <Base.ScrollProvider containerRef={viewRef}>
-        <TOCItems items={items} />
-      </Base.ScrollProvider>
+      <TOCItems items={items} />
     </div>
   );
 };
