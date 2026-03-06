@@ -17,7 +17,7 @@ I recently started picking up .NET Core again. I was a bit worried because I'm o
 
 ## Installation
 
-Install `dotnet-sdk` and `dotnet-runtime` from the Manjaro package manager GUI, or use the terminal. This should also work on vanilla Arch using `pacaur` instead of `pacman`:
+Install _`dotnet-sdk`_ and _`dotnet-runtime`_ from the Manjaro package manager GUI, or use the terminal. This should also work on vanilla Arch using _`pacaur`_ instead of _`pacman`_:
 
 ```bash
 pacman -S dotnet-sdk dotnet-runtime
@@ -34,7 +34,7 @@ dotnet: /usr/bin/dotnet /usr/share/dotnet
 
 ## Path Configuration
 
-If the location of dotnet is **not** `/usr/share/dotnet`, create a new file at `/etc/profile.d/dotnet.sh` with the following content (requires `sudo`). After creating this file, reboot or re-login:
+If the location of dotnet is **not** _`/usr/share/dotnet`_, create a new file at _`/etc/profile.d/dotnet.sh`_ with the following content (requires _`sudo`_). After creating this file, reboot or re-login:
 
 ```bash
 export DOTNET_ROOT=/opt/dotnet
@@ -42,7 +42,7 @@ export MSBuildSDKsPath=$DOTNET_ROOT/sdk/$(${DOTNET_ROOT}/dotnet --version)/Sdks
 export PATH=${PATH}:${DOTNET_ROOT}
 ```
 
-Then add the following to your `~/.bashrc` (or `~/.zshrc` if you use zsh):
+Then add the following to your _`~/.bashrc`_ (or _`~/.zshrc`_ if you use zsh):
 
 ```bash
 # DOTNET - Required

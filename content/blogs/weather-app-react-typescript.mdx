@@ -26,7 +26,7 @@ create-react-app weather --scripts-version=react-scripts-ts
 npm install --save core-decorators
 ```
 
-After generating the project, enable experimental decorators in `tsconfig.json`:
+After generating the project, enable experimental decorators in _`tsconfig.json`_:
 
 ```json
 {
@@ -74,15 +74,15 @@ I reskinned the default create-react-app styles using freeCodeCamp's green theme
 
 ## Step 2: Configuration
 
-TypeScript lets you annotate primitive types (`string`, `number`, `boolean`) and define custom object types. For example, the `WeatherData` type with a nested `DisplayLocation`:
+TypeScript lets you annotate primitive types (_`string`_, _`number`_, _`boolean`_) and define custom object types. For example, the _`WeatherData`_ type with a nested _`DisplayLocation`_:
 
 ![The User Stories](https://cdn-images-1.medium.com/max/814/1*D1a6zvkRnvj7okzDiGMQeA.png)
 
 ## Step 3: React Components
 
-I used the presentational/container component pattern. The `WeatherDisplay` component demonstrates `React.Fragment` — a wrapper that doesn't render any actual HTML element. Interfaces define the shape of props and state using angle-bracket syntax: `<Props, State>`.
+I used the presentational/container component pattern. The _`WeatherDisplay`_ component demonstrates _`React.Fragment`_ — a wrapper that doesn't render any actual HTML element. Interfaces define the shape of props and state using angle-bracket syntax: _`<Props, State>`_.
 
-Decorators use the `@` symbol. The `@autobind` decorator automatically binds `this` to class methods, removing manual binding boilerplate:
+Decorators use the _`@`_ symbol. The _`@autobind`_ decorator automatically binds _`this`_ to class methods, removing manual binding boilerplate:
 
 ```ts
 // With arrow function — no binding issue
@@ -96,7 +96,7 @@ classMethod() {
 }
 ```
 
-The `Weather` container component manages API calls through async operations. `getCurrentPosition` returns a Promise, ensuring geolocation completes before fetching weather data. Optional type properties are marked with `?` in interfaces.
+The _`Weather`_ container component manages API calls through async operations. _`getCurrentPosition`_ returns a Promise, ensuring geolocation completes before fetching weather data. Optional type properties are marked with _`?`_ in interfaces.
 
 ## Step 4: Complete
 

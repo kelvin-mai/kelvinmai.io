@@ -6,6 +6,7 @@ import { motion } from 'motion/react';
 import { useTheme } from 'next-themes';
 
 import { useMounted } from '@/registry/default/hooks/use-mounted';
+import { useRegistryTheme } from '@/providers/registry-theme';
 import { cn } from '@/lib/utils';
 
 const ThemeOption = ({
@@ -61,7 +62,12 @@ const THEME_OPTIONS = [
 ];
 
 const ThemeSwitch = () => {
-  const { theme, setTheme } = useTheme();
+  const { theme: globalTheme, setTheme: globalSetTheme } = useTheme();
+  const registryCtx = useRegistryTheme();
+
+  const theme = registryCtx?.theme ?? globalTheme;
+  const setTheme = registryCtx?.setTheme ?? globalSetTheme;
+
   const isMounted = useMounted();
 
   if (!isMounted) {

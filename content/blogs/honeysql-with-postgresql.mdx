@@ -13,7 +13,7 @@ image: https://media2.dev.to/dynamic/image/width=1000,height=420,fit=cover,gravi
 
 > _Originally posted on [DEV](https://dev.to/kelvinmai/how-to-integrate-honeysql-with-postgresql-108l)._
 
-In returning to clojure, there was one library that I wanted to check out and that one is [honeysql](https://github.com/seancorfield/honeysql). HoneySQL is a library where you can create a clojure map and use the `sql/format` function to turn that map into a raw sql query.
+In returning to clojure, there was one library that I wanted to check out and that one is [honeysql](https://github.com/seancorfield/honeysql). HoneySQL is a library where you can create a clojure map and use the _`sql/format`_ function to turn that map into a raw sql query.
 
 ```clojure
 (require '[honeysql.core :as sql]
@@ -39,7 +39,7 @@ The above example shows off the capabilities of the library, but here is the cla
 
 There is one small problem — the library is very useful for creating raw query strings, but I couldn't find an example of actually executing these queries. That is what I want to accomplish with this post.
 
-For this post we'll be using the Clojure CLI rather than leiningen, so here is the minimum configuration of a `deps.edn` file with an nrepl alias included:
+For this post we'll be using the Clojure CLI rather than leiningen, so here is the minimum configuration of a _`deps.edn`_ file with an nrepl alias included:
 
 ```clojure
 {:paths ["src"]
@@ -68,7 +68,7 @@ Some of these versions may have been updated, so make sure to check [clojars](ht
 (def db (jdbc/get-datasource db-config))
 ```
 
-The connection configuration is used by `jdbc/get-datasource` and the persisted connection is held in the `db` var. Now all we need to do is execute queries by calling `jdbc/execute!`. Note that the first argument is always the database connection:
+The connection configuration is used by _`jdbc/get-datasource`_ and the persisted connection is held in the _`db`_ var. Now all we need to do is execute queries by calling _`jdbc/execute!`_. Note that the first argument is always the database connection:
 
 ```clojure
 (jdbc/execute! db ["CREATE TABLE thing (

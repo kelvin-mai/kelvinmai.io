@@ -139,6 +139,26 @@
     radial-gradient(at 69% 69%, hsla(65, 95%, 73%, 1) 0px, transparent 50%);
 }
 
+/*
+ * Eldritch v2 — same theme palette, reduced opacity so orbs blend rather than
+ * compete. Drops the yellow-green (65°) orb which clashes with cyan.
+ * Eldritch theme exact hues:
+ *   Cyan    #04d1f9 → hsla(193, 97%, 49%)
+ *   Green   #37f499 → hsla(151, 90%, 58%)
+ *   Purple  #a48cf4 → hsla(254, 84%, 75%)
+ *   Pink    #f16c75 → hsla(356, 82%, 68%)
+ *   Amber   #f7c67f → hsla(35, 89%, 73%)
+ */
+.bg-mesh-gradient-eldritch-v2 {
+  background-color: hsla(234, 25%, 17%, 1);
+  background-image:
+    radial-gradient(at 25% 35%, hsla(193, 97%, 49%, 0.55) 0px, transparent 50%),
+    radial-gradient(at 75% 15%, hsla(254, 84%, 75%, 0.5) 0px, transparent 50%),
+    radial-gradient(at 10% 70%, hsla(151, 90%, 58%, 0.45) 0px, transparent 50%),
+    radial-gradient(at 80% 70%, hsla(356, 82%, 68%, 0.4) 0px, transparent 50%),
+    radial-gradient(at 50% 55%, hsla(35, 89%, 73%, 0.3) 0px, transparent 45%);
+}
+
 .bg-mesh-gradient-dracula-pro {
   background-color: hsla(245, 14%, 15%, 1);
   background-image: radial-gradient(

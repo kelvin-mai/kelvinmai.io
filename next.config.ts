@@ -8,6 +8,10 @@ const config: NextConfig = {
         pathname: '/images/**',
         search: '',
       },
+      {
+        pathname: '/blog/**',
+        search: '',
+      },
     ],
     remotePatterns: [
       { hostname: 'cdn-images-1.medium.com' },

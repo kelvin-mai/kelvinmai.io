@@ -12,9 +12,9 @@ image: https://media2.dev.to/dynamic/image/width=1000,height=420,fit=cover,gravi
 
 > _Originally posted on [DEV](https://dev.to/kelvinmai/understanding-clojure-multimethods-2cd0)._
 
-It took me quite a while to wrap my head around clojure's multimethods, which is clojure's version of pattern matching and polymorphism. Pattern matching is a core part of how functional languages combat the ambiguity of `null`. The big draw in typed languages like Scala and OCaml is exhausting all possibilities, but clojure is dynamically typed so the interest is different — we want branching paths, like an expanded `if` statement, that call a different function depending on the condition.
+It took me quite a while to wrap my head around clojure's multimethods, which is clojure's version of pattern matching and polymorphism. Pattern matching is a core part of how functional languages combat the ambiguity of _`null`_. The big draw in typed languages like Scala and OCaml is exhausting all possibilities, but clojure is dynamically typed so the interest is different — we want branching paths, like an expanded _`if`_ statement, that call a different function depending on the condition.
 
-JavaScript and other C-like languages have a decent impression of this with `switch`:
+JavaScript and other C-like languages have a decent impression of this with _`switch`_:
 
 ```javascript
 const switchFn = (condition) => {
@@ -32,7 +32,7 @@ const switchFn = (condition) => {
 };
 ```
 
-Here is the clojure equivalent using clojure keywords (the `:` syntax) instead of strings as conditions:
+Here is the clojure equivalent using clojure keywords (the _`:`_ syntax) instead of strings as conditions:
 
 ```clojure
 (defn switch-fn [condition]
@@ -42,11 +42,11 @@ Here is the clojure equivalent using clojure keywords (the `:` syntax) instead o
     :default (prn "maybe?")))
 ```
 
-The downside of `case` is that updating functionality requires editing the function directly. This becomes a real problem when you consider polymorphism — say you want to add a case to a third-party library. That's nearly impossible with `case`.
+The downside of _`case`_ is that updating functionality requires editing the function directly. This becomes a real problem when you consider polymorphism — say you want to add a case to a third-party library. That's nearly impossible with _`case`_.
 
 ## Multimethods
 
-That's where clojure's multimethods come in. Using `defmulti` and `defmethod` we can define the dispatch function and each case separately:
+That's where clojure's multimethods come in. Using _`defmulti`_ and _`defmethod`_ we can define the dispatch function and each case separately:
 
 ```clojure
 (defmulti factorial identity)
@@ -61,9 +61,9 @@ That's where clojure's multimethods come in. Using `defmulti` and `defmethod` we
 (factorial 7) ; => 5040
 ```
 
-This implements a factorial using multimethods instead of the typical recursive alternative. The `defmulti` macro takes the name of the multimethod and a dispatch function — here `identity`, meaning whatever number is provided becomes the case. Each `defmethod` takes the multimethod name, the case to match, and a function body.
+This implements a factorial using multimethods instead of the typical recursive alternative. The _`defmulti`_ macro takes the name of the multimethod and a dispatch function — here _`identity`_, meaning whatever number is provided becomes the case. Each _`defmethod`_ takes the multimethod name, the case to match, and a function body.
 
-The `:default` keyword works as the catch-all case, similar to `default` in a switch statement.
+The _`:default`_ keyword works as the catch-all case, similar to _`default`_ in a switch statement.
 
 For a more practical example, here is a React/Redux-style action dispatch system:
 
@@ -84,4 +84,4 @@ For a more practical example, here is a React/Redux-style action dispatch system
 (app-reducer state [:add-to-list 4])
 ```
 
-With a redux-style reducer you always have two arguments — state and action — but the action is divided into its type and payload. To maintain arity, the action is embedded in a vector and destructured in each `defmethod`. In the `defmulti`, `first` returns the action type to determine which method to dispatch to. In each method's body we care about the payload, not the type, so the type is ignored after dispatch.
+With a redux-style reducer you always have two arguments — state and action — but the action is divided into its type and payload. To maintain arity, the action is embedded in a vector and destructured in each _`defmethod`_. In the _`defmulti`_, _`first`_ returns the action type to determine which method to dispatch to. In each method's body we care about the payload, not the type, so the type is ignored after dispatch.

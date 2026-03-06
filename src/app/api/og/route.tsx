@@ -8,16 +8,14 @@ import { getBaseUrl } from '@/lib/utils';
 export const runtime = 'edge';
 
 const backgroundImage = `radial-gradient(
-      at 30% 38%,
-      hsla(189, 96%, 49%, 1) 0px,
-      transparent 80%
+      at 25% 35%,
+      hsla(193, 97%, 49%, 0.5) 0px,
+      transparent 50%
     ),
-    radial-gradient(at 13% 72%, hsla(151, 89%, 58%, 1) 0px, transparent 80%),
-    radial-gradient(at 27% 92%, hsla(35, 88%, 73%, 1) 0px, transparent 80%),
-    radial-gradient(at 77% 12%, hsla(325, 84%, 67%, 1) 0px, transparent 80%),
-    radial-gradient(at 61% 21%, hsla(254, 79%, 74%, 1) 0px, transparent 80%),
-    radial-gradient(at 43% 63%, hsla(355, 82%, 68%, 1) 0px, transparent 80%),
-    radial-gradient(at 69% 69%, hsla(65, 95%, 73%, 1) 0px, transparent 80%)`
+    radial-gradient(at 75% 15%, hsla(254, 84%, 75%, 0.5) 0px, transparent 80%),
+    radial-gradient(at 10% 70%, hsla(151, 90%, 58%, 0.5) 0px, transparent 80%),
+    radial-gradient(at 80% 70%, hsla(356, 82%, 68%, 0.5) 0px, transparent 80%),
+    radial-gradient(at 50% 55%, hsla(35, 89%, 73%, 0.5) 0px, transparent 85%)`
   .split('\n')
   .map((s) => s.trim())
   .join(' ');
@@ -29,16 +27,27 @@ export async function GET(request: Request) {
       ? searchParams.get('title')?.slice(0, 100)
       : '';
     const description = searchParams.has('description')
-      ? searchParams.get('description')?.slice(0, 100)
+      ? searchParams.get('description')?.slice(0, 150)
       : '';
+    const previewImage = searchParams.get('image');
 
     const ubuntuFont = await fetch(
       `${getBaseUrl()}/fonts/Ubuntu-Regular.ttf`,
     ).then((res) => res.arrayBuffer());
 
-    const image = await fetch(`${getBaseUrl()}/images/me.jpg`).then((res) =>
+    const avatar = await fetch(`${getBaseUrl()}/images/me.jpg`).then((res) =>
       res.arrayBuffer(),
     );
+
+    const previewImageData = previewImage
+      ? await fetch(
+          previewImage.startsWith('/')
+            ? `${getBaseUrl()}${previewImage}`
+            : previewImage,
+        )
+          .then((res) => res.arrayBuffer())
+          .catch(() => null)
+      : null;
 
     return new ImageResponse(
       (
@@ -53,7 +62,7 @@ export async function GET(request: Request) {
             <img
               width={64}
               height={64}
-              src={image as unknown as Blob}
+              src={avatar as unknown as Blob}
               tw='rounded-full overflow-hidden'
             />
             <div tw='flex flex-col ml-2'>
@@ -62,10 +71,28 @@ export async function GET(request: Request) {
             </div>
           </div>
           {title && description ? (
-            <div tw='p-8 flex flex-col'>
-              <h2 tw='text-5xl m-0'>{title}</h2>
-              <p tw='text-2xl m-0'>{description}</p>
-            </div>
+            previewImageData ? (
+              <div tw='flex flex-row w-full h-full pt-24 pb-12 px-8 gap-8 items-center'>
+                <div tw='flex flex-col flex-1 justify-center'>
+                  <h2 tw='text-5xl m-0 mb-4 leading-tight'>{title}</h2>
+                  <p tw='text-xl m-0 opacity-70 leading-relaxed'>
+                    {description}
+                  </p>
+                </div>
+                <img
+                  src={previewImageData as unknown as Blob}
+                  width={480}
+                  height={320}
+                  tw='rounded-2xl object-cover flex-shrink-0'
+                  style={{ objectFit: 'cover' }}
+                />
+              </div>
+            ) : (
+              <div tw='p-8 flex flex-col'>
+                <h2 tw='text-5xl m-0'>{title}</h2>
+                <p tw='text-2xl m-0'>{description}</p>
+              </div>
+            )
           ) : (
             <p tw='p-8 text-3xl'>{resume.basics.summary}</p>
           )}

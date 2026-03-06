@@ -15,7 +15,7 @@ import { Button } from '@/components/ui';
 export default function Home() {
   return (
     <>
-      <div className='bg-mesh-gradient-eldritch fixed -z-10 min-h-screen w-full overflow-hidden' />
+      <div className='bg-mesh-gradient-eldritch-v2 fixed -z-10 min-h-screen w-full overflow-hidden' />
       <main className='container space-y-4 py-4'>
         <div className='grid grid-cols-1 gap-4 md:grid-cols-3'>
           <section className='flex flex-col space-y-4 md:col-span-2'>

@@ -6,12 +6,12 @@ import { remarkCodeHike, recmaCodeHike } from 'codehike/mdx';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
-import { ArrowLeft } from 'lucide-react';
 
 import { source } from '@/lib/source';
 import { getMDXComponents } from '@/components/mdx';
 import { Footer } from '@/components/layout';
 import { SITE_URL } from '@/lib/constants';
+import { Badge } from '@/components/ui';
 
 const { blogs } = source;
 
@@ -49,7 +49,7 @@ export async function generateMetadata(props: {
       tags: post.data.tags,
       images: [
         {
-          url: `${SITE_URL}/api/og?title=${post.data.title}&description=${post.data.description}`,
+          url: `${SITE_URL}/api/og?title=${post.data.title}&description=${post.data.description}${post.data.image ? `&image=${post.data.image}` : ''}`,
           height: 1200,
           width: 630,
           alt: `Preview image for ${post.data.title}`,
@@ -68,15 +68,16 @@ export default async function BlogPostPage(props: {
 
   return (
     <>
+      <div className='bg-mesh-gradient-eldritch-v2 fixed -z-10 min-h-screen w-full overflow-hidden' />
       <main className='container mx-auto max-w-3xl px-4 py-16'>
         <Link
           href='/blog'
-          className='text-muted-foreground hover:text-foreground mb-8 flex items-center gap-1 text-sm transition-colors'
+          className='mb-10 inline-block text-sm text-white/40 transition-colors hover:text-cyan-400'
         >
-          <ArrowLeft className='size-4' />
-          All posts
+          ← All posts
         </Link>
-        <div className='text-muted-foreground mb-3 flex items-center gap-2 text-sm'>
+
+        <div className='mb-3 flex items-center gap-2 text-sm text-cyan-400'>
           <span>
             {post.data.date.toLocaleDateString('en-US', {
               year: 'numeric',
@@ -87,39 +88,45 @@ export default async function BlogPostPage(props: {
           <span>·</span>
           <span>{post.data.readTime} min read</span>
         </div>
-        <h1 className='mb-4 text-4xl font-bold tracking-tight'>
+
+        <h1 className='mb-4 text-4xl font-bold tracking-tight text-white md:text-5xl'>
           {post.data.title}
         </h1>
+
         {post.data.description && (
-          <p className='text-muted-foreground mb-6 text-lg'>
-            {post.data.description}
-          </p>
+          <p className='mb-6 text-lg text-white/60'>{post.data.description}</p>
         )}
+
         {post.data.tags && post.data.tags.length > 0 && (
           <div className='mb-8 flex flex-wrap gap-2'>
             {post.data.tags.map((tag) => (
-              <span
+              <Badge
                 key={tag}
-                className='bg-muted text-muted-foreground rounded-full px-2.5 py-0.5 text-xs'
+                className='bg-neutral-800 font-semibold text-neutral-200 hover:bg-neutral-700 hover:text-neutral-50'
               >
                 {tag}
-              </span>
+              </Badge>
             ))}
           </div>
         )}
+
         {post.data.image && (
-          <div className='relative mb-10 aspect-[21/9] w-full overflow-hidden rounded-lg'>
-            <Image
-              src={post.data.image}
-              alt={post.data.title}
-              fill
-              className='object-cover'
-              sizes='(max-width: 768px) 100vw, 768px'
-              priority
-            />
+          <div className='relative mb-10 overflow-hidden rounded-xl'>
+            <div className='relative aspect-[21/9]'>
+              <Image
+                src={post.data.image}
+                alt={post.data.title}
+                fill
+                className='object-cover'
+                sizes='(max-width: 768px) 100vw, 768px'
+                priority
+              />
+            </div>
+            <div className='absolute inset-0 bg-gradient-to-t from-[#212337]/70 to-transparent' />
           </div>
         )}
-        <article className='prose prose-neutral dark:prose-invert max-w-none'>
+
+        <article className='prose prose-invert prose-headings:text-white prose-a:text-cyan-400 prose-a:no-underline prose-a:transition-colors prose-strong:text-white prose-code:text-cyan-300 hover:prose-a:text-cyan-300 max-w-none'>
           <MDXRemote
             source={post.data.body}
             components={getMDXComponents()}
