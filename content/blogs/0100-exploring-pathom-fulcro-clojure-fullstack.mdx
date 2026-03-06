@@ -1,0 +1,165 @@
+---
+title: Exploring Full-Stack Clojure with Pathom and Fulcro
+description: A hands-on look at building a full-stack Clojure application using Pathom's graph resolver model and Fulcro's normalized component state, covering EQL, resolvers, mutations, and how the two libraries compose together.
+date: 2021-07-31
+tags:
+  - clojure
+image: https://pttjrd5bylwkefgv.public.blob.vercel-storage.com/blog/pathom-fulcro.png
+---
+
+At [Luminare](https://www.luminare.io/) I was given the lead on a new internal MVP. I didn't get to choose the stack though — our CTO had already decided it would be built on [Pathom](https://blog.wsscode.com/pathom/v2/pathom/2.2.0/introduction.html) and [Fulcro](https://book.fulcrologic.com/), two libraries I hadn't touched before.
+
+To actually understand what I was working with, I built a separate hobby project outside of work. Both libraries are niche even by Clojure standards, and reading docs only goes so far. The demo code lives at [github.com/kelvin-mai/pathom-fulcro-demo](https://github.com/kelvin-mai/pathom-fulcro-demo) — it's unfinished and rough, but it's where most of the learning happened.
+
+## The Stack
+
+The backend runs on Clojure with http-kit and Reitit for routing. The database is [Crux](https://opencrux.com/) (now XTDB), a bitemporal document store backed by PostgreSQL. The frontend is ClojureScript compiled with shadow-cljs. The glue holding it all together is Pathom on the server and Fulcro on the client.
+
+The other projects at Luminare up to that point had used re-frame — a ClojureScript state management library built on top of React — along with Reitit for routing. So Reitit was familiar ground, and the ClojureScript-on-React mental model carried over. Fulcro is also a ClojureScript wrapper around React, but it takes a much more opinionated approach to state than re-frame does. Where re-frame gives you subscriptions and event handlers you wire up yourself, Fulcro owns the entire data lifecycle — normalization, fetching, mutations — and the learning curve reflects that.
+
+## EQL and Pathom
+
+Pathom is a Clojure/ClojureScript library for building graph query APIs. The query language it uses is EQL — Entity Query Language — a data format for describing what data you want, modelled after Datomic's pull syntax and used by om.next and Fulcro.
+
+An EQL query looks like this:
+
+```clojure
+[{::product/all [::product/id ::product/name ::product/price]}]
+```
+
+This says: "give me all products, and for each one I want its id, name, and price." The nested vector is a join — you're walking a relationship in the graph.
+
+Pathom resolves these queries by registering `defresolver` functions. Each resolver declares its inputs and outputs, and Pathom figures out how to chain them to satisfy a query:
+
+```clojure
+(defresolver products-resolver
+  [{:keys [db]} _]
+  {::pc/output [{::product/all [::product/id]}]}
+  {::product/all (db/get-all-idents db ::product/id)})
+
+(defresolver product-resolver
+  [{:keys [db]} {::product/keys [id]}]
+  {::pc/input  #{::product/id}
+   ::pc/output [::product/name ::product/price]}
+  (db/get-entity db ::product/id id))
+```
+
+The first resolver produces a list of product idents. The second takes a single _`::product/id`_ and resolves the full entity. Pathom automatically composes them: if a query asks for _`::product/name`_ on every product, Pathom calls _`products-resolver`_ first, then fans out to _`product-resolver`_ for each result.
+
+This is the key insight — you don't write a "get all products with their names and prices" endpoint. You write small, composable resolvers and let Pathom figure out the traversal.
+
+One thing that took some getting used to is that everything is a namespaced keyword. Instead of plain _`:id`_ or _`:name`_, you write _`::product/id`_ and _`::product/name`_. Luminare used namespaced keywords throughout the codebase — it's a Clojure convention for avoiding collisions across namespaces — and I was still getting comfortable with them when I started this project. In EQL they're not optional: the namespace is part of how Pathom identifies and indexes attributes in its graph. Once it clicks it makes sense, but early on reading a map full of _`::product/keys`_ and _`::pc/output`_ felt like alphabet soup.
+
+### Wiring the Parser
+
+The Pathom parser is the entry point for all queries from the client:
+
+```clojure
+(defn create-parser [db]
+  (p/parser
+   {::p/env     {::p/reader [p/map-reader
+                              pc/reader2
+                              pc/index-reader
+                              pc/open-ident-reader
+                              p/env-placeholder-reader]
+                 ::p/placeholder-prefixes #{">"}
+                 ::pc/mutation-join-globals [:tempids]
+                 ::p/process-error process-error}
+    ::p/mutate  pc/mutate
+    ::p/plugins [(pc/connect-plugin {::pc/register registry})
+                 (p/env-wrap-plugin (fn [env]
+                                      (assoc env :db db)))
+                 p/error-handler-plugin
+                 (p/post-process-parser-plugin p/elide-not-found)]}))
+```
+
+The _`registry`_ is a flat vector of all resolvers and mutations. The _`env-wrap-plugin`_ injects the database connection into every resolver's environment, so resolvers can pull from it without threading it manually through every call.
+
+## Fulcro Components
+
+Fulcro is a ClojureScript framework built on React. The big difference from plain React is that Fulcro manages a single normalized client-side database — every component declares a query describing the data it needs, and Fulcro merges server responses into a normalized map keyed by ident.
+
+Components are defined with _`defsc`_:
+
+```clojure
+(defsc Product
+  [this {::product/keys [id name price]}]
+  {:query [::product/id ::product/name ::product/price]
+   :ident ::product/id}
+  (dom/tr {:classes [table/table-row]}
+          (dom/td {:classes [table/table-cell]} (str id))
+          (dom/td {:classes [table/table-cell]} name)
+          (dom/td {:classes [table/table-cell]} price)))
+```
+
+The _`:query`_ key is EQL — it declares exactly what this component needs from the client DB. The _`:ident`_ tells Fulcro how to normalize this entity (keyed by _`::product/id`_). This is analogous to how Redux normalizes by id, but it's declared on the component itself and derived automatically when you compose components.
+
+A parent component composes a child's query:
+
+```clojure
+(defsc Products
+  [this {:keys [products]}]
+  {:query [{:products (comp/get-query Product)}]
+   :ident (fn [] [:component/id :products])
+   :initial-state {:products []}}
+  ...)
+```
+
+_`(comp/get-query Product)`_ pulls the child's EQL query in as a join. Fulcro walks the full tree to produce one composite EQL query that it sends to the server — Pathom receives it and resolves the whole thing in one round trip.
+
+### Loading Data
+
+Route components declare a _`:will-enter`_ lifecycle for deferred loading:
+
+```clojure
+:will-enter (fn [app _]
+              (dr/route-deferred
+               [:component/id :products]
+               (fn []
+                 (df/load! app ::product/all
+                           Product
+                           {:target [:component/id :products :products]
+                            :post-mutation `dr/target-ready
+                            :post-mutation-params {:target [:component/id :products]}}))))
+```
+
+_`df/load!`_ sends an EQL query to the server and merges the result into the normalized client DB at the specified _`:target`_. The router defers rendering until the data is ready.
+
+### Isomorphic Mutations
+
+One of the more elegant parts of this stack is how mutations are defined. Using Clojure reader conditionals (_`#?`_), you write both the server and client sides of a mutation in the same _`.cljc`_ file:
+
+```clojure
+#?(:clj
+   (pc/defmutation create!
+     [{:keys [db]} {temp-id ::product/id :as params}]
+     {::pc/sym    `create!
+      ::pc/output [:transaction/success ::product/id]}
+     (let [{::product/keys [id] :as entity} (db/new-entity ::product/id params)
+           tx-status (db/submit! db [[:crux.tx/put entity]])]
+       {:transaction/success tx-status
+        :tempids {temp-id id}}))
+
+   :cljs
+   (m/defmutation create!
+     [{::product/keys [id] :as params}]
+     (action [{:keys [state]}]
+             (swap!-> state
+                      (assoc-in [::product/id id] params)
+                      (update-in [:component/id :products :products] conj [::product/id id])))
+     (remote [env] true)))
+```
+
+The _`:clj`_ side is a Pathom mutation — it validates the params, writes to Crux, and returns the real id to replace the tempid. The _`:cljs`_ side is a Fulcro mutation — it optimistically updates the client DB immediately, then sends the mutation to the server. Fulcro handles the tempid swap automatically when the server responds.
+
+## What I Took Away
+
+The Pathom + Fulcro combination is genuinely cohesive. The EQL query you write in a Fulcro component travels unchanged to the server and Pathom resolves it — there's no REST mapping, no endpoint proliferation, and no over-fetching. The normalized client DB means you never manually reconcile data after a mutation; Fulcro handles it.
+
+The tradeoff is a steep learning curve. Both libraries have significant API surface area, and debugging the composition of resolvers or the routing lifecycle isn't always obvious. Pathom's visualizer tool helped a lot here — it lets you inspect the resolver graph and trace how queries get resolved.
+
+I never finished the demo project, but working through it gave me enough of a mental model to be productive at Luminare. The ideas stuck with me too. If you work in Clojure and haven't looked at Pathom, it's worth an afternoon even if you never use Fulcro.
+
+One resource that helped me get up and running faster than the docs alone was a video series by Tony Kay — the creator of Fulcro himself. He walks through the framework hands-on and the explanations are much more approachable than reading the book cold. You can find the playlist [here](https://www.youtube.com/playlist?list=PLVi9lDx-4C_TBRiHfjnjXaK2J3BIUDPnf).
+
+Check out the demo project on [GitHub](https://github.com/kelvin-mai/pathom-fulcro-demo), and the official documentation for [Fulcro](https://book.fulcrologic.com/) and [Pathom](https://blog.wsscode.com/pathom/v2/pathom/2.2.0/introduction.html).

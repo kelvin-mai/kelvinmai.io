@@ -1,0 +1,45 @@
+---
+title: Coding Videos with Remotion and CodeHike
+description: An exploration of Remotion and CodeHike's token transitions plugin to create an animated code explainer for Clojure's hiccup HTML format.
+date: 2025-01-30
+tags:
+  - react
+  - javascript
+  - tooling
+  - clojure
+image: https://pttjrd5bylwkefgv.public.blob.vercel-storage.com/blog/template-code-hike-cover.png
+---
+
+This week I've been playing around with [Remotion](https://www.remotion.dev/) and [CodeHike](https://codehike.org/), and I'm pretty happy with the little GIF I managed to put together — an animated explanation of Clojure's hiccup format for writing HTML.
+
+## Remotion: Videos in React
+
+The big idea behind Remotion is that you program videos using React. Instead of reaching for Premiere or After Effects, you write components. Frames are just renders of your React tree at a given point in time, and you compose animations the same way you'd compose UI — with components, props, and hooks.
+
+That framing clicked for me immediately. I already think in components. Being able to express timing and transitions as code rather than dragging keyframes around a timeline is genuinely appealing.
+
+Getting started was straightforward using the [remotion-dev/template-code-hike](https://github.com/remotion-dev/template-code-hike) template, which comes pre-wired with CodeHike. From there it was mostly getting comfortable with the Remotion workflow: the Studio gives you a browser-based preview where you can scrub through your composition frame by frame, which makes iteration fast.
+
+## CodeHike Token Transitions
+
+The real star of this experiment was CodeHike's [token transitions plugin](https://codehike.org/docs/code/token-transitions). It animates code changes at the token level — individual keywords, identifiers, brackets — smoothly transitioning between two states of a code block. The result is that instead of one block of code swapping out for another, you see each piece morph into place.
+
+For explaining Clojure's hiccup syntax, this was perfect. Hiccup represents HTML as nested vectors:
+
+```clojure
+[:div {:class "container"}
+  [:h1 "Hello, World!"]
+  [:p "This is hiccup."]]
+```
+
+The token transitions let me animate from a regular HTML structure to its hiccup equivalent, showing exactly which parts map to which — tags become keywords, attributes become maps, children stay in place. Much clearer than a static before/after comparison.
+
+## The Result
+
+Here's the GIF render I ended up with:
+
+![Remotion CodeHike hiccup animation](https://pttjrd5bylwkefgv.public.blob.vercel-storage.com/blog/remotion-hiccup-html.gif)
+
+It's a small thing, but it's the kind of explainer I wish existed when I was first learning ClojureScript. The combination of Remotion's React-based timeline and CodeHike's token-level animation makes it surprisingly easy to produce something polished.
+
+I'm looking forward to using this stack more — there are a lot of concepts that are just easier to show with animated code than to describe in prose.

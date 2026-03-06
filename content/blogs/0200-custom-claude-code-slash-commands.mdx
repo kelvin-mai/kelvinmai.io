@@ -1,0 +1,188 @@
+---
+title: Building Custom Slash Commands in Claude Code
+description: A practical guide to building custom Claude Code slash commands, using a code review plugin as a working example — covering branch analysis, markdown output, and a feedback implementation workflow.
+date: 2026-03-09
+tags:
+  - tooling
+  - career
+image: https://pttjrd5bylwkefgv.public.blob.vercel-storage.com/blog/claude-slash.jpg
+---
+
+I've been using Claude Code as my daily driver for a while now, and one of the most underrated features is the ability to define your own slash commands. Not just shortcuts — full, multi-step agentic workflows that know your project, run shell commands, read files, and write output, all triggered by typing something like `/code-review`.
+
+This post walks through building a code review plugin from scratch. By the end you'll have two commands: `/code-review` which reads your branch diff, finds problems, and writes a report to disk, and `/implement-feedback` which reads that report and actually fixes the issues.
+
+## How Custom Slash Commands Work
+
+Claude Code looks for slash commands in two places:
+
+- **Project-level**: `.claude/commands/` in your repo root (checked into git, shared with your team)
+- **Global**: `~/.claude/commands/` (personal commands available in every project)
+
+Each command is a markdown file. The filename becomes the command name — so `.claude/commands/code-review.md` registers `/code-review`. The file content is the prompt Claude receives when you invoke it, with _`$ARGUMENTS`_ as a placeholder for anything you type after the command name.
+
+Commands also support a YAML frontmatter block for metadata:
+
+```markdown
+---
+description: Short description shown in the command list
+argument-hint: [optional hint shown in autocomplete]
+allowed-tools: [Bash, Read, Write, Edit, Glob]
+---
+```
+
+The _`allowed-tools`_ field restricts which tools the command can use — useful for commands you want to keep read-only, or ones you're sharing with a team and want to scope carefully.
+
+## Building `/code-review`
+
+Create `.claude/commands/code-review.md`:
+
+```markdown
+---
+description: Review current branch changes and write a report to /dev
+allowed-tools: [Bash, Read, Write, Glob]
+---
+
+# Code Review
+
+Review the changes on the current branch against main.
+
+## Steps
+
+1. Run `git rev-parse --abbrev-ref HEAD` to get the current branch name
+2. Run `git log origin/main..HEAD --oneline` to list commits in this branch
+3. Run `git diff origin/main..HEAD` to get the full diff
+4. Analyze the changes for:
+   - Logic errors or bugs
+   - Security concerns (injection, auth gaps, exposed secrets)
+   - Missing error handling at system boundaries
+   - Performance issues (N+1 queries, unnecessary re-renders, blocking calls)
+   - Inconsistencies with the existing codebase style
+5. Write a detailed report to `/dev/code-review-{branch-name}.md` using the
+   structure below
+6. Also write a section of professional, constructive PR review comments —
+   ready to paste directly into GitHub — for each issue found
+
+## Report Structure
+
+Use this structure for the output file:
+
+\`\`\`markdown
+
+# Code Review: {branch-name}
+
+## Summary
+
+Brief overall assessment.
+
+## Issues Found
+
+### Critical
+
+- ...
+
+### Warnings
+
+- ...
+
+### Suggestions
+
+- ...
+
+## PR Review Comments
+
+Professional, copy-pasteable comments for each issue, written
+as if leaving a GitHub review. Be direct but constructive.
+\`\`\`
+```
+
+Now when I run `/code-review` from inside my repo, Claude:
+
+1. Shells out to git to get the branch name and full diff
+2. Reads the changed files for full context where needed
+3. Writes a structured markdown file to `/dev/code-review-{branch}.md`
+
+The _`/dev`_ directory is great for this — it's local, not committed, and easy to find. I keep a `.gitignore` entry for it so the reports stay on my machine.
+
+## The PR Comment Agent
+
+The PR review comments section is where this gets genuinely useful. I asked it to write comments as if it were leaving a GitHub review, and the output is surprisingly good — it identifies the exact line context, explains the concern, and suggests a fix without being condescending.
+
+An example output comment it generated for a missing null check:
+
+```markdown
+## PR Review Comments
+
+**`src/lib/utils/parse.ts` — `parseConfig` function**
+
+The return value of `JSON.parse()` is typed as `any` and immediately
+spread without validation. If the config file contains unexpected keys
+or the parse fails silently, this will propagate malformed state into
+the rest of the app.
+
+Consider validating with zod or a manual guard before spreading:
+
+\`\`\`ts
+const raw = JSON.parse(content);
+if (!isValidConfig(raw)) throw new Error('Invalid config shape');
+\`\`\`
+```
+
+Paste, done. It's not replacing a real code review, but it's a solid first pass — especially useful when I'm reviewing my own work before opening a PR and need a fresh perspective.
+
+## Building `/implement-feedback`
+
+Once the report exists, I want a second command that reads it and starts fixing things. Create `.claude/commands/implement-feedback.md`:
+
+```markdown
+---
+description: Implement fixes from the latest code review report in /dev
+allowed-tools: [Bash, Read, Write, Edit, Glob]
+---
+
+# Implement Feedback
+
+Read the most recent code review report and implement the suggested fixes.
+
+## Steps
+
+1. Use Glob to find all files matching `/dev/code-review-*.md`
+2. Sort by modification time and read the most recent one
+3. Work through the **Critical** issues first, then **Warnings**
+4. For each issue:
+   - Read the relevant file to understand the full context
+   - Apply the fix
+   - Move on — do not ask for confirmation between fixes unless
+     the change is destructive or ambiguous
+5. Skip the **Suggestions** section unless $ARGUMENTS includes "all"
+6. After finishing, summarize what was changed
+
+## Notes
+
+- Prefer minimal, targeted edits — fix the issue, don't refactor
+  surrounding code
+- If an issue is unclear or the fix would require a large structural
+  change, leave a TODO comment and note it in the summary
+```
+
+Running `/implement-feedback` picks up the latest report, works through the critical and warning items, and gives me a summary of what it changed. Running `/implement-feedback all` also handles the suggestions section.
+
+## Tips for Writing Good Commands
+
+A few things I've learned building these:
+
+**Be explicit about output format.** The more specific the structure you ask for, the more consistent and parseable the output is. Vague instructions like "write a report" produce vague reports.
+
+**Use _`$ARGUMENTS`_ for variation.** It's a simple string substitution but it gives you a lot of flexibility. I use it for flags like `all`, branch name overrides, or piping in a specific file path.
+
+**Keep _`allowed-tools`_ tight.** For commands that only need to read, don't give write access. It makes the command safer to run and easier to reason about.
+
+**Project-level vs global.** Commands that are project-specific (like one that knows your `/dev` directory convention) belong in `.claude/commands/`. Commands you want everywhere (like a generic commit message helper) go in `~/.claude/commands/`.
+
+**Chain commands manually.** There's no built-in command piping, but you can just run `/code-review` and then `/implement-feedback` back-to-back. The shared `/dev` directory is the handoff point between them.
+
+## Wrapping Up
+
+Custom slash commands turn Claude Code from a general assistant into something that fits your actual workflow. The code review example here took maybe 20 minutes to set up and I've used it before almost every PR since.
+
+The pattern generalises well — anything you'd describe as "read some context, do some reasoning, write some output" is a good candidate for a slash command. Database migration reviews, changelog generation, dependency audit reports — once you have the pattern down, these are quick to build.

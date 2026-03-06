@@ -1,0 +1,91 @@
+---
+title: I Got Tired of Remembering URLs, So I Built My Own Tools
+description: An exploration of how a developer grew frustrated with bookmarking scattered online tools and decided to build a consolidated tools section directly into their personal registry.
+date: 2025-05-21
+tags:
+  - css
+  - tailwind
+  - react
+  - tooling
+---
+
+There's a certain class of tool that every frontend developer uses regularly but can never quite remember where to find. You know what I mean — the CSS easing visualizer, the color palette generator, the gradient builder. They exist, they're great, but they're scattered across a dozen different domains that my brain stubbornly refuses to retain.
+
+I had a growing list of bookmarks I barely used, a browser history full of "easing tool site" searches, and an ever-present low-level annoyance every time I needed to do something as simple as visualize a cubic-bezier curve.
+
+So I did what any reasonable developer would do: I built my own.
+
+## The Tools I Was Already Using
+
+Before getting into what I built, I want to give credit where it's due. The tools that inspired this project are genuinely excellent — I just wanted them closer.
+
+- **[1001.io](https://1001.io/tools/css-cubic-bezier-generator)** — My go-to for CSS cubic-bezier generation. Great visual editor, lets you feel the curve before you commit to it.
+- **[Tailscan](https://tailscan.com/colors)** — An incredible Tailwind color reference. Every shade, every name, ready to copy.
+- **[uicolors.app](https://uicolors.app)** — Lets you generate a full Tailwind color palette from a single hex value. Incredibly useful when you're trying to make a brand color fit into the Tailwind system.
+- **[cssgradient.io](https://cssgradient.io)** — A solid gradient builder with a clean UI.
+
+These are tools I genuinely recommend. I'm not replacing them — I'm just bringing the workflow into my own space.
+
+## What I Actually Built
+
+I added a tools section to my registry with four utilities that I personally reach for the most:
+
+### Easing Visualizer
+
+The one I missed most. I wanted to be able to look at the collection of easing curves I use across my projects in one place, see them animate, and grab the values without leaving my docs.
+
+```tsx
+<Easings />
+```
+
+It renders each named easing curve, plays an animation preview on hover, and lets you copy the CSS value directly. No more "what was that spring easing again?"
+
+### Tailwind Color Reference
+
+I use Tailwind's color palette constantly but I can never keep the exact shade numbers in my head. Is it `slate-700` or `slate-800`? Which gray family actually looks neutral on screen?
+
+```tsx
+<TailwindColorSwatches />
+```
+
+This renders the full Tailwind color palette so I can see all the shades at a glance and copy the class name or hex value directly. Same idea as Tailscan — I just wanted it built into my site.
+
+### Color Generator
+
+This one generates a complete Tailwind-compatible color scale from a single seed color. You give it a hex value, it gives you a full `50`–`950` ramp that you can drop directly into your Tailwind config.
+
+```tsx
+<ColorGenerator />
+```
+
+The algorithm tries to maintain perceptually even steps across the lightness range, similar to how uicolors.app approaches it.
+
+### Gradient Generator
+
+A visual gradient builder that outputs clean CSS. Pick your colors, set your angle, adjust the stops, and copy the result.
+
+```tsx
+<GradientGenerator />
+```
+
+I kept this one intentionally minimal — no layer blending modes or mesh gradients. Just the thing I actually need 90% of the time.
+
+## Why Not Just Use Bookmarks?
+
+Honestly? I tried. I had a bookmarks folder called "tools" that grew to about 20 entries before I stopped maintaining it. The problem isn't that the tools don't exist — it's the context switch. When I'm in my docs figuring out what easing to use for an animation, having to open a new tab, navigate somewhere else, then come back breaks my flow.
+
+Having these tools live inside my registry means I can reference them right alongside the components that use them. My easing documentation links directly to the visualizer. My color palette docs are next to the generator. The tools are part of the documentation, not a separate destination.
+
+## The Actual Building Part
+
+Each tool is a React component that I registered in my shadcn-style component registry. They're server-renderable where possible, but the interactive bits (color pickers, animation previews, canvas gradients) use client components.
+
+The registry setup means I can also pull these into other projects if I want — they're not hardcoded to my site, they're proper reusable components with documented APIs.
+
+All four tools are available in [my registry](/registry) if you want to explore the implementations or use them yourself.
+
+## Takeaway
+
+If there's a tool you use more than twice a week and you find yourself searching for it every time, that's a sign you should either bookmark it properly or build it yourself. Building it yourself is more work upfront, but it gives you exactly the version of the tool you want — no ads, no paywalls, no features you'll never use.
+
+And honestly, the process of rebuilding something simple teaches you more about how it works than just using it ever would.

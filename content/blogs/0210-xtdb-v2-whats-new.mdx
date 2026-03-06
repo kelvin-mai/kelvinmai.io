@@ -1,0 +1,120 @@
+---
+title: Checking Back In on XTDB (Formerly Crux)
+description: A look at what changed in XTDB v2 — now a standalone database with SQL as the primary interface — for developers familiar with the original Crux.
+date: 2026-03-30
+tags:
+  - clojure
+  - sql
+  - xtdb
+image: https://pttjrd5bylwkefgv.public.blob.vercel-storage.com/blog/xtdb-update.png
+---
+
+I wrote about [Crux DB](/blog/crux-db-clojure-bitemporal) back in 2021 as part of a hobby project to understand the Pathom and Fulcro stack I was using at work. I hadn't thought about it much since. Recently I was browsing my old repositories and pulled up the [pathom-fulcro-demo](https://github.com/kelvin-mai/pathom-fulcro-demo) again, and on a whim went to check what had changed with the technologies involved. Pathom and Fulcro are largely the same story — v3 of each, still niche, still interesting. XTDB was a different story.
+
+## It's a Real Database Now
+
+The first thing I noticed: in my original post I described Crux as "not a database from scratch" — a layer on top of Postgres that used JDBC as its document and transaction log store. That description no longer applies to v2. XTDB is now a fully standalone, open-source database. It runs on the JVM, ships as a Docker image, has client drivers for Clojure, Java, Python, Node.js, Go, and more. The Postgres dependency is gone.
+
+Architecturally it's shifted to a columnar engine built on Apache Arrow with object storage (S3 or similar) for persistence and optional Kafka for the transaction log. It's positioned for both OLTP and analytical workloads. That's a significant jump from what I was running — a JDBC-backed node that felt like an experiment.
+
+## SQL Is the Default Now
+
+The bigger surprise was the query language. In 2021 I was writing Datalog:
+
+```clojure
+(crux/q (crux/db node)
+        `{:find [?e]
+          :where [[?e ::product/id]]})
+```
+
+XTDB v2 dropped EQL/Datalog as the primary interface in favor of SQL. Not a Clojure-inspired DSL — actual SQL, compliant with the ISO SQL:2011 standard. It took me a moment to process that.
+
+The SQL has some XTDB-specific conventions worth knowing. Every table has underscore-prefixed system columns that the database manages automatically:
+
+- _`_id`_ — the required primary key
+- _`_valid_from`_ / _`_valid_to`_ — valid-time (when the fact is true in the world)
+- _`_system_from`_ / _`_system_to`_ — system-time (when the DB recorded the change)
+
+Tables are still schemaless — no _`CREATE TABLE`_ needed. You insert and the table is created implicitly. The schema evolves automatically as you add new columns:
+
+```sql
+INSERT INTO products RECORDS {_id: 1, name: 'Widget', price: 9.99}
+```
+
+That _`RECORDS`_ syntax is a document-style upsert — inserting to an existing _`_id`_ updates rather than throwing a duplicate key error. It's a small nod to the document-DB heritage.
+
+Temporal queries are first-class:
+
+```sql
+SELECT * FROM products FOR VALID_TIME AS OF TIMESTAMP '2024-01-01'
+```
+
+```sql
+SELECT * FROM products FOR SYSTEM_TIME ALL
+```
+
+The _`FOR VALID_TIME ALL`_ and _`FOR SYSTEM_TIME ALL`_ clauses return the full history of a row across that time dimension — no audit tables, no triggers, no event sourcing setup. Same core idea as before, just expressed in SQL now.
+
+Deletes are also worth noting. A regular _`DELETE`_ is a soft temporal delete — it sets _`_valid_to`_ and preserves history. If you actually want to remove data permanently there's a separate:
+
+```sql
+ERASE FROM products WHERE _id = 1
+```
+
+That distinction between "this is no longer true" and "this never happened" is something most databases don't bother with.
+
+## XTQL — The Clojure-y Escape Hatch
+
+I was relieved to find the team didn't abandon Clojure-style querying entirely. XTQL is XTDB's native composable query language, sitting alongside SQL as a first-class alternative. It uses EDN — the Clojure data notation — and leans into the Clojure threading macro for composing queries:
+
+```clojure
+(-> (from :products [{:xt/id product-id} name price])
+    (where (>= price 5.00))
+    (order-by price)
+    (limit 10))
+```
+
+The key difference from Datalog is that XTQL is relational algebra expressed as data — you pipe data through a sequence of operators (_`from`_, _`where`_, _`with`_, _`aggregate`_, _`order-by`_, etc.) rather than writing logic clauses. Joins use _`unify`_, which works by sharing variable names across _`from`_ clauses:
+
+```clojure
+(unify (from :products [{:xt/id product-id} name])
+       (from :inventory [{:product-id product-id} quantity]))
+```
+
+What I find most compelling about XTQL is how it handles temporal scope — each _`from`_ clause specifies its own temporal filter independently, which SQL can't easily do:
+
+```clojure
+(unify (from :products {:for-valid-time (at #inst "2022") :bind [{:xt/id id}]})
+       (from :products {:for-valid-time (at #inst "2024") :bind [{:xt/id id}]}))
+```
+
+That query compares the same table at two different points in valid-time in a single expression. Useful for audit and diff scenarios.
+
+The positioning feels deliberate: SQL is the default because it lowers the barrier for adoption across the industry. XTQL is still there for Clojure users who want composable, injection-safe queries. The team at JUXT didn't abandon their roots — they just stopped requiring the rest of the world to share them.
+
+### Mixing XTQL and SQL
+
+The two languages aren't isolated from each other. You can embed an XTQL query inside SQL using the _`XTQL $$ ... $$`_ delimiter syntax, treating it as a subquery:
+
+```sql
+SELECT * FROM (XTQL $$
+  (-> (from :products [name price])
+      (where (>= price 5.00))
+      (order-by price))
+$$) p
+WHERE p.name LIKE 'W%'
+```
+
+This means you can use XTQL for the parts that benefit from it — composable filtering, per-source temporal scoping, programmatic construction — and then wrap it in SQL for the outer shape, joins with other sources, or just because that's what the rest of the query looks like. You're not forced to pick one for a whole application.
+
+Going the other direction, XTQL queries can reference SQL tables the same way they reference any other relation. The two query models operate over the same underlying data.
+
+## What's Still the Same
+
+The immutable bitemporal data model is unchanged and is still the whole point of XTDB. Every write is preserved. System time is append-only and cannot be altered — it's a permanent audit trail. Valid time can be backdated or corrected, which is what makes it useful for domains like finance, compliance, or anything where "what did we think was true, and when?" is a meaningful question.
+
+That core idea carries forward from Crux intact. The surface has changed a lot, but the database it's trying to be is still the same one.
+
+---
+
+Docs at [docs.xtdb.com](https://docs.xtdb.com/).

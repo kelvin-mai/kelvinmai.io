@@ -1,0 +1,170 @@
+---
+title: Exploring Crux DB in a Clojure Full-Stack App
+description: A practical look at Crux (now XTDB), a bitemporal document database for Clojure, covering its schemaless document model, Datalog queries, transaction operations, and entity history — illustrated through a real hobby project.
+date: 2021-08-07
+tags:
+  - clojure
+image: https://pttjrd5bylwkefgv.public.blob.vercel-storage.com/blog/crux-db.png
+---
+
+In [last week's post](/blog/exploring-pathom-fulcro-clojure-fullstack) I wrote about the Pathom and Fulcro side of my hobby project. The third piece of the stack I glossed over was the database: [Crux](https://crux-docs.xtdb.com/) (since renamed to XTDB). It deserves its own writeup because it's genuinely unlike any database I'd used before.
+
+Crux is a bitemporal document database written in Clojure. You interact with it through a Clojure API, store plain Clojure maps as documents, and query with Datalog. The bitemporal part — tracking both when something happened in reality and when it was recorded — is the headline feature, and I'll get to that. But the basics are interesting on their own.
+
+## Not a Database From Scratch
+
+One thing that surprised me when I first set it up: Crux isn't a self-contained storage engine. It's more of a layer that sits on top of existing infrastructure. It separates the transaction log, the document store, and the query engine into independent components, and you plug in a backend for each.
+
+In this project both the transaction log and the document store are backed by PostgreSQL via JDBC:
+
+```clojure
+(defmethod ig/init-key :crux/db
+  [_ {:keys [config]}]
+  (let [{:keys [jdbc]} config
+        crux-config {:crux.jdbc/connection-pool {:dialect {:crux/module 'crux.jdbc.psql/->dialect}
+                                                 :db-spec jdbc}
+                     :crux/tx-log               {:crux/module     'crux.jdbc/->tx-log
+                                                 :connection-pool :crux.jdbc/connection-pool}
+                     :crux/document-store       {:crux/module 'crux.jdbc/->document-store
+                                                 :connection-pool :crux.jdbc/connection-pool}}]
+    (crux/start-node crux-config)))
+```
+
+So when you write a document, Crux is ultimately writing rows to Postgres tables. The transaction log is an append-only table of operations; the document store holds the content of each version. Crux's query engine reads from these and handles the Datalog evaluation in memory on the JVM.
+
+This means you get Postgres's durability and operational familiarity, but you also carry its operational overhead. For a hobby project that's fine — I already had Postgres running for other things. But it's worth understanding that you're not replacing Postgres with something leaner, you're adding a layer on top of it. The value Crux adds is the bitemporal index and the Datalog query engine, not raw storage.
+
+Other backends exist too — RocksDB for a fully embedded setup, Kafka for the transaction log in distributed scenarios. The architecture is deliberately pluggable. But JDBC/Postgres is the most straightforward starting point if you're already in that world.
+
+## Documents and Identity
+
+Crux is schemaless. Documents are just maps, and the only requirement is a _`:crux.db/id`_ key. In this project every document also carries a namespaced UUID that doubles as the application-level identifier:
+
+```clojure
+(defn new-entity [ident entity]
+  (let [eid (UUID/randomUUID)]
+    (merge {:crux.db/id eid
+            ident eid}
+           (dissoc entity ident))))
+```
+
+So a new product document ends up looking like:
+
+```clojure
+{:crux.db/id #uuid "a1b2..."
+ :app.models.product/id #uuid "a1b2..."
+ :app.models.product/name "Widget"
+ :app.models.product/price 9.99}
+```
+
+The _`:crux.db/id`_ is Crux's internal primary key. The namespaced _`::product/id`_ is what Pathom and Fulcro use to identify the entity on the application side. They happen to be the same UUID — this was a deliberate choice to make lookups straightforward.
+
+## Writing Data
+
+All writes go through _`crux/submit-tx`_, which takes a node and a vector of transaction operations:
+
+```clojure
+(defn submit! [node tx]
+  (let [tx-map (crux/submit-tx node tx)]
+    (crux/await-tx node tx-map)
+    (crux/tx-committed? node tx-map)))
+```
+
+A put looks like this at the call site:
+
+```clojure
+(db/submit! db [[:crux.tx/put entity]])
+```
+
+And a delete:
+
+```clojure
+(db/submit! db [[:crux.tx/delete id]])
+```
+
+The _`crux/await-tx`_ call is important — Crux's transaction log is async by default, so without it you'd return to the caller before the write is queryable. Awaiting and then checking _`crux/tx-committed?`_ gives you synchronous confirmation that the transaction landed.
+
+You can also batch multiple operations in one transaction vector, which gives you atomic multi-document writes — something that's easy to overlook but useful when your documents have relationships.
+
+## Querying with Datalog
+
+Reads use Datalog, a declarative logic query language. The basic shape is _`{:find [...] :where [...]}`_:
+
+```clojure
+(defn get-all-idents [node ident]
+  (let [ids (crux/q (crux/db node)
+                    `{:find [?e]
+                      :where [[?e ~ident]]})]
+    (ids->idents ids ident)))
+```
+
+The _`crux/db`_ call takes a snapshot of the database at the current point in time — all queries run against this snapshot, which makes reads consistent even if writes are happening concurrently.
+
+The _`:where`_ clause here says: "find every entity _`?e`_ that has an attribute matching _`ident`_." The backtick and unquote (_`~ident`_) is standard Clojure syntax for splicing a runtime value into a quoted form.
+
+Looking up a specific entity by its namespaced id takes two steps — first find the Crux internal id, then fetch the full document:
+
+```clojure
+(defn get-entity [node ident id]
+  (let [eid (crux/q (crux/db node)
+                    `{:find [?e]
+                      :where [[?e ~ident ~id]]})
+        eid (ffirst eid)]
+    (crux/entity (crux/db node) eid)))
+```
+
+_`crux/entity`_ returns the full document map for a given _`:crux.db/id`_. The _`ffirst`_ unwraps the query result set, which comes back as a set of tuples.
+
+## The Bitemporal Model
+
+This is where Crux gets interesting. Most databases track one timeline: when a record was written. Crux tracks two:
+
+- **Transaction time** — when the record was inserted into the database
+- **Valid time** — when the fact is true in the real world
+
+By default _`submit-tx`_ sets both to now. But you can pass a valid time explicitly, which lets you backdate or future-date a fact without rewriting history. This makes Crux well-suited for anything that needs an audit trail — compliance systems, inventory tracking, financial records.
+
+In this project I used it for inventory history. Every time the quantity of an inventory item changes, Crux automatically records the previous state. I can retrieve that history without having written any audit log code:
+
+```clojure
+(defn entity-history
+  ([node id]
+   (entity-history node id :desc))
+  ([node id sort-order]
+   (crux/entity-history (crux/db node) id sort-order {:with-docs? true})))
+```
+
+And the Pathom resolver that exposes it:
+
+```clojure
+(defresolver inventory-history-resolver
+  [{:keys [db]} {::inventory/keys [id]}]
+  {::pc/input  #{::inventory/id}
+   ::pc/output [::inventory/history]}
+  (let [history (db/entity-history db id)
+        history->data (fn [snapshot]
+                        {:time (:crux.db/valid-time snapshot)
+                         :quantity (get-in snapshot [:crux.db/doc ::inventory/quantity])})]
+    {::inventory/history (map history->data history)}))
+```
+
+Each snapshot in the history contains _`:crux.db/valid-time`_ and _`:crux.db/doc`_ — the full document as it existed at that point in time. This is built into the database; there's no trigger, no shadow table, no event sourcing setup. You get it for free.
+
+## How It Fits with Pathom
+
+The integration with Pathom is clean. The Crux node is injected into the Pathom environment via a plugin at startup:
+
+```clojure
+(p/env-wrap-plugin (fn [env]
+                     (assoc env :db db)))
+```
+
+Every resolver and mutation destructures _`{:keys [db]}`_ from the environment and calls into the _`app.utils.db`_ namespace. The DB layer stays thin — it doesn't know anything about Pathom, and Pathom doesn't know anything about Crux. The resolvers are the only place they meet.
+
+## What I'd Do Differently
+
+The main thing I'd revisit is the two-step lookup pattern in _`get-entity`_. Querying for the internal Crux id and then fetching the document is redundant when Datalog can return the full document directly using _`:find [(pull ?e [*])]`_. I didn't know that when I wrote this.
+
+I'd also be more deliberate about valid time. Right now every write just uses the current time, which means I'm not actually using the bitemporal model for the product data — only the inventory history resolver takes advantage of it. For a real audit use case you'd want to pass valid time explicitly on every write.
+
+Crux (XTDB) has continued to evolve since this version — v2 has a substantially different API and SQL support. But the core ideas are the same, and it's still one of the more interesting databases I've worked with.
