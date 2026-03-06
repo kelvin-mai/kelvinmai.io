@@ -6,6 +6,8 @@ import { remarkCodeHike, recmaCodeHike } from 'codehike/mdx';
 
 import { source } from '@/lib/source';
 import { getMDXComponents } from '@/components/mdx';
+
+const { docs } = source;
 import { TableOfContents } from '@/components/docs';
 import { BuyMeCofffeeBanner } from '@/components/common';
 import { cn } from '@/lib/utils';
@@ -24,14 +26,14 @@ const mdxOptions = {
 };
 
 export async function generateStaticParams() {
-  return source.generateParams();
+  return docs.generateParams();
 }
 
 export async function generateMetadata(props: {
   params: Promise<{ slug?: string[] }>;
 }) {
   const params = await props.params;
-  const page = source.getPage(params.slug);
+  const page = docs.getPage(params.slug);
   if (!page) notFound();
 
   return {
@@ -57,7 +59,7 @@ export default async function DocsPage(props: {
   params: Promise<{ slug?: string[] }>;
 }) {
   const params = await props.params;
-  const page = source.getPage(params.slug);
+  const page = docs.getPage(params.slug);
   if (!page) notFound();
 
   return (

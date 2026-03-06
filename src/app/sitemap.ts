@@ -3,6 +3,8 @@ import { MetadataRoute } from 'next';
 import { source } from '@/lib/source';
 import { SITE_URL } from '@/lib/constants';
 
+const { docs, blogs } = source;
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const url = (path: string) => new URL(path, SITE_URL).toString();
   return [
@@ -14,9 +16,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       url: url('/resume'),
       lastModified: new Date(),
     },
-    ...source.getPages().map((page) => ({
+    ...docs.getPages().map((page) => ({
       url: url(page.url),
       lastModified: page.data.lastModified,
+    })),
+    ...blogs.getPosts().map((post) => ({
+      url: url(post.url),
+      lastModified: post.data.date,
     })),
   ];
 }

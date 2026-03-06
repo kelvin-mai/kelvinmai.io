@@ -1,19 +1,18 @@
-import { readFileSync, readdirSync } from 'fs';
+import { readFileSync } from 'fs';
 import { join } from 'path';
-import { execSync } from 'child_process';
 import matter from 'gray-matter';
-import { remark } from 'remark';
-import { visit } from 'unist-util-visit';
-import { toString } from 'mdast-util-to-string';
-import type { Heading } from 'mdast';
 
-const DOCS_DIR = join(process.cwd(), 'src/content/docs');
+import {
+  extractTOC,
+  getGitLastModified,
+  getMdxFiles,
+  getSubdirs,
+} from './utils';
+import type { TOCItemType } from './utils';
 
-export type TOCItemType = {
-  title: string;
-  url: string;
-  depth: number;
-};
+export type { TOCItemType };
+
+const DOCS_DIR = join(process.cwd(), 'content/docs');
 
 export type PageData = {
   title: string;
@@ -36,53 +35,8 @@ export type NavItem = {
   children?: NavItem[];
 };
 
-function slugify(text: string): string {
-  return text
-    .toLowerCase()
-    .replace(/[^\w\s-]/g, '')
-    .replace(/\s+/g, '-')
-    .replace(/-+/g, '-')
-    .trim();
-}
-
-function extractTOC(content: string): TOCItemType[] {
-  const toc: TOCItemType[] = [];
-  const tree = remark().parse(content);
-  visit(tree, 'heading', (node: Heading) => {
-    const title = toString(node);
-    toc.push({ title, url: `#${slugify(title)}`, depth: node.depth });
-  });
-  return toc;
-}
-
-function getGitLastModified(filePath: string): Date {
-  try {
-    const result = execSync(`git log -1 --format="%cI" -- "${filePath}"`, {
-      cwd: process.cwd(),
-      stdio: ['pipe', 'pipe', 'ignore'],
-    })
-      .toString()
-      .trim();
-    return result ? new Date(result) : new Date();
-  } catch {
-    return new Date();
-  }
-}
-
 function capitalize(s: string): string {
   return s.charAt(0).toUpperCase() + s.slice(1).replace(/-/g, ' ');
-}
-
-function getMdxFiles(dir: string): string[] {
-  return readdirSync(dir, { withFileTypes: true })
-    .filter((e) => e.isFile() && e.name.endsWith('.mdx'))
-    .map((e) => e.name);
-}
-
-function getSubdirs(dir: string): string[] {
-  return readdirSync(dir, { withFileTypes: true })
-    .filter((e) => e.isDirectory())
-    .map((e) => e.name);
 }
 
 function parsePage(filePath: string, slug: string[]): Page {
@@ -102,16 +56,14 @@ function parsePage(filePath: string, slug: string[]): Page {
   };
 }
 
-export const source = {
+export const docs = {
   generateParams(): { slug: string[] }[] {
     const params: { slug: string[] }[] = [];
 
-    // Root-level MDX files
     for (const file of getMdxFiles(DOCS_DIR)) {
       params.push({ slug: [file.replace(/\.mdx$/, '')] });
     }
 
-    // Category subdirectories
     for (const dir of getSubdirs(DOCS_DIR)) {
       for (const file of getMdxFiles(join(DOCS_DIR, dir))) {
         params.push({ slug: [dir, file.replace(/\.mdx$/, '')] });
@@ -140,7 +92,6 @@ export const source = {
   getPageTree(): { children: NavItem[] } {
     const children: NavItem[] = [];
 
-    // Root-level pages first
     for (const file of getMdxFiles(DOCS_DIR)) {
       const slug = [file.replace(/\.mdx$/, '')];
       const page = this.getPage(slug);
@@ -149,7 +100,6 @@ export const source = {
       }
     }
 
-    // Category folders
     for (const dir of getSubdirs(DOCS_DIR)) {
       const category: NavItem = {
         name: capitalize(dir),

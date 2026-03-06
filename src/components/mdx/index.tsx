@@ -35,6 +35,15 @@ export const getMDXComponents = (components?: MDXComponents): MDXComponents => {
     p: (props) => (
       <p className='leading-6 [&:not(:first-child)]:mt-2' {...props} />
     ),
+    img: ({ src, alt, ...props }) => (
+      // eslint-disable-next-line @next/next/no-img-element
+      <img
+        src={src}
+        alt={alt ?? ''}
+        className='mx-auto my-6 rounded-lg object-cover'
+        {...props}
+      />
+    ),
     blockquote: (props) => (
       <blockquote className='mt-6 border-l-2 pl-6 italic' {...props} />
     ),

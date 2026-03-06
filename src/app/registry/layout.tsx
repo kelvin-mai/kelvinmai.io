@@ -4,12 +4,14 @@ import { Footer } from '@/components/layout';
 import { SidebarInset, SidebarProvider, SidebarTrigger } from '@/components/ui';
 import { source } from '@/lib/source';
 
+const { docs } = source;
+
 export default function RegistryLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const nav = source.getPageTree();
+  const nav = docs.getPageTree();
   return (
     <SidebarProvider>
       <DocsSidebar items={nav.children} />
