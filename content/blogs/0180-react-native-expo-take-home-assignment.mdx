@@ -1,0 +1,176 @@
+---
+title: Building a React Native Take-Home with Expo
+description: A walkthrough of a React Native take-home assignment building a burger ordering app with Expo Router, NativeWind, React Native Reusables, and Zustand.
+date: 2025-04-30
+tags:
+  - react
+  - react native
+  - typescript
+  - expo
+image: https://pttjrd5bylwkefgv.public.blob.vercel-storage.com/blog/react-native-and-expo.jpg
+---
+
+A while back I got an opportunity to do a take-home assignment in React Native. I had explored React Native before, but it was during its early days — before Expo had matured into what it is now. Coming back to it felt like meeting an old friend who's gotten their life together. The assignment was to build a simple burger ordering app called Burgerhub: browse a menu, view product details, and manage a shopping cart.
+
+## The Stack
+
+I leaned into the modern Expo ecosystem rather than fighting it:
+
+- **Expo 52** with **expo-router** for file-based routing
+- **NativeWind** for Tailwind CSS-style styling
+- **React Native Reusables** for primitive UI components
+- **Zustand** for state management
+- **sonner-native** for toast notifications
+- **Jest** + **@testing-library/react-native** for unit tests
+
+The combo of NativeWind and React Native Reusables was immediately familiar. React Native Reusables is essentially shadcn/ui for React Native — it gives you unstyled, accessible primitives built on _`@rn-primitives`_ that you own and style yourself. Coming from web dev where I use shadcn daily, it was a very comfortable starting point.
+
+## Screen Structure
+
+![Burger Hub Screens](https://pttjrd5bylwkefgv.public.blob.vercel-storage.com/blog/burgerhub.png)
+
+The app has two tabs, set up in the root layout using _`expo-router`_'s _`Tabs`_ component:
+
+```tsx
+<Tabs initialRouteName='(tabs)/(stack)'>
+  <Tabs.Screen
+    name='(tabs)/(stack)'
+    options={{
+      headerShown: false,
+      title: 'Home',
+      tabBarIcon: ({ color, size }) => <House size={size} color={color} />,
+    }}
+  />
+  <Tabs.Screen
+    name='(tabs)/shopping-cart'
+    options={{
+      title: 'Shopping Cart',
+      tabBarBadge: cartCount,
+      tabBarIcon: ({ color, size }) => (
+        <ShoppingCart size={size} color={color} />
+      ),
+    }}
+  />
+</Tabs>
+```
+
+The home tab wraps a nested _`Stack`_ navigator — so navigating to product details pushes onto the stack while keeping the tab bar visible. The file structure mirrors this:
+
+```
+src/app/
+  _layout.tsx              ← root Tabs layout
+  (tabs)/
+    shopping-cart.tsx      ← cart tab
+    (stack)/
+      _layout.tsx          ← Stack layout for home tab
+      index.tsx            ← product list
+      product-details.tsx  ← product detail screen
+```
+
+This is one of the things expo-router does really well. The folder structure _is_ the navigation structure. No separate navigator files to maintain.
+
+### Home Screen
+
+The home screen fetches products on mount via a Zustand effect and renders them in a _`FlatList`_:
+
+```tsx
+export default function HomeScreen() {
+  const { products, loading } = useAppStore();
+  const { loadProducts } = useAppEffects();
+
+  useEffect(() => {
+    loadProducts();
+  }, [loadProducts]);
+
+  return (
+    <SafeAreaView edges={['bottom']}>
+      {loading ? (
+        <ActivityIndicator testID='home-loading-indicator' />
+      ) : (
+        <FlatList
+          data={products}
+          renderItem={({ item }) => <ProductListItem product={item} />}
+        />
+      )}
+    </SafeAreaView>
+  );
+}
+```
+
+### Product Details Screen
+
+Tapping a product sets it in Zustand's state as _`selected`_, then navigates to the detail screen. If _`selected`_ is null (e.g. deep-linked without a product), the screen redirects back home:
+
+```tsx
+if (!selected) {
+  return <Redirect href='/' />;
+}
+```
+
+Adding to cart triggers a toast via _`sonner-native`_ to give immediate feedback without cluttering the UI with alerts.
+
+### Shopping Cart Screen
+
+The cart tab uses a _`SectionList`_ (overkill for a single section, but it made adding a sticky footer total and clear button straightforward). The tab badge in the root layout is driven by reducing over the cart state — so it updates reactively whenever anything is added or removed.
+
+## Zustand with an Actions/Effects Split
+
+One pattern I settled on for the store was separating pure state mutations (_actions_) from side-effectful operations (_effects_). The store is structured as three files:
+
+- _`state.ts`_ — initial state shape
+- _`actions.ts`_ — synchronous state setters (_`addToCart`_, _`setProducts`_, etc.)
+- _`effects.ts`_ — async operations that compose actions and trigger toasts
+
+```ts
+export const useAppStore = create<AppStore>((set, get) => ({
+  ...initialState,
+  actions: createActions(set),
+  effects: createEffects(set, get),
+}));
+
+export const useAppActions = () => useAppStore((store) => store.actions);
+export const useAppEffects = () => useAppStore((store) => store.effects);
+```
+
+This made testing much easier. Actions are pure functions — given a state, they return a new state. Effects are where the API calls and toasts live. Keeping them separate means I could test actions in isolation without mocking any async behavior.
+
+## NativeWind + Dark Mode
+
+NativeWind works by running Tailwind's compiler against your source files and converting class strings into React Native style objects at build time. It pairs with a _`useColorScheme`_ hook from NativeWind to drive dark mode:
+
+```ts
+export const useColorScheme = () => {
+  const { colorScheme, setColorScheme, toggleColorScheme } =
+    useNativewindColorScheme();
+  return {
+    colorScheme: colorScheme ?? 'dark',
+    setColorScheme,
+    toggleColorScheme,
+  };
+};
+```
+
+The _`?? 'dark'`_ fallback means unresolved color schemes default to dark — a personal preference. The theme toggle in the header calls _`toggleColorScheme()`_ and NativeWind handles propagating the change through the component tree.
+
+One thing to keep in mind: NativeWind uses _`className`_ on native components the same as web, but some Tailwind utilities don't map 1:1 to React Native layout. I ran into a few cases where I had to fall back to explicit _`style`_ props for things that just don't exist in React Native's layout model.
+
+## Testing with the Expo Go App
+
+For manual testing during development I used the Expo Go app on my phone. Running _`pnpm start`_ gives you a QR code — scan it and you're running the app live on device. Hot reload worked reliably throughout the build. Being able to test on a real device without setting up a simulator or Android emulator was a genuine quality-of-life win.
+
+For automated tests I used Jest with the _`jest-expo`_ preset and _`@testing-library/react-native`_. The tests cover each screen's loading/empty/populated states and the store's action logic:
+
+```tsx
+it('renders the product list when products are loaded', async () => {
+  render(<HomeScreen />);
+  await waitFor(() => {
+    expect(screen.getByTestId('home-products-list')).toBeTruthy();
+  });
+});
+```
+
+## Takeaways
+
+The Expo ecosystem has grown up considerably since I last touched React Native. expo-router brings the same mental model as Next.js App Router to mobile — if you know one, the other clicks quickly. NativeWind makes styling feel native (pun intended) to anyone with a Tailwind background, and React Native Reusables fills the component primitive gap that shadcn fills on the web.
+
+The biggest adjustment was remembering that React Native has no DOM. No CSS grid, no _`position: fixed`_, no browser events. The layout primitives are flexbox-first and everything is a native view. Once that mental model shifted, the rest followed naturally.

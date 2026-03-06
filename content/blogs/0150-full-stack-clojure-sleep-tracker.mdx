@@ -1,0 +1,267 @@
+---
+title: Building a Full-Stack Clojure App
+description: A walkthrough of building a full-stack sleep tracker in Clojure and ClojureScript, covering Integrant, Reitit, HoneySQL, Malli, re-frame, and the patterns that make the stack cohesive.
+date: 2025-03-01
+tags:
+  - clojure
+---
+
+I originally intended to turn this project into a YouTube tutorial series — a step-by-step guide to building a full-stack Clojure application from scratch. I never finished it. Honestly, with how AI and vibe coding have shifted the way people learn, I'm not sure a long-form video series would get much traction anyway. A blog post feels more appropriate.
+
+So here's the write-up instead. The project is a sleep tracker — a simple CRUD app with user authentication — and it covers most of what you'd need to know to build a real full-stack Clojure application. The code is on [GitHub](https://github.com/kelvin-mai/clj-sleep-tracker).
+
+## The Stack
+
+**Backend:** Clojure, http-kit, Reitit, next.jdbc + HikariCP, HoneySQL, Malli, Integrant, Migratus, buddy-auth
+**Frontend:** ClojureScript, shadow-cljs, Reagent, re-frame, Reitit (frontend), Tailwind CSS
+**Infrastructure:** PostgreSQL, Docker Compose (local dev + MailHog for SMTP testing)
+
+The backend and frontend share code via _`.cljc`_ files — Clojure reader conditionals let the same namespace compile for both the JVM and the browser, which is great for shared schemas and utility functions.
+
+## Backend: Integrant System
+
+The backend is wired together with [Integrant](https://github.com/weavejester/integrant), a library for managing stateful components as a data-driven dependency graph. Instead of global state or manual startup order, you define your system as an EDN map:
+
+```clojure
+{:system/config   {}
+ :postgres/db     {:config (ig/ref :system/config)}
+ :smtp/mailer     {:config (ig/ref :system/config)}
+ :reitit/router   {:db     (ig/ref :postgres/db)
+                   :mailer (ig/ref :smtp/mailer)
+                   :config (ig/ref :system/config)}
+ :http/server     {:handler (ig/ref :reitit/router)
+                   :config  (ig/ref :system/config)}}
+```
+
+Each key has an _`ig/init-key`_ method that constructs the component, and an _`ig/halt-key!`_ method for cleanup. Integrant resolves the dependency order automatically. The entry point reads config via Aero (which supports per-environment profiles) and calls _`ig/init`_.
+
+This makes the system trivially restartable from the REPL — call _`ig/halt!`_ then _`ig/init`_ and everything reloads cleanly. It's one of the things I miss most when working in other stacks.
+
+## Routing with Reitit
+
+[Reitit](https://github.com/metosin/reitit) is the routing library for both the backend and frontend. On the server, routes are defined as data:
+
+```clojure
+["/api"
+ ["/account"
+  ["" {:post   {:handler register-handler
+                :summary "Register new account"
+                :parameters {:body account/register-schema}
+                :responses  {200 {:body account/account-schema}}}}]
+  ["/login" {:post {:handler login-handler ...}}]]
+ ["/sleep"
+  ["" {:get  {:handler list-handler ...}
+       :post {:handler create-handler ...}}]
+  ["/:date" {:get    {:handler get-handler ...}
+             :put    {:handler update-handler ...}
+             :delete {:handler delete-handler ...}}]]]
+```
+
+The route data drives Swagger/OpenAPI docs automatically — no separate documentation to maintain. Reitit also handles request and response coercion via Malli, so invalid requests are rejected before they ever reach a handler.
+
+## Validation with Malli
+
+[Malli](https://github.com/metosin/malli) is used throughout for schema definition, validation, and coercion. Schemas live in _`.cljc`_ files so they work on both the backend and frontend:
+
+```clojure
+(def sleep-schema
+  [:map
+   [:sleep/sleep-date :date]
+   [:sleep/start-time :time]
+   [:sleep/end-time   :time]])
+```
+
+Those _`:date`_ and _`:time`_ keywords are custom validators. On the backend, Malli coerces incoming JSON strings into proper date/time types. On the frontend, the same schema validates form input before a request is ever sent. No duplication, no drift between client and server.
+
+### Writing Custom Validators
+
+Malli's built-in types cover the basics but not domain-specific types like dates or times. You define custom validators with _`m/-simple-schema`_, which takes a map describing the type:
+
+```clojure
+(ns sleep.utils.schema
+  (:require [malli.core :as m]
+            [tick.core :as t]))
+
+(def date?
+  (m/-simple-schema
+   {:type            :date
+    :pred            t/date?
+    :type-properties {:error/message "must be a valid date"
+                      :gen/gen       gen-date}}))
+```
+
+The key fields are:
+
+- _`:type`_ — the keyword name for this schema (what you'll use in other schemas)
+- _`:pred`_ — a function that returns truthy for valid values
+- _`:type-properties`_ — metadata including the error message and a generator for test data
+
+For a non-blank string validator the same pattern applies, but with an inline predicate:
+
+```clojure
+(def non-blank-string?
+  (m/-simple-schema
+   {:type            :non-blank-string
+    :pred            #(and (string? %) (not (clojure.string/blank? %)))
+    :type-properties {:error/message "must be a non-blank string"
+                      :gen/gen       (gen/fmap clojure.string/join gen/string-alphanumeric)}}))
+```
+
+For simpler cases like email format, Malli's built-in _`[:re ...]`_ schema is enough — no need for _`-simple-schema`_:
+
+```clojure
+(def email?
+  [:re {:error/message "must be a valid email address"}
+   #"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"])
+```
+
+### Custom Transformers for Coercion
+
+Defining a validator tells Malli how to check a value, but not how to convert it. To coerce JSON strings like _`"2024-01-15"`_ into actual date objects, you need a custom transformer. Transformers are pairs of encode/decode functions compiled per schema type:
+
+```clojure
+(defn decode-date [_ _]
+  {:enter #(when (string? %)
+             (try
+               (t/date %)
+               #?(:clj  (catch Exception _ nil)
+                  :cljs (catch js/Error _ nil))))})
+
+(defn custom-transformer []
+  (mt/transformer
+   {:decoders {:time {:compile decode-time}
+               :date {:compile decode-date}}}
+   {:encoders {:time {:compile encode-time}
+               :date {:compile encode-date}}}))
+```
+
+The _`:enter`_ key wraps the transformer logic — it receives the raw value and returns the coerced result. Reader conditionals handle the difference between JVM and ClojureScript error types.
+
+This custom transformer gets composed with Malli's standard JSON transformer and plugged into Reitit's coercion config:
+
+```clojure
+(def json-transformer
+  (mt/transformer
+   mt/json-transformer
+   custom-transformer
+   mt/default-value-transformer))
+
+(def coercion
+  (rm/create
+   (-> rm/default-options
+       (assoc-in [:transformers :body :formats "application/json"] json-transformer)
+       (assoc-in [:transformers :string :default] string-transformer))))
+```
+
+With this in place, a route that declares _`[:map [:date date?]]`_ as its path parameters will automatically parse the URL string _`"2024-01-15"`_ into a _`java.time.LocalDate`_ before the handler ever sees it. The handler just works with real types.
+
+## Database with next.jdbc and HoneySQL
+
+All database queries are written with [HoneySQL](https://github.com/seancorfield/honeysql), which compiles Clojure maps to SQL:
+
+```clojure
+(defn get-by-email [db email]
+  (jdbc/execute-one!
+   db
+   (hsql/format
+    {:select [:*]
+     :from   [:account]
+     :where  [:= :email email]})))
+```
+
+I prefer this over string SQL because it's composable — you can build up query maps incrementally and pass them around before compilation. No string interpolation, no SQL injection risk.
+
+One nice detail: I added custom JDBC type extensions to automatically convert between PostgreSQL date/time types and Clojure's _`java.time`_ equivalents. That means query results come back as _`java.time.LocalDate`_ and _`java.time.Instant`_ instead of JDBC timestamp objects.
+
+## Authentication
+
+Auth is JWT-based with short-lived access tokens (15 minutes) and longer-lived refresh tokens (24 hours) stored in the database. Email verification and password reset both use OTP codes with a 15-minute window.
+
+The middleware stack injects the authenticated account into every request's environment after verifying the JWT:
+
+```clojure
+(defn wrap-auth [handler]
+  (fn [request]
+    (let [claims (buddy/parse-token request jwt-secret)]
+      (handler (assoc request :account claims)))))
+```
+
+Handlers downstream can pull _`:account`_ from the request without thinking about the auth machinery.
+
+The email system uses a protocol:
+
+```clojure
+(defprotocol Mailer
+  (send-verification! [this email otp])
+  (send-reset!        [this email otp]))
+```
+
+In development, _`LogMailer`_ just logs the OTP to the console (MailHog also captures SMTP traffic in a local UI). In production, _`SMTPMailer`_ sends real email via Postal. Integrant picks the right implementation based on config, and handlers never know the difference.
+
+## Frontend: re-frame and Reagent
+
+The frontend is ClojureScript with [Reagent](https://github.com/reagent-project/reagent) (React wrapper) and [re-frame](https://github.com/day8/re-frame) for state management. re-frame is an event-driven architecture: state lives in a single atom, you dispatch events to transform it, and subscriptions derive views from it reactively.
+
+The app initializes by loading tokens from local storage:
+
+```clojure
+(re-frame/reg-cofx
+ :local-storage/tokens
+ (fn [coeffects]
+   (assoc coeffects :tokens
+          {:access-token  (js/localStorage.getItem "access-token")
+           :refresh-token (js/localStorage.getItem "refresh-token")})))
+
+(re-frame/reg-event-fx
+ ::initialize
+ [(re-frame/inject-cofx :local-storage/tokens)]
+ (fn [{:keys [db tokens]} _]
+   {:db (assoc db :auth tokens)
+    :fx [[:dispatch [::account/me]]]}))
+```
+
+Co-effects (_`reg-cofx`_) are re-frame's way of injecting side-effectful reads (like local storage) into event handlers in a testable way. The handler itself is a pure function — no side effects inside.
+
+Routing uses Reitit's frontend easy router, which syncs with the browser's History API and dispatches re-frame events on navigation. Pages are just Reagent components associated with routes.
+
+## Shared Code in cljc
+
+The _`cljc/`_ directory is the secret weapon of any Clojure fullstack project. Anything that needs to run on both the JVM and the browser lives there:
+
+- **Malli schemas** — validated on both sides
+- **Time utilities** — shared formatting/parsing using tick (wraps java.time / js-joda)
+- **Map utilities** — namespace conversion helpers
+
+The reader conditional syntax makes it easy to branch when the JVM and browser implementations differ:
+
+```clojure
+(defn format-date [d]
+  #?(:clj  (str d)
+     :cljs (.toString d)))
+```
+
+## Running It Locally
+
+```bash
+# Start PostgreSQL and MailHog
+docker compose up -d
+
+# Run migrations
+clj -M:migrate
+
+# Watch frontend
+npm run dev
+
+# Start backend REPL
+clj -M:dev
+```
+
+From the REPL you can call the Integrant init/halt cycle directly to reload the system without restarting the process. Combined with shadow-cljs hot reloading on the frontend, the feedback loop is tight.
+
+## Takeaways
+
+The Clojure full-stack is opinionated but cohesive. The same data-driven philosophy runs through everything — Integrant systems, Reitit routes, HoneySQL queries, Malli schemas. Once you internalize that philosophy, the pieces fit together naturally.
+
+The cljc sharing story is genuinely good. Writing a schema once and having it validate on both sides, or writing a time utility that works identically in Clojure and ClojureScript, cuts a lot of duplication that would otherwise creep in.
+
+If you're curious about building something similar, the code is on [GitHub](https://github.com/kelvin-mai/clj-sleep-tracker). It's a realistic starting point rather than a toy — it has auth, email, migrations, tests, and a multi-page frontend.

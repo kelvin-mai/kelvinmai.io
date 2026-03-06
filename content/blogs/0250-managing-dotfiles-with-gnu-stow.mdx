@@ -1,0 +1,154 @@
+---
+title: Managing Dotfiles with GNU Stow
+description: How to use GNU Stow to manage dotfiles with symlinks, making config migration across machines and distros painless.
+date: 2026-03-27
+tags:
+  - tooling
+  - linux
+image: https://pttjrd5bylwkefgv.public.blob.vercel-storage.com/blog/gnustow.png
+---
+
+I've been seeing [Omarchy](https://omarchy.org/) all over the place lately and it looks really cool — so I got that familiar Linux distro-hopping itch. There's just one problem: I'd have to migrate my configs. And as of writing this, my last dotfiles commit was back in April 2024.
+
+Part of the reason for the gap was dev burnout from a very long job hunt. I stepped back from tinkering with my tools, left my beloved Neovim behind, and returned to the much less config-heavy VS Code. But that also means when it comes to a fresh distro install, I'm essentially starting from scratch.
+
+My original dotfiles were never very sophisticated. I mainly copied and pasted config files into the right places. I did attempt to write a symlink script at one point, but I was juggling a laptop and a desktop, so there were conditional paths and platform-specific files. I ended up maintaining two separate scripts — one per machine — and eventually just went back to copy-paste because it had less friction.
+
+This time around, I have the benefit of hindsight. I want something structured, portable, and easy to maintain. That's where [GNU Stow](https://www.gnu.org/software/stow/) comes in.
+
+## What is GNU Stow?
+
+Stow is a symlink farm manager. You give it a directory of config files organized the way they should appear in your home folder, and it creates the corresponding symlinks for you. The key insight is that you just mirror the structure relative to your home directory inside a _`~/.dotfiles/<package>/`_ folder.
+
+For example, if Starship's config lives at _`~/.config/starship.toml`_, you'd put it at:
+
+```
+~/.dotfiles/starship/.config/starship.toml
+```
+
+Then running _`stow starship`_ from inside _`~/.dotfiles/`_ creates the symlink _`~/.config/starship.toml → ~/.dotfiles/starship/.config/starship.toml`_.
+
+That's it. Everything stays version-controlled in one repo, and your home directory just holds the links.
+
+## Setting Up the Repo
+
+First, install Stow. On Arch-based systems:
+
+```bash
+sudo pacman -S stow
+```
+
+Then create a dotfiles directory and initialize a git repo:
+
+```bash
+mkdir ~/.dotfiles
+cd ~/.dotfiles
+git init
+```
+
+## Organizing Configs by Package
+
+Each "package" in Stow is just a subdirectory. I structure mine around each tool:
+
+```
+~/.dotfiles/
+├── starship/
+│   └── .config/
+│       └── starship.toml
+├── zellij/
+│   └── .config/
+│       └── zellij/
+│           └── config.kdl
+├── zsh/
+│   └── .zshrc
+├── lsd/
+│   └── .config/
+│       └── lsd/
+│           └── config.yaml
+└── vscode/
+    └── .config/
+        └── Code/
+            └── User/
+                ├── settings.json
+                └── keybindings.json
+```
+
+The directory names are arbitrary — they're just labels for Stow to use. I named them after the tool they configure.
+
+## Symlinking Everything
+
+To stow a single package:
+
+```bash
+cd ~/.dotfiles
+stow starship
+```
+
+To stow everything at once:
+
+```bash
+stow */
+```
+
+To remove symlinks (unstow):
+
+```bash
+stow -D starship
+```
+
+Stow is smart enough to create intermediate directories when needed, and it'll warn you if a symlink target already exists rather than silently overwriting it.
+
+### Machine-Specific Configs
+
+This is actually what killed my old approach. When I was juggling a laptop and a desktop, I had platform-specific differences — different PATH entries, different monitor configs, tools only installed on one machine. I ended up with two separate scripts and kept them in sync manually. That got old fast.
+
+With Stow the pattern is to treat each machine's unique config as its own package. So instead of one monolithic _`zsh`_ package, I'd have:
+
+```
+~/.dotfiles/
+├── zsh/          # shared across all machines
+│   └── .zshrc
+├── zsh-laptop/   # laptop-only overrides
+│   └── .zshrc_local
+└── zsh-desktop/  # desktop-only overrides
+    └── .zshrc_local
+```
+
+The shared _`.zshrc`_ sources _`.zshrc_local`_ at the bottom if it exists:
+
+```bash
+[ -f ~/.zshrc_local ] && source ~/.zshrc_local
+```
+
+Then on each machine I stow the shared package plus the right machine-specific one:
+
+```bash
+# on the laptop
+stow zsh zsh-laptop
+
+# on the desktop
+stow zsh zsh-desktop
+```
+
+Everything stays in the same repo. No duplicate scripts, no branching, no wondering which machine has the "right" version.
+
+## My Current Config Suite
+
+I'm keeping things light for now since I'm essentially starting over. The configs I'm migrating are:
+
+- **[Starship](https://starship.rs/)** — my cross-shell prompt. Minimal config, mostly just hiding some default segments I don't care about.
+- **[Zellij](https://zellij.dev/)** — terminal multiplexer. I switched from tmux to Zellij mainly because it displays keybindings right in the TUI, so you don't have to memorize them or keep a cheatsheet open.
+- **zshrc** — aliases, PATH exports, tool initializations.
+- **[lsd](https://github.com/lsd-rs/lsd)** — a modern _`ls`_ replacement with icons and color.
+- **VS Code** — settings and keybindings. I symlink just those two files rather than the entire VS Code user directory.
+- **[Eldritch theme](https://github.com/eldritch-theme/eldritch)** — my current color scheme. I apply it to everything that supports custom themes: terminal, Zellij, VS Code, Starship.
+
+## One Gotcha: Folding
+
+Stow has a behavior called "folding" where if an entire directory can be symlinked as a unit (rather than file by file), it will. This is usually fine but can cause problems if you later add files to that directory outside of Stow's management. You can disable folding with _`--no-folding`_ if you want Stow to always symlink individual files instead of directories.
+
+## What's Next
+
+Getting Neovim back into my workflow is next on the list. I deliberately left it out of this first migration since I want to build my config from scratch rather than copying over something stale. Having the Stow structure already in place means adding it later is just a matter of dropping configs into a new _`nvim/`_ package directory and running _`stow nvim`_.
+
+The whole point of this setup is that adding configs to a new machine becomes _`git clone`_ + _`stow */`_. No scripts, no manual copying, no wondering where a file lives. That's a good enough reason to finally get this right.

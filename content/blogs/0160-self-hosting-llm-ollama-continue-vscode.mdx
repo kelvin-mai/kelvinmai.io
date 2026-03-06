@@ -1,0 +1,128 @@
+---
+title: Self-Hosting an LLM with Ollama and Continue in VS Code
+description: A walkthrough of setting up a local LLM using Ollama and integrating it into VS Code with the Continue extension for privacy-conscious AI-assisted development.
+date: 2025-03-10
+tags:
+  - tooling
+  - ollama
+  - vscode
+  - continue
+  - ai
+image: https://pttjrd5bylwkefgv.public.blob.vercel-storage.com/blog/ollama.png
+---
+
+As a Linux fanboy, privacy is always somewhere in the back of my mind. I'm not paranoid about security, but I am wary about sending my private code and data to the cloud — which is unfortunately a requirement for using most AI coding tools. GitHub Copilot is the obvious default, but every keypress gets phoned home to Microsoft's servers. That tradeoff started bothering me enough that I decided to experiment with self-hosting a local LLM instead.
+
+Here's what I ended up with: [Ollama](https://ollama.com/) to manage and run models locally, and the [Continue](https://www.continue.dev/) VS Code extension to plug those models into my editor workflow.
+
+## Installing Ollama
+
+Ollama is the easiest way to pull and run open-source LLMs locally. It handles model downloads, quantization, and serving a local API — all through a simple CLI.
+
+On Arch/Manjaro (or any distro with your package manager of choice):
+
+```bash
+curl -fsSL https://ollama.com/install.sh | sh
+```
+
+Once installed, you can pull a model:
+
+```bash
+ollama pull qwen2.5-coder:7b
+```
+
+The big question is which model to use. I've mainly been running **Qwen Coder** and **DeepSeek Coder** variants. The key constraint is your VRAM (or RAM if you're running on CPU). I tried the full DeepSeek model at 70B+ and my computer sounded like a jet engine about to take off — and it was still slow. I initially settled on 32B as a sweet spot, but I've since switched to the **7B models** — they're fast enough that autocomplete actually feels responsive, and they free up enough GPU headroom that the rest of my system stays usable.
+
+### How Much VRAM Do You Have?
+
+Before picking a model, figure out what your GPU can actually hold. On Linux:
+
+```bash
+# NVIDIA
+nvidia-smi --query-gpu=name,memory.total --format=csv,noheader
+
+# AMD
+rocm-smi --showmeminfo vram
+```
+
+Then match your VRAM to a model range. Ollama uses Q4_K_M quantization by default, so the disk size shown on the model page is essentially the minimum VRAM you need:
+
+| VRAM     | Model range | Suggested models                                 |
+| -------- | ----------- | ------------------------------------------------ |
+| 4–6 GB   | 3B–7B       | _`qwen2.5-coder:7b`_, _`llama3.2:3b`_            |
+| 8–12 GB  | 7B–14B      | _`qwen2.5-coder:14b`_, _`deepseek-coder-v2:16b`_ |
+| 16–24 GB | 14B–32B     | _`qwen2.5-coder:7b`_, _`deepseek-r1:32b`_        |
+| 32 GB+   | 32B–70B     | _`llama3.1:70b`_, _`qwen2.5-coder:72b`_          |
+
+If your model doesn't fully fit in VRAM, Ollama will offload layers to RAM — it still runs, just much slower. Better to pick a model that fits comfortably than to push the limit and get unusably slow inference.
+
+To verify your model is running:
+
+```bash
+ollama run qwen2.5-coder:7b
+```
+
+This drops you into an interactive chat. Once you've confirmed it works, you can stop the interactive session and let Continue manage it from the background.
+
+## Setting Up Continue in VS Code
+
+[Continue](https://marketplace.visualstudio.com/items?itemName=Continue.continue) is an open-source AI coding assistant for VS Code (and JetBrains) that works with any model — including local ones served by Ollama.
+
+Install it from the VS Code marketplace, then configure it to point at your local Ollama instance. The config lives at _`~/.continue/config.json`_:
+
+```json
+{
+  "models": [
+    {
+      "title": "Qwen Coder 32B",
+      "provider": "ollama",
+      "model": "qwen2.5-coder:7b",
+      "apiBase": "http://localhost:11434"
+    }
+  ],
+  "tabAutocompleteModel": {
+    "title": "Qwen Coder 32B",
+    "provider": "ollama",
+    "model": "qwen2.5-coder:7b",
+    "apiBase": "http://localhost:11434"
+  },
+  "contextProviders": [
+    {
+      "name": "codebase",
+      "params": {}
+    },
+    {
+      "name": "file"
+    },
+    {
+      "name": "open"
+    }
+  ]
+}
+```
+
+The _`apiBase`_ field is what connects Continue to your local Ollama server. By default Ollama exposes its API on port _`11434`_, so no extra setup is needed there.
+
+## What I Actually Like About This Setup
+
+One thing that surprised me about Continue versus my previous Copilot usage: **codebase context**. Continue has a built-in _`codebase`_ context provider that indexes your project and lets the model understand what you're actually working on — not just the file you have open.
+
+With Copilot, I was mostly getting glorified autocomplete. With Continue + a local model, I can ask questions like "where is the auth middleware defined?" or "what does this function return?" and get answers grounded in my actual codebase. To be fair, Copilot may have added similar features since I last used it — I just never found them. But having it work out of the box with Continue was a nice surprise.
+
+The _`@codebase`_ and _`@file`_ context providers let you pull specific files or search your whole project directly from the chat panel. It feels a lot more like pair programming than autocomplete.
+
+## The Tradeoffs
+
+This setup is not without friction:
+
+- **Cold start time**: The first prompt after the model loads takes noticeably longer.
+- **Noise level**: Larger models make your CPU fans angry. My apartment sounds like a server room. The 7B models are noticeably quieter — one of the reasons I switched.
+- **Quality ceiling**: Local 7B models are noticeably weaker than GPT-4 or Claude Sonnet for complex reasoning, but for day-to-day autocomplete and quick codebase questions they hold up well. If you have the VRAM headroom, stepping up to a 14B or 32B model closes that gap significantly.
+
+For privacy-sensitive projects or when I just don't want to think about data leaving my machine, it's absolutely worth it.
+
+## Sources
+
+- [Continue](https://www.continue.dev/)
+- [Ollama](https://ollama.com/)
+- [Continue VS Code Extension](https://marketplace.visualstudio.com/items?itemName=Continue.continue)

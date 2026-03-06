@@ -1,0 +1,294 @@
+---
+title: Building a REST API with Kotlin and Ktor
+description: A walkthrough of Kotlin and Ktor patterns for developers familiar with MVC frameworks like Spring Boot or ASP.NET Core, covering data classes, companion objects, the routing DSL, HikariCP, and plugin-based configuration.
+date: 2026-02-09
+tags:
+  - kotlin
+  - ktor
+  - backend
+  - rest-api
+image: https://pttjrd5bylwkefgv.public.blob.vercel-storage.com/blog/kotlin-ktor.jpg
+---
+
+I recently had to get up to speed with Kotlin and Ktor at work to contribute to a microservice. Coming from a Java Spring Boot and C# ASP.NET Core background, most of it felt immediately familiar — controllers, repositories, dependency injection, middleware. The MVC mental model transfers cleanly. But there were a few Kotlin-specific patterns that genuinely surprised me, and Ktor's plugin architecture is quite different from Spring's annotation-driven approach. Here's what I wish I'd had when I started.
+
+## Project Structure
+
+The layered architecture is the same as Spring Boot — same layers, different idioms:
+
+```
+src/main/kotlin/com/example/
+├── Application.kt       # Entry point & module wiring
+├── controllers/         # HTTP endpoint handlers
+├── repositories/        # Database access
+├── services/            # Business logic
+├── entities/            # Data class definitions
+├── enums/               # Domain enumerations
+├── database/            # HikariCP setup, DatabaseService interface
+├── plugins/             # Ktor plugins (routing, auth, DI)
+└── utils/               # Custom serializers
+```
+
+If you've worked in Spring Boot or ASP.NET Core, this should feel like home.
+
+## Data Classes and Companion Objects
+
+Data classes are the first thing that stood out. In Spring Boot you'd typically reach for Lombok to generate _`equals()`_, _`hashCode()`_, _`toString()`_, and a _`copy()`_-style builder. In Kotlin, that's all part of the language — declare a _`data class`_ and you get all of it for free. The _`@Serializable`_ annotation from _`kotlinx.serialization`_ is all Ktor needs to convert it to JSON — no Jackson config, no _`ObjectMapper`_ bean.
+
+```kotlin
+// entities/Document.kt
+@Serializable
+data class Document(
+    val id: String,
+    val title: String,
+    val category: Category,
+    val owner: String,
+    @Serializable(with = InstantAsStringSerializer::class)
+    val createdAt: Instant,
+    val metadata: JsonObject = JsonObject(emptyMap()),
+)
+```
+
+The _`@Serializable(with = ...)`_ lets you attach a custom serializer inline for types that don't serialize cleanly by default, like _`Instant`_.
+
+The thing that was genuinely new to me was **companion objects**. In Java or C#, static factory methods live directly on the class. Kotlin doesn't have statics — instead, you define a _`companion object`_ inside the class body, and its members are accessible directly on the class name:
+
+```kotlin
+data class Document(...) {
+    companion object {
+        fun from(row: DocumentRow): Document =
+            Document(
+                id = row.externalId,
+                title = row.title,
+                category = Category.fromString(row.categoryName),
+                owner = row.ownerExternalId,
+                createdAt = row.createdOn,
+            )
+    }
+}
+```
+
+You call it as _`Document.from(row)`_ — the same ergonomics as a static factory in Java, just without the _`static`_ keyword. Once I understood that companion objects are essentially the Kotlin equivalent of a class-level namespace, they started showing up everywhere.
+
+## Custom Serializers
+
+When a type doesn't serialize the way you want, you implement a _`KSerializer`_. Here's one that formats _`Instant`_ as a readable date string rather than an epoch number:
+
+```kotlin
+// utils/InstantAsStringSerializer.kt
+object InstantAsStringSerializer : KSerializer<Instant> {
+    override val descriptor = PrimitiveSerialDescriptor("Instant", PrimitiveKind.STRING)
+    private val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd").withZone(ZoneId.systemDefault())
+
+    override fun serialize(encoder: Encoder, value: Instant) {
+        encoder.encodeString(formatter.format(value))
+    }
+
+    override fun deserialize(decoder: Decoder): Instant =
+        Instant.parse(decoder.decodeString())
+}
+```
+
+The _`object`_ keyword means this is a singleton — the Kotlin equivalent of a static class with no constructor. You reference it with _`@Serializable(with = InstantAsStringSerializer::class)`_ on any field that needs it.
+
+## Enums with Lazy Properties
+
+This was another pattern I hadn't seen before. In C# or Java you'd typically map enum variants to config values in a switch statement somewhere. Kotlin lets you attach properties directly to enum variants using _`by lazy`_:
+
+```kotlin
+// enums/Category.kt
+@Serializable
+enum class Category {
+    Reports,
+    Invoices,
+    Statements,
+    Unknown,
+    ;
+
+    val storageBucket: String by lazy {
+        when (this) {
+            Reports -> EnvConfig.getString("storage.reports.bucket")
+            Invoices -> EnvConfig.getString("storage.invoices.bucket")
+            Statements -> EnvConfig.getString("storage.statements.bucket")
+            Unknown -> ""
+        }
+    }
+
+    val pathPrefix: String by lazy {
+        when (this) {
+            Reports -> EnvConfig.getString("storage.reports.prefix")
+            Invoices -> EnvConfig.getString("storage.invoices.prefix")
+            Statements -> EnvConfig.getString("storage.statements.prefix")
+            Unknown -> ""
+        }
+    }
+
+    companion object {
+        fun fromString(value: String?): Category = when (value?.lowercase()) {
+            "reports" -> Reports
+            "invoices" -> Invoices
+            "statements" -> Statements
+            else -> Unknown
+        }
+    }
+}
+```
+
+The _`by lazy`_ means the config lookup only runs once per enum variant, the first time that property is accessed. It's a memoized computed property. You can then call _`Category.Invoices.storageBucket`_ anywhere without needing a lookup table or an injected service.
+
+## The Database Layer
+
+Instead of a raw _`DataSource`_, I use **HikariCP** for connection pooling and wrap it behind a _`DatabaseService`_ interface — similar to Spring's _`JdbcTemplate`_ or C#'s _`IDbConnection`_ abstraction:
+
+```kotlin
+// database/DatabaseService.kt
+interface DatabaseService {
+    fun getConnection(): Connection
+    fun <T> executePreparedQuery(query: String, vararg parameters: Any?, resultHandler: (ResultSet) -> T): T
+    fun executePreparedUpdate(query: String, vararg parameters: Any?): Int
+}
+
+class HikariDatabaseService(config: DatabaseConfig) : DatabaseService {
+    private val dataSource: HikariDataSource
+
+    init {
+        val hikariConfig = HikariConfig().apply {
+            driverClassName = "com.mysql.cj.jdbc.Driver"
+            jdbcUrl = "jdbc:mysql://${config.host}:${config.port}/${config.name}"
+            username = config.username
+            password = config.password
+            maximumPoolSize = 10
+            minimumIdle = 2
+            addDataSourceProperty("cachePrepStmts", "true")
+            addDataSourceProperty("rewriteBatchedStatements", "true")
+        }
+        dataSource = HikariDataSource(hikariConfig)
+    }
+
+    override fun <T> executePreparedQuery(
+        query: String,
+        vararg parameters: Any?,
+        resultHandler: (ResultSet) -> T,
+    ): T = getConnection().use { conn ->
+        conn.prepareStatement(query).use { stmt ->
+            parameters.forEachIndexed { i, param -> stmt.setObject(i + 1, param) }
+            stmt.executeQuery().use(resultHandler)
+        }
+    }
+}
+```
+
+The _`.use { }`_ idiom is Kotlin's equivalent of _`try-with-resources`_ in Java or _`using`_ in C#. It calls _`close()`_ on the resource when the block exits, even if an exception is thrown.
+
+## The Repository
+
+Repositories get their _`DatabaseService`_ via **Kodein**, a lightweight DI container. The _`DIAware`_ interface is how classes declare their dependency on the container — similar to Spring's _`@Autowired`_ but explicit:
+
+```kotlin
+// repositories/DocumentsRepository.kt
+class DocumentsRepository(override val di: DI) : DIAware {
+    private val databaseService: DatabaseService by di.instance()
+
+    fun getDocumentsForOwner(ownerIds: List<String>): List<Document> {
+        if (ownerIds.isEmpty()) return emptyList()
+
+        val placeholders = ownerIds.joinToString(",") { "?" }
+        val query = """
+            SELECT d.external_id, d.title, c.name AS category_name,
+                   d.owner_external_id, d.created_on
+            FROM documents d
+            LEFT JOIN categories c ON c.id = d.category_id
+            WHERE d.owner_external_id IN ($placeholders)
+            ORDER BY d.created_on DESC
+        """.trimIndent()
+
+        return databaseService.executePreparedQuery(query, *ownerIds.toTypedArray()) { rs ->
+            buildList {
+                while (rs.next()) {
+                    add(Document.from(DocumentRow(
+                        externalId = rs.getString("external_id"),
+                        title = rs.getString("title"),
+                        categoryName = rs.getString("category_name"),
+                        ownerExternalId = rs.getString("owner_external_id"),
+                        createdOn = rs.getTimestamp("created_on").toInstant(),
+                    )))
+                }
+            }
+        }
+    }
+}
+```
+
+The _`*ownerIds.toTypedArray()`_ is Kotlin's spread operator — it unpacks a list into varargs, the equivalent of passing _`params.toArray()`_ in Java before calling a varargs method.
+
+## Routing: The Ktor DSL
+
+This is where Ktor diverges most from Spring Boot. There are no annotations — routing is defined in code using a builder DSL:
+
+```kotlin
+// plugins/RoutingPlugin.kt
+fun configureApplicationRouting(app: Application, di: DI) {
+    app.install(ContentNegotiation) { json() }
+
+    app.routing {
+        get("/ping") { call.respond("pong") }
+
+        route("/v1") {
+            authenticate("bearer-auth") {
+                get("/documents") {
+                    val owners = call.request.queryParameters.getAll("owner") ?: emptyList()
+                    val docs = documentsController.listForOwners(owners)
+                    call.respond(HttpStatusCode.OK, docs)
+                }
+
+                get("/documents/{category}") {
+                    val category = Category.fromString(call.parameters["category"])
+                    val owners = call.request.queryParameters.getAll("owner") ?: emptyList()
+                    val docs = documentsController.listByCategory(owners, category)
+                    call.respond(HttpStatusCode.OK, docs)
+                }
+
+                get("/document/{id}") {
+                    val id = call.parameters["id"] ?: return@get call.respond(HttpStatusCode.BadRequest)
+                    val doc = documentsController.getById(id)
+                    call.respond(
+                        if (doc != null) HttpStatusCode.OK else HttpStatusCode.NotFound,
+                        doc ?: "Not found",
+                    )
+                }
+            }
+        }
+    }
+}
+```
+
+The _`authenticate("bearer-auth") { }`_ block wraps any routes that require a Bearer token. It reads a lot like Express middleware nesting, except it's typed and enforced at compile time.
+
+## Plugin-Based Application Configuration
+
+Instead of Spring's _`@Configuration`_ classes or ASP.NET's _`Startup.cs`_, Ktor uses **plugins** — installable modules that each handle a piece of the application setup. The order they're installed in is the order they run:
+
+```kotlin
+// Application.kt
+fun Application.module() {
+    install(SecretsPlugin)    // Load config from secrets manager
+    install(DatabasePlugin)   // Init HikariCP after secrets are available
+    install(DIPlugin)         // Register repositories and controllers
+    install(RoutingPlugin)    // Wire up routes after DI is ready
+}
+```
+
+When initialization ordering gets more complex — say, the database plugin needs secrets before it can connect — you can enforce it with custom Ktor events:
+
+```kotlin
+// events/ApplicationEvents.kt
+object SecretsLoaded : EventDefinition<Unit>()
+object DatabaseReady : EventDefinition<Unit>()
+object DIReady : EventDefinition<Unit>()
+```
+
+Each plugin raises the next event when it's done, and the next plugin listens for it before starting. You get an explicit, auditable startup sequence without the magic of Spring's _`@DependsOn`_.
+
+## Takeaway
+
+Coming from Spring Boot and C#, most of the architecture is immediately legible — the controller/repository split, DI, connection pooling, and bearer auth all work the same way conceptually. The differences are in the idioms: companion objects instead of statics, _`by lazy`_ for memoized enum properties, _`.use { }`_ for resource cleanup, and a routing DSL instead of annotations. Once those patterns clicked, the rest of the Kotlin codebase started feeling genuinely pleasant to work in.

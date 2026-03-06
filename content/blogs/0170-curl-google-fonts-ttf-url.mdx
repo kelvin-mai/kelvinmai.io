@@ -1,0 +1,65 @@
+---
+title: Getting the TTF URL from Google Fonts with curl
+description: A quick trick for extracting direct TTF font file URLs from Google Fonts embed links using curl, useful when you need the raw font file rather than a CSS import.
+date: 2025-04-21
+tags:
+  - tooling
+  - css
+  - node
+image: https://pttjrd5bylwkefgv.public.blob.vercel-storage.com/blog/curl-google-font.jpeg
+---
+
+This one is pretty niche, but it saved me some time so it's worth writing down.
+
+I needed to embed a font directly into my resume PDF. Not a CSS _`@import`_, not a _`<link>`_ tag — I needed the actual TTF file URL so I could reference it in a Node script that generates the PDF. The problem is Google Fonts doesn't really advertise where the font files live.
+
+## The Trick
+
+When you visit a Google Fonts embed URL in a browser — something like:
+
+```
+https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap
+```
+
+Google detects your browser's user agent and returns WOFF2 URLs, which are optimized for the web. But if you _`curl`_ that same URL without spoofing a browser user agent, Google falls back to serving TTF URLs instead:
+
+```bash
+curl "https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap"
+```
+
+The response is plain CSS with _`src: url(...)`_ declarations pointing directly to the font files on Google's CDN:
+
+```css
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  src: url(https://fonts.gstatic.com/s/inter/v13/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfAZ9hiJ-Ek-_EeA.ttf)
+    format('truetype');
+}
+```
+
+Copy that URL and you have a direct link to the TTF file. No scraping, no guessing, no digging through browser network tabs.
+
+## Why curl Specifically
+
+Browsers and curl send different _`User-Agent`_ headers. Google Fonts uses that header to decide which format to serve:
+
+- Browser → WOFF2 (smaller, modern)
+- curl / no user agent → TTF (universal fallback)
+
+You can verify this yourself by comparing the output with and without a browser user agent:
+
+```bash
+# Returns TTF URLs (no user agent)
+curl "https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap"
+
+# Returns WOFF2 URLs (spoofed browser user agent)
+curl -A "Mozilla/5.0" "https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap"
+```
+
+## My Use Case
+
+I needed this for my resume, which is generated as a PDF using a Node script. The PDF renderer I was using required a direct font URL at build time rather than a CSS import it could parse itself. Plugging the TTF URL directly into the script was the cleanest solution — no downloading and committing font files, just a URL that always points to the latest version Google hosts.
+
+It's a small trick, but one of those things that's annoying to figure out the first time and trivial once you know it.

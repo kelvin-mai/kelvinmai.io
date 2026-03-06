@@ -102,5 +102,105 @@
   "placeholder.png": {
     "url": "https://pttjrd5bylwkefgv.public.blob.vercel-storage.com/placeholder.png",
     "hash": "695463f8d3433f0f3f8bb4198a6d5ad3"
+  },
+  "blog/multiple-themes.png": {
+    "url": "https://pttjrd5bylwkefgv.public.blob.vercel-storage.com/blog/multiple-themes.png",
+    "hash": "97ac440245a17d1a1015d23fb94142ef"
+  },
+  "blog/shadcn-registry.png": {
+    "url": "https://pttjrd5bylwkefgv.public.blob.vercel-storage.com/blog/shadcn-registry.png",
+    "hash": "74952569941a2902721e15f2cb5d642a"
+  },
+  "blog/theme-focus.png": {
+    "url": "https://pttjrd5bylwkefgv.public.blob.vercel-storage.com/blog/theme-focus.png",
+    "hash": "6ee75cc263640b937c8d9ecfe9b3cdfb"
+  },
+  "blog/xtdb-update.png": {
+    "url": "https://pttjrd5bylwkefgv.public.blob.vercel-storage.com/blog/xtdb-update.png",
+    "hash": "e5d9e728b17c1b7ad6d76fbaacd33787"
+  },
+  "blog/claude-slash.jpg": {
+    "url": "https://pttjrd5bylwkefgv.public.blob.vercel-storage.com/blog/claude-slash.jpg",
+    "hash": "e648b3e21043be119e890bea935d5988"
+  },
+  "blog/godot-c-25-01.webp": {
+    "url": "https://pttjrd5bylwkefgv.public.blob.vercel-storage.com/blog/godot-c-25-01.webp",
+    "hash": "73252bc55b9dd15216b3c9a69c944f6b"
+  },
+  "blog/godot-c-25-02.webp": {
+    "url": "https://pttjrd5bylwkefgv.public.blob.vercel-storage.com/blog/godot-c-25-02.webp",
+    "hash": "32295dbf51cc1b624c5bcbdf7e11ee7e"
+  },
+  "blog/own-tools-color-generator.png": {
+    "url": "https://pttjrd5bylwkefgv.public.blob.vercel-storage.com/blog/own-tools-color-generator.png",
+    "hash": "f4ceb51c7bc098b2c96770c786aa2860"
+  },
+  "blog/godot-c-25-cover.webp": {
+    "url": "https://pttjrd5bylwkefgv.public.blob.vercel-storage.com/blog/godot-c-25-cover.webp",
+    "hash": "97d186f5cf0912b6886bdf62adc6bcba"
+  },
+  "blog/curl-google-font.jpeg": {
+    "url": "https://pttjrd5bylwkefgv.public.blob.vercel-storage.com/blog/curl-google-font.jpeg",
+    "hash": "3ca77347ec0951b28cd78e08d2e6e12f"
+  },
+  "blog/remotion-hiccup-html.gif": {
+    "url": "https://pttjrd5bylwkefgv.public.blob.vercel-storage.com/blog/remotion-hiccup-html.gif",
+    "hash": "c0203b757927324bebb76b81c7d8d626"
+  },
+  "blog/template-code-hike-cover.png": {
+    "url": "https://pttjrd5bylwkefgv.public.blob.vercel-storage.com/blog/template-code-hike-cover.png",
+    "hash": "0efab9f80cfcd60c38232a948b8de398"
+  },
+  "blog/pathom-fulcro.png": {
+    "url": "https://pttjrd5bylwkefgv.public.blob.vercel-storage.com/blog/pathom-fulcro.png",
+    "hash": "52ee18da8f7a36cd0159bc555a6e366d"
+  },
+  "blog/crux-db.png": {
+    "url": "https://pttjrd5bylwkefgv.public.blob.vercel-storage.com/blog/crux-db.png",
+    "hash": "1b70b74e3327132d28f93c0b94b02600"
+  },
+  "blog/dnd-digital-garden.png": {
+    "url": "https://pttjrd5bylwkefgv.public.blob.vercel-storage.com/blog/dnd-digital-garden.png",
+    "hash": "39d922192e33cbaaabb426cda6be02e5"
+  },
+  "blog/obsidian-digital-garden-settings.png": {
+    "url": "https://pttjrd5bylwkefgv.public.blob.vercel-storage.com/blog/obsidian-digital-garden-settings.png",
+    "hash": "edb97ac07f611ba0b4bfffa67e44cf59"
+  },
+  "blog/obsidian-graph-view.png": {
+    "url": "https://pttjrd5bylwkefgv.public.blob.vercel-storage.com/blog/obsidian-graph-view.png",
+    "hash": "7c0132b2975a4ace1922d4d2ed8fabba"
+  },
+  "blog/expo-react-native.webp": {
+    "url": "https://pttjrd5bylwkefgv.public.blob.vercel-storage.com/blog/expo-react-native.webp",
+    "hash": "07011f638a68a02214fd907048dab259"
+  },
+  "blog/kotlin-ktor.jpg": {
+    "url": "https://pttjrd5bylwkefgv.public.blob.vercel-storage.com/blog/kotlin-ktor.jpg",
+    "hash": "200fb19b45fd12e0471948a6348f7764"
+  },
+  "blog/ollama.png": {
+    "url": "https://pttjrd5bylwkefgv.public.blob.vercel-storage.com/blog/ollama.png",
+    "hash": "d6a13b256829fbea8a43cc8325f83fcd"
+  },
+  "blog/opencode-eldritch.png": {
+    "url": "https://pttjrd5bylwkefgv.public.blob.vercel-storage.com/blog/opencode-eldritch.png",
+    "hash": "cfd10c168edec8a513b13ba8566ba7f3"
+  },
+  "blog/opencode.png": {
+    "url": "https://pttjrd5bylwkefgv.public.blob.vercel-storage.com/blog/opencode.png",
+    "hash": "e24510c699af184f8ea68992bf03589d"
+  },
+  "blog/gnustow.png": {
+    "url": "https://pttjrd5bylwkefgv.public.blob.vercel-storage.com/blog/gnustow.png",
+    "hash": "438ef21ce6b22125206933dec5e1bbbe"
+  },
+  "blog/burgerhub.png": {
+    "url": "https://pttjrd5bylwkefgv.public.blob.vercel-storage.com/blog/burgerhub.png",
+    "hash": "f3f8c3a596308b31914f829c72be69c6"
+  },
+  "blog/react-native-and-expo.jpg": {
+    "url": "https://pttjrd5bylwkefgv.public.blob.vercel-storage.com/blog/react-native-and-expo.jpg",
+    "hash": "c07b6fd036ae127afcedad4a400e29f6"
   }
 }
