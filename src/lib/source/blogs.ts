@@ -42,11 +42,15 @@ function parseBlogPost(filePath: string, slug: string): BlogPost {
   };
 }
 
+function fileToSlug(filename: string): string {
+  return filename.replace(/\.mdx$/, '').replace(/^\d+-/, '');
+}
+
 export const blogs = {
   generateParams(): { slug: string }[] {
     try {
       return getMdxFiles(BLOGS_DIR).map((file) => ({
-        slug: file.replace(/\.mdx$/, ''),
+        slug: fileToSlug(file),
       }));
     } catch {
       return [];
@@ -54,9 +58,12 @@ export const blogs = {
   },
 
   getPost(slug: string): BlogPost | null {
-    const filePath = join(BLOGS_DIR, `${slug}.mdx`);
     try {
-      return parseBlogPost(filePath, slug);
+      const filename = getMdxFiles(BLOGS_DIR).find(
+        (f) => fileToSlug(f) === slug,
+      );
+      if (!filename) return null;
+      return parseBlogPost(join(BLOGS_DIR, filename), slug);
     } catch {
       return null;
     }
