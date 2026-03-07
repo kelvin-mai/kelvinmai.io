@@ -45,6 +45,9 @@ export const Footer: React.FC = () => {
                 <Link href='/blog'>Blog</Link>
               </li>
               <li>
+                <Link href='/videos'>Videos</Link>
+              </li>
+              <li>
                 <Link href='/registry'>Registry</Link>
               </li>
             </ul>

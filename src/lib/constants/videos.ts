@@ -315,6 +315,8 @@ export const videos: VideoData = {
     {
       id: 'PLBeQxJQNprbjDQ4fJi58jOcZYA8VYauVh',
       title: 'Go Anon Board',
+      description:
+        'Build an anonymous message board REST API from scratch in Go using GORM and PostgreSQL.',
       image: '/images/playlists/go-anon-board.jpg',
       tags: ['golang', 'postgres'],
       videos: [
@@ -343,6 +345,8 @@ export const videos: VideoData = {
     {
       id: 'PLBeQxJQNprbhUU5hrPlENx4V3jVhDK2_F',
       title: 'NextJS Jobs Listings',
+      description:
+        'Build a job listings application with Next.js featuring a card UI, search filters, and pagination.',
       image: '/images/playlists/next-jobs.png',
       tags: ['NextJS', 'react', 'typescript'],
       videos: [
@@ -376,6 +380,8 @@ export const videos: VideoData = {
     {
       id: 'PLBeQxJQNprbjZmm6JG_mrnqAVr9zIjbxc',
       title: 'Nx Space Explorer',
+      description:
+        'Build a full-stack space launch explorer using an Nx monorepo with NestJS, Next.js, GraphQL codegen, and Docker.',
       image: '/images/playlists/nx-space-explorer.png',
       tags: [
         'nestjs',
@@ -433,6 +439,8 @@ export const videos: VideoData = {
     {
       id: 'PLBeQxJQNprbjvILPGCw4h7pFOZp_Yms1B',
       title: 'Clojure Auth',
+      description:
+        'Implement JWT authentication in a Clojure web server using Reitit, Ring, HoneySQL, and Buddy.',
       image: '/images/playlists/clj-auth.jpg',
       tags: ['clojure'],
       videos: [
@@ -456,6 +464,8 @@ export const videos: VideoData = {
     {
       id: 'PLBeQxJQNprbgkmvbv80xC8R0SHcPsosjZ',
       title: 'Full Stack Clojure Contact Book',
+      description:
+        'Build a full-stack contact book with a Clojure/Reitit backend and a ClojureScript/React frontend.',
       image: '/images/playlists/fullstack-clj.png',
       tags: ['clojure'],
       videos: [

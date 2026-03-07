@@ -76,13 +76,14 @@ export const Experiences: React.FC<ExperiencesProps> = ({
   jobs,
 }) => {
   return (
-    <Accordion className={className} type='multiple'>
+    <Accordion
+      className={className}
+      type='multiple'
+      defaultValue={jobs[0] ? [jobs[0].name] : []}
+    >
       {jobs.map((j) => (
         <AccordionItem key={j.name} value={j.name} className='border-b-0'>
-          <AccordionTrigger
-            className='hover:cursor-pointer hover:no-underline'
-            hideTrigger
-          >
+          <AccordionTrigger className='hover:cursor-pointer hover:no-underline'>
             <ExperienceTrigger work={j} />
           </AccordionTrigger>
           <AccordionContent className='space-y-2 px-2'>
