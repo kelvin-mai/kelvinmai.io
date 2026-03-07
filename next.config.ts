@@ -14,6 +14,7 @@ const config: NextConfig = {
       },
     ],
     remotePatterns: [
+      { hostname: 'img.youtube.com' },
       { hostname: 'cdn-images-1.medium.com' },
       { hostname: 'media2.dev.to' },
       { hostname: 'dev-to-uploads.s3.amazonaws.com' },
