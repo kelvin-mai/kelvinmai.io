@@ -137,6 +137,7 @@ type TOCItemProps = {
   upper?: number;
   lower?: number;
   active: string[];
+  activeClassName?: string;
 };
 
 const TOCItem: React.FC<TOCItemProps> = ({
@@ -144,6 +145,7 @@ const TOCItem: React.FC<TOCItemProps> = ({
   upper = item.depth,
   lower = item.depth,
   active,
+  activeClassName = 'data-[active=true]:text-primary',
 }) => {
   const offset = getLineOffset(item.depth),
     upperOffset = getLineOffset(upper),
@@ -155,7 +157,10 @@ const TOCItem: React.FC<TOCItemProps> = ({
       href={item.url}
       data-active={isActive}
       style={{ paddingInlineStart: getItemOffset(item.depth) }}
-      className='prose text-muted-foreground data-[active=true]:text-primary relative py-1.5 text-sm [overflow-wrap:anywhere] transition-colors first:pt-0 last:pb-0'
+      className={cn(
+        'prose text-muted-foreground relative py-1.5 text-sm [overflow-wrap:anywhere] transition-colors first:pt-0 last:pb-0',
+        activeClassName,
+      )}
     >
       {offset !== upperOffset ? (
         <svg
@@ -188,7 +193,11 @@ const TOCItem: React.FC<TOCItemProps> = ({
 
 // --- TOC items container ---
 
-const TOCItems: React.FC<{ items: TOCItemType[] }> = ({ items }) => {
+const TOCItems: React.FC<{
+  items: TOCItemType[];
+  thumbClassName?: string;
+  activeClassName?: string;
+}> = ({ items, thumbClassName, activeClassName }) => {
   const containerRef = React.useRef<HTMLDivElement>(null);
   const active = useActiveAnchors(items);
 
@@ -249,7 +258,10 @@ const TOCItems: React.FC<{ items: TOCItemType[] }> = ({ items }) => {
           <TocThumb
             containerRef={containerRef}
             active={active}
-            className='bg-primary mt-(--fd-top) h-(--fd-height) transition-all'
+            className={cn(
+              'mt-(--fd-top) h-(--fd-height) transition-all',
+              thumbClassName ?? 'bg-primary',
+            )}
           />
         </div>
       ) : null}
@@ -261,6 +273,7 @@ const TOCItems: React.FC<{ items: TOCItemType[] }> = ({ items }) => {
             upper={items[i - 1]?.depth}
             lower={items[i + 1]?.depth}
             active={active}
+            activeClassName={activeClassName}
           />
         ))}
       </div>
@@ -273,11 +286,17 @@ const TOCItems: React.FC<{ items: TOCItemType[] }> = ({ items }) => {
 export type TableOfContentsProps = {
   className?: string;
   items: TOCItemType[];
+  headingClassName?: string;
+  thumbClassName?: string;
+  activeClassName?: string;
 };
 
 export const TableOfContents: React.FC<TableOfContentsProps> = ({
   className,
   items,
+  headingClassName,
+  thumbClassName,
+  activeClassName,
 }) => {
   const viewRef = React.useRef<HTMLDivElement>(null);
 
@@ -289,10 +308,19 @@ export const TableOfContents: React.FC<TableOfContentsProps> = ({
         className,
       )}
     >
-      <h3 className='text-primary inline-flex items-center gap-2'>
+      <h3
+        className={cn(
+          'inline-flex items-center gap-2',
+          headingClassName ?? 'text-primary',
+        )}
+      >
         <Text className='size-4' /> On This Page
       </h3>
-      <TOCItems items={items} />
+      <TOCItems
+        items={items}
+        thumbClassName={thumbClassName}
+        activeClassName={activeClassName}
+      />
     </div>
   );
 };

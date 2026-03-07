@@ -2,7 +2,7 @@ import { readFileSync } from 'fs';
 import { join } from 'path';
 import matter from 'gray-matter';
 
-import { getMdxFiles } from './utils';
+import { getMdxFiles, extractTOC, type TOCItemType } from './utils';
 
 const BLOGS_DIR = join(process.cwd(), 'content/blogs');
 
@@ -15,6 +15,7 @@ export type BlogPostData = {
   image?: string;
   body: string;
   readTime: number;
+  toc: TOCItemType[];
 };
 
 export type BlogPost = {
@@ -38,6 +39,7 @@ function parseBlogPost(filePath: string, slug: string): BlogPost {
       image: data.image as string | undefined,
       body: content,
       readTime: Math.max(1, Math.ceil(content.split(/\s+/).length / 200)),
+      toc: extractTOC(content),
     },
   };
 }
