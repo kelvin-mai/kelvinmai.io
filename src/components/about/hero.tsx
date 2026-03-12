@@ -1,10 +1,10 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { Download, FileHeart } from 'lucide-react';
+import { FileHeart } from 'lucide-react';
 
 import { resume } from '@/lib/constants';
 import { Button } from '@/components/ui/button';
-import { PDFDownloadLink, ResumeDocument } from '../pdf';
+import { ResumeActions } from '../pdf/resume-actions';
 import { AnimatedHomeCard } from './animated-home-card';
 
 export const HeroSection = () => {
@@ -33,12 +33,7 @@ export const HeroSection = () => {
             View Resume
           </Link>
         </Button>
-        <Button variant='home' asChild>
-          <PDFDownloadLink document={<ResumeDocument resume={resume} />}>
-            <Download />
-            Download Resume
-          </PDFDownloadLink>
-        </Button>
+        <ResumeActions />
       </div>
     </AnimatedHomeCard>
   );

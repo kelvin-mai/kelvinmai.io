@@ -12,7 +12,7 @@ export const resume = {
     email: 'kelvin.mai002@gmail.com',
     phone: null,
     url: 'kelvinmai.io',
-    summary: `Dynamic software engineer with over ${yearsSinceStart()} years of hands-on experience and passionate about functional programming methodologies. Specializing in web technologies including TypeScript, Clojure, React and Golang with a proven track record of delivering robust solutions and adapting to new tools.`,
+    summary: `Full-stack software engineer with over ${yearsSinceStart()} years of experience building microservices and distributed systems across agile teams. Passionate about functional programming, specializing in TypeScript, Clojure, React, and Go with a track record of designing REST and GraphQL APIs, improving CI/CD pipelines, and shipping scalable web applications.`,
     location: {
       address: null,
       postalCode: null,
@@ -72,10 +72,10 @@ export const resume = {
       summary:
         'Development on internal admin tool to aid SFTP automation for insurance clients',
       highlights: [
-        'Developed internal admin tools for SFTP file automation by introducing a dry run feature',
-        'Enhance the Admin UI for Gravie employees and insurance clients, improving workflow efficiency.',
-        'Managed AWS & Redis for file processing in a Groovy on Grails backend.',
-        'Mentored Java engineers in React and Clojurescript, facilitating frontend modernization.',
+        'Developed internal admin tools for SFTP file automation by introducing a dry run feature, eliminating silent failures in insurance client file processing.',
+        'Enhanced the Admin UI for Gravie employees and insurance clients, streamlining multi-step workflows and reducing manual intervention.',
+        'Managed AWS & Redis infrastructure for high-throughput file processing in a Groovy on Grails backend.',
+        'Mentored Java engineers in React and ClojureScript, accelerating a full frontend modernization effort.',
       ],
     },
     {
@@ -92,10 +92,10 @@ export const resume = {
       summary:
         'Provide development consultation on client facing non-custodial compounding blockchain application',
       highlights: [
-        'Collaborated with Rust backend engineers to optimize smart contract interactions.',
-        'Development on compounding outpost strategy implementation',
-        'Migrated frontend from React 16 to Next.js, enhancing performance and scalability.',
-        'Mentored junior developers on React and Typescript best practices.',
+        'Collaborated with Rust backend engineers to optimize smart contract interactions, reducing on-chain transaction overhead.',
+        'Developed compounding outpost strategy for automated yield optimization across multiple DeFi protocols.',
+        'Migrated frontend from React 16 to Next.js, significantly improving page load performance and enabling server-side rendering.',
+        'Mentored junior developers on React and TypeScript best practices, improving team code quality and review velocity.',
       ],
     },
     {
@@ -112,11 +112,11 @@ export const resume = {
       summary:
         'Rapid development of vaccination management app during the COVID-19 pandemic',
       highlights: [
-        'Developed and optimized a COVID-19 vaccination management platform.',
-        'Migrated core services from Node.js to Clojure for improved performance and scalability.',
-        'Development of SMS/Email notifications feature.',
-        'Maintained frontend application using Cypress end-to-end testing.',
-        'Mentored and taught junior developers about Clojure/ClojureScript.',
+        'Developed and optimized a COVID-19 vaccination management platform deployed across multiple healthcare facilities.',
+        'Migrated core services from Node.js to Clojure, significantly improving throughput and reducing memory overhead.',
+        'Built SMS and Email notification system for patient vaccination updates, improving communication reliability at scale.',
+        'Maintained frontend reliability using Cypress end-to-end testing, catching regressions before production.',
+        'Mentored junior developers in Clojure/ClojureScript, growing team functional programming proficiency.',
       ],
     },
     {
@@ -142,10 +142,10 @@ export const resume = {
       summary:
         'Development of various Travel B2B dependant microservices and internal administration tools.',
       highlights: [
-        'Development on both client-facing and administrative frontend applications in both React and Angular',
-        'Developed Java and Golang microservices for the Travel B2B platform.',
-        'Built a Python-based ETL worker to optimize Redis data propagation.',
-        'Automated SFTP file transfers using Java and Docker.',
+        'Developed client-facing and administrative frontend applications in React and Angular serving Travel B2B clients.',
+        'Developed Java and Golang microservices for a Travel B2B platform handling hotel and travel inventory at scale.',
+        'Built a Python-based ETL worker to optimize Redis data propagation, significantly reducing cache update latency.',
+        'Automated SFTP file transfers using Java and Docker, eliminating manual file handling across multiple vendor integrations.',
       ],
     },
     // {
@@ -181,10 +181,10 @@ export const resume = {
       summary:
         'Feature development on desktop and mobile retail travel e-commerce web applications.',
       highlights: [
-        'Implemented React-based HTML email templates for improved purchase confirmation UX.',
-        'Implemented mobile cart functionality to use React Router streamlining navigation experience and mobile conversions.',
-        'Upgraded React Router (v2 to v5), enhancing navigation performance.',
-        'Feature development on React Native Windows based kiosk application.',
+        'Implemented React-based HTML email templates for purchase confirmations, replacing a fragmented legacy templating system.',
+        'Implemented mobile cart functionality using React Router, streamlining the checkout flow and improving mobile conversion experience.',
+        'Upgraded React Router (v2 to v5) across a large-scale e-commerce codebase, improving navigation reliability and performance.',
+        'Developed React Native Windows kiosk application features for on-site hotel and entertainment bookings.',
       ],
     },
     {
@@ -210,10 +210,10 @@ export const resume = {
       summary:
         'R&D and Feature development and maintenance of the cloud-hosted LMS.',
       highlights: [
-        'Designed and prototyped an internal GraphQL API for better data querying.',
-        'Added C# .NET service endpoint to provide full text search using PostgreSQL.',
-        'Created and maintained internal React data dashboard.',
-        'Led migration from Angular 5 to Angular 6, improving frontend maintainability.',
+        'Designed and prototyped an internal GraphQL API, replacing fragmented REST endpoints and simplifying data querying for frontend teams.',
+        'Added C# .NET full-text search endpoint using PostgreSQL, enabling complex content discovery across the cloud-hosted LMS.',
+        'Created and maintained internal React data dashboard used by the operations team for student progress tracking.',
+        'Led migration from Angular 5 to Angular 6 across the full LMS frontend, improving build tooling and long-term maintainability.',
       ],
     },
     // {
@@ -257,7 +257,7 @@ export const resume = {
     },
     {
       institution: 'University of California, Riverside',
-      area: 'Computer Science Major',
+      area: 'Computer Science — Coursework Completed (No Degree)',
       location: 'Riverside, CA',
       startDate: '2008-09-01T07:00:00.000Z',
       endDate: '2011-02-01T08:00:00.000Z',
@@ -274,7 +274,7 @@ export const resume = {
         'JavaScript',
         'Clojure',
         'ClojureScript',
-        'Golang (Go)',
+        'Go (Golang)',
         'Java',
         'Groovy',
         'Python',
@@ -294,6 +294,7 @@ export const resume = {
         'Bootstrap',
         'Material UI',
         'Tailwind CSS',
+        'Web3',
         'Cypress',
         'Jest',
       ],
@@ -305,12 +306,11 @@ export const resume = {
         'Express.js',
         'ASP.NET Core',
         'Spring Boot',
-        'Rest APIs',
+        'REST APIs',
         'GraphQL',
         'PostgreSQL',
         'MySQL',
         'MongoDB',
-        'Web3',
       ],
     },
     {
@@ -350,8 +350,12 @@ export const resume = {
       startDate: '2024-03-22',
       endDate: null,
       description:
-        'Daggerheart TTRPG fan applicaiton for generating homebrew cards for gameplay.',
-      highlights: [],
+        'Daggerheart TTRPG fan application for generating homebrew cards for gameplay.',
+      highlights: [
+        'Developed a Next.js application for designing and exporting custom printable gameplay cards.',
+        'Implemented a card template engine supporting multiple card types with real-time preview.',
+        'Grew to 2,000+ total users with ~1,200 weekly active visitors.',
+      ],
     },
   ],
 };

@@ -50,6 +50,7 @@ Font.register({
 });
 
 export { ResumeDocument } from './resume/document';
+export { ATSResumeDocument } from './resume/ats-document';
 
 export const PDFViewer = dynamic(
   () => import('@react-pdf/renderer').then((m) => m.PDFViewer),

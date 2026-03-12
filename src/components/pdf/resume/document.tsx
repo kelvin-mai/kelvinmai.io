@@ -52,7 +52,7 @@ export const ResumeDocument: React.FC<ResumeDocumentProps> = ({ resume }) => {
     >
       <Page size='A4' style={styles.page}>
         <Heading info={resume.basics} />
-        <Section title='introduction'>
+        <Section title='summary'>
           <Text>{resume.basics.summary}</Text>
         </Section>
         <Section title='skills'>
