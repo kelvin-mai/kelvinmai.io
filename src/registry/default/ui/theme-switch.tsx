@@ -89,7 +89,7 @@ const ThemeSwitch = () => {
           icon={option.icon}
           value={option.value}
           isActive={theme === option.value}
-          onClick={setTheme}
+          onClick={setTheme as (value: string) => void}
         />
       ))}
     </motion.div>
