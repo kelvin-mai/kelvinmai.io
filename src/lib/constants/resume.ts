@@ -13,6 +13,8 @@ export const resume = {
     phone: null,
     url: 'kelvinmai.io',
     summary: `Full-stack software engineer with over ${yearsSinceStart()} years of experience building microservices and distributed systems across agile teams. Passionate about functional programming, specializing in TypeScript, Clojure, React, and Go with a track record of designing REST and GraphQL APIs, improving CI/CD pipelines, and shipping scalable web applications.`,
+    openToWork: false,
+    bio: `I've spent the last ${yearsSinceStart()} years building microservices and distributed systems across full-stack teams — from a travel e-commerce platform at Vegas.com to a COVID-era healthcare app at Luminare, to insurance infrastructure at Gravie. I'm passionate about functional programming, especially Clojure, and love working at the intersection of clean backend architecture and modern React frontends. Outside of work I run a YouTube channel where I make tutorials on web development and software engineering. Looking for a remote-friendly team tackling interesting systems problems where functional ideas are welcome.`,
     location: {
       address: null,
       postalCode: null,
