@@ -12,7 +12,7 @@ export type BlogPostData = {
   date: Date;
   tags?: string[];
   canonicalUrl?: string;
-  image?: string;
+  image: string;
   body: string;
   readTime: number;
   toc: TOCItemType[];
@@ -36,7 +36,9 @@ function parseBlogPost(filePath: string, slug: string): BlogPost {
       date: new Date(data.date as string),
       tags: data.tags as string[] | undefined,
       canonicalUrl: data.canonicalUrl as string | undefined,
-      image: data.image as string | undefined,
+      image:
+        (data.image as string | undefined) ??
+        'https://pttjrd5bylwkefgv.public.blob.vercel-storage.com/placeholder.png',
       body: content,
       readTime: Math.max(1, Math.ceil(content.split(/\s+/).length / 200)),
       toc: extractTOC(content),

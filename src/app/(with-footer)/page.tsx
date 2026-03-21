@@ -9,6 +9,7 @@ import {
   Experiences,
   SocialLinks,
   Skills,
+  LatestContent,
 } from '@/components/about';
 import { Button } from '@/components/ui';
 
@@ -58,11 +59,12 @@ export default function Home() {
             </AnimatedHomeCard>
           </section>
         </div>
+        <LatestContent />
         <section className='flex flex-col-reverse gap-4 md:flex-col'>
-          <AnimatedHomeCard delay={4}>
+          <AnimatedHomeCard delay={5}>
             <Skills />
           </AnimatedHomeCard>
-          <AnimatedHomeCard delay={5}>
+          <AnimatedHomeCard delay={6}>
             <Experiences jobs={resume.work} />
           </AnimatedHomeCard>
         </section>

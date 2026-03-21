@@ -5,6 +5,7 @@ import type { Metadata } from 'next';
 import { source } from '@/lib/source';
 import { Footer } from '@/components/layout';
 import { Badge } from '@/components/ui';
+import { AnimatedListItem } from '@/components/common';
 
 const { blogs } = source;
 
@@ -31,14 +32,14 @@ export default function BlogPage() {
         </div>
 
         <ul className='grid grid-cols-1 gap-6 sm:grid-cols-2'>
-          {posts.map((post) => (
-            <li key={post.slug}>
+          {posts.map((post, i) => (
+            <AnimatedListItem key={post.slug} index={i} className='h-full'>
               <Link
                 href={post.url}
-                className='group block overflow-hidden rounded-xl border border-white/10 bg-black/40 backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-cyan-500/30 hover:shadow-lg hover:shadow-cyan-500/10'
+                className='group flex h-full flex-col overflow-hidden rounded-xl border border-white/10 bg-black/40 backdrop-blur-md transition-all duration-300 hover:border-cyan-500/30 hover:shadow-lg hover:shadow-cyan-500/10'
               >
                 {post.data.image ? (
-                  <div className='relative h-44 overflow-hidden'>
+                  <div className='relative h-44 shrink-0 overflow-hidden'>
                     <Image
                       src={post.data.image}
                       alt={post.data.title}
@@ -49,9 +50,9 @@ export default function BlogPage() {
                     <div className='absolute inset-0 bg-gradient-to-t from-black/60 to-transparent' />
                   </div>
                 ) : (
-                  <div className='h-44 bg-gradient-to-br from-cyan-950/40 to-purple-950/40' />
+                  <div className='h-44 shrink-0 bg-gradient-to-br from-cyan-950/40 to-purple-950/40' />
                 )}
-                <div className='p-5'>
+                <div className='flex flex-1 flex-col p-5'>
                   <div className='mb-2 flex items-center gap-2 text-xs text-cyan-400'>
                     <span>
                       {post.data.date.toLocaleDateString('en-US', {
@@ -67,12 +68,12 @@ export default function BlogPage() {
                     {post.data.title}
                   </h2>
                   {post.data.description && (
-                    <p className='mb-3 line-clamp-2 text-sm text-white/60'>
+                    <p className='mb-3 line-clamp-2 flex-1 text-sm text-white/60'>
                       {post.data.description}
                     </p>
                   )}
                   {post.data.tags && post.data.tags.length > 0 && (
-                    <div className='flex flex-wrap gap-1.5'>
+                    <div className='mt-auto flex flex-wrap gap-1.5'>
                       {post.data.tags.map((tag) => (
                         <Badge
                           key={tag}
@@ -85,7 +86,7 @@ export default function BlogPage() {
                   )}
                 </div>
               </Link>
-            </li>
+            </AnimatedListItem>
           ))}
         </ul>
       </main>

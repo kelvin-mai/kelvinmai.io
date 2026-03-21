@@ -4,6 +4,7 @@ import type { Metadata } from 'next';
 import { PlayCircle, ListVideo, ArrowRight } from 'lucide-react';
 
 import { Footer } from '@/components/layout';
+import { AnimatedListItem } from '@/components/common';
 import {
   videos,
   getVideoUrl,
@@ -22,7 +23,7 @@ function VideoCard({ video }: { video: VideoEntry }) {
       href={getVideoUrl(video.id)}
       target='_blank'
       rel='noopener noreferrer'
-      className='group block overflow-hidden rounded-xl border border-white/10 bg-black/40 backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-cyan-500/30 hover:shadow-lg hover:shadow-cyan-500/10'
+      className='group block overflow-hidden rounded-xl border border-white/10 bg-black/40 backdrop-blur-md transition-all duration-300 hover:border-cyan-500/30 hover:shadow-lg hover:shadow-cyan-500/10'
     >
       <div className='relative h-52 shrink-0 overflow-hidden'>
         <Image
@@ -82,40 +83,44 @@ export default function VideosPage() {
                 <ArrowRight className='size-3.5 transition-transform group-hover:translate-x-0.5' />
               </Link>
             </div>
-            <div className='grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3'>
-              {playlists.slice(0, 3).map((playlist) => (
-                <Link
+            <ul className='grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3'>
+              {playlists.slice(0, 3).map((playlist, i) => (
+                <AnimatedListItem
                   key={`${playlist.id}-${playlist.title}`}
-                  href='/videos/playlists'
-                  className='group block overflow-hidden rounded-xl border border-white/10 bg-black/40 backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-cyan-500/30 hover:shadow-lg hover:shadow-cyan-500/10'
+                  index={i}
                 >
-                  <div className='relative h-52 overflow-hidden'>
-                    <Image
-                      src={playlist.image}
-                      alt={playlist.title}
-                      fill
-                      className='object-cover transition-transform duration-500 group-hover:scale-105'
-                      sizes='(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw'
-                    />
-                    <div className='absolute inset-0 bg-gradient-to-t from-black/70 to-transparent' />
-                    <div className='absolute bottom-3 left-3 flex items-center gap-1.5 rounded-full bg-black/50 px-2 py-1 text-xs text-white/80 backdrop-blur-sm'>
-                      <ListVideo className='size-3.5' />
-                      {playlist.videos.length} videos
+                  <Link
+                    href='/videos/playlists'
+                    className='group block overflow-hidden rounded-xl border border-white/10 bg-black/40 backdrop-blur-md transition-all duration-300 hover:border-cyan-500/30 hover:shadow-lg hover:shadow-cyan-500/10'
+                  >
+                    <div className='relative h-52 overflow-hidden'>
+                      <Image
+                        src={playlist.image}
+                        alt={playlist.title}
+                        fill
+                        className='object-cover transition-transform duration-500 group-hover:scale-105'
+                        sizes='(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw'
+                      />
+                      <div className='absolute inset-0 bg-gradient-to-t from-black/70 to-transparent' />
+                      <div className='absolute bottom-3 left-3 flex items-center gap-1.5 rounded-full bg-black/50 px-2 py-1 text-xs text-white/80 backdrop-blur-sm'>
+                        <ListVideo className='size-3.5' />
+                        {playlist.videos.length} videos
+                      </div>
                     </div>
-                  </div>
-                  <div className='p-4'>
-                    <h3 className='font-semibold text-white transition-colors group-hover:text-cyan-300'>
-                      {playlist.title}
-                    </h3>
-                    {playlist.description && (
-                      <p className='mt-1 line-clamp-2 text-sm text-white/60'>
-                        {playlist.description}
-                      </p>
-                    )}
-                  </div>
-                </Link>
+                    <div className='p-4'>
+                      <h3 className='font-semibold text-white transition-colors group-hover:text-cyan-300'>
+                        {playlist.title}
+                      </h3>
+                      {playlist.description && (
+                        <p className='mt-1 line-clamp-2 text-sm text-white/60'>
+                          {playlist.description}
+                        </p>
+                      )}
+                    </div>
+                  </Link>
+                </AnimatedListItem>
               ))}
-            </div>
+            </ul>
             <Link
               href='/videos/playlists'
               className='group mt-5 flex w-full items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/5 py-3 text-sm text-white/50 backdrop-blur-sm transition-all hover:border-cyan-500/30 hover:text-cyan-400'
@@ -130,10 +135,10 @@ export default function VideosPage() {
           <section>
             <h2 className='mb-6 text-2xl font-bold text-white'>Videos</h2>
             <ul className='grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3'>
-              {standalone.map((video) => (
-                <li key={video.id}>
+              {standalone.map((video, i) => (
+                <AnimatedListItem key={video.id} index={i}>
                   <VideoCard video={video} />
-                </li>
+                </AnimatedListItem>
               ))}
             </ul>
           </section>

@@ -5,6 +5,7 @@ import { ListVideo } from 'lucide-react';
 
 import { Footer } from '@/components/layout';
 import { Badge } from '@/components/ui';
+import { AnimatedListItem } from '@/components/common';
 import {
   videos,
   getPlaylistUrl,
@@ -23,7 +24,7 @@ function PlaylistCard({ playlist }: { playlist: PlaylistEntry }) {
       href={getPlaylistUrl(playlist.id)}
       target='_blank'
       rel='noopener noreferrer'
-      className='group block overflow-hidden rounded-xl border border-white/10 bg-black/40 backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-cyan-500/30 hover:shadow-lg hover:shadow-cyan-500/10'
+      className='group flex h-full flex-col overflow-hidden rounded-xl border border-white/10 bg-black/40 backdrop-blur-md transition-all duration-300 hover:border-cyan-500/30 hover:shadow-lg hover:shadow-cyan-500/10'
     >
       <div className='relative h-56 shrink-0 overflow-hidden'>
         <Image
@@ -39,17 +40,17 @@ function PlaylistCard({ playlist }: { playlist: PlaylistEntry }) {
           {playlist.videos.length} videos
         </div>
       </div>
-      <div className='p-5'>
+      <div className='flex flex-1 flex-col p-5'>
         <h3 className='mb-2 text-base font-semibold text-white transition-colors group-hover:text-cyan-300'>
           {playlist.title}
         </h3>
         {playlist.description && (
-          <p className='mb-3 line-clamp-2 text-sm text-white/60'>
+          <p className='line-clamp-2 flex-1 text-sm text-white/60'>
             {playlist.description}
           </p>
         )}
         {playlist.tags && playlist.tags.length > 0 && (
-          <div className='mt-3 flex flex-wrap gap-1.5'>
+          <div className='mt-auto flex flex-wrap gap-1.5'>
             {playlist.tags.map((tag) => (
               <Badge
                 key={tag}
@@ -89,10 +90,14 @@ export default function PlaylistsPage() {
         </div>
 
         <ul className='grid grid-cols-1 gap-6 sm:grid-cols-2'>
-          {playlists.map((playlist) => (
-            <li key={`${playlist.id}-${playlist.title}`}>
+          {playlists.map((playlist, i) => (
+            <AnimatedListItem
+              key={`${playlist.id}-${playlist.title}`}
+              index={i}
+              className='h-full'
+            >
               <PlaylistCard playlist={playlist} />
-            </li>
+            </AnimatedListItem>
           ))}
         </ul>
       </main>
