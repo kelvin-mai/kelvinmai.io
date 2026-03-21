@@ -18,6 +18,7 @@ const config: NextConfig = {
       { hostname: 'cdn-images-1.medium.com' },
       { hostname: 'media2.dev.to' },
       { hostname: 'dev-to-uploads.s3.amazonaws.com' },
+      { hostname: 'pttjrd5bylwkefgv.public.blob.vercel-storage.com' },
     ],
   },
   async redirects() {

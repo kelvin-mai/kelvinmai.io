@@ -45,3 +45,6 @@ e2e.log
 
 # fumadocs
 .source/
+
+# local blob staging (tracked via blob-manifest.json instead)
+/public/assets/

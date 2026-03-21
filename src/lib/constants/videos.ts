@@ -317,7 +317,8 @@ export const videos: VideoData = {
       title: 'Go Anon Board',
       description:
         'Build an anonymous message board REST API from scratch in Go using GORM and PostgreSQL.',
-      image: '/images/playlists/go-anon-board.jpg',
+      image:
+        'https://pttjrd5bylwkefgv.public.blob.vercel-storage.com/playlists/go-anon-board.jpg',
       tags: ['golang', 'postgres'],
       videos: [
         {
@@ -347,7 +348,8 @@ export const videos: VideoData = {
       title: 'NextJS Jobs Listings',
       description:
         'Build a job listings application with Next.js featuring a card UI, search filters, and pagination.',
-      image: '/images/playlists/next-jobs.png',
+      image:
+        'https://pttjrd5bylwkefgv.public.blob.vercel-storage.com/playlists/next-jobs.png',
       tags: ['NextJS', 'react', 'typescript'],
       videos: [
         {
@@ -382,7 +384,8 @@ export const videos: VideoData = {
       title: 'Nx Space Explorer',
       description:
         'Build a full-stack space launch explorer using an Nx monorepo with NestJS, Next.js, GraphQL codegen, and Docker.',
-      image: '/images/playlists/nx-space-explorer.png',
+      image:
+        'https://pttjrd5bylwkefgv.public.blob.vercel-storage.com/playlists/nx-space-explorer.png',
       tags: [
         'nestjs',
         'typescript',
@@ -441,7 +444,8 @@ export const videos: VideoData = {
       title: 'Clojure Auth',
       description:
         'Implement JWT authentication in a Clojure web server using Reitit, Ring, HoneySQL, and Buddy.',
-      image: '/images/playlists/clj-auth.jpg',
+      image:
+        'https://pttjrd5bylwkefgv.public.blob.vercel-storage.com/playlists/clj-auth.jpg',
       tags: ['clojure'],
       videos: [
         {
@@ -466,7 +470,8 @@ export const videos: VideoData = {
       title: 'Full Stack Clojure Contact Book',
       description:
         'Build a full-stack contact book with a Clojure/Reitit backend and a ClojureScript/React frontend.',
-      image: '/images/playlists/fullstack-clj.png',
+      image:
+        'https://pttjrd5bylwkefgv.public.blob.vercel-storage.com/playlists/fullstack-clj.png',
       tags: ['clojure'],
       videos: [
         {
@@ -511,7 +516,8 @@ export const videos: VideoData = {
       title: 'Angular Countries',
       description:
         'In this video series, take on the frontend mentor challenge to do the countries REST api application with Angular.',
-      image: '/images/playlists/angular-countries.png',
+      image:
+        'https://pttjrd5bylwkefgv.public.blob.vercel-storage.com/playlists/angular-countries.png',
       tags: ['Angular', 'RxJS'],
       videos: [
         {
@@ -541,7 +547,8 @@ export const videos: VideoData = {
       title: 'React Conduit',
       description:
         'Learn a different React stack, this frontend framework uses Overmind for state management and @reach/router for navigation.',
-      image: '/images/playlists/react-conduit.jpg',
+      image:
+        'https://pttjrd5bylwkefgv.public.blob.vercel-storage.com/playlists/react-conduit.jpg',
       tags: ['React', 'Overmind', 'TypeScript'],
       videos: [
         {
@@ -611,7 +618,8 @@ export const videos: VideoData = {
       title: 'NestJS Blog API',
       description:
         'Learn to create a medium clone Rest API with NestJS and PostgreSQL with the help of TypeORM.',
-      image: '/images/playlists/nestjs-blog-api.jpg',
+      image:
+        'https://pttjrd5bylwkefgv.public.blob.vercel-storage.com/playlists/nestjs-blog-api.jpg',
       tags: ['NestJS', 'PostgreSQL', 'TypeScript'],
       videos: [
         {
@@ -691,7 +699,8 @@ export const videos: VideoData = {
       title: 'Redux Tip Calculator',
       description:
         'Learn how to integrate the Redux state management library with a Typescript React project.',
-      image: '/images/playlists/redux-tip.jpg',
+      image:
+        'https://pttjrd5bylwkefgv.public.blob.vercel-storage.com/playlists/redux-tip.jpg',
       tags: ['React', 'Redux', 'TypeScript'],
       videos: [
         {
@@ -736,7 +745,8 @@ export const videos: VideoData = {
       title: 'Scala Mongo API',
       description:
         'Learn how to create a simple Rest API with the Play framework in Scala and use MongoDB as the data layer.',
-      image: '/images/playlists/scala-mongo.jpg',
+      image:
+        'https://pttjrd5bylwkefgv.public.blob.vercel-storage.com/playlists/scala-mongo.jpg',
       tags: ['Scala', 'MongoDB'],
       videos: [
         {
@@ -761,7 +771,8 @@ export const videos: VideoData = {
       title: 'NestJS ECommerce',
       description:
         'Learn how to create an e-commerce server architecture Rest API in NestJS with MongoDB as the database.',
-      image: '/images/playlists/nestjs-commerce.jpg',
+      image:
+        'https://pttjrd5bylwkefgv.public.blob.vercel-storage.com/playlists/nestjs-commerce.jpg',
       tags: ['MongoDB', 'NestJS'],
       videos: [
         {
@@ -836,7 +847,8 @@ export const videos: VideoData = {
       title: 'Ideas App - Angular NgRx',
       description:
         'Learn Angular and NgRx state management by creating the front end of the Ideas app.',
-      image: '/images/playlists/angular-ideas.jpg',
+      image:
+        'https://pttjrd5bylwkefgv.public.blob.vercel-storage.com/playlists/angular-ideas.jpg',
       tags: ['Angular', 'NgRx', 'RxJS'],
       videos: [
         {
@@ -910,7 +922,8 @@ export const videos: VideoData = {
       id: 'PLBeQxJQNprbiJm55q7nTAfhMmzIC8MWxc',
       title: 'Ideas App - NestJS GraphQL',
       description: 'Add a GraphQL layer to the Ideas app.',
-      image: '/images/playlists/nestjs-ideas-graphql.jpg',
+      image:
+        'https://pttjrd5bylwkefgv.public.blob.vercel-storage.com/playlists/nestjs-ideas-graphql.jpg',
       tags: ['NestJS', 'TypeScript', 'GraphQL'],
       videos: [
         {
@@ -945,7 +958,8 @@ export const videos: VideoData = {
       title: 'Ideas App - NestJS API',
       description:
         'Learn NestJS by creating a Rest API with PostgreSQL as the database and TypeORM.',
-      image: '/images/playlists/nestjs-ideas.jpg',
+      image:
+        'https://pttjrd5bylwkefgv.public.blob.vercel-storage.com/playlists/nestjs-ideas.jpg',
       tags: ['NestJS', 'PostgreSQL', 'TypeScript'],
       videos: [
         {
@@ -1014,7 +1028,8 @@ export const videos: VideoData = {
       id: 'PLBeQxJQNprbgZgivXyBX-djYAhMJGE93B',
       title: 'Angular Simon Game',
       description: 'Learn Angular by creating a simon says game.',
-      image: '/images/playlists/angular-simon.jpg',
+      image:
+        'https://pttjrd5bylwkefgv.public.blob.vercel-storage.com/playlists/angular-simon.jpg',
       tags: ['Angular'],
       videos: [
         {
@@ -1054,7 +1069,8 @@ export const videos: VideoData = {
       title: 'TypeScript Groceries API',
       description:
         'Learn Typescript by creating a node.js express server that manages groceries lists.',
-      image: '/images/playlists/ts-groceries.jpg',
+      image:
+        'https://pttjrd5bylwkefgv.public.blob.vercel-storage.com/playlists/ts-groceries.jpg',
       tags: ['TypeScript', 'PostgreSQL'],
       videos: [
         {
@@ -1089,7 +1105,8 @@ export const videos: VideoData = {
       title: 'Full Stack MERN Voting App',
       description:
         'Learn all the parts of the MERN stack as well as Redux by creating a voting application.',
-      image: '/images/playlists/mern-vote.jpg',
+      image:
+        'https://pttjrd5bylwkefgv.public.blob.vercel-storage.com/playlists/mern-vote.jpg',
       tags: ['React', 'MongoDB', 'Redux', 'JavaScript'],
       videos: [
         {

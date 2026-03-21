@@ -67,7 +67,8 @@ export const resume = {
         'redis',
       ],
       url: 'https://www.gravie.com/',
-      image: 'gravie.jpg',
+      image:
+        'https://pttjrd5bylwkefgv.public.blob.vercel-storage.com/jobs/gravie.jpg',
       position: 'Senior Software Engineer',
       startDate: '2024-07-15T08:00:00.000Z',
       endDate: null,
@@ -87,7 +88,8 @@ export const resume = {
       description: null,
       skills: ['typescript', 'react', 'web3', 'nextjs'],
       url: 'https://www.yieldmos.com/',
-      image: 'yieldmos.png',
+      image:
+        'https://pttjrd5bylwkefgv.public.blob.vercel-storage.com/jobs/yieldmos.png',
       position: 'Software Consultant',
       startDate: '2023-08-16T08:00:00.000Z',
       endDate: '2024-02-21T08:00:00.000Z',
@@ -107,7 +109,8 @@ export const resume = {
       description: null,
       skills: ['clojure', 'react', 'postgresql', 'java', 'docker', 'node.js'],
       url: 'https://www.luminare.io/',
-      image: 'luminare.png',
+      image:
+        'https://pttjrd5bylwkefgv.public.blob.vercel-storage.com/jobs/luminare.png',
       position: 'Software Engineer',
       startDate: '2021-02-08T08:00:00.000Z',
       endDate: '2023-01-20T08:00:00.000Z',
@@ -137,7 +140,8 @@ export const resume = {
         'spring boot',
       ],
       url: 'https://www.bonotel.com/',
-      image: 'bonotel.png',
+      image:
+        'https://pttjrd5bylwkefgv.public.blob.vercel-storage.com/jobs/bonotel.png',
       position: 'Software Developer',
       startDate: '2020-03-01T08:00:00.000Z',
       endDate: '2021-02-04T08:00:00.000Z',
@@ -176,7 +180,8 @@ export const resume = {
       description: null,
       skills: ['react', 'redux', 'docker', 'node.js', 'react native'],
       url: 'https://www.vegas.com/',
-      image: 'vegas.png',
+      image:
+        'https://pttjrd5bylwkefgv.public.blob.vercel-storage.com/jobs/vegas.png',
       position: 'Front End Developer',
       startDate: '2019-07-01T07:00:00.000Z',
       endDate: '2020-03-01T08:00:00.000Z',
@@ -205,7 +210,8 @@ export const resume = {
         'dotnet',
       ],
       url: null,
-      image: 'motivis.png',
+      image:
+        'https://pttjrd5bylwkefgv.public.blob.vercel-storage.com/jobs/motivis.png',
       position: 'Software Developer',
       startDate: '2018-04-01T07:00:00.000Z',
       endDate: '2019-06-01T07:00:00.000Z',

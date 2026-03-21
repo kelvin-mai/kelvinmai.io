@@ -20,7 +20,7 @@ export const ExperienceTrigger: React.FC<ExperienceProps> = ({ work }) => {
     <>
       <div className='flex'>
         <Image
-          src={`/images/jobs/${work.image}`}
+          src={work.image}
           className='mr-4 w-12'
           height={48}
           width={48}
