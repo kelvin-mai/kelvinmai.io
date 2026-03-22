@@ -1,53 +1,50 @@
 'use server';
 
-import { transporter } from '@/lib/email';
-import { getBaseUrl } from '@/lib/utils';
+import { render } from '@react-email/components';
 
-const htmlTemplate = ({
-  name,
-  email,
-  message,
-}: {
-  name: string;
-  email: string;
-  message: string;
-}) => `
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <title>New Contact Form Submission</title>
-</head>
-<body>
-  <h1>New Contact Form Submission from ${getBaseUrl()}</h1>
-  <p><strong>Name:</strong> ${name}</p>
-  <p><strong>Email:</strong> <a href="mailto:${email}">${email}</a></p>
-  <p>${message}</p>
-  <hr>
-  <p><small>This email was sent from the contact form on <a href="${getBaseUrl()}">${getBaseUrl()}</a>.</small></p>
-</body>
-</html>
+import { ContactFormEmail } from '@/components/emails/contact-form-email';
+import { resend } from '@/lib/email';
 
-`;
+type EmailState = { submitted: boolean; error?: string };
 
 export const sendEmailAction = async (
-  _: { submitted: boolean },
+  _: EmailState,
   formData: FormData,
-) => {
+): Promise<EmailState> => {
+  const honeypot = formData.get('website') as string;
+  if (honeypot) return { submitted: true };
+
+  const email = (formData.get('email') as string)?.trim();
+  const name = (formData.get('name') as string)?.trim();
+  const message = (formData.get('message') as string)?.trim();
+
+  if (!email || !name || !message)
+    return { submitted: false, error: 'All fields are required.' };
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))
+    return { submitted: false, error: 'Invalid email address.' };
+  if (name.length > 100)
+    return { submitted: false, error: 'Name is too long.' };
+  if (message.length > 2000)
+    return { submitted: false, error: 'Message is too long (max 2000 chars).' };
+  if ((message.match(/https?:\/\//g) ?? []).length > 2)
+    return { submitted: false, error: 'Message contains too many links.' };
+
   try {
-    await transporter.verify();
-    const res = await transporter.sendMail({
-      to: 'me@kelvinmai.io',
-      subject: '[kelvinmai.io] New Contact Form Submission',
-      html: htmlTemplate({
-        email: String(formData.get('email')),
-        name: String(formData.get('name')),
-        message: String(formData.get('message')),
-      }),
+    const html = await render(ContactFormEmail({ name, email, message }));
+    const { error } = await resend.emails.send({
+      from: 'Contact Form <onboarding@resend.dev>',
+      to: 'kelvin.mai002@gmail.com',
+      replyTo: email,
+      subject: `[kelvinmai.io] New message from ${name}`,
+      html,
     });
-    console.log(res);
+    if (error) throw error;
   } catch (e) {
     console.error(e);
+    return {
+      submitted: false,
+      error: 'Failed to send message. Please try again.',
+    };
   }
   return { submitted: true };
 };

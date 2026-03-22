@@ -10,6 +10,7 @@ import { sendEmailAction } from '@/actions/email';
 export const ContactForm = () => {
   const [state, action] = React.useActionState(sendEmailAction, {
     submitted: false,
+    error: undefined,
   });
   return (
     <div className='grid w-full overflow-hidden rounded-lg bg-gray-900 text-white md:grid-cols-2'>
@@ -50,6 +51,13 @@ export const ContactForm = () => {
             action={action}
           >
             <h2 className='text-center text-3xl font-bold'>Contact Form</h2>
+            <input
+              name='website'
+              data-honeypot='true'
+              tabIndex={-1}
+              autoComplete='off'
+              className='pointer-events-none absolute h-0 w-0 opacity-0'
+            />
             <div className='space-y-2'>
               <Label htmlFor='email'>Email</Label>
               <Input
@@ -78,6 +86,9 @@ export const ContactForm = () => {
                 className='border border-slate-200'
               />
             </div>
+            {state.error && (
+              <p className='text-sm text-red-600'>{state.error}</p>
+            )}
             <Button variant='home' className='text-slate-50'>
               <Mail className='size-4' />
               Send Message
