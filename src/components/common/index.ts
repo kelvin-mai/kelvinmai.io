@@ -1,4 +1,5 @@
 export * from './animated-list-item';
+export * from './pagination';
 export * from './buy-me-coffee-banner';
 export * from './copy-button';
 export * from './external-link';

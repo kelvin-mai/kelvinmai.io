@@ -37,12 +37,12 @@ export const videos: VideoData = {
       id: 'iy6AJzlqdUw',
       title:
         'Dynamically Create a Shacn Registry and Documentation with Next.js and Fumadocs',
-      publishedAt: '2025-01-01T00:00:00Z',
+      publishedAt: '2025-03-21T00:00:00Z',
       tags: ['typsescript', 'react', 'nextjs'],
     },
     {
       id: '_bmuH5XONww',
-      title: 'Use Shadcn Style Recat Components in ClojureScript',
+      title: 'Use Shadcn Style React Components in ClojureScript',
       publishedAt: '2025-04-22T00:00:00Z',
       tags: ['clojure', 'react', 'ClojureScript'],
     },
@@ -62,6 +62,12 @@ export const videos: VideoData = {
       id: 'ZkJcVCW9GqY',
       title: 'Clojure Crash Course',
       publishedAt: '2021-08-17T15:00:15Z',
+      tags: ['clojure'],
+    },
+    {
+      id: 'eXdOKmN98FA',
+      title: 'Destructuring in Clojure',
+      publishedAt: '2021-11-10T15:00:15Z',
       tags: ['clojure'],
     },
     {

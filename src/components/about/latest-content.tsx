@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { ArrowRight } from 'lucide-react';
 
 import {
   videos,
@@ -125,6 +126,13 @@ export function LatestContent() {
           </AnimatedHomeCard>
         </a>
       )}
+      <Link
+        href='/content'
+        className='group col-span-full flex items-center justify-center gap-2 rounded-lg border border-white/10 bg-black/40 py-3 text-sm text-white/60 backdrop-blur-md transition-all hover:border-cyan-500/30 hover:text-white'
+      >
+        See all content
+        <ArrowRight className='size-3.5 transition-transform group-hover:translate-x-0.5' />
+      </Link>
     </section>
   );
 }
