@@ -1,6 +1,6 @@
 ---
 title: Building a REST API with Kotlin and Ktor
-description: A step-by-step guide to setting up a REST API in Kotlin using Ktor, covering project structure, raw JDBC with javax.sql.DataSource, kotlinx.serialization, SLF4J logging, and JWT authentication.
+description: A walkthrough of Kotlin and Ktor patterns for developers familiar with MVC frameworks like Spring Boot or ASP.NET Core, covering data classes, companion objects, the routing DSL, HikariCP, and plugin-based configuration.
 date: 2026-02-09
 tags:
   - kotlin
@@ -9,342 +9,285 @@ tags:
   - rest-api
 ---
 
-I recently had to get up to speed with Kotlin and Ktor at work to contribute to a microservice. Coming from a TypeScript/Node background, I found the ecosystem surprisingly pleasant once I understood the conventions — but the initial setup has a lot of moving parts. Here's the step-by-step guide I wish I'd had.
+I recently had to get up to speed with Kotlin and Ktor at work to contribute to a microservice. Coming from a Java Spring Boot and C# ASP.NET Core background, most of it felt immediately familiar — controllers, repositories, dependency injection, middleware. The MVC mental model transfers cleanly. But there were a few Kotlin-specific patterns that genuinely surprised me, and Ktor's plugin architecture is quite different from Spring's annotation-driven approach. Here's what I wish I'd had when I started.
 
 ## Project Structure
 
-Ktor follows a fairly standard JVM project layout. Everything lives under `src/main/kotlin/com/<your-package>/`, and I split it into four main directories:
+The layered architecture is the same as Spring Boot — same layers, different idioms:
 
 ```
 src/main/kotlin/com/example/
-├── controllers/   # Route handlers (thin, delegate to repositories)
-├── repositories/  # Database access logic
-├── plugins/       # Ktor plugin configuration (routing, auth, serialization)
-└── entities/      # Data class definitions
+├── Application.kt       # Entry point & module wiring
+├── controllers/         # HTTP endpoint handlers
+├── repositories/        # Database access
+├── services/            # Business logic
+├── entities/            # Data class definitions
+├── enums/               # Domain enumerations
+├── database/            # HikariCP setup, DatabaseService interface
+├── plugins/             # Ktor plugins (routing, auth, DI)
+└── utils/               # Custom serializers
 ```
 
-This separation keeps the routing layer clean and makes the repository logic easy to test independently.
-
-## Defining the Entity
-
-The entity is a plain Kotlin data class annotated with _`@Serializable`_ from `kotlinx.serialization`. That's all Ktor needs to serialize it to JSON — no ORM table object required:
-
-```kotlin
-// entities/Document.kt
-import kotlinx.serialization.Serializable
-
-@Serializable
-data class Document(
-    val id: Int,
-    val title: String,
-    val content: String,
-    val createdAt: Long,
-)
-
-@Serializable
-data class CreateDocumentRequest(
-    val title: String,
-    val content: String,
-)
-```
-
-Keeping the request body as a separate class avoids leaking internal fields (like _`id`_ or _`createdAt`_) into the API contract.
+If you've worked in Spring Boot or ASP.NET Core, this should feel like home.
 
 ## Data Classes and Companion Objects
 
-Data classes were honestly the thing that surprised me most coming from TypeScript. In TypeScript, a plain object type is just a shape — it doesn't give you anything at runtime. Kotlin data classes are the opposite: the compiler auto-generates _`equals()`_, _`hashCode()`_, _`toString()`_, and _`copy()`_ for you based on the constructor properties. The _`copy()`_ method in particular is incredibly useful — it lets you create a modified clone without mutating the original, which is exactly the kind of thing I used to do manually with spread operators.
-
-```kotlin
-val original = Document(id = 1, title = "Hello", content = "World", createdAt = 1234567890L)
-val updated = original.copy(title = "Hello, Updated")
-```
-
-The other thing I kept reaching for was a way to attach static-like utility methods to the class — the Kotlin equivalent of a static factory. That's where companion objects come in. A companion object lives inside the class body and is shared across all instances, so you can call its methods directly on the class name:
-
-```kotlin
-companion object {
-    fun from(doc: Document): PublicDocument = PublicDocument(...)
-}
-```
-
-This is particularly handy for separating internal DB models from what you actually surface to the API client. My _`Document`_ entity contains everything from the database row, but I don't want to expose _`createdAt`_ as a raw epoch millisecond or leak internal fields. So I introduced a _`PublicDocument`_ with a companion object factory:
+Data classes are the first thing that stood out. In Spring Boot you'd typically reach for Lombok to generate _`equals()`_, _`hashCode()`_, _`toString()`_, and a _`copy()`_-style builder. In Kotlin, that's all part of the language — declare a _`data class`_ and you get all of it for free. The _`@Serializable`_ annotation from `kotlinx.serialization` is all Ktor needs to convert it to JSON — no Jackson config, no _`ObjectMapper`_ bean.
 
 ```kotlin
 // entities/Document.kt
-import kotlinx.serialization.Serializable
-
-// Internal DB model — not returned directly to clients
-data class Document(
-    val id: Int,
-    val title: String,
-    val content: String,
-    val createdAt: Long,
-)
-
-// Public API model — safe to serialize and return
 @Serializable
-data class PublicDocument(
-    val id: Int,
+data class Document(
+    val id: String,
     val title: String,
-    val content: String,
-) {
+    val category: Category,
+    val owner: String,
+    @Serializable(with = InstantAsStringSerializer::class)
+    val createdAt: Instant,
+    val metadata: JsonObject = JsonObject(emptyMap()),
+)
+```
+
+The _`@Serializable(with = ...)`_ lets you attach a custom serializer inline for types that don't serialize cleanly by default, like _`Instant`_.
+
+The thing that was genuinely new to me was **companion objects**. In Java or C#, static factory methods live directly on the class. Kotlin doesn't have statics — instead, you define a `companion object` inside the class body, and its members are accessible directly on the class name:
+
+```kotlin
+data class Document(...) {
     companion object {
-        fun from(doc: Document): PublicDocument =
-            PublicDocument(
-                id = doc.id,
-                title = doc.title,
-                content = doc.content,
+        fun from(row: DocumentRow): Document =
+            Document(
+                id = row.externalId,
+                title = row.title,
+                category = Category.fromString(row.categoryName),
+                owner = row.ownerExternalId,
+                createdAt = row.createdOn,
             )
     }
 }
-
-@Serializable
-data class CreateDocumentRequest(
-    val title: String,
-    val content: String,
-)
 ```
 
-Only _`PublicDocument`_ gets the _`@Serializable`_ annotation — _`Document`_ is an internal type that never leaves the repository layer. The controller then calls _`PublicDocument.from(doc)`_ before responding:
+You call it as _`Document.from(row)`_ — the same ergonomics as a static factory in Java, just without the `static` keyword. Once I understood that companion objects are essentially the Kotlin equivalent of a class-level namespace, they started showing up everywhere.
+
+## Custom Serializers
+
+When a type doesn't serialize the way you want, you implement a `KSerializer`. Here's one that formats `Instant` as a readable date string rather than an epoch number:
 
 ```kotlin
-suspend fun getAll(call: ApplicationCall) {
-    call.respond(repo.findAll().map(PublicDocument::from))
+// utils/InstantAsStringSerializer.kt
+object InstantAsStringSerializer : KSerializer<Instant> {
+    override val descriptor = PrimitiveSerialDescriptor("Instant", PrimitiveKind.STRING)
+    private val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd").withZone(ZoneId.systemDefault())
+
+    override fun serialize(encoder: Encoder, value: Instant) {
+        encoder.encodeString(formatter.format(value))
+    }
+
+    override fun deserialize(decoder: Decoder): Instant =
+        Instant.parse(decoder.decodeString())
 }
 ```
 
-I find this pattern much cleaner than trying to annotate fields with `@Transient` or `@JsonIgnore` to hide things — you just never put the fields in the public type to begin with.
+The `object` keyword means this is a singleton — the Kotlin equivalent of a static class with no constructor. You reference it with `@Serializable(with = InstantAsStringSerializer::class)` on any field that needs it.
+
+## Enums with Lazy Properties
+
+This was another pattern I hadn't seen before. In C# or Java you'd typically map enum variants to config values in a switch statement somewhere. Kotlin lets you attach properties directly to enum variants using `by lazy`:
+
+```kotlin
+// enums/Category.kt
+@Serializable
+enum class Category {
+    Reports,
+    Invoices,
+    Statements,
+    Unknown,
+    ;
+
+    val storageBucket: String by lazy {
+        when (this) {
+            Reports -> EnvConfig.getString("storage.reports.bucket")
+            Invoices -> EnvConfig.getString("storage.invoices.bucket")
+            Statements -> EnvConfig.getString("storage.statements.bucket")
+            Unknown -> ""
+        }
+    }
+
+    val pathPrefix: String by lazy {
+        when (this) {
+            Reports -> EnvConfig.getString("storage.reports.prefix")
+            Invoices -> EnvConfig.getString("storage.invoices.prefix")
+            Statements -> EnvConfig.getString("storage.statements.prefix")
+            Unknown -> ""
+        }
+    }
+
+    companion object {
+        fun fromString(value: String?): Category = when (value?.lowercase()) {
+            "reports" -> Reports
+            "invoices" -> Invoices
+            "statements" -> Statements
+            else -> Unknown
+        }
+    }
+}
+```
+
+The `by lazy` means the config lookup only runs once per enum variant, the first time that property is accessed. It's a memoized computed property. You can then call _`Category.Invoices.storageBucket`_ anywhere without needing a lookup table or an injected service.
+
+## The Database Layer
+
+Instead of a raw `DataSource`, I use **HikariCP** for connection pooling and wrap it behind a `DatabaseService` interface — similar to Spring's `JdbcTemplate` or C#'s `IDbConnection` abstraction:
+
+```kotlin
+// database/DatabaseService.kt
+interface DatabaseService {
+    fun getConnection(): Connection
+    fun <T> executePreparedQuery(query: String, vararg parameters: Any?, resultHandler: (ResultSet) -> T): T
+    fun executePreparedUpdate(query: String, vararg parameters: Any?): Int
+}
+
+class HikariDatabaseService(config: DatabaseConfig) : DatabaseService {
+    private val dataSource: HikariDataSource
+
+    init {
+        val hikariConfig = HikariConfig().apply {
+            driverClassName = "com.mysql.cj.jdbc.Driver"
+            jdbcUrl = "jdbc:mysql://${config.host}:${config.port}/${config.name}"
+            username = config.username
+            password = config.password
+            maximumPoolSize = 10
+            minimumIdle = 2
+            addDataSourceProperty("cachePrepStmts", "true")
+            addDataSourceProperty("rewriteBatchedStatements", "true")
+        }
+        dataSource = HikariDataSource(hikariConfig)
+    }
+
+    override fun <T> executePreparedQuery(
+        query: String,
+        vararg parameters: Any?,
+        resultHandler: (ResultSet) -> T,
+    ): T = getConnection().use { conn ->
+        conn.prepareStatement(query).use { stmt ->
+            parameters.forEachIndexed { i, param -> stmt.setObject(i + 1, param) }
+            stmt.executeQuery().use(resultHandler)
+        }
+    }
+}
+```
+
+The `.use { }` idiom is Kotlin's equivalent of `try-with-resources` in Java or `using` in C#. It calls `close()` on the resource when the block exits, even if an exception is thrown.
 
 ## The Repository
 
-The repository holds all the database logic. Instead of an ORM, I use raw JDBC through a _`javax.sql.DataSource`_ — which means plain SQL and standard _`java.sql.Connection`_ objects. I also add an SLF4J logger here so I can trace slow queries without polluting the controller:
+Repositories get their `DatabaseService` via **Kodein**, a lightweight DI container. The `DIAware` interface is how classes declare their dependency on the container — similar to Spring's _`@Autowired`_ but explicit:
 
 ```kotlin
-// repositories/DocumentRepository.kt
-import org.slf4j.LoggerFactory
-import java.sql.Connection
-import javax.sql.DataSource
+// repositories/DocumentsRepository.kt
+class DocumentsRepository(override val di: DI) : DIAware {
+    private val databaseService: DatabaseService by di.instance()
 
-class DocumentRepository(private val dataSource: DataSource) {
-    private val logger = LoggerFactory.getLogger(DocumentRepository::class.java)
+    fun getDocumentsForOwner(ownerIds: List<String>): List<Document> {
+        if (ownerIds.isEmpty()) return emptyList()
 
-    fun findAll(): List<Document> {
-        logger.debug("Fetching all documents")
-        return dataSource.connection.use { conn: Connection ->
-            conn.prepareStatement("SELECT id, title, content, created_at FROM documents")
-                .executeQuery()
-                .let { rs ->
-                    val result = mutableListOf<Document>()
-                    while (rs.next()) {
-                        result.add(
-                            Document(
-                                id = rs.getInt("id"),
-                                title = rs.getString("title"),
-                                content = rs.getString("content"),
-                                createdAt = rs.getLong("created_at"),
-                            )
-                        )
-                    }
-                    result
-                }
-        }
-    }
+        val placeholders = ownerIds.joinToString(",") { "?" }
+        val query = """
+            SELECT d.external_id, d.title, c.name AS category_name,
+                   d.owner_external_id, d.created_on
+            FROM documents d
+            LEFT JOIN categories c ON c.id = d.category_id
+            WHERE d.owner_external_id IN ($placeholders)
+            ORDER BY d.created_on DESC
+        """.trimIndent()
 
-    fun findById(id: Int): Document? {
-        logger.debug("Fetching document id={}", id)
-        return dataSource.connection.use { conn: Connection ->
-            conn.prepareStatement("SELECT id, title, content, created_at FROM documents WHERE id = ?")
-                .apply { setInt(1, id) }
-                .executeQuery()
-                .let { rs ->
-                    if (rs.next()) Document(
-                        id = rs.getInt("id"),
+        return databaseService.executePreparedQuery(query, *ownerIds.toTypedArray()) { rs ->
+            buildList {
+                while (rs.next()) {
+                    add(Document.from(DocumentRow(
+                        externalId = rs.getString("external_id"),
                         title = rs.getString("title"),
-                        content = rs.getString("content"),
-                        createdAt = rs.getLong("created_at"),
-                    ) else null
+                        categoryName = rs.getString("category_name"),
+                        ownerExternalId = rs.getString("owner_external_id"),
+                        createdOn = rs.getTimestamp("created_on").toInstant(),
+                    )))
                 }
-        }
-    }
-
-    fun create(title: String, content: String): Document {
-        logger.info("Creating document title={}", title)
-        val createdAt = System.currentTimeMillis()
-        return dataSource.connection.use { conn: Connection ->
-            val stmt = conn.prepareStatement(
-                "INSERT INTO documents (title, content, created_at) VALUES (?, ?, ?)",
-                java.sql.Statement.RETURN_GENERATED_KEYS,
-            )
-            stmt.setString(1, title)
-            stmt.setString(2, content)
-            stmt.setLong(3, createdAt)
-            stmt.executeUpdate()
-            val keys = stmt.generatedKeys
-            keys.next()
-            Document(id = keys.getInt(1), title = title, content = content, createdAt = createdAt)
-        }
-    }
-}
-```
-
-_`dataSource.connection.use { ... }`_ ensures the connection is always returned to the pool after the block completes, even if an exception is thrown.
-
-## The Controller
-
-Controllers receive Ktor's _`ApplicationCall`_ and delegate to the repository. I add a logger here too for request-level visibility:
-
-```kotlin
-// controllers/DocumentController.kt
-import io.ktor.http.*
-import io.ktor.server.application.*
-import io.ktor.server.request.*
-import io.ktor.server.response.*
-import org.slf4j.LoggerFactory
-
-class DocumentController(private val repo: DocumentRepository) {
-    private val logger = LoggerFactory.getLogger(DocumentController::class.java)
-
-    suspend fun getAll(call: ApplicationCall) {
-        logger.info("GET /documents")
-        call.respond(repo.findAll())
-    }
-
-    suspend fun getById(call: ApplicationCall) {
-        val id = call.parameters["id"]?.toIntOrNull()
-            ?: return call.respond(HttpStatusCode.BadRequest, "Invalid ID")
-        logger.info("GET /documents/{}", id)
-        val doc = repo.findById(id)
-            ?: return call.respond(HttpStatusCode.NotFound, "Document not found")
-        call.respond(doc)
-    }
-
-    suspend fun create(call: ApplicationCall) {
-        val body = call.receive<CreateDocumentRequest>()
-        logger.info("POST /documents title={}", body.title)
-        val doc = repo.create(body.title, body.content)
-        call.respond(HttpStatusCode.Created, doc)
-    }
-}
-```
-
-## Wiring It Together: The Routing Plugin
-
-I create a _`configureApplicationRouting`_ function that installs content negotiation, Swagger UI, and JWT bearer authentication, then registers the document routes under `/api/v1/documents`. Environment variables are read via `de.sharpmind.ktor.EnvConfig`, which makes `.env` file values and system environment variables available through Ktor's config API:
-
-```kotlin
-// plugins/Routing.kt
-import de.sharpmind.ktor.EnvConfig
-import io.ktor.serialization.kotlinx.json.*
-import io.ktor.server.application.*
-import io.ktor.server.auth.*
-import io.ktor.server.auth.jwt.*
-import io.ktor.server.plugins.contentnegotiation.*
-import io.ktor.server.plugins.swagger.*
-import io.ktor.server.routing.*
-import com.auth0.jwt.JWT
-import com.auth0.jwt.algorithms.Algorithm
-
-fun Application.configureApplicationRouting(dataSource: javax.sql.DataSource) {
-    val jwtSecret = EnvConfig.getString("JWT_SECRET")
-    val jwtIssuer = EnvConfig.getString("JWT_ISSUER")
-
-    // Content negotiation — serialize @Serializable data classes to JSON
-    install(ContentNegotiation) {
-        json()
-    }
-
-    // JWT bearer authentication
-    install(Authentication) {
-        jwt("auth-jwt") {
-            realm = "documents-api"
-            verifier(
-                JWT.require(Algorithm.HMAC256(jwtSecret))
-                    .withIssuer(jwtIssuer)
-                    .build()
-            )
-            validate { credential ->
-                if (credential.payload.subject != null) JWTPrincipal(credential.payload) else null
-            }
-        }
-    }
-
-    val repo = DocumentRepository(dataSource)
-    val controller = DocumentController(repo)
-
-    routing {
-        swaggerUI(path = "swagger")
-
-        authenticate("auth-jwt") {
-            route("/api/v1/documents") {
-                get { controller.getAll(call) }
-                get("/{id}") { controller.getById(call) }
-                post { controller.create(call) }
             }
         }
     }
 }
 ```
 
-## Connecting to MySQL
+The _`*ownerIds.toTypedArray()`_ is Kotlin's spread operator — it unpacks a list into varargs, the equivalent of passing `params.toArray()` in Java before calling a varargs method.
 
-The database plugin sets up a _`javax.sql.DataSource`_ using MySQL's built-in _`MysqlDataSource`_ and reads connection details from environment variables via `EnvConfig`:
+## Routing: The Ktor DSL
+
+This is where Ktor diverges most from Spring Boot. There are no annotations — routing is defined in code using a builder DSL:
 
 ```kotlin
-// plugins/Database.kt
-import com.mysql.cj.jdbc.MysqlDataSource
-import de.sharpmind.ktor.EnvConfig
-import io.ktor.server.application.*
-import org.slf4j.LoggerFactory
-import javax.sql.DataSource
+// plugins/RoutingPlugin.kt
+fun configureApplicationRouting(app: Application, di: DI) {
+    app.install(ContentNegotiation) { json() }
 
-private val logger = LoggerFactory.getLogger("Database")
+    app.routing {
+        get("/ping") { call.respond("pong") }
 
-fun Application.configureDatabase(): DataSource {
-    val ds = MysqlDataSource().apply {
-        setUrl(EnvConfig.getString("DB_URL"))
-        user = EnvConfig.getString("DB_USER")
-        password = EnvConfig.getString("DB_PASSWORD")
+        route("/v1") {
+            authenticate("bearer-auth") {
+                get("/documents") {
+                    val owners = call.request.queryParameters.getAll("owner") ?: emptyList()
+                    val docs = documentsController.listForOwners(owners)
+                    call.respond(HttpStatusCode.OK, docs)
+                }
+
+                get("/documents/{category}") {
+                    val category = Category.fromString(call.parameters["category"])
+                    val owners = call.request.queryParameters.getAll("owner") ?: emptyList()
+                    val docs = documentsController.listByCategory(owners, category)
+                    call.respond(HttpStatusCode.OK, docs)
+                }
+
+                get("/document/{id}") {
+                    val id = call.parameters["id"] ?: return@get call.respond(HttpStatusCode.BadRequest)
+                    val doc = documentsController.getById(id)
+                    call.respond(
+                        if (doc != null) HttpStatusCode.OK else HttpStatusCode.NotFound,
+                        doc ?: "Not found",
+                    )
+                }
+            }
+        }
     }
-
-    // Smoke-test the connection on startup
-    ds.connection.use { conn ->
-        logger.info("Database connected: {}", conn.metaData.url)
-    }
-
-    return ds
 }
 ```
 
-_`MysqlDataSource`_ implements _`javax.sql.DataSource`_, so the rest of the codebase only ever sees the interface — swapping in a pooled DataSource (or a test double) later requires no changes to the repository or controllers.
+The `authenticate("bearer-auth") { }` block wraps any routes that require a Bearer token. It reads a lot like Express middleware nesting, except it's typed and enforced at compile time.
 
-## Tying It All Together
+## Plugin-Based Application Configuration
 
-In _`Application.kt`_, install `EnvConfig` first so it's available when the other plugins run:
+Instead of Spring's _`@Configuration`_ classes or ASP.NET's _`Startup.cs`_, Ktor uses **plugins** — installable modules that each handle a piece of the application setup. The order they're installed in is the order they run:
 
 ```kotlin
 // Application.kt
-import de.sharpmind.ktor.EnvConfig
-import io.ktor.server.application.*
-
-fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
-
 fun Application.module() {
-    install(EnvConfig)
-    val dataSource = configureDatabase()
-    configureApplicationRouting(dataSource)
+    install(SecretsPlugin)    // Load config from secrets manager
+    install(DatabasePlugin)   // Init HikariCP after secrets are available
+    install(DIPlugin)         // Register repositories and controllers
+    install(RoutingPlugin)    // Wire up routes after DI is ready
 }
 ```
 
-And the corresponding `.env` file (or system environment variables):
+When initialization ordering gets more complex — say, the database plugin needs secrets before it can connect — you can enforce it with custom Ktor events:
 
+```kotlin
+// events/ApplicationEvents.kt
+object SecretsLoaded : EventDefinition<Unit>()
+object DatabaseReady : EventDefinition<Unit>()
+object DIReady : EventDefinition<Unit>()
 ```
-DB_URL=jdbc:mysql://localhost:3306/mydb
-DB_USER=root
-DB_PASSWORD=secret
-JWT_SECRET=super-secret-key
-JWT_ISSUER=com.example
-```
+
+Each plugin raises the next event when it's done, and the next plugin listens for it before starting. You get an explicit, auditable startup sequence without the magic of Spring's `@DependsOn`.
 
 ## Takeaway
 
-The controller → repository → entity pattern maps cleanly to Ktor's plugin-based architecture. Using `javax.sql.DataSource` and raw JDBC kept the dependency list short and made the SQL explicit — which I actually preferred over an ORM for a microservice where the queries are straightforward. `EnvConfig` handled environment variable loading cleanly without needing a separate HOCON config file for secrets, and SLF4J gave me structured logging that plugs into whatever backend (Logback, Log4j2) the service already uses.
+Coming from Spring Boot and C#, most of the architecture is immediately legible — the controller/repository split, DI, connection pooling, and bearer auth all work the same way conceptually. The differences are in the idioms: companion objects instead of statics, `by lazy` for memoized enum properties, `.use { }` for resource cleanup, and a routing DSL instead of annotations. Once those patterns clicked, the rest of the Kotlin codebase started feeling genuinely pleasant to work in.
