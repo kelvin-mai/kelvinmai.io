@@ -1,0 +1,233 @@
+---
+title: Building a Claude Code Plugin Marketplace
+description: A look at how to organize Claude Code slash commands into installable plugins backed by a local marketplace — covering plugin structure, agents, skills, and how to surface them in Claude Code.
+date: 2026-03-25
+tags:
+  - tooling
+  - career
+---
+
+In my [last post on custom slash commands](/blog/custom-claude-code-slash-commands), I covered how a single markdown file in `.claude/commands/` becomes a working `/command` in Claude Code. That's great for personal shortcuts or one-off automations in a project. But when you want to share a collection of related commands across a team — and keep them versioned, installable, and discoverable — you need something more structured.
+
+That's where the plugin system comes in.
+
+Claude Code supports a marketplace model that lets you bundle commands, agents, and skills into plugins, host them in a local directory (or eventually a remote registry), and install them with a single CLI invocation. The best practices around this are still evolving, but the foundation is solid enough to build real workflows on. Here's how I've been thinking about it.
+
+## What a Plugin Actually Is
+
+At its core, a Claude Code plugin is just a directory with a specific layout. It has a manifest file that describes it, a folder of commands, and optionally folders for agents and skills. There's no compilation step, no binary, no package manager resolution — it's all markdown files and JSON.
+
+The directory structure looks like this:
+
+```
+my-plugin/
+├── .claude-plugin/
+│   └── plugin.json
+├── commands/
+│   └── my-command.md
+├── agents/
+│   └── my-agent.md
+├── skills/
+│   └── my-skill/
+│       └── SKILL.md
+├── shared/
+│   └── reference-doc.md
+└── README.md
+```
+
+Each subdirectory has a specific role, which I'll break down below.
+
+## Plugin Anatomy
+
+### `.claude-plugin/plugin.json`
+
+This is the manifest. It gives the plugin its identity:
+
+```json
+{
+  "name": "my-plugin",
+  "version": "1.0.0",
+  "description": "What this plugin does",
+  "author": {
+    "name": "Your Name",
+    "email": "you@example.com"
+  },
+  "keywords": ["tag1", "tag2"]
+}
+```
+
+The _`name`_ and _`version`_ fields are what Claude Code uses to identify the plugin and check for updates. Use semantic versioning — when you change a command's behavior, bump the version, otherwise Claude Code may serve a cached version of the old prompt.
+
+### `commands/`
+
+Each `.md` file here registers a slash command. The filename becomes the command name: _`code-review.md`_ → `/code-review`. The file content is the prompt Claude receives, with optional frontmatter:
+
+```markdown
+---
+description: Run a code review against main and write a report
+allowed-tools: [Bash, Read, Write, Glob]
+---
+
+Your prompt here. Use $ARGUMENTS for anything typed after the command.
+```
+
+This is the same format as project-level commands in `.claude/commands/`, just organized under a plugin.
+
+### `agents/`
+
+Agents are named subprocesses that a command can spin up to handle a focused subtask. A command might orchestrate three agents — one that reads context, one that does the heavy lifting, and one that formats output — keeping each agent's context clean and its tool access scoped.
+
+An agent file is just a markdown prompt. The name of the file becomes the agent identifier. A command references agents via the `Agent` tool with a `subagent_type` that matches the plugin's agent name.
+
+```markdown
+<!-- agents/my-analyzer.md -->
+You are a specialized agent that analyzes X.
+
+Given $INPUT, produce $OUTPUT in the following format:
+...
+```
+
+Agents are great when a workflow has a natural decomposition. Instead of one giant prompt trying to do everything, you break it into stages where each agent focuses on exactly one thing.
+
+### `skills/`
+
+Skills are reusable prompt modules that can be invoked from a command or used to extend another plugin's behavior. They live in subdirectories with a _`SKILL.md`_ file as the entry point. A skill directory can also have a `references/` folder for supporting docs the skill pulls in:
+
+```
+skills/
+└── my-workflow/
+    ├── SKILL.md
+    └── references/
+        ├── best-practices.md
+        └── patterns.md
+```
+
+The distinction between a command and a skill is subtle. A command is user-facing — you type `/command-name` to invoke it. A skill is more like a module — it's a reusable prompt block that can be loaded into a command or referenced across plugins. Think of it as the difference between a CLI entry point and a library function.
+
+### `shared/`
+
+Shared is just a convention I've seen work well in practice. It's a place for reference documents that multiple commands or agents within the same plugin need to read — things like formatting guides, error message templates, validation rules. There's no special treatment from Claude Code; it's just a directory your prompts reference.
+
+## Building a Marketplace
+
+When you have multiple plugins, you probably want a central place to register them all. That's the marketplace — a parent directory with its own manifest at `.claude-plugin/marketplace.json`:
+
+```json
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "owner": {
+    "name": "my-team"
+  },
+  "name": "my-marketplace",
+  "version": "1.0.0",
+  "description": "A collection of Claude Code plugins for our team workflows.",
+  "plugins": [
+    {
+      "name": "code-review",
+      "description": "Automated code review and feedback implementation",
+      "source": "./code-review"
+    },
+    {
+      "name": "jira",
+      "description": "Jira workflow integration for creating and syncing stories",
+      "source": "./jira"
+    }
+  ]
+}
+```
+
+The layout is a monorepo-style directory where each plugin lives in its own subfolder alongside the root marketplace manifest:
+
+```
+my-toolkit/
+├── .claude-plugin/
+│   └── marketplace.json
+├── code-review/
+│   ├── .claude-plugin/plugin.json
+│   ├── commands/
+│   └── ...
+└── jira/
+    ├── .claude-plugin/plugin.json
+    ├── commands/
+    └── ...
+```
+
+This structure lets you version-control everything in one repo, install individual plugins independently, and update them one at a time.
+
+## Installing Plugins
+
+Once you have a marketplace directory, installing is a two-step process.
+
+First, register the marketplace:
+
+```bash
+claude plugin marketplace add /path/to/my-toolkit
+```
+
+Then install individual plugins from it:
+
+```bash
+claude plugin install code-review@my-marketplace
+claude plugin install jira@my-marketplace
+```
+
+**Important:** after installing or updating a plugin, you need to restart Claude Code for the changes to take effect. Claude Code loads plugin definitions at startup, so any install or uninstall during a session won't be reflected until you quit and reopen.
+
+### Team-Wide Configuration
+
+If you want everyone on a team to have the same plugins without each person running install commands, you can pre-configure them in the project's `.claude/settings.json`:
+
+```json
+{
+  "extraKnownMarketplaces": {
+    "my-marketplace": {
+      "source": {
+        "source": "local",
+        "path": "/path/to/my-toolkit"
+      }
+    }
+  },
+  "enabledPlugins": {
+    "code-review@my-marketplace": true,
+    "jira@my-marketplace": true
+  }
+}
+```
+
+Check this file into version control and every team member who clones the repo gets the plugins automatically — no manual install step needed.
+
+## Updating Plugins During Development
+
+The development loop takes a bit of getting used to. When you make changes to a command or agent, Claude Code doesn't pick them up unless you bump the plugin version and run an update:
+
+```bash
+# Bump version in .claude-plugin/plugin.json first, then:
+claude plugin marketplace update my-marketplace
+claude plugin update code-review@my-marketplace
+```
+
+If the update command reports "already at latest" (which happens if you forgot to bump the version), uninstall and reinstall:
+
+```bash
+claude plugin uninstall code-review@my-marketplace
+claude plugin install code-review@my-marketplace
+```
+
+Then restart Claude Code. It's a bit manual right now — the tooling around this is one of the rougher edges of the plugin system — but it works reliably once you internalize the pattern.
+
+## What's Worth Turning Into a Plugin
+
+Not every slash command needs to be a plugin. Single-purpose commands that only make sense in one project belong in `.claude/commands/`, checked into that project's repo. The plugin layer makes sense when:
+
+- You want to share commands across multiple projects
+- A workflow is complex enough to warrant multiple agents
+- You want versioning and update semantics
+- You're distributing commands to a team who shouldn't have to know how they're built
+
+For complex multi-step workflows — things like "analyze this MR, generate a review report, implement approved changes, and draft rejection comments for the rest" — the plugin model is the right level of abstraction. You get clean separation between stages, independent agent contexts, and a single installable unit.
+
+## Wrapping Up
+
+The slash command system I covered last time is a great starting point. The plugin marketplace is the next step when those commands need to grow up — getting versioned, shared, and composed with agents and skills into something that feels closer to a workflow automation platform than a collection of prompt files.
+
+The ecosystem is still new and the conventions are still solidifying, but the core primitives are there. If you've already built a few useful slash commands, the jump to packaging them as a plugin is smaller than it looks.
