@@ -1,7 +1,7 @@
 import { Document, Page, StyleSheet, Text, View } from '@react-pdf/renderer';
 
 import type { Resume } from '@/lib/constants';
-import { renderDates } from '@/lib/utils';
+import { renderDateRanges } from '@/lib/utils';
 import { Section } from './section';
 import { Skill } from './skill';
 import { Education } from './education';
@@ -145,7 +145,7 @@ export const ATSResumeDocument: React.FC<ATSResumeDocumentProps> = ({
                   />
                   <IconText
                     icon='calendar'
-                    text={renderDates(w.startDate, w.endDate)}
+                    text={renderDateRanges(w.dateRanges)}
                   />
                 </View>
               </View>

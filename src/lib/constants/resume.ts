@@ -70,8 +70,10 @@ export const resume = {
       image:
         'https://pttjrd5bylwkefgv.public.blob.vercel-storage.com/jobs/gravie.jpg',
       position: 'Senior Software Engineer',
-      startDate: '2024-07-15T08:00:00.000Z',
-      endDate: null,
+      dateRanges: [
+        { startDate: '2024-07-15', endDate: '2025-01-02' },
+        { startDate: '2025-07-28', endDate: null },
+      ],
       summary:
         'Development on internal admin tool to aid SFTP automation for insurance clients',
       highlights: [
@@ -91,8 +93,7 @@ export const resume = {
       image:
         'https://pttjrd5bylwkefgv.public.blob.vercel-storage.com/jobs/yieldmos.png',
       position: 'Software Consultant',
-      startDate: '2023-08-16T08:00:00.000Z',
-      endDate: '2024-02-21T08:00:00.000Z',
+      dateRanges: [{ startDate: '2023-08-16', endDate: '2024-02-21' }],
       summary:
         'Provide development consultation on client facing non-custodial compounding blockchain application',
       highlights: [
@@ -112,8 +113,7 @@ export const resume = {
       image:
         'https://pttjrd5bylwkefgv.public.blob.vercel-storage.com/jobs/luminare.png',
       position: 'Software Engineer',
-      startDate: '2021-02-08T08:00:00.000Z',
-      endDate: '2023-01-20T08:00:00.000Z',
+      dateRanges: [{ startDate: '2021-02-08', endDate: '2023-01-20' }],
       summary:
         'Rapid development of vaccination management app during the COVID-19 pandemic',
       highlights: [
@@ -143,8 +143,7 @@ export const resume = {
       image:
         'https://pttjrd5bylwkefgv.public.blob.vercel-storage.com/jobs/bonotel.png',
       position: 'Software Developer',
-      startDate: '2020-03-01T08:00:00.000Z',
-      endDate: '2021-02-04T08:00:00.000Z',
+      dateRanges: [{ startDate: '2020-03-01', endDate: '2021-02-04' }],
       summary:
         'Development of various Travel B2B dependant microservices and internal administration tools.',
       highlights: [
@@ -183,8 +182,7 @@ export const resume = {
       image:
         'https://pttjrd5bylwkefgv.public.blob.vercel-storage.com/jobs/vegas.png',
       position: 'Front End Developer',
-      startDate: '2019-07-01T07:00:00.000Z',
-      endDate: '2020-03-01T08:00:00.000Z',
+      dateRanges: [{ startDate: '2019-07-01', endDate: '2020-03-01' }],
       summary:
         'Feature development on desktop and mobile retail travel e-commerce web applications.',
       highlights: [
@@ -213,8 +211,7 @@ export const resume = {
       image:
         'https://pttjrd5bylwkefgv.public.blob.vercel-storage.com/jobs/motivis.png',
       position: 'Software Developer',
-      startDate: '2018-04-01T07:00:00.000Z',
-      endDate: '2019-06-01T07:00:00.000Z',
+      dateRanges: [{ startDate: '2018-04-01', endDate: '2019-06-01' }],
       summary:
         'R&D and Feature development and maintenance of the cloud-hosted LMS.',
       highlights: [
@@ -257,8 +254,8 @@ export const resume = {
       institution: 'DigitalCrafts',
       area: 'Full Stack Immersive Bootcamp',
       location: 'Houston, TX',
-      startDate: '2017-11-01T07:00:00.000Z',
-      endDate: '2018-03-01T08:00:00.000Z',
+      startDate: '2017-11-01',
+      endDate: '2018-03-01',
       studyType: null,
       gpa: null,
       courses: null,
@@ -267,8 +264,8 @@ export const resume = {
       institution: 'University of California, Riverside',
       area: 'Computer Science — Coursework Completed (No Degree)',
       location: 'Riverside, CA',
-      startDate: '2008-09-01T07:00:00.000Z',
-      endDate: '2011-02-01T08:00:00.000Z',
+      startDate: '2008-09-01',
+      endDate: '2011-02-01',
       studyType: null,
       gpa: null,
       courses: null,

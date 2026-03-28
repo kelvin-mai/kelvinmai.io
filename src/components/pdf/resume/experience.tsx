@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View } from '@react-pdf/renderer';
 
 import type { Resume } from '@/lib/constants';
-import { renderDates } from '@/lib/utils';
+import { renderDateRanges } from '@/lib/utils';
 import { ConditionalLink } from './conditional-link';
 import { Icon, IconText } from './icons';
 
@@ -44,8 +44,7 @@ export const Experience: React.FC<ExperienceProps> = ({
   position,
   location,
   locationType,
-  startDate,
-  endDate,
+  dateRanges,
   highlights,
 }) => {
   return (
@@ -60,7 +59,7 @@ export const Experience: React.FC<ExperienceProps> = ({
             icon='location'
             text={`${location} - ${locationType ? locationType : 'On-Site'}    `}
           />
-          <IconText icon='calendar' text={renderDates(startDate, endDate)} />
+          <IconText icon='calendar' text={renderDateRanges(dateRanges)} />
         </View>
       </View>
       <View style={styles.list}>

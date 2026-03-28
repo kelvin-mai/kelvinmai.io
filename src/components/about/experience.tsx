@@ -8,7 +8,7 @@ import {
   AccordionTrigger,
 } from '../ui/accordion';
 import { Calendar, MapPin } from 'lucide-react';
-import { renderDates } from '@/lib/utils';
+import { renderDateRanges } from '@/lib/utils';
 import { Badge } from '../ui/badge';
 
 type ExperienceProps = {
@@ -44,7 +44,7 @@ export const ExperienceContent: React.FC<ExperienceProps> = ({ work }) => {
           {work.location} - {work.locationType ? work.locationType : 'On-Site'}
         </p>
         <Calendar className='h-4 w-4' />
-        <p>{renderDates(work.startDate, work.endDate)}</p>
+        <p>{renderDateRanges(work.dateRanges)}</p>
       </div>
       <p>{work.summary}</p>
       <div className='flex flex-wrap items-center gap-2'>
