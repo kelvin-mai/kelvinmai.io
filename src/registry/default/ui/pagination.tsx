@@ -11,12 +11,12 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuLabel,
+  DropdownMenuRadioGroup,
   DropdownMenuRadioItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { cn } from '@/lib/utils';
-import { DropdownMenuRadioGroup } from '@radix-ui/react-dropdown-menu';
 
 type PaginationProps = React.ComponentProps<'nav'> & {
   currentPage: number;
