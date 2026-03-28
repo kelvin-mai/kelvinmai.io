@@ -60,6 +60,7 @@ const convertNpmCommand = (pm: PackageManager, npmCommand: string) => {
   if (npmCommand.startsWith('npx')) {
     return npmCommand.replace('npx', conversion.npx[pm]);
   }
+  return npmCommand;
 };
 
 export const NpmCommand = async ({ value }: { value: string }) => {
