@@ -1,29 +1,15 @@
 import { notFound } from 'next/navigation';
 import { MDXRemote } from 'next-mdx-remote/rsc';
-import remarkGfm from 'remark-gfm';
-import rehypeSlug from 'rehype-slug';
-import { remarkCodeHike, recmaCodeHike } from 'codehike/mdx';
 
 import { source } from '@/lib/source';
 import { getMDXComponents } from '@/components/mdx';
-
-const { docs } = source;
 import { TableOfContents } from '@/components/docs';
 import { BuyMeCofffeeBanner } from '@/components/common';
 import { cn } from '@/lib/utils';
 import { SITE_URL } from '@/lib/constants';
+import { mdxOptions } from '@/lib/mdx';
 
-const chConfig = {
-  components: { code: 'Code', inlineCode: 'InlineCode' },
-};
-
-const plug = <T extends unknown[]>(...args: T): T => args;
-
-const mdxOptions = {
-  remarkPlugins: [plug(remarkCodeHike, chConfig), remarkGfm],
-  rehypePlugins: [rehypeSlug],
-  recmaPlugins: [plug(recmaCodeHike, chConfig)],
-};
+const { docs } = source;
 
 export async function generateStaticParams() {
   return docs.generateParams();

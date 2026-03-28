@@ -39,7 +39,7 @@ export const ContactForm = () => {
             <h2 className='text-3xl font-bold'>Thank you</h2>
             <p className='text-lg'>
               Your message has been sent and I will do my best to respond as
-              soon as possbile.
+              soon as possible.
             </p>
             <div className='inline-flex justify-center'>
               <CheckCircle className='size-8 text-teal-600' />

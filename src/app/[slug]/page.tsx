@@ -1,24 +1,13 @@
 import { notFound } from 'next/navigation';
 import { MDXRemote } from 'next-mdx-remote/rsc';
-import remarkGfm from 'remark-gfm';
-import rehypeSlug from 'rehype-slug';
-import { remarkCodeHike, recmaCodeHike } from 'codehike/mdx';
 import type { Metadata } from 'next';
 
 import { source } from '@/lib/source';
 import { getMDXComponents } from '@/components/mdx';
 import { Footer } from '@/components/layout';
+import { mdxOptions } from '@/lib/mdx';
 
 const { pages } = source;
-
-const chConfig = { components: { code: 'Code', inlineCode: 'InlineCode' } };
-const plug = <T extends unknown[]>(...args: T): T => args;
-
-const mdxOptions = {
-  remarkPlugins: [plug(remarkCodeHike, chConfig), remarkGfm],
-  rehypePlugins: [rehypeSlug],
-  recmaPlugins: [plug(recmaCodeHike, chConfig)],
-};
 
 export async function generateStaticParams() {
   return pages.generateParams();

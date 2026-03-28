@@ -1,8 +1,5 @@
 import { notFound } from 'next/navigation';
 import { MDXRemote } from 'next-mdx-remote/rsc';
-import remarkGfm from 'remark-gfm';
-import rehypeSlug from 'rehype-slug';
-import { remarkCodeHike, recmaCodeHike } from 'codehike/mdx';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -13,17 +10,9 @@ import { Footer } from '@/components/layout';
 import { SITE_URL } from '@/lib/constants';
 import { Badge } from '@/components/ui';
 import { TableOfContents } from '@/components/docs/table-of-contents';
+import { mdxOptions } from '@/lib/mdx';
 
 const { blogs } = source;
-
-const chConfig = { components: { code: 'Code', inlineCode: 'InlineCode' } };
-const plug = <T extends unknown[]>(...args: T): T => args;
-
-const mdxOptions = {
-  remarkPlugins: [plug(remarkCodeHike, chConfig), remarkGfm],
-  rehypePlugins: [rehypeSlug],
-  recmaPlugins: [plug(recmaCodeHike, chConfig)],
-};
 
 export async function generateStaticParams() {
   return blogs.generateParams();
