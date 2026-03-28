@@ -301,8 +301,9 @@ export const TableOfContents: React.FC<TableOfContentsProps> = ({
   const viewRef = React.useRef<HTMLDivElement>(null);
 
   return (
-    <div
+    <nav
       ref={viewRef}
+      aria-label='Table of contents'
       className={cn(
         'hidden shrink-0 md:sticky md:top-16 md:block md:self-start',
         className,
@@ -321,6 +322,6 @@ export const TableOfContents: React.FC<TableOfContentsProps> = ({
         thumbClassName={thumbClassName}
         activeClassName={activeClassName}
       />
-    </div>
+    </nav>
   );
 };
