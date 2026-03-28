@@ -36,7 +36,8 @@ export const pages = {
       return getMdxFiles(PAGES_DIR).map((file) => ({
         slug: file.replace(/\.mdx$/, ''),
       }));
-    } catch {
+    } catch (error) {
+      console.warn('pages.generateParams failed:', error);
       return [];
     }
   },
@@ -45,7 +46,8 @@ export const pages = {
     const filePath = join(PAGES_DIR, `${slug}.mdx`);
     try {
       return parsePage(filePath, slug);
-    } catch {
+    } catch (error) {
+      console.warn(`pages.getPage failed for slug "${slug}":`, error);
       return null;
     }
   },

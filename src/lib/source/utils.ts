@@ -40,7 +40,8 @@ export function getGitLastModified(filePath: string): Date {
       .toString()
       .trim();
     return result ? new Date(result) : new Date();
-  } catch {
+  } catch (error) {
+    console.warn(`getGitLastModified failed for ${filePath}:`, error);
     return new Date();
   }
 }

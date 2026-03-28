@@ -56,7 +56,8 @@ export const blogs = {
       return getMdxFiles(BLOGS_DIR).map((file) => ({
         slug: fileToSlug(file),
       }));
-    } catch {
+    } catch (error) {
+      console.warn('blogs.generateParams failed:', error);
       return [];
     }
   },
@@ -68,7 +69,8 @@ export const blogs = {
       );
       if (!filename) return null;
       return parseBlogPost(join(BLOGS_DIR, filename), slug);
-    } catch {
+    } catch (error) {
+      console.warn(`blogs.getPost failed for slug "${slug}":`, error);
       return null;
     }
   },

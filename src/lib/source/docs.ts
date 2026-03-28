@@ -14,6 +14,8 @@ export type { TOCItemType };
 
 const DOCS_DIR = join(process.cwd(), 'content/docs');
 
+let cachedPages: Page[] | null = null;
+
 export type PageData = {
   title: string;
   description?: string;
@@ -78,15 +80,18 @@ export const docs = {
     const filePath = join(DOCS_DIR, ...slug) + '.mdx';
     try {
       return parsePage(filePath, slug);
-    } catch {
+    } catch (error) {
+      console.warn(`docs.getPage failed for slug "${slug.join('/')}":`, error);
       return null;
     }
   },
 
   getPages(): Page[] {
-    return this.generateParams()
+    if (cachedPages) return cachedPages;
+    cachedPages = this.generateParams()
       .map(({ slug }) => this.getPage(slug))
       .filter((p): p is Page => p !== null);
+    return cachedPages;
   },
 
   getPageTree(): { children: NavItem[] } {
