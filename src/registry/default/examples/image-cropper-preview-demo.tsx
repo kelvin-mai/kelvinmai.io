@@ -107,7 +107,6 @@ export default function Component() {
     return () => {
       if (currentUrl && currentUrl.startsWith('blob:')) {
         URL.revokeObjectURL(currentUrl);
-        console.log('Revoked URL:', currentUrl);
       }
     };
   }, [croppedImageUrl]);

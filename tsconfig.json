@@ -15,6 +15,7 @@
     "moduleResolution": "bundler",
     "moduleDetection": "force",
     "noUncheckedIndexedAccess": true,
+    "noImplicitReturns": true,
     "checkJs": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
