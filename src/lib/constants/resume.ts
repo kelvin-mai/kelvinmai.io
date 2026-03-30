@@ -12,7 +12,7 @@ export const resume = {
     email: 'kelvin.mai002@gmail.com',
     phone: null,
     url: 'kelvinmai.io',
-    summary: `Full-stack software engineer with over ${yearsSinceStart()} years of experience building microservices and distributed systems across agile teams. Passionate about functional programming, specializing in TypeScript, Clojure, React, and Go with a track record of designing REST and GraphQL APIs, improving CI/CD pipelines, and shipping scalable web applications.`,
+    summary: `Full-stack software engineer with ${yearsSinceStart()}+ years building microservices and distributed systems — from travel e-commerce to healthcare to insurance infrastructure. Specializes in TypeScript, Clojure, React, and Go. Strong track record designing REST and GraphQL APIs, leading frontend modernization efforts, and delivering scalable backend services across remote teams.`,
     openToWork: false,
     bio: `I've spent the last ${yearsSinceStart()} years building microservices and distributed systems across full-stack teams — from a travel e-commerce platform at Vegas.com to a COVID-era healthcare app at Luminare, to insurance infrastructure at Gravie. I'm passionate about functional programming, especially Clojure, and love working at the intersection of clean backend architecture and modern React frontends. Outside of work I run a YouTube channel where I make tutorials on web development and software engineering. Looking for a remote-friendly team tackling interesting systems problems where functional ideas are welcome.`,
     location: {
@@ -65,6 +65,7 @@ export const resume = {
         'groovy',
         'grails',
         'redis',
+        'kotlin',
       ],
       url: 'https://www.gravie.com/',
       image:
@@ -75,12 +76,13 @@ export const resume = {
         { startDate: '2025-07-28', endDate: null },
       ],
       summary:
-        'Development on internal admin tool to aid SFTP automation for insurance clients',
+        'Engineered internal admin tooling and AWS/Redis infrastructure supporting SFTP automation for insurance client file processing.',
       highlights: [
         'Developed internal admin tools for SFTP file automation by introducing a dry run feature, eliminating silent failures in insurance client file processing.',
         'Enhanced the Admin UI for Gravie employees and insurance clients, streamlining multi-step workflows and reducing manual intervention.',
-        'Managed AWS & Redis infrastructure for high-throughput file processing in a Groovy on Grails backend.',
+        'Optimized AWS & Redis infrastructure for high-throughput file processing, reducing error rates in insurance client pipelines.',
         'Mentored Java engineers in React and ClojureScript, accelerating a full frontend modernization effort.',
+        'Contributed to claims and payments infrastructure; building a payment authorization tool, a Kotlin/Ktor invoice microservice, and supporting migration of SQS-based payment processing to a new banking provider.',
       ],
     },
     {
@@ -95,12 +97,12 @@ export const resume = {
       position: 'Software Consultant',
       dateRanges: [{ startDate: '2023-08-16', endDate: '2024-02-21' }],
       summary:
-        'Provide development consultation on client facing non-custodial compounding blockchain application',
+        'Consulted on a non-custodial DeFi yield optimization platform, leading frontend architecture and smart contract integration.',
       highlights: [
-        'Collaborated with Rust backend engineers to optimize smart contract interactions, reducing on-chain transaction overhead.',
+        'Collaborated with Rust backend engineers to reduce on-chain transaction overhead through optimized smart contract interaction patterns.',
         'Developed compounding outpost strategy for automated yield optimization across multiple DeFi protocols.',
-        'Migrated frontend from React 16 to Next.js, significantly improving page load performance and enabling server-side rendering.',
-        'Mentored junior developers on React and TypeScript best practices, improving team code quality and review velocity.',
+        'Migrated frontend from React 16 to Next.js, improving page load performance and enabling server-side rendering.',
+        'Mentored junior developers on React and TypeScript best practices, establishing code review standards that improved team velocity.',
       ],
     },
     {
@@ -115,11 +117,11 @@ export const resume = {
       position: 'Software Engineer',
       dateRanges: [{ startDate: '2021-02-08', endDate: '2023-01-20' }],
       summary:
-        'Rapid development of vaccination management app during the COVID-19 pandemic',
+        'Helped ship a COVID-19 vaccination management platform, migrating backend services to Clojure and building patient notification infrastructure.',
       highlights: [
         'Developed and optimized a COVID-19 vaccination management platform deployed across multiple healthcare facilities.',
-        'Migrated core services from Node.js to Clojure, significantly improving throughput and reducing memory overhead.',
-        'Built SMS and Email notification system for patient vaccination updates, improving communication reliability at scale.',
+        'Migrated core services from Node.js to Clojure, improving throughput and reducing memory overhead.',
+        'Built SMS and email notification system for patient vaccination updates across multiple healthcare facilities.',
         'Maintained frontend reliability using Cypress end-to-end testing, catching regressions before production.',
         'Mentored junior developers in Clojure/ClojureScript, growing team functional programming proficiency.',
       ],
@@ -145,7 +147,7 @@ export const resume = {
       position: 'Software Developer',
       dateRanges: [{ startDate: '2020-03-01', endDate: '2021-02-04' }],
       summary:
-        'Development of various Travel B2B dependant microservices and internal administration tools.',
+        'Built microservices and internal tooling across a Travel B2B platform handling hotel and travel inventory at scale.',
       highlights: [
         'Developed client-facing and administrative frontend applications in React and Angular serving Travel B2B clients.',
         'Developed Java and Golang microservices for a Travel B2B platform handling hotel and travel inventory at scale.',
@@ -184,9 +186,9 @@ export const resume = {
       position: 'Front End Developer',
       dateRanges: [{ startDate: '2019-07-01', endDate: '2020-03-01' }],
       summary:
-        'Feature development on desktop and mobile retail travel e-commerce web applications.',
+        'Shipped features across desktop and mobile retail travel e-commerce apps serving millions of users.',
       highlights: [
-        'Implemented React-based HTML email templates for purchase confirmations, replacing a fragmented legacy templating system.',
+        'Built React-based transactional email templates for purchase confirmations, replacing a fragmented legacy templating system and unifying the notification stack.',
         'Implemented mobile cart functionality using React Router, streamlining the checkout flow and improving mobile conversion experience.',
         'Upgraded React Router (v2 to v5) across a large-scale e-commerce codebase, improving navigation reliability and performance.',
         'Developed React Native Windows kiosk application features for on-site hotel and entertainment bookings.',
@@ -213,7 +215,7 @@ export const resume = {
       position: 'Software Developer',
       dateRanges: [{ startDate: '2018-04-01', endDate: '2019-06-01' }],
       summary:
-        'R&D and Feature development and maintenance of the cloud-hosted LMS.',
+        'R&D and feature development on a cloud-hosted LMS, contributing to API design, full-text search, and frontend migration.',
       highlights: [
         'Designed and prototyped an internal GraphQL API, replacing fragmented REST endpoints and simplifying data querying for frontend teams.',
         'Added C# .NET full-text search endpoint using PostgreSQL, enabling complex content discovery across the cloud-hosted LMS.',
