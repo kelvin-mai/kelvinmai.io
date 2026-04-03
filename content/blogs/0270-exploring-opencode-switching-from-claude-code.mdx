@@ -1,0 +1,132 @@
+---
+title: Exploring OpenCode as a Claude Code Alternative
+description: A look at OpenCode, an open-source AI coding terminal that supports any LLM provider — including self-hosted Ollama — and how its commands, skills, and configuration compare to Claude Code.
+date: 2026-04-02
+tags:
+  - tooling
+  - claude code
+  - opencode
+  - ai
+image: https://pttjrd5bylwkefgv.public.blob.vercel-storage.com/blog/opencode.png
+---
+
+Back when I wrote about [self-hosting an LLM with Ollama and Continue.dev](/blog/self-hosting-llm-ollama-continue-vscode), I mentioned keeping privacy and security concerns somewhere in the back of my mind. Since then I've gotten pretty comfortable with Claude Code as a daily driver — to the point of writing about [custom slash commands](/blog/custom-claude-code-slash-commands) and [building a plugin marketplace](/blog/building-a-claude-code-plugin-marketplace) around it. So when I stumbled across OpenCode, I was curious enough to actually sit down and try it.
+
+This isn't a full migration post. I haven't committed either way. But I spent enough time with it to have opinions, and I wanted to write them down.
+
+## First Impressions
+
+OpenCode is an open-source AI coding assistant that runs entirely in the terminal. The setup is familiar: you get a TUI, you point it at a project, you start talking to it. The first notable difference is initialization — instead of a _`CLAUDE.md`_, OpenCode generates an _`AGENTS.md`_ file during _`/init`_. Same idea: a project-level markdown file that gives the AI context about your codebase, conventions, and structure.
+
+The renaming is purely cosmetic. The concept is identical. You write instructions, it reads them. If you already have a well-tuned _`CLAUDE.md`_, porting it over is just a copy-paste.
+
+## Commands, Skills, and the Workflow I Cared About
+
+The main thing I needed to verify before taking OpenCode seriously was whether my existing workflow would carry over. Most of what makes Claude Code actually useful for me day-to-day lives in [custom slash commands](/blog/custom-claude-code-slash-commands) and [skills](/blog/building-a-claude-code-plugin-marketplace) — prompt modules that handle recurring tasks like code review, blog drafting, and component scaffolding.
+
+Good news: OpenCode has both, and they work almost exactly the same way.
+
+### Commands
+
+Custom commands in OpenCode live in _`.opencode/commands/`_ at the project level, or _`~/.config/opencode/commands/`_ globally. Each command is a markdown file with optional YAML frontmatter:
+
+```markdown
+---
+description: Run a thorough code review
+agent: default
+model: anthropic/claude-3-5-sonnet-20241022
+---
+
+Review the staged changes in this PR. Check for correctness, edge cases, and adherence to the project conventions in AGENTS.md. $ARGUMENTS
+```
+
+The filename becomes the slash command: _`code-review.md`_ → _`/code-review`_. You can use _`$ARGUMENTS`_, _`$1`_, _`$2`_ as placeholders, inject shell output with backtick syntax, and reference files with _`@filename`_. Structurally it's the same format as Claude Code commands in _`.claude/commands/`_.
+
+### Skills
+
+Skills work nearly identically to how they do in Claude Code. A skill is a _`SKILL.md`_ file with YAML frontmatter sitting inside _`.opencode/skills/<name>/`_. The agent discovers available skills on-demand and loads the full content only when needed:
+
+```markdown
+---
+name: blog-post
+description: Create a new MDX blog post from a draft file
+---
+
+Check content/draft.md for the blog brief. Write a new post to content/blogs/...
+```
+
+OpenCode also searches _`.claude/`_ and _`.agents/`_ compatible directories automatically, so if you already have Claude Code skills set up, there's a decent chance OpenCode will just pick them up without moving anything.
+
+## The Actual Selling Point
+
+All of that is table-stakes compatibility. The reason OpenCode is interesting is something else: it supports any AI provider.
+
+That includes Anthropic, OpenAI, Google, and — critically — self-hosted Ollama. I already run an Ollama instance locally. Being able to point an AI coding assistant at it is genuinely useful for a few reasons:
+
+**Privacy-sensitive work.** When I'm in a codebase with credentials or internal tooling I'd rather not send through a third-party API, a local model is the right call.
+
+**Uncensored models.** This sounds more scandalous than it is. The actual use case that came up for me: I asked a public model to generate a Code of Conduct markdown template and it refused. An uncensored local model just... does it. That's the whole situation. (I'll also admit the joke in my draft notes about "nsfw reasons" — I left it in the draft. You can use your imagination.)
+
+**Cost.** No tokens, no metering, no waiting for rate limits to reset.
+
+Adding Ollama as a provider takes about ten seconds. OpenCode uses `~/.config/opencode/opencode.jsonc` for global config, and Ollama goes in the _`provider`_ block. Since Ollama exposes an OpenAI-compatible API, it uses the _`@ai-sdk/openai-compatible`_ package under the hood:
+
+```jsonc
+{
+  "$schema": "https://opencode.ai/config.json",
+  "provider": {
+    "ollama": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "Ollama (local)",
+      "options": {
+        "baseURL": "http://localhost:11434/v1",
+      },
+      "models": {
+        "llama3.2": {
+          "name": "Llama 3.2",
+        },
+        "deepseek-r1": {
+          "name": "DeepSeek R1",
+        },
+      },
+    },
+  },
+}
+```
+
+Whatever models you have pulled in Ollama, you add them under _`models`_ with any display name you want. Then you can switch to them mid-session with _`/model`_. One thing worth noting from the docs: if tool calls aren't working reliably, bump _`num_ctx`_ in Ollama to at least 16k–32k. The default context window is too small for the kind of multi-step tool use a coding agent needs.
+
+## The UX Is Just Better
+
+![Eldritch Theme for opencode](https://pttjrd5bylwkefgv.public.blob.vercel-storage.com/blog/opencode-eldritch.png)
+
+The TUI is more polished than Claude Code's. There's a Plan mode (toggled with Tab) that puts the agent in a read-only, suggestion-only state — useful when I want analysis without accidental file edits. You can drag images into the terminal. The overall feel is that someone spent real time on the terminal experience, not just the AI layer underneath it.
+
+Theming is a first-class feature. OpenCode ships with a solid set of built-in themes — Tokyo Night, Catppuccin, Gruvbox, Nord, Kanagawa, and more. You can set one with the _`/theme`_ command inside the TUI, or lock it in config via a _`tui.json`_ file at _`~/.config/opencode/tui.json`_:
+
+```json
+{
+  "$schema": "https://opencode.ai/tui.json",
+  "theme": "tokyonight"
+}
+```
+
+If you want something custom, themes are just JSON files. Drop a _`mytheme.json`_ into _`~/.config/opencode/themes/`_ for global use or _`.opencode/themes/`_ for per-project, and it gets picked up automatically. The schema has sections for _`defs`_ (reusable color aliases) and _`theme`_ (assignments for specific UI elements like _`primary`_, _`text`_, _`background`_, _`syntaxKeyword`_, _`diffAdded`_, etc.), with support for separate dark and light variants. It's the kind of thing that feels minor but makes a real difference when you're staring at a terminal for hours.
+
+## The Problem
+
+Here's where it falls apart for me right now: OpenCode requires a Claude API key to use Anthropic models. I'm on the Claude Pro subscription, which is the web and desktop plan — not the API. Those are separate products with separate billing.
+
+I looked into it. To use Claude through the API, I'd need to set up a separate API account and pay per token on top of my existing subscription. I'm not doing that just to use an open-source wrapper around the same model I'm already paying for.
+
+Apparently the ability to use the Claude subscription used to be useable but [since been removed](https://www.reddit.com/r/ClaudeAI/comments/1r9hqdk/claude_subscriptions_will_no_longer_be_usable_in/) for legal purposes.
+
+So the practical situation is: I can use Claude Code with the subscription, or I can use OpenCode with a non-Claude model provider. I can't use both OpenCode and Claude Code together in a way that shares the same Claude access. It's one or the other.
+
+That's not a knock against OpenCode — it's just how Anthropic prices things. But it does mean that "switching" is a real decision with a real cost, not just swapping one tool for another.
+
+## Where I'm Landing
+
+I'm not switching just yet. I'm not going to pay for API access on top of my Pro subscription just to try something new. So I have at least until the end of my subscription to make a decision.
+
+I'm going to keep OpenCode around for Ollama work. Anything where I want a local model, a private codebase, or just a different tool for a second opinion — that's where OpenCode earns its place for now.
