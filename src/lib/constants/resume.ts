@@ -73,7 +73,7 @@ export const resume = {
       position: 'Senior Software Engineer',
       dateRanges: [
         { startDate: '2024-07-15', endDate: '2025-01-02' },
-        { startDate: '2025-07-28', endDate: null },
+        { startDate: '2025-07-28', endDate: '2026-04-02' },
       ],
       summary:
         'Engineered internal admin tooling and AWS/Redis infrastructure supporting SFTP automation for insurance client file processing.',
