@@ -61,9 +61,11 @@ export const ResumeDocument: React.FC<ResumeDocumentProps> = ({ resume }) => {
           ))}
         </Section>
         <Section title='professional experience'>
-          {resume.work.map((w) => (
-            <Experience key={w.name} {...w} />
-          ))}
+          {resume.work
+            .filter((w) => !w.archived)
+            .map((w) => (
+              <Experience key={w.name} {...w} />
+            ))}
         </Section>
         <View style={styles.twoColumn}>
           <View style={styles.left}>

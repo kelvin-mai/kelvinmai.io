@@ -2,6 +2,7 @@ import { StyleSheet, Text, View } from '@react-pdf/renderer';
 
 type SectionProps = React.PropsWithChildren & {
   title: string;
+  compact?: boolean;
 };
 
 const styles = StyleSheet.create({
@@ -21,11 +22,15 @@ const styles = StyleSheet.create({
   },
 });
 
-export const Section: React.FC<SectionProps> = ({ title, children }) => {
+export const Section: React.FC<SectionProps> = ({
+  title,
+  compact,
+  children,
+}) => {
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, compact && { paddingBottom: 6 }]}>
       <Text style={styles.title}>{title}</Text>
-      <View style={styles.separator} />
+      <View style={[styles.separator, compact && { marginBottom: 2 }]} />
       {children}
     </View>
   );

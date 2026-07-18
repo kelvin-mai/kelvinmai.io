@@ -1,7 +1,7 @@
 import { Document, Page, StyleSheet, Text, View } from '@react-pdf/renderer';
 
 import type { Resume } from '@/lib/constants';
-import { renderDateRanges } from '@/lib/utils';
+import { mergeDateRanges, renderDates } from '@/lib/utils';
 import { Section } from './section';
 import { Skill } from './skill';
 import { Education } from './education';
@@ -10,40 +10,40 @@ import { IconText } from './icons';
 
 const styles = StyleSheet.create({
   page: {
-    paddingTop: 48,
-    paddingHorizontal: 50,
+    paddingTop: 36,
+    paddingHorizontal: 40,
     fontFamily: 'Ubuntu',
     fontSize: 10,
-    paddingBottom: 36,
+    paddingBottom: 24,
   },
   headingContainer: {
-    paddingBottom: 16,
+    paddingBottom: 6,
   },
   name: {
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: 700,
   },
   label: {
-    fontSize: 16,
-    marginTop: 2,
+    fontSize: 14,
+    marginTop: 0,
     color: '#7c3aed',
     fontWeight: 700,
   },
   contactRow: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    marginTop: 8,
-    gap: 16,
+    marginTop: 4,
+    gap: 6,
   },
   row: {
     flexDirection: 'row',
   },
   expTitle: {
-    fontSize: 16,
+    fontSize: 13,
     fontWeight: 700,
   },
   company: {
-    fontSize: 14,
+    fontSize: 12,
     fontWeight: 700,
     color: '#7c3aed',
   },
@@ -51,13 +51,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginTop: 4,
+    marginTop: 2,
   },
   list: {
-    marginTop: 4,
+    marginTop: 2,
   },
   listItem: {
-    marginBottom: 2,
+    marginBottom: 1,
     flexDirection: 'row',
   },
   projectTitle: {
@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
     fontWeight: 700,
   },
   projectDescription: {
-    marginTop: 4,
+    marginTop: 2,
   },
   pageNumber: {
     position: 'absolute',
@@ -97,7 +97,6 @@ export const ATSResumeDocument: React.FC<ATSResumeDocumentProps> = ({
       title={`Resume for Kelvin Mai, ${new Date().getFullYear()}`}
     >
       <Page size='LETTER' style={styles.page}>
-        {/* Heading — no photo */}
         <View style={styles.headingContainer}>
           <Text style={styles.name}>{resume.basics.name}</Text>
           <Text style={styles.label}>{resume.basics.label}</Text>
@@ -111,60 +110,58 @@ export const ATSResumeDocument: React.FC<ATSResumeDocumentProps> = ({
             {linkedin && (
               <IconText icon='link' text={stripProtocol(linkedin.url)} />
             )}
-            {github && (
-              <IconText icon='link' text={stripProtocol(github.url)} />
-            )}
           </View>
         </View>
 
-        {/* Summary — ATS-standard section name */}
-        <Section title='summary'>
+        <Section title='summary' compact>
           <Text>{resume.basics.summary}</Text>
         </Section>
 
-        {/* Skills */}
-        <Section title='skills'>
+        <Section title='skills' compact>
           {resume.skills.map((s) => (
             <Skill key={s.name} {...s} />
           ))}
         </Section>
 
-        {/* Experience — plain text bullets */}
-        <Section title='professional experience'>
-          {resume.work.map((w) => (
-            <View key={w.name} style={{ marginBottom: 4 }} wrap={false}>
-              <Text style={styles.expTitle}>{w.position}</Text>
-              <View style={styles.infoRow}>
-                <ConditionalLink url={w.url}>
-                  <Text style={styles.company}>{w.name}</Text>
-                </ConditionalLink>
-                <View style={styles.row}>
-                  <IconText
-                    icon='location'
-                    text={`${w.location} - ${w.locationType ?? 'On-Site'}    `}
-                  />
-                  <IconText
-                    icon='calendar'
-                    text={renderDateRanges(w.dateRanges)}
-                  />
-                </View>
-              </View>
-              <View style={styles.list}>
-                {w.highlights.map((h) => (
-                  <View key={h} style={styles.listItem}>
-                    <Text style={{ marginRight: 4 }}>•</Text>
-                    <Text style={{ flex: 1 }}>{h}</Text>
+        <Section title='professional experience' compact>
+          {resume.work
+            .filter((w) => !w.archived)
+            .map((w) => {
+              const { startDate, endDate } = mergeDateRanges(w.dateRanges);
+              return (
+                <View key={w.name} style={{ marginBottom: 2 }} wrap={false}>
+                  <Text style={styles.expTitle}>{w.position}</Text>
+                  <View style={styles.infoRow}>
+                    <ConditionalLink url={w.url}>
+                      <Text style={styles.company}>{w.name}</Text>
+                    </ConditionalLink>
+                    <View style={styles.row}>
+                      <IconText
+                        icon='location'
+                        text={`${w.location} - ${w.locationType ?? 'On-Site'}    `}
+                      />
+                      <IconText
+                        icon='calendar'
+                        text={renderDates(startDate, endDate)}
+                      />
+                    </View>
                   </View>
-                ))}
-              </View>
-            </View>
-          ))}
+                  <View style={styles.list}>
+                    {w.highlights.map((h) => (
+                      <View key={h} style={styles.listItem}>
+                        <Text style={{ marginRight: 4 }}>•</Text>
+                        <Text style={{ flex: 1 }}>{h}</Text>
+                      </View>
+                    ))}
+                  </View>
+                </View>
+              );
+            })}
         </Section>
 
-        {/* Projects — full width, plain bullets */}
-        <Section title='projects'>
+        <Section title='projects' compact>
           {resume.projects.map((p) => (
-            <View key={p.name} wrap={false} style={{ marginBottom: 4 }}>
+            <View key={p.name} wrap={false} style={{ marginBottom: 2 }}>
               <ConditionalLink url={p.url}>
                 <Text style={styles.projectTitle}>{p.name}</Text>
               </ConditionalLink>
@@ -183,8 +180,7 @@ export const ATSResumeDocument: React.FC<ATSResumeDocumentProps> = ({
           ))}
         </Section>
 
-        {/* Education — full width (no columns) */}
-        <Section title='education'>
+        <Section title='education' compact>
           {resume.education.map((e) => (
             <Education key={e.institution} {...e} />
           ))}

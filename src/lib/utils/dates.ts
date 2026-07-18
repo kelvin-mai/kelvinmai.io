@@ -11,3 +11,18 @@ export const renderDates = (start: string, end?: string | null) =>
 
 export const renderDateRanges = (dateRanges: DateRange[]) =>
   dateRanges.map((r) => renderDates(r.startDate, r.endDate)).join(' | ');
+
+export const mergeDateRanges = (dateRanges: DateRange[]): DateRange => {
+  const startDate = dateRanges.reduce(
+    (earliest, r) => (r.startDate < earliest ? r.startDate : earliest),
+    dateRanges[0].startDate,
+  );
+  const endDate = dateRanges.some((r) => !r.endDate)
+    ? null
+    : dateRanges.reduce<string | null>(
+        (latest, r) =>
+          !latest || (r.endDate ?? '') > latest ? (r.endDate ?? null) : latest,
+        null,
+      );
+  return { startDate, endDate };
+};
