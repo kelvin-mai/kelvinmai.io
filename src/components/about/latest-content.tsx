@@ -87,7 +87,7 @@ export function LatestContent() {
               <p className='text-xs font-medium text-cyan-400'>Latest Post</p>
               <h3 className='font-semibold'>{latestPost.data.title}</h3>
               {latestPost.data.description && (
-                <p className='text-muted-foreground line-clamp-2 flex-1 text-sm'>
+                <p className='line-clamp-2 flex-1 text-sm text-white/60'>
                   {latestPost.data.description}
                 </p>
               )}

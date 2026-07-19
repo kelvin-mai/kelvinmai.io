@@ -158,7 +158,7 @@ const TOCItem: React.FC<TOCItemProps> = ({
       data-active={isActive}
       style={{ paddingInlineStart: getItemOffset(item.depth) }}
       className={cn(
-        'prose text-muted-foreground relative py-1.5 text-sm [overflow-wrap:anywhere] transition-colors first:pt-0 last:pb-0',
+        'prose relative py-1.5 text-sm [overflow-wrap:anywhere] text-white/50 transition-colors first:pt-0 last:pb-0',
         activeClassName,
       )}
     >
