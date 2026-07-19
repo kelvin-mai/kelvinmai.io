@@ -15,7 +15,7 @@ export const renderDateRanges = (dateRanges: DateRange[]) =>
 export const mergeDateRanges = (dateRanges: DateRange[]): DateRange => {
   const startDate = dateRanges.reduce(
     (earliest, r) => (r.startDate < earliest ? r.startDate : earliest),
-    dateRanges[0].startDate,
+    dateRanges[0]?.startDate ?? '',
   );
   const endDate = dateRanges.some((r) => !r.endDate)
     ? null

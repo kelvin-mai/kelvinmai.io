@@ -28,9 +28,16 @@ export const Section: React.FC<SectionProps> = ({
   children,
 }) => {
   return (
-    <View style={[styles.container, compact && { paddingBottom: 6 }]}>
+    <View
+      style={{ ...styles.container, ...(compact ? { paddingBottom: 6 } : {}) }}
+    >
       <Text style={styles.title}>{title}</Text>
-      <View style={[styles.separator, compact && { marginBottom: 2 }]} />
+      <View
+        style={{
+          ...styles.separator,
+          ...(compact ? { marginBottom: 2 } : {}),
+        }}
+      />
       {children}
     </View>
   );
