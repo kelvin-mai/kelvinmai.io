@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "license": "MIT",
   "homepage": "https://kelvinmai.io",
+  "packageManager": "pnpm@11.3.0",
   "author": {
     "name": "Kelvin Mai",
     "email": "kelvin.mai002@gmail.com",
