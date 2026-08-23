@@ -1,0 +1,160 @@
+---
+title: The Strangest API I've Ever Interfaced With
+description: A look at Overpass, OpenStreetMap's query API, and how it differs from REST, GraphQL, and SOAP, built through the lens of a real Next.js integration.
+date: 2026-08-24
+tags:
+  - nextjs
+  - typescript
+  - api
+image: https://pttjrd5bylwkefgv.public.blob.vercel-storage.com/blog/overpass-api.png
+---
+
+I recently built [address-insights](https://github.com/kelvin-mai/address-insights) ([live site](https://address-insights-psi.vercel.app/)), a small app where you type a street address and get a livability snapshot back: how walkable it is, how drivable it is, how urban it feels, and an interactive map of the amenities that shape everyday life nearby. Type an address, get a score.
+
+![Address Insights App](https://pttjrd5bylwkefgv.public.blob.vercel-storage.com/blog/address-insights.png)
+
+Most of the build is unremarkable Next.js and React. Server components fetch data, a scoring function crunches numbers, Leaflet draws a map. But the data source behind all of it is the most unconventional API I've ever worked with: the [Overpass API](https://wiki.openstreetmap.org/wiki/Overpass_API), OpenStreetMap's read-only query engine for pulling map data. I'd worked with REST and GraphQL plenty, and I vaguely knew SOAP existed as some older, more rigid ancestor of both. Overpass is none of those things, and figuring out what it actually _is_ took some real head-scratching.
+
+## Not REST, Not GraphQL, Not SOAP
+
+My first instinct was to pattern-match it to GraphQL: single endpoint, POST body, something that looks declarative. But the resemblance stops at the surface.
+
+REST and GraphQL both assume a typed contract. REST gives you a fixed set of resources and shapes; GraphQL gives you a schema you query against, where the shape of your request mirrors the shape of the response. SOAP is the strictest of all: a WSDL document describes every operation and every parameter type before you're allowed to call anything.
+
+Overpass has no contract at all. There's no schema to introspect, no WSDL, no envelope. Instead, you're sending a small imperative script, written in a language called Overpass QL, to a server that executes it against a giant graph database of the entire planet. It's closer to sending raw SQL to a database over HTTP than to calling a described API.
+
+Here's a simplified version of the query _`address-insights`_ builds to find nearby restaurants:
+
+```
+[out:json][timeout:25];
+(
+  node[amenity=restaurant](around:4828,40.7484,-73.9857);
+  way[amenity=restaurant](around:4828,40.7484,-73.9857);
+);
+out center;
+```
+
+That's not a request body describing a resource; it's a program. Each line is a statement that filters OpenStreetMap's data into a set, and the statements accumulate. Reading it line by line:
+
+- _`[out:json][timeout:25]`_ sets global options: output format, and a server-side execution budget in seconds.
+- The outer _`(...)`_ is a union block: run everything inside it, then union the resulting sets together.
+- _`node[amenity=restaurant](around:4828,40.7484,-73.9857)`_ means "every node tagged _`amenity=restaurant`_, within 4828 meters of this point." That _`around`_ filter is evaluated against Overpass's built-in geospatial index; there's no REST or GraphQL equivalent baked into the query language itself.
+- _`out center`_ is the output statement. _`center`_ tells it to compute a centroid for way and relation results, which don't have a single coordinate the way a node does.
+
+## The Data Model Explains Everything Else
+
+Once I understood the OpenStreetMap data model, the rest of Overpass's weirdness started making sense. OSM represents the entire world as three element types:
+
+- **node**: a single point
+- **way**: an ordered list of nodes, forming a line or a polygon
+- **relation**: a group of nodes, ways, or other relations (a bus route, a multi-building complex)
+
+Run the restaurant query from earlier and this is roughly what comes back:
+
+```json
+{
+  "version": 0.6,
+  "generator": "Overpass API 0.7.62",
+  "osm3s": {
+    "timestamp_osm_base": "2026-08-07T22:14:03Z",
+    "copyright": "The data included in this document is from www.openstreetmap.org."
+  },
+  "elements": [
+    {
+      "type": "node",
+      "id": 4318741062,
+      "lat": 40.7486123,
+      "lon": -73.9854311,
+      "tags": {
+        "amenity": "restaurant",
+        "name": "Keens Steakhouse",
+        "cuisine": "steak_house"
+      }
+    },
+    {
+      "type": "way",
+      "id": 891234567,
+      "center": {
+        "lat": 40.7479881,
+        "lon": -73.9861204
+      },
+      "tags": {
+        "amenity": "restaurant",
+        "name": "Some Corner Bistro"
+      }
+    }
+  ]
+}
+```
+
+Every top-level field except _`elements`_ is boilerplate the app ignores: _`version`_ is the Overpass API schema version, _`generator`_ identifies the server build, and _`osm3s`_ is a timestamp for how fresh the underlying OSM database snapshot is. The real payload is the _`elements`_ array, and it already shows the node/way split in practice: the node result has _`lat`_/_`lon`_ directly on it, while the way result only has a computed _`center`_, exactly what _`out center`_ was for. Notice too that the two elements don't have the same tag shape: the node has a _`cuisine`_ tag and the way doesn't. Nothing requires them to match, because there's no schema enforcing it. That's the _`el.lat ?? el.center?.lat`_ fallback in _`toAmenity`_ ([`src/services/overpass.ts`](https://github.com/kelvin-mai/address-insights/blob/main/src/services/overpass.ts)) earning its keep, and it's also why the app can't just assume a fixed set of fields will be present on every element and has to check.
+
+Every element carries free-form _`key=value`_ tags, things like _`amenity=restaurant`_ or _`shop=bakery`_, with no enforced schema. Nothing stops a contributor from tagging a node however they want; it's convention, not a type system. That's exactly why _`address-insights`_ has a fairly defensive _`classifyTags`_ function ([`src/lib/amenity/taxonomy.ts`](https://github.com/kelvin-mai/address-insights/blob/main/src/lib/amenity/taxonomy.ts)) that checks a big pile of possible tag combinations to sort raw OSM elements into categories like groceries, dining, or transit:
+
+```ts
+if (
+  shop === 'supermarket' ||
+  shop === 'grocery' ||
+  shop === 'convenience' ||
+  shop === 'greengrocer' ||
+  shop === 'bakery' ||
+  shop === 'butcher' ||
+  shop === 'deli'
+) {
+  return { category: 'grocery', kind: shop };
+}
+```
+
+There's no schema to consult here, just a running list of known tag combinations built from reading OSM's documentation and looking at real data.
+
+The schemaless tagging also explains why a restaurant needs both a _`node[...]`_ and a _`way[...]`_ clause for the same tag. Some restaurants are mapped as a single point; others are mapped as a building outline. Overpass QL has no "match either element type" shorthand, so you ask for each explicitly. The query-building code in the app reflects this directly, generating a node and a way clause for every tag value it cares about.
+
+And where GraphQL solves over-fetching with field selection, Overpass solves it with verbosity levels on the _`out`_ statement: _`out ids`_ (just type and ID), _`out skel`_ (add geometry), _`out body`_ (add tags, the default), _`out meta`_ (add version and changeset info). You can't ask for "just the name," the way you'd trim a GraphQL selection set. The only real lever you have is narrowing which elements match at all.
+
+That constraint turned out to matter a lot in practice.
+
+## Query Narrowing Wasn't Optional
+
+The first version of the amenity query used broad existence checks, things like _`node[shop]`_ or _`node[amenity]`_, meaning "any node that has this key at all." That works fine in a sparse suburb. In a dense city, it returns tens of megabytes of JSON for a single request, which is both slow and past Vercel's per-cache-item size limit.
+
+The fix was switching from bare key checks to exact-value filters. Instead of asking for every node with an _`amenity`_ tag, the query asks only for the specific values the app actually classifies: _`amenity=restaurant`_, _`amenity=cafe`_, _`amenity=pharmacy`_, and so on, enumerated explicitly. Since Overpass has no field-selection mechanism, trimming which elements match was the only knob available:
+
+```ts
+const buildQuery = (radius: number, lat: number, lon: number): string => {
+  const around = `(around:${radius},${lat},${lon})`;
+  const amenityClauses = AMENITY_TAG_VALUES.flatMap((value) => [
+    `node[amenity=${value}]${around};`,
+    `way[amenity=${value}]${around};`,
+  ]);
+  const keyClauses = OSM_TAG_KEYS.flatMap((key) => [
+    `node[${key}]${around};`,
+    `way[${key}]${around};`,
+  ]);
+  const clauses = [...amenityClauses, ...keyClauses].join('\n  ');
+
+  return `[out:json][timeout:25];\n(\n  ${clauses}\n);\nout center;`;
+};
+```
+
+_`AMENITY_TAG_VALUES`_ is a curated list of specific tag values worth scoring (restaurant, cafe, pharmacy, school, and so on), and _`OSM_TAG_KEYS`_ covers a handful of keys (_`shop`_, _`leisure`_, _`public_transport`_, _`railway`_) where any value is useful enough to keep. Every value in that list becomes its own node and way clause. It's more verbose than the naive version, but it's the difference between a query that returns a usable result and one that times out or blows past a size limit.
+
+## Free, Public, and Occasionally Down
+
+Overpass is run by volunteers on a handful of public mirrors, with no API key and no auth. That's great for a side project with no budget, but it means individual mirrors go down or get slow under load, with no SLA to fall back on.
+
+_`address-insights`_ handles this by keeping a short list of mirror URLs and retrying across them:
+
+```ts
+const OVERPASS_MIRRORS = [
+  'https://overpass-api.de/api/interpreter',
+  'https://overpass.kumi.systems/api/interpreter',
+  'https://maps.mail.ru/osm/tools/overpass/api/interpreter',
+  'https://overpass.private.coffee/api/interpreter',
+];
+```
+
+If a mirror times out or returns a retryable status, the app retries once against the same mirror before moving to the next one. It also checks for a _`remark`_ field in a successful response, since Overpass can return HTTP 200 with a partial result and a message explaining that your query got killed at the 25-second timeout. That's not a status code REST or GraphQL APIs would use for a partial failure; it's baked into the response body, and you have to know to look for it.
+
+Combined with the multi-mirror fallback, this is also why the app caches aggressively: a 24-hour server-side cache keyed on rounded coordinates, so a repeat lookup near a previous search doesn't hit Overpass at all.
+
+It was also, honestly, a fun constraint to design around. Working against an API with no schema and no field selection forced a different set of tradeoffs than I'm used to: defensive tag classification instead of trusting a typed response, query narrowing instead of response shaping, multi-mirror retries instead of a single reliable host. If you want to see the whole thing end to end, the [repo](https://github.com/kelvin-mai/address-insights) is public, or you can just [try the app](https://address-insights-psi.vercel.app/) on your own address.
