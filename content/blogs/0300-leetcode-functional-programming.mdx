@@ -1,0 +1,80 @@
+---
+title: Leetcode Is Making Me Worse at Functional Programming
+description: Reflections on how grinding Leetcode-style interview prep has eroded functional programming habits, and a plan to rebuild them.
+date: 2026-09-06
+tags:
+  - career
+  - functional
+  - typescript
+  - programming
+image: https://pttjrd5bylwkefgv.public.blob.vercel-storage.com/blog/leetcode.jpg
+---
+
+As some of you know, I'm deep in my current job search, and I've even turned to AI to help me process applications (I wrote about that in my [career-ops post](/blog/career-ops-ai-job-search)). One of the other things I've been brushing up on is my ability to survive Leetcode-style whiteboard interviews. I never really invested effort into this before; I've always steered away from FAANG-style companies and preferred startups. But with how harsh the market feels right now, I figured I should stop avoiding it.
+
+Going through this grind, I've realized I never really developed the muscle for optimized algorithms outside of brute-force solutions, so there's a lot to learn. My current platform right now is [neetcode.io](https://neetcode.io/), but I still default to TypeScript for my solutions instead of the recommeneded Python.
+
+But here's the thing I didn't expect: this practice has made me a noticeably worse functional programmer.
+
+## How I got into FP in the first place
+
+I fell in love with functional programming through React, more modern styles of TypeScript, and especially through Clojure, which is still my favorite language. Immutability, pure functions, composing small pieces together instead of mutating state in place: that's the style I reach for by default when I'm building something real.
+
+Leetcode does not reward that style. Most problems and most course material expect an imperative approach, and I've noticed I rarely reach for _`map`_, _`filter`_, and _`reduce`_ as often as I used to. Worse, my brain now defaults to _`for`_ and _`while`_ loops before it even considers a functional alternative. And it genuinely hurts my soul every time a problem wants me to mutate a data structure in place instead of returning a new one.
+
+## A small example of the drift
+
+Here's the kind of thing I mean. Given an array, double every even number and drop the odd ones. The FP version I would have written a year ago:
+
+```typescript
+function doubleEvens(nums: number[]): number[] {
+  return nums.filter((n) => n % 2 === 0).map((n) => n * 2);
+}
+```
+
+The version my brain reaches for now, after months of Leetcode:
+
+```typescript
+function doubleEvens(nums: number[]): number[] {
+  const result: number[] = [];
+  for (let i = 0; i < nums.length; i++) {
+    if (nums[i] % 2 === 0) {
+      result.push(nums[i] * 2);
+    }
+  }
+  return result;
+}
+```
+
+For an interview, the imperative version is the "correct" answer: it's what the interviewer wants to see when they're probing for time and space complexity in real time. But for modern software development, that same imperative version is usually the wrong choice. It mutates a local array through manual index bookkeeping instead of expressing the transformation directly, which makes it harder to read at a glance and easier to introduce an off-by-one bug into. That's exactly the problem: the interview format optimizes for a style of thinking that's slowly replacing the one I actually want to keep sharp.
+
+## Why this matters beyond the interview
+
+This isn't just a stylistic preference. In any codebase that's more than a personal project, the imperative habit actively works against you.
+
+Code review gets slower when logic is spelled out as a loop with a mutable accumulator. A reviewer has to mentally step through each iteration to figure out what the loop is actually doing, versus reading _`filter`_ and _`map`_ and immediately knowing the shape of the transformation from the method names alone. The imperative version hides intent behind mechanism.
+
+Larger projects also lean hard on refactoring, and FP-style code refactors more safely. A pipeline of small, pure functions can be reordered, extracted, or swapped out without worrying about what state got mutated where. A loop with a mutable accumulator is more likely to be tangled up with side effects, which means touching it means re-verifying the whole function's behavior instead of just the piece you changed. Codebases that prioritize frequent refactors and composable, reusable functions (which is most codebases I actually want to work in) tend to reward the FP habits I'm at risk of losing, not the imperative ones Leetcode is currently reinforcing.
+
+## Why this happens
+
+It's not just me being lazy. There's a real paradigm mismatch baked into how these problems are designed:
+
+- Most Leetcode problems assume mutable state and in-place updates, which is the opposite of what FP encourages.
+- The "optimal" solution is frequently judged by whether you can shave off allocations, and the fastest way to do that in an interview setting is usually a mutable accumulator, not a fold.
+- The ecosystem and interview culture around these platforms lean heavily imperative (a lot of prep material defaults to Python or Java loops), so even when a functional solution would be just as elegant, it's rarely the one being taught.
+- Heavy repetition of pattern-matching problems trains rote recall of templates rather than the kind of abstraction thinking that FP is good at.
+
+None of that makes the practice worthless. Being able to reason about time and space complexity under pressure is a real skill, and I'd rather have it than not. But I don't want to trade away the FP muscle to get it.
+
+## What I'm doing about it
+
+Moving forward, I want to supplement this prep with more FP-flavored work so I don't lose the muscle entirely. Concretely, that means:
+
+- After solving a problem imperatively for the interview-realistic version, going back and writing a second pass using _`map`_/_`filter`_/_`reduce`_ or recursion, just to keep that pathway active.
+- Doing more project-based work in Clojure on the side, where the language itself won't let me reach for a mutable loop as the default.
+- Treating Leetcode as a tool for pattern recognition under time pressure, not as my primary source of "how do I write good code."
+
+I also wish there was a genuinely FP-centric algorithms course built for whiteboard interviews, and as far as I can tell one doesn't really exist. Part of the reason might be that some patterns just don't lend themselves well to FP in the first place. Two pointers depends on tracking and mutating a pair of indices in place as you converge them toward each other, and greedy solutions usually depend on incrementally updating some running best-so-far state as you scan through the input. You can express both in a functional style with recursion or a fold, but it often ends up feeling like a translation exercise rather than the natural shape of the solution, which is probably why most prep material doesn't bother.
+
+If you're in the same boat, prepping for interviews while trying not to backslide on the style you actually care about, I'd treat the two as separate skills you're training in parallel, not one skill that naturally produces the other.
