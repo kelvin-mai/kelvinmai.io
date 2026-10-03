@@ -1,0 +1,327 @@
+---
+title: Building an Agent Dev Team in Claude Code
+description: A walkthrough of setting up a planner, coder, tester, reviewer and tech-writer subagent pipeline in Claude Code, with guardrails that keep a human in charge of every commit.
+date: 2026-10-02
+tags:
+  - tooling
+  - claude code
+  - ai
+image: https://pttjrd5bylwkefgv.public.blob.vercel-storage.com/blog/claude-slash.jpg
+---
+
+I recently came across a [YouTube short by Ray Fu](https://www.youtube.com/shorts/gsH0_0gB4IY) about building a dev team out of four AI agents in Claude, and I wanted to put it into practice. I've been using Claude Code a lot lately (enough to [write my own slash commands](/blog/custom-claude-code-slash-commands)), but until now my usage had basically been "open a session, type a prompt, steer it until it's done". I only just found out that there's a name for the next step up: agentic engineering.
+
+## Vibe coding vs prompting vs agentic engineering
+
+It helps to separate three ways of working with an AI coding tool, because they get lumped together a lot.
+
+**Vibe coding** is describing what you want, accepting whatever comes back, and judging the result by whether it seems to work. You aren't really reading the code. That's fine for a throwaway prototype and risky for anything you have to maintain.
+
+**Classic prompt-based sessions** are what I'd been doing. One long conversation with one model that does everything: it explores the codebase, plans, edits files, runs tests, and reviews its own work. I read the diffs and correct it as I go. It works, but the same context is doing every job, so by the time it's "reviewing" its changes it's grading its own homework, and the conversation keeps getting longer and fuzzier.
+
+**Agentic engineering** treats the AI less like a single assistant and more like a small team you design. You split the work into roles, give each role its own instructions, tools and model, decide how work gets handed from one to the next, and put guardrails around what each one is allowed to do. Your job moves from typing prompts to designing the process and approving the output. The code is still yours, you just spend your attention at the checkpoints instead of on every keystroke.
+
+## The four roles from the short
+
+The short proposes four specialised agents, each writing its output into a shared _`.pipeline/`_ folder for the next one to read, with a single slash command that runs them in order:
+
+| Role     | Job                                                         | Tools                  | Model  |
+| -------- | ----------------------------------------------------------- | ---------------------- | ------ |
+| planner  | turns a vague request into a spec with paths and edge cases | Read, Grep, Glob       | opus   |
+| coder    | implements the spec exactly                                 | + Edit, Write, Bash    | sonnet |
+| tester   | writes and runs tests for the edge cases and happy path     | + Edit, Write, Bash    | sonnet |
+| reviewer | reads the spec and diff, gives a verdict                    | Read, Grep, Glob, Bash | sonnet |
+
+The model split makes sense once you think about it: the plan limits how good everything after it can be, so it gets the strongest model. The coder is following a spec that already lays out the implementation, so Sonnet is plenty.
+
+In Claude Code, each of these roles is a subagent: a markdown file in _`.claude/agents/`_ with frontmatter for its _`tools`_, _`model`_ and _`maxTurns`_, and a body that acts as its job description.
+
+### How the roles actually chain together
+
+The thing that clicked for me is that subagents don't call each other. The main session is the coordinator: it delegates to one role, waits for its report, then delegates to the next. The "one slash command" is really just a script for the main session to follow, which I wrote as a skill.
+
+The other key fact is that a subagent can't see your conversation. It only gets the delegation prompt. That's why the _`.pipeline/`_ files matter: without them, the coder only knows whatever the main session decides to retell it. With them, the coder reads the planner's actual spec, word for word.
+
+```txt
+.pipeline/
+  spec.md      # planner's spec (saved by the main session)
+  changes.md   # coder's notes
+  tests.md     # tester's results and any source bugs
+  review.md    # reviewer's verdict (saved by the main session)
+  docs.md      # tech-writer's notes (my addition)
+```
+
+## Where I deviated from the video
+
+The short's pitch is shipping features while you sleep. I'm not ready for that, so I set things up to run attended, with a few deliberate changes:
+
+- **Read-only roles stay read-only.** In the video every agent writes to _`.pipeline/`_. But the _`Write`_ tool isn't scoped to a folder, so giving the planner or reviewer _`Write`_ means they could write anywhere. Instead they return their report as their reply and the main session saves it. The tool list, not the prompt, is the real safety boundary.
+- **A human checkpoint after the plan.** The spec is the cheapest place to catch a wrong direction, before the coder and tester spend any tokens. The pipeline stops and waits for my approval, and I can edit _`spec.md`_ directly before approving, since the coder reads whatever is in the file.
+- **Nothing gets committed.** No role runs state-changing git commands. I read the diff and commit myself.
+- **No worktrees (yet).** Running the coder with _`isolation: worktree`_ would put it in a separate checkout branched from the default branch, so the tester and reviewer, working in my checkout, wouldn't see its changes.
+
+## My setup in daggerheart-brews
+
+I set this up in [daggerheart-brews](https://daggerheartbrews.com), my Next.js side project for building homebrew content for the Daggerheart TTRPG. It already had a _`CLAUDE.md`_, a _`code-standards`_ skill, and a _`/changelog`_ command, so the agents had a lot of existing context to lean on.
+
+First, keep the handoff files out of git:
+
+```bash
+echo ".pipeline/" >> .gitignore
+```
+
+### The planner
+
+The planner is read-only, runs on Opus, and is forced into a fixed spec format so every downstream role knows where to look:
+
+````md
+---
+name: planner
+description: Turns a daggerheart-brews feature request into an implementation spec (exact files, signatures, edge cases, test plan). Use first, before any code is written. Read-only; returns the spec as its report.
+tools: Read, Grep, Glob
+model: opus
+maxTurns: 25
+skills:
+  - code-standards
+---
+
+You plan features for daggerheart-brews (Next.js 16, TypeScript, Drizzle,
+Better Auth, Zustand, Tailwind v4). You never write code beyond signatures.
+Signatures must follow the code-standards skill.
+
+Explore only as much as you need to name exact files and follow existing
+patterns. Then reply with ONLY the spec below, under 600 words. Headings
+are fixed; replace each guidance line with your content.
+
+```
+# Spec: <title>
+
+## Goal
+1–2 sentences.
+
+## Files
+`path` — what changes. Mark new files NEW.
+
+## Signatures
+TypeScript signatures for new/changed functions.
+
+## Edge cases
+Numbered; each one testable.
+
+## Test plan
+Unit (test/…) and/or e2e (e2e/…), or "none, because …".
+
+## Out of scope
+
+## Open questions
+Start a line with BLOCKING if work can't start without an answer.
+For non-blocking questions, state the default you'd pick.
+```
+````
+
+The _`BLOCKING`_ convention is useful: the coordinator surfaces those questions at the approval checkpoint, and for anything non-blocking the coder just uses the planner's stated default and notes it.
+
+### The coder
+
+The coder gets every editing tool, but its prompt narrows its scope hard: implement the spec, nothing more, and never write tests.
+
+```md
+---
+name: coder
+description: Implements the spec in .pipeline/spec.md for daggerheart-brews, exactly and nothing more. Use after the spec is approved. Does not write tests or run state-changing git commands.
+tools: Read, Grep, Glob, Edit, Write, Bash
+model: sonnet
+maxTurns: 40
+skills:
+  - code-standards
+---
+
+1. Read .pipeline/spec.md. On a fix pass, fix ONLY what you were asked
+   to: the source bugs listed in .pipeline/tests.md, or the review
+   findings in .pipeline/review.md at the severity you were given.
+2. Implement the spec. Don't widen scope or refactor unrelated code.
+   If the spec is wrong or impossible, stop and say why instead of guessing.
+3. Check your work: `pnpm run lint` and `pnpm tsc --noEmit`.
+4. Never: write tests (the tester does), install packages, read .env\*,
+   or run git commands other than diff/status/log/show.
+5. Write .pipeline/changes.md: each file changed + one line why, any
+   deviation from the spec, anything the tester should know.
+
+Reply: `done` or `blocked: <reason>`, in one line.
+```
+
+### The tester
+
+The tester's most important rule is that it never fixes source code. If a test fails because the implementation is wrong, it reports a source bug instead of quietly bending the code (or the test) until it goes green.
+
+```md
+---
+name: tester
+description: Writes and runs tests for the change described in .pipeline/spec.md and .pipeline/changes.md. Use after the coder. Edits only test/, e2e/ and .pipeline/tests.md; never fixes source code.
+tools: Read, Grep, Glob, Edit, Write, Bash
+model: sonnet
+maxTurns: 30
+skills:
+  - code-standards
+---
+
+1. Read .pipeline/spec.md (edge cases + test plan) and .pipeline/changes.md.
+2. Write tests for the happy path and every edge case, following the
+   existing patterns in test/. Write e2e specs only if the test plan asks;
+   don't run them.
+3. Run `pnpm run test --run`, then `pnpm run lint` and `pnpm tsc --noEmit`.
+4. If a test fails because the SOURCE is wrong, do not touch src/.
+   Record it as a bug instead.
+5. Write .pipeline/tests.md: files added, commands run, pass/fail counts,
+   lint/type-check result, and a `## Source bugs` list (or "none").
+
+Reply: `pass` or `fail: <n> source bugs`, in one line.
+```
+
+### The reviewer
+
+The reviewer is read-only and only reports issues that affect correctness, security, or the code standards. I explicitly tell it not to invent issues, otherwise reviewers love to find _something_.
+
+```md
+---
+name: reviewer
+description: Reviews a git diff in daggerheart-brews for bugs, security issues, and code-standards violations. Use after code changes and before committing or opening a PR. Read-only; never edits files.
+tools: Read, Grep, Glob, Bash
+model: sonnet
+maxTurns: 20
+skills:
+  - code-standards
+---
+
+1. Get the diff you were asked to review. If the request doesn't name
+   one, review `git diff HEAD` and say that's what you did.
+2. Read surrounding code only as far as needed to judge the change.
+3. Report only issues that affect correctness, security, or the
+   code-standards skill. No style preferences beyond that.
+4. You are read-only. Only run commands that inspect state. Never edit
+   files, install packages, or run git commands that change state.
+
+Reply in this format, under 300 words:
+
+## Verdict: ship | fix first
+
+## Findings
+
+- `path:line` (severity): problem → suggested fix
+  If there are no findings, say so plainly. Don't invent issues.
+
+If .pipeline/spec.md exists, also say whether the diff matches it.
+```
+
+One gotcha here: _`git diff`_ ignores untracked files, so a reviewer that only runs _`git diff HEAD`_ never sees new files the coder created. The coordinator tells it to also run _`git status --short`_ and read anything new.
+
+## The extra role: a tech-writer
+
+This is the part of my setup that goes beyond the video, and I think it's the most underrated. After the reviewer, a fifth agent updates the docs and the changelog.
+
+daggerheart-brews has a public changelog, and I already had a _`/changelog`_ command that drafts _`content/changelog/pending.mdx`_ from git history. The problem is that the pipeline never commits, so there's no git history to read yet. The tech-writer reuses the same command's categories and copywriting rules, but builds the entries from _`spec.md`_ and _`changes.md`_ instead:
+
+```md
+---
+name: tech-writer
+description: Updates existing docs and the pending changelog entry for the change described in .pipeline/. Use last, after the reviewer. Edits only docs/, README.md, .claude/skills/code-standards/SKILL.md, content/changelog/pending.mdx and .pipeline/docs.md; never touches code or tests.
+tools: Read, Grep, Glob, Edit, Write, Bash
+model: sonnet
+maxTurns: 20
+---
+
+You document finished changes in daggerheart-brews.
+
+1. Read .pipeline/spec.md, .pipeline/changes.md and .pipeline/review.md.
+   Run `git diff HEAD` and `git status --short` if you need detail.
+2. Docs: update README.md or files in docs/ only where the change makes
+   them incorrect or incomplete (new commands, env vars, setup steps,
+   config, documented behaviour). Don't create new doc files and don't
+   document internal implementation details. No change needed is a valid
+   outcome.
+3. Changelog: read .claude/commands/changelog.md and follow its
+   categories, format and copywriting rules, with one difference: the
+   change is NOT committed yet, so build entries from spec.md and
+   changes.md, not from `git log`. Merge into
+   content/changelog/pending.mdx; don't duplicate existing bullets.
+   Never touch versioned v\*.mdx files.
+4. Never: edit src/, test/, e2e/, config, or anything under .claude/
+   other than the code-standards SKILL.md, install packages, or run git
+   commands other than diff/status/log/show.
+5. Write .pipeline/docs.md: each file changed + one line why, and the
+   changelog bullets you added.
+
+Reply: `done: <n> files updated` or `done: no changes`, in one line.
+```
+
+The line I'd point out is "No change needed is a valid outcome." Without it, a docs agent will happily pad your README with a paragraph about every internal refactor. If you maintain a changelog, release notes, or any docs that tend to drift from the code, this role is worth stealing even if you skip the rest.
+
+## The coordinator skill
+
+Finally, _`/ship-feature`_ ties it together. It's a skill in _`.claude/skills/ship-feature/SKILL.md`_ with _`disable-model-invocation: true`_, so Claude never decides to kick off the whole pipeline on its own; it only runs when I type it.
+
+```md
+---
+name: ship-feature
+description: Runs the planner → coder → tester → reviewer → tech-writer pipeline on one feature request.
+disable-model-invocation: true
+argument-hint: <feature request>
+---
+
+Run the pipeline for: $ARGUMENTS
+
+You are the coordinator. Delegate each step to the named subagent and do
+not do any role's work yourself. Subagents can't see this conversation,
+so always name the .pipeline/ files in your delegation prompt.
+
+0. Preflight:
+   - Run `git branch --show-current`. If it's main, STOP and ask me to
+     create a feature branch.
+   - Run `git status --short`. If it shows anything, STOP and ask me to
+     commit or stash first (the reviewer diffs the whole working tree).
+   - Then `mkdir -p .pipeline && find .pipeline -name '*.md' -delete`.
+1. planner: pass the feature request verbatim. Save its reply to
+   .pipeline/spec.md. Show me the Goal, Files, Edge cases, Out of scope,
+   and any BLOCKING questions, then WAIT for my approval.
+2. coder: "Implement .pipeline/spec.md; write .pipeline/changes.md."
+   If it replies `blocked: …`, STOP and show me the reason.
+3. tester: "Test the change; write .pipeline/tests.md." If it reports
+   source bugs, run the coder once more and then the tester once more.
+   Never loop more than once.
+4. reviewer: "Review the uncommitted change against .pipeline/spec.md."
+   Save its reply to .pipeline/review.md. If the verdict is `fix first`
+   with any finding of medium severity or higher, run the coder, tester
+   and reviewer once more. Never loop more than once.
+5. tech-writer: "Update docs and content/changelog/pending.mdx for the
+   change; write .pipeline/docs.md."
+6. Report: test result, reviewer verdict, open findings, files changed,
+   changelog bullets added, and any spec deviations. Remind me that
+   nothing is committed. I review `git diff` and commit myself.
+```
+
+A few things in there came from actually running it rather than from the video:
+
+- **Fix passes are capped at one.** Without a cap, a coder and tester can ping-pong forever, burning through your usage. If it's still failing after one retry, the pipeline carries on and flags it, and I deal with it.
+- **The review fix pass only triggers on medium or higher.** Low-severity nits get listed in the report instead of costing another full coder, tester and reviewer cycle.
+- **The preflight uses _`find`_ to clear old handoffs.** My first version used _`rm -f .pipeline/*.md`_, which errors in zsh when the glob matches nothing.
+- **A clean working tree is required.** The reviewer diffs everything uncommitted, so leftover changes would end up in its review.
+
+Running it looks like this:
+
+```bash
+git switch -c feat/duplicate-card
+claude
+> /ship-feature add a "duplicate card" button to the homebrew list
+```
+
+## Guardrails and the cost of all this
+
+To be honest about the limits: most of the "never commit" and "never touch _`src/`_" rules live in prompts right now, not in enforced permissions. My _`settings.local.json`_ still has a broad _`Bash(git:*)`_ allow that I accumulated by clicking "don't ask again", which technically covers _`git push --force`_ too. Tightening that with proper allow/deny rules and hooks is my next step, and it's a prerequisite before I'd ever let this run unattended.
+
+It's also not cheap. One feature is one Opus run plus at least four Sonnet runs, and each role re-reads the code it needs from scratch. That's several times the usage of just fixing something in a single session, so I only reach for _`/ship-feature`_ when a change is big enough to deserve a plan, not for typos.
+
+## Keeping the final say
+
+I'm still wary about automating AI completely, so I want the final say over the output. That's why every role in this pipeline has a responsibility to report back to me before anything is committed: I approve the plan, I read the final report, and I review _`git diff`_ and commit it myself. The agents do the work; I own the result.
+
+So far I haven't shipped any huge features with this workflow yet, but I'll keep experimenting with it and trying to stay up to date on the agentic engineering side of things. If you want to try it yourself, start with a single read-only reviewer subagent, get comfortable with how delegation works, and then grow it into a team. The full agent files and the _`/ship-feature`_ skill above are a decent starting point to adapt to your own project.
